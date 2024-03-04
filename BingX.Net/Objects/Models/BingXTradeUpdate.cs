@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
@@ -13,32 +14,32 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Symbol
         /// </summary>
-        [JsonProperty("s")]
+        [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
         /// Trade id
         /// </summary>
-        [JsonProperty("t")]
+        [JsonPropertyName("t")]
         public long TradeId { get; set; }
         /// <summary>
         /// Trade price
         /// </summary>
-        [JsonProperty("p")]
+        [JsonPropertyName("p")]
         public decimal Price { get; set; }
         /// <summary>
         /// Quantity
         /// </summary>
-        [JsonProperty("q")]
+        [JsonPropertyName("q")]
         public decimal Quantity { get; set; }
         /// <summary>
         /// Trade timestamp
         /// </summary>
-        [JsonProperty("T")]
+        [JsonPropertyName("T")]
         public DateTime TradeTime { get; set; }
         /// <summary>
         /// Whether buyer is maker
         /// </summary>
-        [JsonProperty("m")]
+        [JsonPropertyName("m")]
         public bool BuyerIsMaker { get; set; }
     }
 }

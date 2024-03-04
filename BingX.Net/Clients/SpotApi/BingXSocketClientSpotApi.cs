@@ -21,6 +21,7 @@ using BingX.Net.Objects.Sockets.Subscriptions;
 using System.IO.Compression;
 using System.IO;
 using System.Net.WebSockets;
+using CryptoExchange.Net.Sockets.MessageParsing.SystemTextJson;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -46,6 +47,9 @@ namespace BingX.Net.Clients.SpotApi
             base(logger, options.Environment.SocketClientAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXPingSubscription(_logger));
+
+            //_serializer = new SystemTextJsonSerializer();
+            //_accessor = new SystemTextJsonMessageAccessor();
         }
         #endregion 
 

@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Internal
 {
     internal class BingXPing
     {
+        [JsonPropertyName("ping")]
         [JsonProperty("ping")]
         public string Ping { get; set; }
-        [JsonProperty("time")]
+        //[JsonPropertyName("time")]
         public DateTimeOffset Timestamp { get; set; }
     }
 }

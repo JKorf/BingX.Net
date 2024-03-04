@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
@@ -13,12 +14,12 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Event name
         /// </summary>
-        [JsonProperty("e")]
+        [JsonPropertyName("e")]
         public string Event { get; set; } = string.Empty;
         /// <summary>
         /// Event timestamp
         /// </summary>
-        [JsonProperty("E")]
+        [JsonPropertyName("E")]
         public DateTime EventTime { get; set; }
     }
 }
