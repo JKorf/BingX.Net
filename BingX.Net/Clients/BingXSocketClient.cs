@@ -31,8 +31,16 @@ namespace BingX.Net.Clients
         /// <summary>
         /// Create a new instance of BingXSocketClient
         /// </summary>
+        /// <param name="loggerFactory">The logger factory</param>
+        public BingXSocketClient(ILoggerFactory? loggerFactory = null) : this((x) => { }, loggerFactory)
+        {
+        }
+
+        /// <summary>
+        /// Create a new instance of BingXSocketClient
+        /// </summary>
         /// <param name="optionsDelegate">Option configuration delegate</param>
-        public BingXSocketClient(Action<BingXSocketOptions>? optionsDelegate = null) : this(optionsDelegate, null)
+        public BingXSocketClient(Action<BingXSocketOptions> optionsDelegate) : this(optionsDelegate, null)
         {
         }
 

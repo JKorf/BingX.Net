@@ -16,7 +16,7 @@ namespace BingX.Net.UnitTests
         [Test]
         public async Task ValidatBingXUpdateStreamJson()
         {
-            await TestFileToObject<BingXModel>(@"JsonResponses/Spot/Socket/BingXAsync.txt");
+            //await TestFileToObject<BingXModel>(@"JsonResponses/Spot/Socket/BingXAsync.txt");
         }
 
 

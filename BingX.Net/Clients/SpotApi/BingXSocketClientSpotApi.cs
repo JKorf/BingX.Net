@@ -18,6 +18,9 @@ using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Sockets.Subscriptions;
+using System.IO.Compression;
+using System.IO;
+using System.Net.WebSockets;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -28,6 +31,10 @@ namespace BingX.Net.Clients.SpotApi
     {
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
+        private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");
+        private static readonly MessagePath _pingPath = MessagePath.Get().Property("ping");
+        private static readonly MessagePath _eventPath = MessagePath.Get().Property("data").Property("e");
+        private static readonly MessagePath _symbolPath = MessagePath.Get().Property("data").Property("s");
         #endregion
 
         #region constructor/destructor
@@ -38,6 +45,7 @@ namespace BingX.Net.Clients.SpotApi
         internal BingXSocketClientSpotApi(ILogger logger, BingXSocketOptions options) :
             base(logger, options.Environment.SocketClientAddress!, options, options.FuturesOptions)
         {
+            AddSystemSubscription(new BingXPingSubscription(_logger));
         }
         #endregion 
 
@@ -46,16 +54,50 @@ namespace BingX.Net.Clients.SpotApi
             => new BingXAuthenticationProvider(credentials);
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToBingXUpdatesAsync(Action<DataEvent<BingXModel>> onMessage, CancellationToken ct = default)
+        public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
         {
-            var subscription = new BingXSubscription<BingXModel>(_logger, new [] { "TOOD" }, onMessage, false);
-            return await SubscribeAsync(subscription, ct).ConfigureAwait(false);
+            var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, symbol + "@trade", symbol + "@trade", onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
+        {
+            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, symbol + "@ticker", "24hTicker" + symbol, onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public override Stream PreprocessStreamMessage(WebSocketMessageType type, Stream stream)
+        {
+            if (type != WebSocketMessageType.Binary)
+                return stream;
+
+            var decompressedStream = new MemoryStream();
+            using var deflateStream = new GZipStream(stream, CompressionMode.Decompress);
+            deflateStream.CopyTo(decompressedStream);
+            decompressedStream.Position = 0;
+            return decompressedStream;
         }
 
         /// <inheritdoc />
         public override string? GetListenerIdentifier(IMessageAccessor message)
         {
-            return message.GetValue<string>(_idPath);
+            var id = message.GetValue<string>(_idPath);
+            if (id != null)
+                return id;
+
+            var dataType = message.GetValue<string>(_dataTypePath);
+            if (dataType != null)
+                return dataType;
+
+            var evnt = message.GetValue<string>(_eventPath);
+            var symbol = message.GetValue<string>(_symbolPath);
+            if (evnt != null)
+                return evnt + symbol;
+
+            var ping = message.GetValue<string>(_pingPath);
+            return ping != null ? "ping" : ping;
         }
 
         /// <inheritdoc />

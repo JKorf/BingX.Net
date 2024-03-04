@@ -34,7 +34,11 @@ namespace BingX.Net.UnitTests
         {
             await _comparer.ProcessSubject(
                 "Spot/ExchangeData",
-                c => c.SpotApi.ExchangeData);
+                c => c.SpotApi.ExchangeData, useNestedJsonPropertyForCompare: new Dictionary<string, string>
+                {
+                    { "GetSymbolsAsync", "data:symbols" },
+                    { "GetRecentTradesAsync", "data" },
+                });
         }
 
         [Test]

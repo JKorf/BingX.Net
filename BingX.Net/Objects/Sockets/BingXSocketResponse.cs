@@ -3,17 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BingX.Net.Objects.Internal
+namespace BingX.Net.Objects.Sockets
 {
-    internal record BingXResult<T>
+    internal class BingXSocketResponse
     {
+        [JsonProperty("id")]
+        public string Id { get; set; } = string.Empty;
         [JsonProperty("code")]
         public int Code { get; set; }
         [JsonProperty("msg")]
         public string? Message { get; set; }
-        [JsonProperty("data")]
-        public T? Data { get; set; }
-        [JsonProperty("timestamp")]
-        public DateTime Timestamp { get; set; }
     }
 }

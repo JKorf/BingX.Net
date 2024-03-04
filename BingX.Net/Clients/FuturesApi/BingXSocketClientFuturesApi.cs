@@ -45,9 +45,9 @@ namespace BingX.Net.Clients.FuturesApi
             => new BingXAuthenticationProvider(credentials);
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToBingXUpdatesAsync(Action<DataEvent<BingXModel>> onMessage, CancellationToken ct = default)
+        public async Task<CallResult<UpdateSubscription>> SubscribeToBingXUpdatesAsync(Action<DataEvent<object>> onMessage, CancellationToken ct = default)
         {
-            var subscription = new BingXSubscription<BingXModel>(_logger, new[] { "TOOD" }, onMessage, false);
+            var subscription = new BingXSubscription<object>(_logger, "TOOD", "", onMessage, false);
             return await SubscribeAsync(subscription, ct).ConfigureAwait(false);
         }
 

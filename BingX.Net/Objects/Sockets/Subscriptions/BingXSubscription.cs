@@ -9,52 +9,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BingX.Net.Objects.Models;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class BingXSubscription<T> : Subscription<BingXModel, BingXModel>
+    internal class BingXSubscription<T> : Subscription<BingXSocketResponse, BingXSocketResponse>
     {
         /// <inheritdoc />
         public override HashSet<string> ListenerIdentifiers { get; set; }
 
+        private readonly string _topic;
         private readonly Action<DataEvent<T>> _handler;
 
         /// <inheritdoc />
         public override Type? GetMessageType(IMessageAccessor message)
         {
-            return typeof(T);
+            return typeof(BingXUpdate<T>);
         }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="logger"></param>
-        /// <param name="topics"></param>
+        /// <param name="dataType"></param>
+        /// <param name="listenId"></param>
         /// <param name="handler"></param>
         /// <param name="auth"></param>
-        public BingXSubscription(ILogger logger, string[] topics, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
+        public BingXSubscription(ILogger logger, string dataType, string listenId, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
         {
             _handler = handler;
-            ListenerIdentifiers = new HashSet<string>(topics);
+            _topic = dataType;
+            ListenerIdentifiers = new HashSet<string>() { listenId };
         }
 
         /// <inheritdoc />
         public override Query? GetSubQuery(SocketConnection connection)
-        {
-            throw new NotImplementedException();
-        }
+            => new BingXQuery(new BingXSocketRequest
+            {
+                Id = ExchangeHelpers.NextId().ToString(),
+                RequestType = "sub",
+                Topic = _topic
+            }, false);
 
         /// <inheritdoc />
         public override Query? GetUnsubQuery()
-        {
-            throw new NotImplementedException();
-        }
+            => new BingXQuery(new BingXSocketRequest
+            {
+                Id = ExchangeHelpers.NextId().ToString(),
+                RequestType = "unsub",
+                Topic = _topic
+            }, false);
 
         /// <inheritdoc />
         public override Task<CallResult> DoHandleMessageAsync(SocketConnection connection, DataEvent<object> message)
         {
-            _handler.Invoke(message.As((T)message.Data!, null, SocketUpdateType.Update));
+            var update = (BingXUpdate<T>)message.Data;
+            _handler.Invoke(message.As(update.Data!, update.DataType, SocketUpdateType.Update));
             return Task.FromResult(new CallResult(null));
         }
     }

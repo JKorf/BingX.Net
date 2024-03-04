@@ -34,7 +34,6 @@ namespace BingX.Net.Clients.FuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<DateTime>> GetServerTimeAsync(CancellationToken ct = default)
         {
-            var result = await _baseClient.SendRequestInternal<BingXModel>(_baseClient.GetUri("BingX"), HttpMethod.Get, ct, ignoreRateLimit: true).ConfigureAwait(false);
             throw new NotImplementedException();
         }
 

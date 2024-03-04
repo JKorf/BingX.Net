@@ -14,7 +14,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// BingX symbol info
     /// </summary>
-    public class BingXSymbol
+    public record BingXSymbol
     {
         /// <summary>
         /// Symbol name

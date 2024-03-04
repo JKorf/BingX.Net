@@ -45,8 +45,21 @@ namespace BingX.Net.Clients.SpotApi
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
-            var result = await _baseClient.SendRequestInternal<BingXSymbolsWrapper>(_baseClient.GetUri("/openApi/spot/v1/common/symbols"), HttpMethod.Get, ct, parameters, ignoreRateLimit: true).ConfigureAwait(false);
+            var result = await _baseClient.SendRequestInternal<BingXSymbolsWrapper>(_baseClient.GetUri("/openApi/spot/v1/common/symbols"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
             return result.As<IEnumerable<BingXSymbol>>(result.Data?.Symbols);
+        }
+
+        #endregion
+
+        #region Get Recent Trades
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXTrade>>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            parameters.AddOptional("limit", limit);
+            return await _baseClient.SendRequestInternal<IEnumerable<BingXTrade>>(_baseClient.GetUri("/openApi/spot/v1/market/trades"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion

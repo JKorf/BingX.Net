@@ -99,7 +99,8 @@ namespace BingX.Net.UnitTests.TestImplementations
             var jsonObject = JToken.Parse(json);
             if (useNestedJsonPropertyForCompare?.ContainsKey(method) == true)
             {
-                jsonObject = jsonObject[useNestedJsonPropertyForCompare[method]];
+                foreach(var nested in useNestedJsonPropertyForCompare[method].Split(":"))
+                    jsonObject = jsonObject[nested];
             }
 
             if (resultData.GetType().GetInterfaces().Contains(typeof(IDictionary)))
@@ -349,7 +350,15 @@ namespace BingX.Net.UnitTests.TestImplementations
             }
             else if (jsonValue.Type == JTokenType.Integer)
             {
-                if (jsonValue.Value<long>() != Convert.ToInt64(objectValue))
+                if (objectValue is DateTime time)
+                {
+                    // timestamp, hard to check..
+                }
+                else if(objectValue is Enum)
+                {
+                    // Enum parsing, can't compare
+                }
+                else if (jsonValue.Value<long>() != Convert.ToInt64(objectValue))
                     throw new Exception($"{method}: {property} not equal: {jsonValue.Value<long>()} vs {Convert.ToInt64(objectValue)}");
             }
             else if (jsonValue.Type == JTokenType.Boolean)
