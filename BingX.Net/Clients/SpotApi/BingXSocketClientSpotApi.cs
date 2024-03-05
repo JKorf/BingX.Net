@@ -48,8 +48,8 @@ namespace BingX.Net.Clients.SpotApi
         {
             AddSystemSubscription(new BingXPingSubscription(_logger));
 
-            //_serializer = new SystemTextJsonSerializer();
-            //_accessor = new SystemTextJsonMessageAccessor();
+            _serializer = new SystemTextJsonSerializer();
+            _accessor = new SystemTextJsonMessageAccessor();
         }
         #endregion 
 
