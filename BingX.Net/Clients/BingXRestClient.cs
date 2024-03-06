@@ -1,5 +1,4 @@
-﻿using CryptoExchange.Net;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System;
 using CryptoExchange.Net.Authentication;
@@ -9,6 +8,7 @@ using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Options;
 using BingX.Net.Clients.SpotApi;
 using BingX.Net.Clients.FuturesApi;
+using CryptoExchange.Net.Clients;
 
 namespace BingX.Net.Clients
 {

@@ -2,7 +2,6 @@
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
-using CryptoExchange.Net.Sockets.MessageParsing.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Interfaces;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {

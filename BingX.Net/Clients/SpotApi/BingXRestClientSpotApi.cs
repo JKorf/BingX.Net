@@ -14,8 +14,9 @@ using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters;
 using Newtonsoft.Json;
-using CryptoExchange.Net.Sockets.MessageParsing.Interfaces;
-using CryptoExchange.Net.Sockets.MessageParsing.SystemTextJson;
+using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Converters.SystemTextJson;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -56,7 +57,9 @@ namespace BingX.Net.Clients.SpotApi
         }
         #endregion
 
-        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonSerializer();
+        /// <inheritdoc />
+        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
+        /// <inheritdoc />
         protected override IMessageAccessor CreateAccessor() => new SystemTextJsonMessageAccessor();
 
         /// <inheritdoc />

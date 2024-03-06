@@ -13,6 +13,7 @@ using CryptoExchange.Net.CommonObjects;
 using CryptoExchange.Net.Interfaces.CommonClients;
 using BingX.Net.Interfaces.Clients.FuturesApi;
 using BingX.Net.Objects.Options;
+using CryptoExchange.Net.Clients;
 
 namespace BingX.Net.Clients.FuturesApi
 {
