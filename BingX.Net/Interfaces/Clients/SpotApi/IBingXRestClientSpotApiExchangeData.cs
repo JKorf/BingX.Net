@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CryptoExchange.Net.Objects;
+using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
 using System.Collections.Generic;
 
@@ -36,5 +37,26 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="ct"></param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXTrade>>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <param name="limit"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <param name="interval"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="limit"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXKline>>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
     }
 }

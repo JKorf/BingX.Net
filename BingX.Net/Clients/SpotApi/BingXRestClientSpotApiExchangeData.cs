@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net;
-using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Objects;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -56,10 +52,45 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<IEnumerable<BingXTrade>>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("symbol", symbol);
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol }
+            };
             parameters.AddOptional("limit", limit);
             return await _baseClient.SendRequestInternal<IEnumerable<BingXTrade>>(_baseClient.GetUri("/openApi/spot/v1/market/trades"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Order Book
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol }
+            };
+            parameters.AddOptional("limit", limit);
+            return await _baseClient.SendRequestInternal<BingXOrderBook>(_baseClient.GetUri("/openApi/spot/v1/market/depth"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Klines
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXKline>>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol },
+                { "interval", EnumConverter.GetString(interval) }
+            };
+            parameters.AddOptionalMilliseconds("startTime", startTime);
+            parameters.AddOptionalMilliseconds("endTime", endTime);
+            parameters.AddOptional("limit", limit);
+            return await _baseClient.SendRequestInternal<IEnumerable<BingXKline>>(_baseClient.GetUri("/openApi/spot/v1/market/kline"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion

@@ -154,9 +154,6 @@
         <member name="M:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi.SubscribeToBingXUpdatesAsync(System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
         <member name="M:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi.GetListenerIdentifier(CryptoExchange.Net.Sockets.MessageParsing.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
@@ -221,6 +218,12 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetRecentTradesAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
             <inheritdoc />
         </member>
@@ -251,6 +254,86 @@
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetAuthenticationRequest">
             <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Enums.KlineInterval">
+            <summary>
+            Kline interval
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.OneMinute">
+            <summary>
+            One minute
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.ThreeMinutes">
+            <summary>
+            Three minutes
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.FiveMinutes">
+            <summary>
+            Five minutes
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.FifteenMinutes">
+            <summary>
+            Fifteen minutes
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.ThirtyMinutes">
+            <summary>
+            Thirty minutes
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.OneHour">
+            <summary>
+            One hour
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.TwoHours">
+            <summary>
+            Two hours
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.FourHours">
+            <summary>
+            Four hours
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.SixHours">
+            <summary>
+            Six hours
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.EightHours">
+            <summary>
+            Eight hours
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.TwelveHours">
+            <summary>
+            Twelve hours
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.OneDay">
+            <summary>
+            One day
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.ThreeDay">
+            <summary>
+            Three days
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.OneWeek">
+            <summary>
+            One week
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.KlineInterval.OneMonth">
+            <summary>
+            One month
+            </summary>
         </member>
         <member name="T:BingX.Net.Enums.SymbolStatus">
             <summary>
@@ -452,6 +535,27 @@
             <param name="ct"></param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="symbol"></param>
+            <param name="limit"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="symbol"></param>
+            <param name="interval"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="limit"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading">
             <summary>
             BingX Spot trading endpoints, placing and managing orders.
@@ -519,6 +623,86 @@
         <member name="F:BingX.Net.Objects.BingXApiAddresses.Default">
             <summary>
             The default addresses to connect to the BingX.com API
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXKline">
+            <summary>
+            Kline (candlestick) info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.OpenTime">
+            <summary>
+            Open timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.OpenPrice">
+            <summary>
+            Open price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.HighPrice">
+            <summary>
+            High price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.LowPrice">
+            <summary>
+            Low price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.Close">
+            <summary>
+            Close price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.Volume">
+            <summary>
+            Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.CloseTime">
+            <summary>
+            Close time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKline.QuoteVolume">
+            <summary>
+            Quote volume
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOrderBook">
+            <summary>
+            Order book info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderBook.Bids">
+            <summary>
+            List of bids
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderBook.Asks">
+            <summary>
+            List of asks
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderBook.Timestamp">
+            <summary>
+            Timestamp of the data
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOrderBookEntry">
+            <summary>
+            Order book entry
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderBookEntry.Price">
+            <summary>
+            The price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderBookEntry.Quantity">
+            <summary>
+            The quantity
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXSocketUpdate">
