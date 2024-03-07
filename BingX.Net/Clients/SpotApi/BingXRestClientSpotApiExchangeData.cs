@@ -10,6 +10,8 @@ using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net;
+using System.Linq;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -77,6 +79,27 @@ namespace BingX.Net.Clients.SpotApi
 
         #endregion
 
+        #region Get Aggregated Order Book
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXOrderBook>> GetAggregatedOrderBookAsync(string symbol, int limit, int mergeDepth, CancellationToken ct = default)
+        {
+            mergeDepth.ValidateIntBetween(nameof(mergeDepth), 0, 5);
+
+            // This endpoint doesn't work unless symbol is with an underscore
+            symbol = symbol.Replace('-', '_');
+
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol },
+                { "depth", limit },
+                { "type", "step" + mergeDepth }
+            };
+            return await _baseClient.SendRequestInternal<BingXOrderBook>(_baseClient.GetUri("/openApi/spot/v2/market/depth"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+        }
+
+        #endregion
+
         #region Get Klines
 
         /// <inheritdoc />
@@ -91,6 +114,51 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("limit", limit);
             return await _baseClient.SendRequestInternal<IEnumerable<BingXKline>>(_baseClient.GetUri("/openApi/spot/v1/market/kline"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Tickers
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXTicker>>> GetTickersAsync(string? symbol = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection()
+            {
+                { "timestamp", DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow) }
+            };
+            parameters.AddOptional("symbol", symbol);
+            return await _baseClient.SendRequestInternal<IEnumerable<BingXTicker>>(_baseClient.GetUri("/openApi/spot/v1/ticker/24hr"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Last Trade
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXLastTrade>> GetLastTradeAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection()
+            {
+                { "symbol", symbol }
+            };
+            var result = await _baseClient.SendRequestInternal<IEnumerable<BingXLastTradeWrapper>>(_baseClient.GetUri("/openApi/spot/v1/ticker/price"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            return result.As<BingXLastTrade>(result.Data?.Single().Trades.Single());
+        }
+
+        #endregion
+
+        #region Get Book Price
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXBookTicker>> GetBookPriceAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection()
+            {
+                { "symbol", symbol }
+            };
+            var result = await _baseClient.SendRequestInternal<IEnumerable<BingXBookTicker>>(_baseClient.GetUri("/openApi/spot/v1/ticker/bookTicker"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            return result.As<BingXBookTicker>(result.Data?.Single());
         }
 
         #endregion

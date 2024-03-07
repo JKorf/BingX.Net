@@ -227,7 +227,19 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetAggregatedOrderBookAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetTickersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetLastTradeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetBookPriceAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
@@ -562,6 +574,44 @@
             <param name="ct"></param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetTickersAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get ticker (24h price statistics)
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24-hour%20price%20changes" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetAggregatedOrderBookAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get aggregated order book
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20Aggregate%20Depth" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="limit">Book depth</param>
+            <param name="mergeDepth">0 is default precision, 1 to 5 are 10 to 100000 times precision respectively</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetLastTradeAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get the last trade
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Latest%20Transaction%20Price" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetBookPriceAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get the current best book prices
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Best%20Order%20Book" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading">
             <summary>
             BingX Spot trading endpoints, placing and managing orders.
@@ -631,6 +681,46 @@
             The default addresses to connect to the BingX.com API
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXBookTicker">
+            <summary>
+            Best book prices
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTicker.EventType">
+            <summary>
+            Event type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTicker.Timestamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTicker.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTicker.BestBidPrice">
+            <summary>
+            Best bid price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTicker.BestBidQuantity">
+            <summary>
+            Best bid quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTicker.BestAskPrice">
+            <summary>
+            Best ask price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTicker.BestAskQuantity">
+            <summary>
+            Best ask quantity
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXKline">
             <summary>
             Kline (candlestick) info
@@ -674,6 +764,41 @@
         <member name="P:BingX.Net.Objects.Models.BingXKline.QuoteVolume">
             <summary>
             Quote volume
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXLastTrade">
+            <summary>
+            Last trade info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLastTrade.Timestamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLastTrade.TradeId">
+            <summary>
+            Trade id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLastTrade.Price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLastTrade.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLastTrade.Volume">
+            <summary>
+            Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLastTrade.Type">
+            <summary>
+            Type
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXOrderBook">
@@ -784,6 +909,86 @@
         <member name="P:BingX.Net.Objects.Models.BingXSymbol.TimeOnline">
             <summary>
             Time online
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTicker">
+            <summary>
+            24 hour price statistics
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.OpenPrice">
+            <summary>
+            Open price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.HighPrice">
+            <summary>
+            High price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.LowPrice">
+            <summary>
+            Low price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.LastPrice">
+            <summary>
+            Last price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.PriceChange">
+            <summary>
+            Price change
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.PriceChangePercent">
+            <summary>
+            Price change percentage
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.Volume">
+            <summary>
+            Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.QuoteVolume">
+            <summary>
+            Quote volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.OpenTime">
+            <summary>
+            Open time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.CloseTime">
+            <summary>
+            Close time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.BestAskPrice">
+            <summary>
+            Best ask price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.BestAskQuantity">
+            <summary>
+            Best ask quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.BestBidPrice">
+            <summary>
+            Best bid price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTicker.BestBidQuantity">
+            <summary>
+            Best bid quantity
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXTickerUpdate">

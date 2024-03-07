@@ -1,5 +1,5 @@
 ﻿using CryptoExchange.Net.Converters;
-using CryptoExchange.Net.Converters.JsonNet;
+using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BingX.Net.UnitTests.TestImplementations
@@ -197,7 +198,7 @@ namespace BingX.Net.UnitTests.TestImplementations
 
         private static void CheckObject(string method, JProperty prop, object obj, Dictionary<string, List<string>> ignoreProperties)
         {
-            var resultProperties = obj.GetType().GetProperties().Select(p => (p, (JsonPropertyAttribute)p.GetCustomAttributes(typeof(JsonPropertyAttribute), true).SingleOrDefault()));
+            var resultProperties = obj.GetType().GetProperties().Select(p => (p, (JsonPropertyNameAttribute)p.GetCustomAttributes(typeof(JsonPropertyNameAttribute), true).SingleOrDefault()));
 
             // Property has a value
             var property = resultProperties.SingleOrDefault(p => p.Item2?.PropertyName == prop.Name).p;
@@ -281,8 +282,8 @@ namespace BingX.Net.UnitTests.TestImplementations
                     {
                         var resultObj = enumerator.Current;
                         var resultProps = resultObj.GetType().GetProperties().Select(p => (p, p.GetCustomAttributes(typeof(ArrayPropertyAttribute), true).Cast<ArrayPropertyAttribute>().SingleOrDefault()));
-                        var arrayConverterProperty = resultObj.GetType().GetCustomAttributes(typeof(JsonConverterAttribute), true).FirstOrDefault();
-                        var jsonConverter = (arrayConverterProperty as JsonConverterAttribute).ConverterType;
+                        var arrayConverterProperty = resultObj.GetType().GetCustomAttributes(typeof(System.Text.Json.Serialization.JsonConverterAttribute), true).FirstOrDefault();
+                        var jsonConverter = (arrayConverterProperty as System.Text.Json.Serialization.JsonConverterAttribute).ConverterType;
                         if (jsonConverter != typeof(ArrayConverter))
                             // Not array converter?
                             continue;

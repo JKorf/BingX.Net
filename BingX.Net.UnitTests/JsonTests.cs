@@ -37,7 +37,13 @@ namespace BingX.Net.UnitTests
                 c => c.SpotApi.ExchangeData, useNestedJsonPropertyForCompare: new Dictionary<string, string>
                 {
                     { "GetSymbolsAsync", "data:symbols" },
+                    { "GetAggregatedOrderBookAsync", "data" },
                     { "GetRecentTradesAsync", "data" },
+                    { "GetBookPriceAsync", "data" },
+                    { "GetKlinesAsync", "data" },
+                    { "GetLastTradeAsync", "data" },
+                    { "GetOrderBookAsync", "data" },
+                    { "GetTickersAsync", "data" },
                 });
         }
 

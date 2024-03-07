@@ -1,0 +1,19 @@
+{
+  "code": 0,
+  "timestamp": 1707147143049,
+  "data": [
+    {
+      "symbol": "BTC_USDT",
+      "trades": [
+        {
+          "timestamp": 1707147142579,
+          "tradeId": "86521463",
+          "price": "42902.61",
+          "amount": "",
+          "type": 1,
+          "volume": "0.11689"
+        }
+      ]
+    }
+  ]
+}
