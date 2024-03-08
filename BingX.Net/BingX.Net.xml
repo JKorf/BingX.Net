@@ -261,6 +261,12 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateSerializer">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAccessor">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>

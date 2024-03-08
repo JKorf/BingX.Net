@@ -44,15 +44,17 @@ namespace BingX.Net.Clients.SpotApi
             base(logger, options.Environment.SocketClientAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXPingSubscription(_logger));
-
-            _serializer = new SystemTextJsonMessageSerializer();
-            _accessor = new SystemTextJsonMessageAccessor();
         }
         #endregion 
 
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
             => new BingXAuthenticationProvider(credentials);
+
+        /// <inheritdoc />
+        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
+        /// <inheritdoc />
+        protected override IMessageAccessor CreateAccessor() => new SystemTextJsonMessageAccessor();
 
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
