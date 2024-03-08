@@ -242,6 +242,9 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetBookPriceAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetTradeHistoryAsync(System.String,System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
             <inheritdoc />
         </member>
@@ -261,7 +264,19 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXKlineUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToPartialOrderBookUpdatesAsync(System.String,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTickerUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTickerUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXPriceUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBookPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBookTickerUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(System.Net.WebSockets.WebSocketMessageType,System.IO.Stream)">
@@ -612,6 +627,17 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetTradeHistoryAsync(System.String,System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get historic trades
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20historical%20transaction%20records" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="limit">Amount or results</param>
+            <param name="fromId">Return trades after this id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading">
             <summary>
             BingX Spot trading endpoints, placing and managing orders.
@@ -624,21 +650,65 @@
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
             <summary>
-            
-            <para><a href="BingX" /></para>
+            Subscribe to live trade updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscription%20transaction%20by%20transaction" /></para>
             </summary>
+            <param name="symbol">The symbol</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXKlineUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to live kline/candlestick data updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#K-line%20Streams" /></para>
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="interval">The interval to subscribe. Currently only the 1 minute interval is supported</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToPartialOrderBookUpdatesAsync(System.String,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to live orderbook data updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20Market%20Depth%20Data" /></para>
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="depth">The depth of the orderbook, 5, 10, 20, 50 or 100</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToTickerUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTickerUpdate}},System.Threading.CancellationToken)">
             <summary>
-            
+            Subscribe to live price statistics updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%2024-hour%20Price%20Change" /></para>
             </summary>
-            <param name="symbol"></param>
-            <param name="onMessage"></param>
-            <param name="ct"></param>
-            <returns></returns>
+            <param name="symbol">The symbol</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXPriceUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to live price updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Latest%20Trade%20Price" /></para>
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToBookPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBookTickerUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to live best book price updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Best%20Order%20Book" /></para>
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
         <member name="T:BingX.Net.Interfaces.IBingXOrderBookFactory">
             <summary>
@@ -721,6 +791,36 @@
             Best ask quantity
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXBookTickerUpdate">
+            <summary>
+            Best book prices
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.BestBidPrice">
+            <summary>
+            Best bid price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.BestBidQuantity">
+            <summary>
+            Best bid quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.BestAskPrice">
+            <summary>
+            Best ask price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.BestAskQuantity">
+            <summary>
+            Best ask quantity
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXKline">
             <summary>
             Kline (candlestick) info
@@ -746,7 +846,7 @@
             Low price
             </summary>
         </member>
-        <member name="P:BingX.Net.Objects.Models.BingXKline.Close">
+        <member name="P:BingX.Net.Objects.Models.BingXKline.ClosePrice">
             <summary>
             Close price
             </summary>
@@ -764,6 +864,71 @@
         <member name="P:BingX.Net.Objects.Models.BingXKline.QuoteVolume">
             <summary>
             Quote volume
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXKlineUpdate">
+            <summary>
+            Kline (candlestick) update
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdate.Kline">
+            <summary>
+            Kline data
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdate.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXKlineUpdateData">
+            <summary>
+            Kline (candlestick) info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.OpenTime">
+            <summary>
+            Open timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.OpenPrice">
+            <summary>
+            Open price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.HighPrice">
+            <summary>
+            High price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.LowPrice">
+            <summary>
+            Low price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.ClosePrice">
+            <summary>
+            Close price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.Volume">
+            <summary>
+            Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.CloseTime">
+            <summary>
+            Close time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.QuoteVolume">
+            <summary>
+            Quote volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKlineUpdateData.TradeCount">
+            <summary>
+            Number of trades
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXLastTrade">
@@ -834,6 +999,26 @@
         <member name="P:BingX.Net.Objects.Models.BingXOrderBookEntry.Quantity">
             <summary>
             The quantity
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXPriceUpdate">
+            <summary>
+            Price update
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPriceUpdate.Event">
+            <summary>
+            Event name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPriceUpdate.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPriceUpdate.Price">
+            <summary>
+            The current last traded price
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXSocketUpdate">

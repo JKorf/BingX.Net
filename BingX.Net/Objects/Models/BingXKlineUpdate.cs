@@ -1,57 +1,74 @@
-﻿using CryptoExchange.Net.Converters;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
+    /// Kline (candlestick) update
+    /// </summary>
+    public record BingXKlineUpdate : BingXSocketUpdate
+    {
+        /// <summary>
+        /// Kline data
+        /// </summary>
+        [JsonPropertyName("K")]
+        public BingXKlineUpdateData Kline { get; set; } = null!;
+        /// <summary>
+        /// Symbol
+        /// </summary>
+        [JsonPropertyName("s")]
+        public string Symbol { get; set; } = string.Empty;
+    }
+
+    /// <summary>
     /// Kline (candlestick) info
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter))]
-    public record BingXKline
+    public record BingXKlineUpdateData
     {
         /// <summary>
         /// Open timestamp
         /// </summary>
-        [ArrayProperty(0)]
-        [JsonConverter(typeof(DateTimeConverter))]
+        [JsonPropertyName("t")]
         public DateTime OpenTime { get; set; }
         /// <summary>
         /// Open price
         /// </summary>
-        [ArrayProperty(1)]
+        [JsonPropertyName("o")]
         public decimal OpenPrice { get; set; }
         /// <summary>
         /// High price
         /// </summary>
-        [ArrayProperty(2)]
+        [JsonPropertyName("h")]
         public decimal HighPrice { get; set; }
         /// <summary>
         /// Low price
         /// </summary>
-        [ArrayProperty(3)]
+        [JsonPropertyName("l")]
         public decimal LowPrice { get; set; }
         /// <summary>
         /// Close price
         /// </summary>
-        [ArrayProperty(4)]
+        [JsonPropertyName("c")]
         public decimal ClosePrice { get; set; }
         /// <summary>
         /// Volume
         /// </summary>
-        [ArrayProperty(5)]
+        [JsonPropertyName("v")]
         public decimal Volume { get; set; }
         /// <summary>
         /// Close time
         /// </summary>
-        [ArrayProperty(6)]
-        [JsonConverter(typeof(DateTimeConverter))]
+        [JsonPropertyName("T")]
         public DateTime CloseTime { get; set; }
         /// <summary>
         /// Quote volume
         /// </summary>
-        [ArrayProperty(7)]
+        [JsonPropertyName("q")]
         public decimal QuoteVolume { get; set; }
+        /// <summary>
+        /// Number of trades
+        /// </summary>
+        [JsonPropertyName("n")]
+        public int TradeCount { get; set; }
     }
 }

@@ -12,8 +12,6 @@ using CryptoExchange.Net.Interfaces.CommonClients;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Internal;
-using CryptoExchange.Net.Converters;
-using Newtonsoft.Json;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;

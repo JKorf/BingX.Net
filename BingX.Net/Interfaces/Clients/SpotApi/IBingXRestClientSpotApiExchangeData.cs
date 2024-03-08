@@ -96,5 +96,16 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXBookTicker>> GetBookPriceAsync(string symbol, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get historic trades
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20historical%20transaction%20records" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="limit">Amount or results</param>
+        /// <param name="fromId">Return trades after this id</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXTrade>>> GetTradeHistoryAsync(string symbol, int? limit = null, string? fromId = null, CancellationToken ct = default);
     }
 }

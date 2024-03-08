@@ -3,22 +3,52 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Models;
 using BingX.Net.UnitTests.TestImplementations;
+using System.Text.Json;
+using CryptoExchange.Net.Converters.SystemTextJson;
 
 namespace BingX.Net.UnitTests
 {
     internal class JsonSocketTests
     {
         [Test]
-        public async Task ValidatBingXUpdateStreamJson()
+        public async Task ValidateTradeUpdatesStreamJson()
         {
-            //await TestFileToObject<BingXModel>(@"JsonResponses/Spot/Socket/BingXAsync.txt");
+            await TestFileToObject<BingXTradeUpdate>(@"JsonResponses/Spot/Socket/SubscribeToTradeUpdatesAsync.txt");
         }
 
+        [Test]
+        public async Task ValidateTickerUpdatesStreamJson()
+        {
+            await TestFileToObject<BingXTickerUpdate>(@"JsonResponses/Spot/Socket/SubscribeToTickerUpdatesAsync.txt");
+        }
+
+        [Test]
+        public async Task ValidateBookPriceUpdatesStreamJson()
+        {
+            await TestFileToObject<BingXBookTickerUpdate>(@"JsonResponses/Spot/Socket/SubscribeToBookPriceUpdatesAsync.txt");
+        }
+
+        [Test]
+        public async Task ValidateKlineUpdatesStreamJson()
+        {
+            await TestFileToObject<BingXKlineUpdate>(@"JsonResponses/Spot/Socket/SubscribeToKlineUpdatesAsync.txt");
+        }
+
+        [Test]
+        public async Task ValidateOrderBookUpdatesStreamJson()
+        {
+            await TestFileToObject<BingXOrderBook>(@"JsonResponses/Spot/Socket/SubscribeToPartialOrderBookUpdatesAsync.txt");
+        }
+
+        [Test]
+        public async Task ValidatePriceUpdatesStreamJson()
+        {
+            await TestFileToObject<BingXPriceUpdate>(@"JsonResponses/Spot/Socket/SubscribeToPriceUpdatesAsync.txt");
+        }
 
         private static async Task TestFileToObject<T>(string filePath, List<string> ignoreProperties = null)
         {
@@ -37,7 +67,7 @@ namespace BingX.Net.UnitTests
                 throw;
             }
 
-            var result = JsonConvert.DeserializeObject<T>(json);
+            var result = JsonSerializer.Deserialize<T>(json, SerializerOptions.WithConverters);
             JsonToObjectComparer<IBingXSocketClient>.ProcessData("", result, json, ignoreProperties: new Dictionary<string, List<string>>
             {
                 { "", ignoreProperties ?? new List<string>() }

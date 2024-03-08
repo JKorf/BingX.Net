@@ -10,7 +10,6 @@ using CryptoExchange.Net.CommonObjects;
 using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Objects;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using BingX.Net.Interfaces.Clients.FuturesApi;
 
 namespace BingX.Net.Clients.FuturesApi

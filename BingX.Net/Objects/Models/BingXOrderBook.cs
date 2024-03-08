@@ -25,7 +25,7 @@ namespace BingX.Net.Objects.Models
         /// Timestamp of the data
         /// </summary>
         [JsonPropertyName("ts")]
-        public DateTime Timestamp { get; set; }
+        public DateTime? Timestamp { get; set; }
     }
 
     /// <summary>

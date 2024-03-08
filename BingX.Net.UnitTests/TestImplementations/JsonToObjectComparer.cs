@@ -1,7 +1,6 @@
 ﻿using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Objects;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
@@ -31,7 +30,8 @@ namespace BingX.Net.UnitTests.TestImplementations
            Func<T, K> getSubject,
            string[] parametersToSetNull = null,
            Dictionary<string, string> useNestedJsonPropertyForCompare = null,
-           Dictionary<string, List<string>> ignoreProperties = null)
+           Dictionary<string, List<string>> ignoreProperties = null,
+           IEnumerable<string> useFirstItemInArray = null)
         {
             var listener = new EnumValueTraceListener();
             Trace.Listeners.Add(listener);
@@ -81,7 +81,7 @@ namespace BingX.Net.UnitTests.TestImplementations
                     Assert.Null(result.Error, method.Name);
 
                     var resultData = result.GetType().GetProperty("Data", BindingFlags.Public | BindingFlags.Instance).GetValue(result);
-                    ProcessData(method.Name + (i == 0 ? "" : i.ToString()), resultData, json, parametersToSetNull, useNestedJsonPropertyForCompare, ignoreProperties);
+                    ProcessData(method.Name + (i == 0 ? "" : i.ToString()), resultData, json, parametersToSetNull, useNestedJsonPropertyForCompare, ignoreProperties, useFirstItemInArray);
                 }
             }
 
@@ -95,9 +95,10 @@ namespace BingX.Net.UnitTests.TestImplementations
 
         internal static void ProcessData(string method, object resultData, string json, string[] parametersToSetNull = null,
            Dictionary<string, string> useNestedJsonPropertyForCompare = null,
-           Dictionary<string, List<string>> ignoreProperties = null)
+           Dictionary<string, List<string>> ignoreProperties = null,
+           IEnumerable<string> useFirstItemInArray = null)
         {
-            var resultProperties = resultData.GetType().GetProperties().Select(p => (p, (JsonPropertyAttribute)p.GetCustomAttributes(typeof(JsonPropertyAttribute), true).SingleOrDefault()));
+            var resultProperties = resultData.GetType().GetProperties().Select(p => (p, (JsonPropertyNameAttribute)p.GetCustomAttributes(typeof(JsonPropertyNameAttribute), true).SingleOrDefault()));
             var jsonObject = JToken.Parse(json);
             if (useNestedJsonPropertyForCompare?.ContainsKey(method) == true)
             {
@@ -105,10 +106,13 @@ namespace BingX.Net.UnitTests.TestImplementations
                     jsonObject = jsonObject[nested];
             }
 
+            if (jsonObject is JArray array && useFirstItemInArray.Contains(method))
+                jsonObject = array[0];
+
             if (resultData.GetType().GetInterfaces().Contains(typeof(IDictionary)))
             {
                 var dict = (IDictionary)resultData;
-                var jObj = (JObject)jsonObject;
+                var jObj = (Newtonsoft.Json.Linq.JObject)jsonObject;
                 var properties = jObj.Properties();
                 foreach (var dictProp in properties)
                 {
@@ -118,7 +122,7 @@ namespace BingX.Net.UnitTests.TestImplementations
                     if (dictProp.Value.Type == JTokenType.Object)
                     {
                         // BingX Some additional checking for objects
-                        foreach (var prop in ((JObject)dictProp.Value).Properties())
+                        foreach (var prop in ((Newtonsoft.Json.Linq.JObject)dictProp.Value).Properties())
                             CheckObject(method, prop, dict[dictProp.Name], ignoreProperties);
                     }
                     else
@@ -133,7 +137,7 @@ namespace BingX.Net.UnitTests.TestImplementations
             }
             else if (jsonObject.Type == JTokenType.Array)
             {
-                var jObjs = (JArray)jsonObject;
+                var jObjs = (Newtonsoft.Json.Linq.JArray)jsonObject;
                 var list = (IEnumerable)resultData;
                 var enumerator = list.GetEnumerator();
                 foreach (var jObj in jObjs)
@@ -141,7 +145,7 @@ namespace BingX.Net.UnitTests.TestImplementations
                     enumerator.MoveNext();
                     if (jObj.Type == JTokenType.Object)
                     {
-                        foreach (var subProp in ((JObject)jObj).Properties())
+                        foreach (var subProp in ((Newtonsoft.Json.Linq.JObject)jObj).Properties())
                         {
                             if (ignoreProperties?.ContainsKey(method) == true && ignoreProperties[method].Contains(subProp.Name))
                                 continue;
@@ -172,7 +176,7 @@ namespace BingX.Net.UnitTests.TestImplementations
                     else
                     {
                         var value = enumerator.Current;
-                        if (value == default && ((JValue)jObj).Type != JTokenType.Null)
+                        if (value == default && ((Newtonsoft.Json.Linq.JValue)jObj).Type != JTokenType.Null)
                         {
                             throw new Exception($"{method}: Array has no value while input json array has value {jObj}");
                         }
@@ -183,7 +187,7 @@ namespace BingX.Net.UnitTests.TestImplementations
             {
                 foreach (var item in jsonObject)
                 {
-                    if (item is JProperty prop)
+                    if (item is Newtonsoft.Json.Linq.JProperty prop)
                     {
                         if (ignoreProperties?.ContainsKey(method) == true && ignoreProperties[method].Contains(prop.Name))
                             continue;
@@ -196,12 +200,12 @@ namespace BingX.Net.UnitTests.TestImplementations
             Debug.WriteLine($"Successfully validated {method}");
         }
 
-        private static void CheckObject(string method, JProperty prop, object obj, Dictionary<string, List<string>> ignoreProperties)
+        private static void CheckObject(string method, Newtonsoft.Json.Linq.JProperty prop, object obj, Dictionary<string, List<string>> ignoreProperties)
         {
             var resultProperties = obj.GetType().GetProperties().Select(p => (p, (JsonPropertyNameAttribute)p.GetCustomAttributes(typeof(JsonPropertyNameAttribute), true).SingleOrDefault()));
 
             // Property has a value
-            var property = resultProperties.SingleOrDefault(p => p.Item2?.PropertyName == prop.Name).p;
+            var property = resultProperties.SingleOrDefault(p => p.Item2?.Name == prop.Name).p;
             if (property is null)
                 property = resultProperties.SingleOrDefault(p => p.p.Name == prop.Name).p;
             if (property is null)
@@ -214,8 +218,7 @@ namespace BingX.Net.UnitTests.TestImplementations
             }
 
             var propertyValue = property.GetValue(obj);
-            if (property.GetCustomAttribute<JsonPropertyAttribute>(true)?.ItemConverterType == null)
-                CheckPropertyValue(method, prop.Value, propertyValue, property.Name, prop.Name, property, ignoreProperties);
+            CheckPropertyValue(method, prop.Value, propertyValue, property.Name, prop.Name, property, ignoreProperties);
         }
 
         private static void CheckPropertyValue(string method, JToken propValue, object propertyValue, string propertyName = null, string propName = null, PropertyInfo info = null, Dictionary<string, List<string>> ignoreProperties = null)
@@ -233,7 +236,7 @@ namespace BingX.Net.UnitTests.TestImplementations
             if (propertyValue.GetType().GetInterfaces().Contains(typeof(IDictionary)))
             {
                 var dict = (IDictionary)propertyValue;
-                var jObj = (JObject)propValue;
+                var jObj = (Newtonsoft.Json.Linq.JObject)propValue;
                 var properties = jObj.Properties();
                 foreach (var dictProp in properties)
                 {
@@ -257,10 +260,10 @@ namespace BingX.Net.UnitTests.TestImplementations
             else if (propertyValue.GetType().GetInterfaces().Contains(typeof(IEnumerable))
                 && propertyValue.GetType() != typeof(string))
             {
-                var jObjs = (JArray)propValue;
+                var jObjs = (Newtonsoft.Json.Linq.JArray)propValue;
                 var list = (IEnumerable)propertyValue;
                 var enumerator = list.GetEnumerator();
-                foreach (JToken jtoken in jObjs)
+                foreach (Newtonsoft.Json.Linq.JToken jtoken in jObjs)
                 {
                     enumerator.MoveNext();
                     var typeConverter = enumerator.Current.GetType().GetCustomAttributes(typeof(JsonConverterAttribute), true);
@@ -270,7 +273,7 @@ namespace BingX.Net.UnitTests.TestImplementations
 
                     if (jtoken.Type == JTokenType.Object)
                     {
-                        foreach (var subProp in ((JObject)jtoken).Properties())
+                        foreach (var subProp in ((Newtonsoft.Json.Linq.JObject)jtoken).Properties())
                         {
                             if (ignoreProperties?.ContainsKey(method) == true && ignoreProperties[method].Contains(subProp.Name))
                                 continue;
@@ -301,12 +304,12 @@ namespace BingX.Net.UnitTests.TestImplementations
                     else
                     {
                         var value = enumerator.Current;
-                        if (value == default && ((JValue)jtoken).Type != JTokenType.Null)
+                        if (value == default && ((Newtonsoft.Json.Linq.JValue)jtoken).Type != JTokenType.Null)
                         {
                             throw new Exception($"{method}: Property `{propertyName}` has no value while input json `{propName}` has value {jtoken}");
                         }
 
-                        CheckValues(method, propertyName, (JValue)jtoken, value);
+                        CheckValues(method, propertyName, (Newtonsoft.Json.Linq.JValue)jtoken, value);
                     }
                 }
             }
@@ -316,7 +319,7 @@ namespace BingX.Net.UnitTests.TestImplementations
                 {
                     foreach (var item in propValue)
                     {
-                        if (item is JProperty prop)
+                        if (item is Newtonsoft.Json.Linq.JProperty prop)
                         {
                             if (ignoreProperties?.ContainsKey(method) == true && ignoreProperties[method].Contains(prop.Name))
                                 continue;
@@ -327,14 +330,13 @@ namespace BingX.Net.UnitTests.TestImplementations
                 }
                 else
                 {
-                    if (info.GetCustomAttribute<JsonConverterAttribute>(true) == null
-                        && info.GetCustomAttribute<JsonPropertyAttribute>(true)?.ItemConverterType == null)
-                        CheckValues(method, propertyName, (JValue)propValue, propertyValue);
+                    if (info.GetCustomAttribute<JsonConverterAttribute>(true) == null)
+                        CheckValues(method, propertyName, (Newtonsoft.Json.Linq.JValue)propValue, propertyValue);
                 }
             }
         }
 
-        private static void CheckValues(string method, string property, JValue jsonValue, object objectValue)
+        private static void CheckValues(string method, string property, Newtonsoft.Json.Linq.JValue jsonValue, object objectValue)
         {
             if (jsonValue.Type == JTokenType.String)
             {

@@ -1,15 +1,12 @@
-﻿using CryptoExchange.Net.Converters;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using Newtonsoft.Json;
+﻿using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Internal
 {
     internal class BingXServerTime
     {
-        [JsonProperty("serverTime"), JsonConverter(typeof(DateTimeConverter))]
+        [JsonPropertyName("serverTime"), JsonConverter(typeof(DateTimeConverter))]
         public DateTime ServerTime { get; set; }
     }
 }

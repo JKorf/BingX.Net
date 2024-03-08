@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Objects;
-using Newtonsoft.Json;
 using BingX.Net.Interfaces.Clients.FuturesApi;
 
 namespace BingX.Net.Clients.FuturesApi
