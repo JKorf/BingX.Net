@@ -18,8 +18,13 @@ namespace BingX.Net.Objects.Options
         public static BingXRestOptions Default { get; set; } = new BingXRestOptions()
         {
             Environment = BingXEnvironment.Live,
-            AutoTimestamp = true
+            AutoTimestamp = false
         };
+
+        /// <summary>
+        /// The receive window
+        /// </summary>
+        public TimeSpan? ReceiveWindow { get; set; }
 
         /// <summary>
         /// Spot API options
@@ -36,6 +41,7 @@ namespace BingX.Net.Objects.Options
         internal BingXRestOptions Copy()
         {
             var options = Copy<BingXRestOptions>();
+            options.ReceiveWindow = ReceiveWindow;
             options.SpotOptions = SpotOptions.Copy<RestApiOptions>();
             options.FuturesOptions = FuturesOptions.Copy<RestApiOptions>();
             return options;

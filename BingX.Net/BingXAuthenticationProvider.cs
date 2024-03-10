@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
+using BingX.Net.Objects.Options;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
@@ -25,7 +27,17 @@ namespace BingX.Net
             if (!auth)
                 return;
 
-            // BingX
+            headers.Add("X-BX-APIKEY", GetApiKey());
+            var parameters = parameterPosition == HttpMethodParameterPosition.InUri ? uriParameters : bodyParameters;
+            var timestamp = GetMillisecondTimestamp(apiClient);
+            parameters.Add("timestamp", timestamp);
+            var receiveWindow = ((BingXRestOptions)apiClient.ClientOptions).ReceiveWindow ?? TimeSpan.Zero;
+            parameters.Add("recvWindow", (int)receiveWindow.TotalMilliseconds);
+
+            uri = uri.SetParameters(uriParameters, arraySerialization);
+            var signData = parameterPosition == HttpMethodParameterPosition.InUri ? uri.Query.Replace("?", "") : parameters.ToFormData();
+            parameters.Add("signature", SignHMACSHA256(signData, SignOutputType.Hex));
+            
         }
     }
 }

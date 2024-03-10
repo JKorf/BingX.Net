@@ -15,6 +15,7 @@ using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Converters.MessageParsing;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -52,6 +53,8 @@ namespace BingX.Net.Clients.SpotApi
             Account = new BingXRestClientSpotApiAccount(this);
             ExchangeData = new BingXRestClientSpotApiExchangeData(logger, this);
             Trading = new BingXRestClientSpotApiTrading(logger, this);
+
+            ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;
         }
         #endregion
 
@@ -66,6 +69,13 @@ namespace BingX.Net.Clients.SpotApi
 
         internal Uri GetUri(string path) => new Uri(BaseAddress.AppendPath(path));
 
+        internal async Task<WebCallResult> SendRequestInternal(Uri uri, HttpMethod method, CancellationToken cancellationToken,
+            Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
+            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false)
+        {
+            return await SendRequestAsync(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, weight, ignoreRatelimit: ignoreRateLimit).ConfigureAwait(false);
+        }
+
         internal async Task<WebCallResult<T>> SendRequestInternal<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
             Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
             ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false) where T : class
@@ -78,6 +88,24 @@ namespace BingX.Net.Clients.SpotApi
                 return result.AsError<T>(new ServerError(result.Data.Code, result.Data.Message!));
 
             return result.As<T>(result.Data.Data);
+        }
+
+        internal async Task<WebCallResult<T>> SendRequestInternalRaw<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
+            Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
+            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false) where T : class
+        {
+            return await SendRequestAsync<T>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, weight, ignoreRatelimit: ignoreRateLimit).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        protected override ServerError? TryParseError(IMessageAccessor accessor)
+        {
+            var code = accessor.GetValue<int>(MessagePath.Get().Property("code"));
+            if (code == 0)
+                return null;
+
+            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
+            return new ServerError(msg!, code);
         }
 
         /// <inheritdoc />

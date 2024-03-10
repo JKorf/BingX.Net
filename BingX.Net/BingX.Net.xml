@@ -194,6 +194,9 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.TryParseError(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
@@ -210,6 +213,45 @@
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetBalancesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositHistoryAsync(System.String,System.Nullable{BingX.Net.Enums.DepositStatus},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetWithdrawalHistoryAsync(System.String,System.String,System.String,System.Nullable{BingX.Net.Enums.WithdrawalStatus},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetAssetsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.WithdrawAsync(System.String,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositAddressAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferAsync(BingX.Net.Enums.TransferType,System.String,System.Decimal,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTransfersAsync(BingX.Net.Enums.TransferType,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferInternalAsync(System.String,BingX.Net.Enums.AccountIdentifierType,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetInternalTransfersAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.StopUserStreamAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData">
@@ -293,6 +335,86 @@
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetAuthenticationRequest">
             <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Enums.AccountIdentifierType">
+            <summary>
+            Account identifier type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AccountIdentifierType.Uid">
+            <summary>
+            Unique id
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AccountIdentifierType.PhoneNumber">
+            <summary>
+            Phone number
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AccountIdentifierType.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.AccountType">
+            <summary>
+            Account type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AccountType.Funding">
+            <summary>
+            Funding account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AccountType.Standard">
+            <summary>
+            Standard account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AccountType.Perpetual">
+            <summary>
+            Perpetual account
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.DepositStatus">
+            <summary>
+            Deposit status
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.DepositStatus.InProgress">
+            <summary>
+            In progress
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.DepositStatus.ChainUploaded">
+            <summary>
+            Chain uploaded
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.DepositStatus.Completed">
+            <summary>
+            Completed
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.InternalTransferStatus">
+            <summary>
+            Internal transfer status
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.InternalTransferStatus.PendingReview">
+            <summary>
+            Pending review
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.InternalTransferStatus.Failed">
+            <summary>
+            Failed
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.InternalTransferStatus.Completed">
+            <summary>
+            Completed
+            </summary>
         </member>
         <member name="T:BingX.Net.Enums.KlineInterval">
             <summary>
@@ -397,6 +519,61 @@
         <member name="F:BingX.Net.Enums.SymbolStatus.Suspended">
             <summary>
             Trading suspended
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.TransferType">
+            <summary>
+            Transfer type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferType.FundingToStandardFutures">
+            <summary>
+            Funding Account -> Standard Contract
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferType.StandardFuturesToFunding">
+            <summary>
+            Standard Contract -> Funding Account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferType.FundingToPerpetualFutures">
+            <summary>
+            Funding Account -> Perpetual Futures
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferType.PerpetualFuturesToFunding">
+            <summary>
+            Perpetual Futures -> Funding Account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferType.StandardFuturesToPerpetualFutures">
+            <summary>
+            Standard Contract -> Perpetual Futures
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferType.PerpetualFuturesToStandardFutures">
+            <summary>
+            Perpetual Futures -> Standard Contract
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.WithdrawalStatus">
+            <summary>
+            Withdrawal status
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.WithdrawalStatus.UnderReview">
+            <summary>
+            Under review
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.WithdrawalStatus.Failed">
+            <summary>
+            Failed
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.WithdrawalStatus.Completed">
+            <summary>
+            Completed
             </summary>
         </member>
         <member name="T:BingX.Net.ExtensionMethods.BingXExtensionMethods">
@@ -543,6 +720,159 @@
             <summary>
             BingX Spot account endpoints. Account endpoints include balance info, withdraw/deposit info and requesting and account settings
             </summary>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetBalancesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get balances
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetDepositHistoryAsync(System.String,System.Nullable{BingX.Net.Enums.DepositStatus},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get deposit history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20History(supporting%20network)" /></para>
+            </summary>
+            <param name="asset"></param>
+            <param name="status"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="offset"></param>
+            <param name="limit"></param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetWithdrawalHistoryAsync(System.String,System.String,System.String,System.Nullable{BingX.Net.Enums.WithdrawalStatus},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get withdrawal history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20History%20(supporting%20network)" /></para>
+            </summary>
+            <param name="id"></param>
+            <param name="asset"></param>
+            <param name="clientOrderId"></param>
+            <param name="status"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="offset"></param>
+            <param name="limit"></param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetAssetsAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get asset info
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#All%20Coins'%20Information" /></para>
+            </summary>
+            <param name="asset"></param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.WithdrawAsync(System.String,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Withdraw funds
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw" /></para>
+            </summary>
+            <param name="asset">The asset</param>
+            <param name="address">Address to withdraw to</param>
+            <param name="quantity">Quantity</param>
+            <param name="walletType">Wallet type</param>
+            <param name="network">Network to use</param>
+            <param name="addressTag">Address tag</param>
+            <param name="clientOrderId">Client order id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetDepositAddressAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get deposit addresses
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Query%20Main%20Account%20Deposit%20Address" /></para>
+            </summary>
+            <param name="asset">The asset</param>
+            <param name="offset">Offset</param>
+            <param name="limit">Limit</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.TransferAsync(BingX.Net.Enums.TransferType,System.String,System.Decimal,System.Threading.CancellationToken)">
+            <summary>
+            Universal transfer
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#User%20Universal%20Transfer" /></para>
+            </summary>
+            <param name="tranferType">Transfer type</param>
+            <param name="asset">Asset to transfer</param>
+            <param name="quantity">Quantity to transfer</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetTransfersAsync(BingX.Net.Enums.TransferType,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get universal transfer history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20User%20Universal%20Transfer%20History%20(USER_DATA)" /></para>
+            </summary>
+            <param name="type">Transaction type</param>
+            <param name="transactionId">Filter by id</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="page">Page</param>
+            <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.TransferInternalAsync(System.String,BingX.Net.Enums.AccountIdentifierType,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Transfer internal to an account on the BingX platform
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#User%20internal%20transfer" /></para>
+            </summary>
+            <param name="asset">Asset</param>
+            <param name="targetAccountType">Target account type</param>
+            <param name="targetAccount">Target account</param>
+            <param name="quantity">Quantity</param>
+            <param name="accountType">Source account type</param>
+            <param name="areaCode">Area code for telephone, required when targetAccountType is PhoneNumber</param>
+            <param name="clientOrderId">Client order id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetInternalTransfersAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get internal transfer history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Account%20Query%20Inner%20Transfer%20Records" /></para>
+            </summary>
+            <param name="asset">Asset</param>
+            <param name="clientOrderId">Client order id</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="offset">Offset</param>
+            <param name="limit">Limit</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
+            <summary>
+            Generate a listen key used for subscribing to user data streams with the socket client
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/listenKey.html#generate%20Listen%20Key" /></para>
+            </summary>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Extend the lifetime of a listenkey with 60 minutes
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/listenKey.html#extend%20Listen%20Key%20Validity%20period" /></para>
+            </summary>
+            <param name="listenKey">Listen key</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.StopUserStreamAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Delete a listenkey and stop the user data stream
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/listenKey.html#delete%20Listen%20Key" /></para>
+            </summary>
+            <param name="listenKey">Listen key</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData">
             <summary>
@@ -757,6 +1087,121 @@
             The default addresses to connect to the BingX.com API
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXAsset">
+            <summary>
+            Asset info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXAsset.Name">
+            <summary>
+            Name 
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXAsset.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXAsset.Networks">
+            <summary>
+            Networks
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXNetwork">
+            <summary>
+            Network info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.Name">
+            <summary>
+            Network name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.Network">
+            <summary>
+            Network
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.DepositEnabled">
+            <summary>
+            Is deposit enabled
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.MinDeposit">
+            <summary>
+            Minimal deposit amount
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.MinConfirmations">
+            <summary>
+            Min amount of confirmations
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.IsDefault">
+            <summary>
+            Is default network
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.WithdrawEnabled">
+            <summary>
+            Is withdrawing enabled
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.WithdrawFee">
+            <summary>
+            Withdrawal fee
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.MinWithdraw">
+            <summary>
+            Minimal withdrawal
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.MaxWithdraw">
+            <summary>
+            Max withdrawal
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.WithdrawDescription">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.WithdrawPrecision">
+            <summary>
+            Witdraw precision
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.DepositPrecision">
+            <summary>
+            Deposit precision
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXBalance">
+            <summary>
+            Balance info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalance.Asset">
+            <summary>
+            Asset name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalance.Free">
+            <summary>
+            Free
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalance.Locked">
+            <summary>
+            Locked
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalance.Total">
+            <summary>
+            Total
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXBookTicker">
             <summary>
             Best book prices
@@ -825,6 +1270,166 @@
         <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.BestAskQuantity">
             <summary>
             Best ask quantity
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXDeposit">
+            <summary>
+            Deposit info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.Quantity">
+            <summary>
+            Quantity 
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.Network">
+            <summary>
+            Used network
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.Status">
+            <summary>
+            Current status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.Address">
+            <summary>
+            Deposit address
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.AddressTag">
+            <summary>
+            Address tag
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.SourceAddress">
+            <summary>
+            Source address
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.TransactionId">
+            <summary>
+            Transaction id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.InsertTime">
+            <summary>
+            Insert time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.UnlockConfirmations">
+            <summary>
+            Confirmed times for unlocking
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDeposit.ConfirmedTimes">
+            <summary>
+            Network confirmations
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXDepositAddresses">
+            <summary>
+            Deposit addresses
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDepositAddresses.Total">
+            <summary>
+            Total
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDepositAddresses.Data">
+            <summary>
+            Results
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXDepositAddress">
+            <summary>
+            Deposit address
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDepositAddress.AssetId">
+            <summary>
+            Asset id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDepositAddress.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDepositAddress.Network">
+            <summary>
+            Network
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDepositAddress.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXDepositAddress.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXId">
+            <summary>
+            Id result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXId.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXInternalTransfers">
+            <summary>
+            Transfers
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfers.Total">
+            <summary>
+            Total transfers
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfers.Transfers">
+            <summary>
+            Transfer list
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXInternalTransfer">
+            <summary>
+            Transfer info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.Quantity">
+            <summary>
+            Quantity transfered
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.TransactionId">
+            <summary>
+            Transaction id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.ReceiverUid">
+            <summary>
+            Receiver
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.Status">
+            <summary>
+            Status
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXKline">
@@ -1332,6 +1937,136 @@
             Whether buyer is maker
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTransactionResult">
+            <summary>
+            Transaction result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransactionResult.TransactionId">
+            <summary>
+            Transaction id
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTransfers">
+            <summary>
+            Transfers
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfers.Total">
+            <summary>
+            Total transfers
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfers.Transfers">
+            <summary>
+            Transfer list
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTransfer">
+            <summary>
+            Transfer info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfer.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfer.Quantity">
+            <summary>
+            Quantity transfered
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfer.Type">
+            <summary>
+            Transfer type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfer.TransactionId">
+            <summary>
+            Transaction id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfer.Timestamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXWithdrawal">
+            <summary>
+            Withdrawal info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Address">
+            <summary>
+            Withdrawal address
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.ApplyTime">
+            <summary>
+            Apply time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Network">
+            <summary>
+            Withdrawal network
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.transferType">
+            <summary>
+            Transfer type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Fee">
+            <summary>
+            Fee
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Confirmations">
+            <summary>
+            Confirmations
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Info">
+            <summary>
+            Extra info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.TransactionId">
+            <summary>
+            Transaction id
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXWithdrawResult">
+            <summary>
+            Withdraw result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawResult.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawResult.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Options.BingXOrderBookOptions">
             <summary>
             Options for the BingX SymbolOrderBook
@@ -1365,6 +2100,11 @@
         <member name="P:BingX.Net.Objects.Options.BingXRestOptions.Default">
             <summary>
             Default options for new clients
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Options.BingXRestOptions.ReceiveWindow">
+            <summary>
+            The receive window
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Options.BingXRestOptions.SpotOptions">

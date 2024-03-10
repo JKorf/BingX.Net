@@ -73,7 +73,12 @@ A Discord server is available [here](https://discord.gg/MSpeEtSY8t). For discuss
 ### Spot
 |API|Supported|Location|
 |--|--:|--|
-|BingX|✓|`restClient.SpotApi.Account`|
+|Market Interface|✓|`restClient.SpotApi.ExchangeData`|
+|Wallet deposits and withdrawals|✓|`restClient.SpotApi.Account`|
+|Spot account|✓|`restClient.SpotApi.Account`|
+|Trade interface|X||
+|Websocket Market Data|✓|`socketClient.SpotApi`|
+|Websocket Account Data|X||
 ### Futures
 |API|Supported|Location|
 |--|--:|--|
