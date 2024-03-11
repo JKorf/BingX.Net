@@ -105,6 +105,23 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default)
+        {
+            // TODO Doesn't work?
+            var stream = "spot.executionReport";
+            var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, stream, stream, onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(string listenKey, Action<DataEvent<BingXBalanceUpdate>> onMessage, CancellationToken ct = default)
+        {
+            var stream = "ACCOUNT_UPDATE";
+            var subscription = new BingXSubscription<BingXBalanceUpdate>(_logger, stream, stream, onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
         public override Stream PreprocessStreamMessage(WebSocketMessageType type, Stream stream)
         {
             if (type != WebSocketMessageType.Binary)

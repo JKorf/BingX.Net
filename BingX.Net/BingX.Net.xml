@@ -290,6 +290,9 @@
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi">
             <summary>
             Client providing access to the BingX spot websocket Api
@@ -325,6 +328,12 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBookPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBookTickerUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToOrderUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBalanceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(System.Net.WebSockets.WebSocketMessageType,System.IO.Stream)">
@@ -494,6 +503,91 @@
         <member name="F:BingX.Net.Enums.KlineInterval.OneMonth">
             <summary>
             One month
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.OrderSide">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderSide.Buy">
+            <summary>
+            Buy
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderSide.Sell">
+            <summary>
+            Sell
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.OrderStatus">
+            <summary>
+            Order status
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderStatus.New">
+            <summary>
+            New order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderStatus.Pending">
+            <summary>
+            Pending
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderStatus.PartiallyFilled">
+            <summary>
+            Partially filled
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderStatus.Filled">
+            <summary>
+            Filled
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderStatus.Canceled">
+            <summary>
+            Canceled
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderStatus.Failed">
+            <summary>
+            Failed
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.OrderType">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderType.Market">
+            <summary>
+            Market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderType.Limit">
+            <summary>
+            Limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderType.StopLimit">
+            <summary>
+            Stop limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderType.StopMarket">
+            <summary>
+            Stop market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderType.TriggerLimit">
+            <summary>
+            Trigger limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OrderType.TriggerMarket">
+            <summary>
+            Trigger market order
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.SymbolStatus">
@@ -979,6 +1073,22 @@
             BingX Spot trading endpoints, placing and managing orders.
             </summary>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place a new order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20Order" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="side">Order side</param>
+            <param name="type">Order type</param>
+            <param name="quantity">Order quantity</param>
+            <param name="price">Order price for limit orders</param>
+            <param name="quoteQuantity">Order quantity in quote asset</param>
+            <param name="stopPrice">Stop price</param>
+            <param name="clientOrderId">Client order id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi">
             <summary>
             BingX spot streams
@@ -1042,6 +1152,26 @@
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Best%20Order%20Book" /></para>
             </summary>
             <param name="symbol">The symbol</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToOrderUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to user order updates. Get the listenKey by calling StartUserStream on the rest client
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20order%20update%20data" /></para>
+            </summary>
+            <param name="listenKey">Listen key</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToBalanceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to user balance updates. Get the listenKey by calling StartUserStream on the rest client
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20account%20balance%20push" /></para>
+            </summary>
+            <param name="listenKey">Listen key</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -1200,6 +1330,11 @@
         <member name="P:BingX.Net.Objects.Models.BingXBalance.Total">
             <summary>
             Total
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXBalanceUpdate">
+            <summary>
+            Balance update
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXBookTicker">
@@ -1610,6 +1745,106 @@
         <member name="P:BingX.Net.Objects.Models.BingXOrderBookEntry.Quantity">
             <summary>
             The quantity
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOrderUpdate">
+            <summary>
+            Order update
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Side">
+            <summary>
+            Side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Type">
+            <summary>
+            Type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Price">
+            <summary>
+            Order price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Quantity">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.EventType">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Status">
+            <summary>
+            Order status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.LastFillQuantity">
+            <summary>
+            Quantity of the last fill for this order
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.LastFillPrice">
+            <summary>
+            Price of the last fill for this order
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.QuantityFilled">
+            <summary>
+            Quantity filled
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Fees">
+            <summary>
+            Fees
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.FeeAsset">
+            <summary>
+            Fee asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.UpdateTime">
+            <summary>
+            Update time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.CreateTime">
+            <summary>
+            Creation time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.TradeId">
+            <summary>
+            Trade id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.VolumeFilled">
+            <summary>
+            Quantity filled in quote asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.LastFillQuantity2">
+            <summary>
+            Last fill quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.QuoteOrderQuantity">
+            <summary>
+            Original quote order quantity
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXPriceUpdate">
