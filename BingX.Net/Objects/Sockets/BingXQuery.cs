@@ -16,12 +16,12 @@ namespace BingX.Net.Objects.Sockets
             ListenerIdentifiers = new HashSet<string> { request.Id };
         }
 
-        public override Task<CallResult<BingXSocketResponse>> HandleMessageAsync(SocketConnection connection, DataEvent<BingXSocketResponse> message)
+        public override CallResult<BingXSocketResponse> HandleMessage(SocketConnection connection, DataEvent<BingXSocketResponse> message)
         {
             if (message.Data.Code != 0)
-                return Task.FromResult(new CallResult<BingXSocketResponse>(new ServerError(message.Data.Code, message.Data.Message!), message.OriginalData));
+                return new CallResult<BingXSocketResponse>(new ServerError(message.Data.Code, message.Data.Message!), message.OriginalData);
 
-            return Task.FromResult(new CallResult<BingXSocketResponse>(message.Data, message.OriginalData, null));
+            return new CallResult<BingXSocketResponse>(message.Data, message.OriginalData, null);
         }
     }
 }

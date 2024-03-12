@@ -54,7 +54,7 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
         /// <inheritdoc />
-        protected override IMessageAccessor CreateAccessor() => new SystemTextJsonMessageAccessor();
+        protected override IByteMessageAccessor CreateAccessor() => new SystemTextJsonByteMessageAccessor();
 
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
@@ -122,16 +122,16 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public override Stream PreprocessStreamMessage(WebSocketMessageType type, Stream stream)
+        public override ReadOnlyMemory<byte> PreprocessStreamMessage(WebSocketMessageType type, ReadOnlyMemory<byte> data)
         {
             if (type != WebSocketMessageType.Binary)
-                return stream;
+                return data;
 
             var decompressedStream = new MemoryStream();
-            using var deflateStream = new GZipStream(stream, CompressionMode.Decompress);
+            using var deflateStream = new GZipStream(new MemoryStream(data.ToArray()), CompressionMode.Decompress);
             deflateStream.CopyTo(decompressedStream);
             decompressedStream.Position = 0;
-            return decompressedStream;
+            return new ReadOnlyMemory<byte>(decompressedStream.ToArray());
         }
 
         /// <inheritdoc />

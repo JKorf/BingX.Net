@@ -336,7 +336,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBalanceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(System.Net.WebSockets.WebSocketMessageType,System.IO.Stream)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(System.Net.WebSockets.WebSocketMessageType,System.ReadOnlyMemory{System.Byte})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
@@ -2397,7 +2397,7 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.GetUnsubQuery">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.DoHandleMessageAsync(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook">

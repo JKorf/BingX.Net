@@ -61,7 +61,7 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
         /// <inheritdoc />
-        protected override IMessageAccessor CreateAccessor() => new SystemTextJsonMessageAccessor();
+        protected override IStreamMessageAccessor CreateAccessor() => new SystemTextJsonStreamMessageAccessor();
 
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)

@@ -62,11 +62,11 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }, false);
 
         /// <inheritdoc />
-        public override Task<CallResult> DoHandleMessageAsync(SocketConnection connection, DataEvent<object> message)
+        public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
         {
             var update = (BingXUpdate<T>)message.Data;
             _handler.Invoke(message.As(update.Data!, update.DataType, SocketUpdateType.Update));
-            return Task.FromResult(new CallResult(null));
+            return new CallResult(null);
         }
     }
 }

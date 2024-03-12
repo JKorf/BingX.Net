@@ -17,10 +17,10 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
         }
 
-        public override Task<CallResult> HandleMessageAsync(SocketConnection connection, DataEvent<BingXPing> message)
+        public override CallResult HandleMessage(SocketConnection connection, DataEvent<BingXPing> message)
         {
             connection.Send(ExchangeHelpers.NextId(), new BingXPong { Pong = message.Data.Ping, Timestamp = message.Data.Timestamp }, 1);
-            return Task.FromResult(new CallResult(null));
+            return new CallResult(null);
         }
     }
 }
