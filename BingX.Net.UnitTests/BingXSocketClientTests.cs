@@ -6,6 +6,7 @@ using CryptoExchange.Net.Objects;
 using System.Diagnostics;
 using System.Reflection;
 using BingX.Net.Clients.SpotApi;
+using NUnit.Framework.Legacy;
 
 namespace BingX.Net.UnitTests
 {
@@ -25,7 +26,7 @@ namespace BingX.Net.UnitTests
                 foreach (var method in implementation.GetMethods().Where(m => m.ReturnType.IsAssignableTo(typeof(Task<CallResult<UpdateSubscription>>))))
                 {
                     var interfaceMethod = clientInterface.GetMethod(method.Name, method.GetParameters().Select(p => p.ParameterType).ToArray());
-                    Assert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.GetType().Name}");
+                    ClassicAssert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.GetType().Name}");
                     methods++;
                 }
                 Debug.WriteLine($"{clientInterface.Name} {methods} methods validated");

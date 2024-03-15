@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Diagnostics;
 using BingX.Net.Clients;
+using NUnit.Framework.Legacy;
 
 namespace BingX.Net.UnitTests
 {
@@ -25,7 +26,7 @@ namespace BingX.Net.UnitTests
                 foreach (var method in implementation.GetMethods().Where(m => m.ReturnType.IsAssignableTo(typeof(Task))))
                 {
                     var interfaceMethod = clientInterface.GetMethod(method.Name, method.GetParameters().Select(p => p.ParameterType).ToArray());
-                    Assert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.Name}");
+                    ClassicAssert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.Name}");
                     methods++;
                 }
                 Debug.WriteLine($"{clientInterface.Name} {methods} methods validated");
