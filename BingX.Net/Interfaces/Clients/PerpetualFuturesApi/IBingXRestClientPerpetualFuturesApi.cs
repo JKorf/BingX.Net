@@ -1,26 +1,26 @@
 ﻿using CryptoExchange.Net.Interfaces;
 using System;
 
-namespace BingX.Net.Interfaces.Clients.FuturesApi
+namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 {
     /// <summary>
     /// BingX futures API endpoints
     /// </summary>
-    public interface IBingXRestClientFuturesApi : IRestApiClient, IDisposable
+    public interface IBingXRestClientPerpetualFuturesApi : IRestApiClient, IDisposable
     {
         /// <summary>
         /// Endpoints related to account settings, info or actions
         /// </summary>
-        public IBingXRestClientFuturesApiAccount Account { get; }
+        public IBingXRestClientPerpetualFuturesApiAccount Account { get; }
 
         /// <summary>
         /// Endpoints related to retrieving market data
         /// </summary>
-        public IBingXRestClientFuturesApiExchangeData ExchangeData { get; }
+        public IBingXRestClientPerpetualFuturesApiExchangeData ExchangeData { get; }
 
         /// <summary>
         /// Endpoints related to orders and trades
         /// </summary>
-        public IBingXRestClientFuturesApiTrading Trading { get; }
+        public IBingXRestClientPerpetualFuturesApiTrading Trading { get; }
     }
 }

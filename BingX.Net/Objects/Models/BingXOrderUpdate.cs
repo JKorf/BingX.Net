@@ -15,6 +15,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
+        /// Client order id
+        /// </summary>
+        [JsonPropertyName("c")]
+        public string? ClientOrderId { get; set; }
+        /// <summary>
         /// Side
         /// </summary>
         [JsonPropertyName("S")]
@@ -65,10 +70,10 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("z")]
         public decimal? QuantityFilled { get; set; }
         /// <summary>
-        /// Fees
+        /// Fee paid
         /// </summary>
         [JsonPropertyName("n")]
-        public decimal? Fees { get; set; }
+        public decimal? Fee { get; set; }
         /// <summary>
         /// Fee asset
         /// </summary>

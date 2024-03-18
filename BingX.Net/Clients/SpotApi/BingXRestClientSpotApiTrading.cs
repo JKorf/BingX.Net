@@ -18,11 +18,14 @@ namespace BingX.Net.Clients.SpotApi
     {
         private readonly BingXRestClientSpotApi _baseClient;
         private readonly ILogger _logger;
+        private readonly string _brokerId;
 
         internal BingXRestClientSpotApiTrading(ILogger logger, BingXRestClientSpotApi baseClient)
         {
             _baseClient = baseClient;
             _logger = logger;
+
+            _brokerId = !string.IsNullOrEmpty(baseClient.ClientOptions.BrokerId) ? baseClient.ClientOptions.BrokerId! : "TODO";
         }
 
         #region Place Order
@@ -41,7 +44,11 @@ namespace BingX.Net.Clients.SpotApi
             parameter.AddOptional("quoteOrderQty", quoteQuantity);
             parameter.AddOptional("stopPrice", stopPrice);
             parameter.AddOptional("newClientOrderId", clientOrderId);
-            var result = await _baseClient.SendRequestInternal<BingXOrder>(_baseClient.GetUri("/openApi/spot/v1/trade/order"), HttpMethod.Post, ct, parameter, true).ConfigureAwait(false);
+            var result = await _baseClient.SendRequestInternal<BingXOrder>(_baseClient.GetUri("/openApi/spot/v1/trade/order"), HttpMethod.Post, ct, parameter, true,
+                 additionalHeaders: new Dictionary<string, string>
+                 {
+                     { "X-SOURCE-KEY", _brokerId }
+                 }).ConfigureAwait(false);
             if (result)
                 _baseClient.InvokeOrderPlaced(new OrderId { Id = result.Data.OrderId.ToString(), SourceObject = result.Data });
             return result;
@@ -59,7 +66,11 @@ namespace BingX.Net.Clients.SpotApi
                 { "data", new SystemTextJsonMessageSerializer().Serialize(orders) }
             };
 
-            var result = await _baseClient.SendRequestInternal<BingXOrderWrapper>(_baseClient.GetUri("/openApi/spot/v1/trade/batchOrders"), HttpMethod.Post, ct, parameter, true).ConfigureAwait(false);
+            var result = await _baseClient.SendRequestInternal<BingXOrderWrapper>(_baseClient.GetUri("/openApi/spot/v1/trade/batchOrders"), HttpMethod.Post, ct, parameter, true,
+                additionalHeaders: new Dictionary<string, string>
+                 {
+                     { "X-SOURCE-KEY", _brokerId }
+                 }).ConfigureAwait(false);
             return result.As<IEnumerable<BingXOrder>>(result.Data?.Orders);
         }
 

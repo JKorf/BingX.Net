@@ -16,7 +16,7 @@ namespace BingX.Net.SymbolOrderBooks
     /// Implementation for a synchronized order book. After calling Start the order book will sync itself and keep up to date with new data. It will automatically try to reconnect and resync in case of a lost/interrupted connection.
     /// Make sure to check the State property to see if the order book is synced.
     /// </summary>
-    public class BingXFuturesSymbolOrderBook : SymbolOrderBook
+    public class BingXPerpetualFuturesSymbolOrderBook : SymbolOrderBook
     {
         private readonly IBingXRestClient _restClient;
         private readonly IBingXSocketClient _socketClient;
@@ -27,7 +27,7 @@ namespace BingX.Net.SymbolOrderBooks
         /// </summary>
         /// <param name="symbol">The symbol the order book is for</param>
         /// <param name="optionsDelegate">Option configuration delegate</param>
-        public BingXFuturesSymbolOrderBook(string symbol, Action<BingXOrderBookOptions>? optionsDelegate = null)
+        public BingXPerpetualFuturesSymbolOrderBook(string symbol, Action<BingXOrderBookOptions>? optionsDelegate = null)
             : this(symbol, optionsDelegate, null, null, null)
         {
             _clientOwner = true;
@@ -42,10 +42,10 @@ namespace BingX.Net.SymbolOrderBooks
         /// <param name="restClient">Rest client instance</param>
         /// <param name="socketClient">Socket client instance</param>
         [ActivatorUtilitiesConstructor]
-        public BingXFuturesSymbolOrderBook(
+        public BingXPerpetualFuturesSymbolOrderBook(
             string symbol,
             Action<BingXOrderBookOptions>? optionsDelegate,
-            ILogger<BingXFuturesSymbolOrderBook>? logger,
+            ILogger<BingXPerpetualFuturesSymbolOrderBook>? logger,
             IBingXRestClient? restClient,
             IBingXSocketClient? socketClient) : base(logger, "BingX", symbol)
         {

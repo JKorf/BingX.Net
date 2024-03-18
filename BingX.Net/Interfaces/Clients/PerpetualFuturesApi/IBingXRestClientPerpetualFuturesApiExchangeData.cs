@@ -3,12 +3,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BingX.Net.Interfaces.Clients.FuturesApi
+namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 {
     /// <summary>
     /// BingX futures exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
     /// </summary>
-    public interface IBingXRestClientFuturesApiExchangeData
+    public interface IBingXRestClientPerpetualFuturesApiExchangeData
     {
         /// <summary>
         /// 

@@ -8,6 +8,10 @@ using Microsoft.Extensions.Logging;
 using BingX.Net.Clients;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
+using BingX.Net.Objects.Models;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System.Linq;
+using CryptoExchange.Net.Interfaces;
 
 namespace BingX.Net.SymbolOrderBooks
 {
@@ -21,7 +25,7 @@ namespace BingX.Net.SymbolOrderBooks
         private readonly IBingXRestClient _restClient;
         private readonly IBingXSocketClient _socketClient;
         private readonly TimeSpan _initialDataTimeout;
-        private readonly int? _updateInterval;
+        private bool _initial = true;
 
         /// <summary>
         /// Create a new order book instance
@@ -56,7 +60,6 @@ namespace BingX.Net.SymbolOrderBooks
 
             _strictLevels = false;
             _sequencesAreConsecutive = options?.Limit == null;
-            _updateInterval = options?.UpdateInterval;
 
             Levels = options?.Limit;
             _initialDataTimeout = options?.InitialDataTimeout ?? TimeSpan.FromSeconds(30);
@@ -68,20 +71,37 @@ namespace BingX.Net.SymbolOrderBooks
         /// <inheritdoc />
         protected override async Task<CallResult<UpdateSubscription>> DoStartAsync(CancellationToken ct)
         {
-            // BingX
-            throw new NotImplementedException();
+            var result = await _socketClient.SpotApi.SubscribeToPartialOrderBookUpdatesAsync(Symbol, Levels ?? 20, HandleOrderBookUpdate).ConfigureAwait(false);
+            if (!result)
+                return result;
+
+            if (ct.IsCancellationRequested)
+            {
+                await result.Data.CloseAsync().ConfigureAwait(false);
+                return result.AsError<UpdateSubscription>(new CancellationRequestedError());
+            }
+
+            Status = OrderBookStatus.Syncing;
+
+            var setResult = await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
+            return setResult ? result : new CallResult<UpdateSubscription>(setResult.Error!);
+        }
+
+        private void HandleOrderBookUpdate(DataEvent<BingXOrderBook> @event)
+        {
+            SetInitialOrderBook(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids.Select(b => (ISymbolOrderBookEntry)b), @event.Data.Asks.Select(b => (ISymbolOrderBookEntry)b));
         }
 
         /// <inheritdoc />
         protected override void DoReset()
         {
+            _initial = true;
         }
 
         /// <inheritdoc />
         protected override async Task<CallResult<bool>> DoResyncAsync(CancellationToken ct)
         {
-            // BingX
-            throw new NotImplementedException();
+            return await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

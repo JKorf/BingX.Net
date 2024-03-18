@@ -1,18 +1,18 @@
 ﻿using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
-using BingX.Net.Interfaces.Clients.FuturesApi;
 using BingX.Net.Objects.Options;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Converters.MessageParsing;
 using CryptoExchange.Net.Clients;
+using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 
-namespace BingX.Net.Clients.FuturesApi
+namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     /// <summary>
     /// Client providing access to the BingX futures websocket Api
     /// </summary>
-    public class BingXSocketClientFuturesApi : SocketApiClient, IBingXSocketClientFuturesApi
+    public class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
     {
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
@@ -23,7 +23,7 @@ namespace BingX.Net.Clients.FuturesApi
         /// <summary>
         /// ctor
         /// </summary>
-        internal BingXSocketClientFuturesApi(ILogger logger, BingXSocketOptions options) :
+        internal BingXSocketClientPerpetualFuturesApi(ILogger logger, BingXSocketOptions options) :
             base(logger, options.Environment.SocketClientAddress!, options, options.FuturesOptions)
         {
         }

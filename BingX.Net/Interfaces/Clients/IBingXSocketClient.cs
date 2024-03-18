@@ -1,7 +1,7 @@
 ﻿using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Interfaces;
-using BingX.Net.Interfaces.Clients.FuturesApi;
 using BingX.Net.Interfaces.Clients.SpotApi;
+using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 
 namespace BingX.Net.Interfaces.Clients
 {
@@ -15,9 +15,9 @@ namespace BingX.Net.Interfaces.Clients
         /// </summary>
         IBingXSocketClientSpotApi SpotApi { get; }
         /// <summary>
-        /// Futures streams
+        /// Perpetual Futures streams
         /// </summary>
-        IBingXSocketClientFuturesApi FuturesApi { get; }
+        IBingXSocketClientPerpetualFuturesApi PerpetualFuturesApi { get; }
 
         /// <summary>
         /// Set the API credentials for this client. All Api clients in this client will use the new credentials, regardless of earlier set options.

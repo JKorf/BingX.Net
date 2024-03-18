@@ -34,10 +34,10 @@ namespace BingX.Net.SymbolOrderBooks
 
 
         /// <inheritdoc />
-        public ISymbolOrderBook CreateFutures(string symbol, Action<BingXOrderBookOptions>? options = null)
-            => new BingXFuturesSymbolOrderBook(symbol,
+        public ISymbolOrderBook CreatePerpetualFutures(string symbol, Action<BingXOrderBookOptions>? options = null)
+            => new BingXPerpetualFuturesSymbolOrderBook(symbol,
                                              options,
-                                             _serviceProvider.GetRequiredService<ILogger<BingXFuturesSymbolOrderBook>>(),
+                                             _serviceProvider.GetRequiredService<ILogger<BingXPerpetualFuturesSymbolOrderBook>>(),
                                              _serviceProvider.GetRequiredService<IBingXRestClient>(),
                                              _serviceProvider.GetRequiredService<IBingXSocketClient>());
     }

@@ -1,5 +1,4 @@
-﻿using CryptoExchange.Net;
-using CryptoExchange.Net.Authentication;
+﻿using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Objects;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,61 +6,53 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net.CommonObjects;
-using CryptoExchange.Net.Interfaces.CommonClients;
-using BingX.Net.Interfaces.Clients.SpotApi;
+using CryptoExchange.Net;
 using BingX.Net.Objects.Options;
-using BingX.Net.Objects.Internal;
-using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.MessageParsing;
 using System.Linq;
 using System.Globalization;
+using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 
-namespace BingX.Net.Clients.SpotApi
+namespace BingX.Net.Clients.PerpetualFuturesApi
 {
-    /// <inheritdoc cref="IBingXRestClientSpotApi" />
-    public class BingXRestClientSpotApi : RestApiClient, IBingXRestClientSpotApi, ISpotClient
+    /// <inheritdoc cref="IBingXRestClientPerpetualFuturesApi" />
+    public class BingXRestClientPerpetualFuturesApi : RestApiClient, IBingXRestClientPerpetualFuturesApi
     {
         #region fields 
-        internal static TimeSyncState _timeSyncState = new TimeSyncState("Spot Api");
+        internal static TimeSyncState _timeSyncState = new TimeSyncState("Perpetual Futures Api");
         #endregion
-
-        internal new BingXRestOptions ClientOptions => (BingXRestOptions)base.ClientOptions;
 
         #region Api clients
         /// <inheritdoc />
-        public IBingXRestClientSpotApiAccount Account { get; }
+        public IBingXRestClientPerpetualFuturesApiAccount Account { get; }
         /// <inheritdoc />
-        public IBingXRestClientSpotApiExchangeData ExchangeData { get; }
+        public IBingXRestClientPerpetualFuturesApiExchangeData ExchangeData { get; }
         /// <inheritdoc />
-        public IBingXRestClientSpotApiTrading Trading { get; }
+        public IBingXRestClientPerpetualFuturesApiTrading Trading { get; }
         /// <inheritdoc />
         public string ExchangeName => "BingX";
         #endregion
 
-        /// <summary>
-        /// Event triggered when an order is placed via this client. Only available for Spot orders
-        /// </summary>
-        public event Action<OrderId>? OnOrderPlaced;
-        /// <summary>
-        /// Event triggered when an order is canceled via this client. Note that this does not trigger when using CancelAllOrdersAsync. Only available for Spot orders
-        /// </summary>
-        public event Action<OrderId>? OnOrderCanceled;
+        internal new BingXRestOptions ClientOptions => (BingXRestOptions)base.ClientOptions;
 
         #region constructor/destructor
-        internal BingXRestClientSpotApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options)
-            : base(logger, httpClient, options.Environment.RestClientAddress, options, options.SpotOptions)
+        internal BingXRestClientPerpetualFuturesApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options)
+            : base(logger, httpClient, options.Environment.RestClientAddress!, options, options.FuturesOptions)
         {
-            Account = new BingXRestClientSpotApiAccount(this);
-            ExchangeData = new BingXRestClientSpotApiExchangeData(logger, this);
-            Trading = new BingXRestClientSpotApiTrading(logger, this);
+            Account = new BingXRestClientPerpetualFuturesApiAccount(this);
+            ExchangeData = new BingXRestClientPerpetualFuturesApiExchangeData(logger, this);
+            Trading = new BingXRestClientPerpetualFuturesApiTrading(logger, this);
 
             ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;
             RequestBodyFormat = RequestBodyFormat.FormData;
         }
+
         #endregion
+
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
@@ -132,87 +123,5 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public override TimeSpan? GetTimeOffset()
             => _timeSyncState.TimeOffset;
-
-        /// <inheritdoc />
-        public ISpotClient CommonSpotClient => this;
-
-        /// <inheritdoc />
-        public string GetSymbolName(string baseAsset, string quoteAsset) =>
-            throw new NotImplementedException();
-
-        internal void InvokeOrderPlaced(OrderId id)
-        {
-            OnOrderPlaced?.Invoke(id);
-        }
-
-        internal void InvokeOrderCanceled(OrderId id)
-        {
-            OnOrderCanceled?.Invoke(id);
-        }
-
-        async Task<WebCallResult<OrderId>> ISpotClient.PlaceOrderAsync(string symbol, CommonOrderSide side, CommonOrderType type, decimal quantity, decimal? price, string? accountId, string? clientOrderId, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<Order>> IBaseRestClient.GetOrderAsync(string orderId, string? symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<UserTrade>>> IBaseRestClient.GetOrderTradesAsync(string orderId, string? symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<Order>>> IBaseRestClient.GetOpenOrdersAsync(string? symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<Order>>> IBaseRestClient.GetClosedOrdersAsync(string? symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<OrderId>> IBaseRestClient.CancelOrderAsync(string orderId, string? symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<Symbol>>> IBaseRestClient.GetSymbolsAsync(CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<Ticker>> IBaseRestClient.GetTickerAsync(string symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<Ticker>>> IBaseRestClient.GetTickersAsync(CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<Kline>>> IBaseRestClient.GetKlinesAsync(string symbol, TimeSpan timespan, DateTime? startTime, DateTime? endTime, int? limit, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<OrderBook>> IBaseRestClient.GetOrderBookAsync(string symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<Trade>>> IBaseRestClient.GetRecentTradesAsync(string symbol, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<WebCallResult<IEnumerable<Balance>>> IBaseRestClient.GetBalancesAsync(string? accountId, CancellationToken ct)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

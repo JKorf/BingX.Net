@@ -19,11 +19,6 @@ namespace BingX.Net.Objects.Options
         public int? Limit { get; set; }
 
         /// <summary>
-        /// Update interval in milliseconds, either 100 or 1000. Defaults to 1000
-        /// </summary>
-        public int? UpdateInterval { get; set; }
-
-        /// <summary>
         /// After how much time we should consider the connection dropped if no data is received for this time after the initial subscriptions
         /// </summary>
         public TimeSpan? InitialDataTimeout { get; set; }
@@ -32,7 +27,6 @@ namespace BingX.Net.Objects.Options
         {
             var result = Copy<BingXOrderBookOptions>();
             result.Limit = Limit;
-            result.UpdateInterval = UpdateInterval;
             result.InitialDataTimeout = InitialDataTimeout;
             return result;
         }

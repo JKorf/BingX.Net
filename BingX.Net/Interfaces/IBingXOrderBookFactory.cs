@@ -15,7 +15,7 @@ namespace BingX.Net.Interfaces
         /// <param name="symbol"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        ISymbolOrderBook CreateFutures(string symbol, Action<BingXOrderBookOptions>? options = null);
+        ISymbolOrderBook CreatePerpetualFutures(string symbol, Action<BingXOrderBookOptions>? options = null);
 
         /// <summary>
         /// Create a new spot local order book instance

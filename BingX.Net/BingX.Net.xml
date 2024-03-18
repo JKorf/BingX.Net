@@ -39,7 +39,7 @@
         <member name="P:BingX.Net.Clients.BingXRestClient.SpotApi">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.BingXRestClient.FuturesApi">
+        <member name="P:BingX.Net.Clients.BingXRestClient.PerpetualFuturesApi">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXRestClient.#ctor(System.Action{BingX.Net.Objects.Options.BingXRestOptions})">
@@ -71,7 +71,7 @@
         <member name="P:BingX.Net.Clients.BingXSocketClient.SpotApi">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.BingXSocketClient.FuturesApi">
+        <member name="P:BingX.Net.Clients.BingXSocketClient.PerpetualFuturesApi">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXSocketClient.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
@@ -102,62 +102,74 @@
         <member name="M:BingX.Net.Clients.BingXSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="T:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi">
-            <inheritdoc cref="T:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApi" />
+        <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi">
+            <inheritdoc cref="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi" />
         </member>
-        <member name="P:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.Account">
+        <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.Account">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.ExchangeData">
+        <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.ExchangeData">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.Trading">
+        <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.Trading">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.ExchangeName">
+        <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.ExchangeName">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateSerializer">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.GetServerTimestampAsync">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateAccessor">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.GetTimeSyncInfo">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApi.GetTimeOffset">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.TryParseError(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="T:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApiAccount">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.SortedDictionary{System.String,System.Object},System.String)">
             <inheritdoc />
         </member>
-        <member name="T:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApiExchangeData">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.GetTimeSyncInfo">
             <inheritdoc />
         </member>
-        <member name="T:BingX.Net.Clients.FuturesApi.BingXRestClientFuturesApiTrading">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.GetTimeOffset">
             <inheritdoc />
         </member>
-        <member name="T:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi">
+        <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi">
             <summary>
             Client providing access to the BingX futures websocket Api
             </summary>
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi.#ctor(Microsoft.Extensions.Logging.ILogger,BingX.Net.Objects.Options.BingXSocketOptions)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.#ctor(Microsoft.Extensions.Logging.ILogger,BingX.Net.Objects.Options.BingXSocketOptions)">
             <summary>
             ctor
             </summary>
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.FuturesApi.BingXSocketClientFuturesApi.GetAuthenticationRequest">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.GetAuthenticationRequest">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi">
@@ -727,53 +739,20 @@
             <param name="baseClient"></param>
             <returns></returns>
         </member>
-        <member name="T:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApi">
+        <member name="T:BingX.Net.ExtensionMethods.ServiceCollectionExtensions">
             <summary>
-            BingX futures API endpoints
+            Extensions for DI
             </summary>
         </member>
-        <member name="P:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApi.Account">
+        <member name="M:BingX.Net.ExtensionMethods.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXRestOptions},System.Action{BingX.Net.Objects.Options.BingXSocketOptions},System.Nullable{Microsoft.Extensions.DependencyInjection.ServiceLifetime})">
             <summary>
-            Endpoints related to account settings, info or actions
+            Add the IBingXClient and IBingXSocketClient to the sevice collection so they can be injected
             </summary>
-        </member>
-        <member name="P:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApi.ExchangeData">
-            <summary>
-            Endpoints related to retrieving market data
-            </summary>
-        </member>
-        <member name="P:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApi.Trading">
-            <summary>
-            Endpoints related to orders and trades
-            </summary>
-        </member>
-        <member name="T:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApiAccount">
-            <summary>
-            BingX futures account endpoints. Account endpoints include balance info, withdraw/deposit info and requesting and account settings
-            </summary>
-        </member>
-        <member name="T:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApiExchangeData">
-            <summary>
-            BingX futures exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
-            </summary>
-        </member>
-        <member name="M:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
-            <summary>
-            
-            <para><a href="BingX" /></para>
-            </summary>
-            <param name="ct">Cancellation token</param>
+            <param name="services">The service collection</param>
+            <param name="defaultRestOptionsDelegate">Set default options for the rest client</param>
+            <param name="defaultSocketOptionsDelegate">Set default options for the socket client</param>
+            <param name="socketClientLifeTime">The lifetime of the IBingXSocketClient for the service collection. Defaults to Singleton.</param>
             <returns></returns>
-        </member>
-        <member name="T:BingX.Net.Interfaces.Clients.FuturesApi.IBingXRestClientFuturesApiTrading">
-            <summary>
-            BingX futures trading endpoints, placing and mananging orders.
-            </summary>
-        </member>
-        <member name="T:BingX.Net.Interfaces.Clients.FuturesApi.IBingXSocketClientFuturesApi">
-            <summary>
-            BingX futures streams
-            </summary>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.IBingXRestClient">
             <summary>
@@ -785,9 +764,9 @@
             Spot API endpoints
             </summary>
         </member>
-        <member name="P:BingX.Net.Interfaces.Clients.IBingXRestClient.FuturesApi">
+        <member name="P:BingX.Net.Interfaces.Clients.IBingXRestClient.PerpetualFuturesApi">
             <summary>
-            Futures API endpoints
+            Perpetual Futures API endpoints
             </summary>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.IBingXRestClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
@@ -806,9 +785,9 @@
             Spot streams
             </summary>
         </member>
-        <member name="P:BingX.Net.Interfaces.Clients.IBingXSocketClient.FuturesApi">
+        <member name="P:BingX.Net.Interfaces.Clients.IBingXSocketClient.PerpetualFuturesApi">
             <summary>
-            Futures streams
+            Perpetual Futures streams
             </summary>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.IBingXSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
@@ -816,6 +795,54 @@
             Set the API credentials for this client. All Api clients in this client will use the new credentials, regardless of earlier set options.
             </summary>
             <param name="credentials">The credentials to set</param>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi">
+            <summary>
+            BingX futures API endpoints
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi.Account">
+            <summary>
+            Endpoints related to account settings, info or actions
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi.ExchangeData">
+            <summary>
+            Endpoints related to retrieving market data
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi.Trading">
+            <summary>
+            Endpoints related to orders and trades
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount">
+            <summary>
+            BingX futures account endpoints. Account endpoints include balance info, withdraw/deposit info and requesting and account settings
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData">
+            <summary>
+            BingX futures exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            <para><a href="BingX" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading">
+            <summary>
+            BingX futures trading endpoints, placing and mananging orders.
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi">
+            <summary>
+            BingX futures streams
+            </summary>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi">
             <summary>
@@ -1325,7 +1352,7 @@
             BingX local order book factory
             </summary>
         </member>
-        <member name="M:BingX.Net.Interfaces.IBingXOrderBookFactory.CreateFutures(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
+        <member name="M:BingX.Net.Interfaces.IBingXOrderBookFactory.CreatePerpetualFutures(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
             <summary>
             Create a new futures local order book instance
             </summary>
@@ -2071,6 +2098,11 @@
             Symbol
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Side">
             <summary>
             Side
@@ -2121,9 +2153,9 @@
             Quantity filled
             </summary>
         </member>
-        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Fees">
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.Fee">
             <summary>
-            Fees
+            Fee paid
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.FeeAsset">
@@ -2751,11 +2783,6 @@
             The top amount of results to keep in sync. If for example limit=10 is used, the order book will contain the 10 best bids and 10 best asks. Leaving this null will sync the full order book
             </summary>
         </member>
-        <member name="P:BingX.Net.Objects.Options.BingXOrderBookOptions.UpdateInterval">
-            <summary>
-            Update interval in milliseconds, either 100 or 1000. Defaults to 1000
-            </summary>
-        </member>
         <member name="P:BingX.Net.Objects.Options.BingXOrderBookOptions.InitialDataTimeout">
             <summary>
             After how much time we should consider the connection dropped if no data is received for this time after the initial subscriptions
@@ -2774,6 +2801,11 @@
         <member name="P:BingX.Net.Objects.Options.BingXRestOptions.ReceiveWindow">
             <summary>
             The receive window
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Options.BingXRestOptions.BrokerId">
+            <summary>
+            Broker id
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Options.BingXRestOptions.SpotOptions">
@@ -2834,41 +2866,6 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
             <inheritdoc />
         </member>
-        <member name="T:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook">
-            <summary>
-            Implementation for a synchronized order book. After calling Start the order book will sync itself and keep up to date with new data. It will automatically try to reconnect and resync in case of a lost/interrupted connection.
-            Make sure to check the State property to see if the order book is synced.
-            </summary>
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
-            <summary>
-            Create a new order book instance
-            </summary>
-            <param name="symbol">The symbol the order book is for</param>
-            <param name="optionsDelegate">Option configuration delegate</param>
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions},Microsoft.Extensions.Logging.ILogger{BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook},BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient)">
-            <summary>
-            Create a new order book instance
-            </summary>
-            <param name="symbol">The symbol the order book is for</param>
-            <param name="optionsDelegate">Option configuration delegate</param>
-            <param name="logger">Logger</param>
-            <param name="restClient">Rest client instance</param>
-            <param name="socketClient">Socket client instance</param>
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook.DoReset">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook.DoResyncAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXFuturesSymbolOrderBook.Dispose(System.Boolean)">
-            <inheritdoc />
-        </member>
         <member name="T:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory">
             <summary>
             BingX order book factory
@@ -2883,7 +2880,42 @@
         <member name="M:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.CreateSpot(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.CreateFutures(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.CreatePerpetualFutures(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook">
+            <summary>
+            Implementation for a synchronized order book. After calling Start the order book will sync itself and keep up to date with new data. It will automatically try to reconnect and resync in case of a lost/interrupted connection.
+            Make sure to check the State property to see if the order book is synced.
+            </summary>
+        </member>
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
+            <summary>
+            Create a new order book instance
+            </summary>
+            <param name="symbol">The symbol the order book is for</param>
+            <param name="optionsDelegate">Option configuration delegate</param>
+        </member>
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions},Microsoft.Extensions.Logging.ILogger{BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook},BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient)">
+            <summary>
+            Create a new order book instance
+            </summary>
+            <param name="symbol">The symbol the order book is for</param>
+            <param name="optionsDelegate">Option configuration delegate</param>
+            <param name="logger">Logger</param>
+            <param name="restClient">Rest client instance</param>
+            <param name="socketClient">Socket client instance</param>
+        </member>
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.DoReset">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.DoResyncAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.Dispose(System.Boolean)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook">
@@ -2920,21 +2952,6 @@
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook.Dispose(System.Boolean)">
             <inheritdoc />
-        </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions">
-            <summary>
-            Extensions for DI
-            </summary>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXRestOptions},System.Action{BingX.Net.Objects.Options.BingXSocketOptions},System.Nullable{Microsoft.Extensions.DependencyInjection.ServiceLifetime})">
-            <summary>
-            Add the IBingXClient and IBingXSocketClient to the sevice collection so they can be injected
-            </summary>
-            <param name="services">The service collection</param>
-            <param name="defaultRestOptionsDelegate">Set default options for the rest client</param>
-            <param name="defaultSocketOptionsDelegate">Set default options for the socket client</param>
-            <param name="socketClientLifeTime">The lifetime of the IBingXSocketClient for the service collection. Defaults to Singleton.</param>
-            <returns></returns>
         </member>
     </members>
 </doc>

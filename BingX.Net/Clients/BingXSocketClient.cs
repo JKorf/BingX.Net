@@ -1,13 +1,13 @@
 ﻿using CryptoExchange.Net.Authentication;
 using Microsoft.Extensions.Logging;
 using System;
-using BingX.Net.Clients.FuturesApi;
 using BingX.Net.Clients.SpotApi;
 using BingX.Net.Interfaces.Clients;
-using BingX.Net.Interfaces.Clients.FuturesApi;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Options;
 using CryptoExchange.Net.Clients;
+using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
+using BingX.Net.Clients.PerpetualFuturesApi;
 
 namespace BingX.Net.Clients
 {
@@ -23,7 +23,7 @@ namespace BingX.Net.Clients
         public IBingXSocketClientSpotApi SpotApi { get; set; }
 
         /// <inheritdoc />
-        public IBingXSocketClientFuturesApi FuturesApi { get; set; }
+        public IBingXSocketClientPerpetualFuturesApi PerpetualFuturesApi { get; set; }
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace BingX.Net.Clients
             Initialize(options);
 
             SpotApi = AddApiClient(new BingXSocketClientSpotApi(_logger, options));
-            FuturesApi = AddApiClient(new BingXSocketClientFuturesApi(_logger, options));
+            PerpetualFuturesApi = AddApiClient(new BingXSocketClientPerpetualFuturesApi(_logger, options));
         }
         #endregion
 
@@ -75,7 +75,7 @@ namespace BingX.Net.Clients
         public void SetApiCredentials(ApiCredentials credentials)
         {
             SpotApi.SetApiCredentials(credentials);
-            FuturesApi.SetApiCredentials(credentials);
+            PerpetualFuturesApi.SetApiCredentials(credentials);
         }
     }
 }

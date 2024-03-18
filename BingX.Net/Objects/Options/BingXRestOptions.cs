@@ -23,6 +23,11 @@ namespace BingX.Net.Objects.Options
         public TimeSpan? ReceiveWindow { get; set; }
 
         /// <summary>
+        /// Broker id
+        /// </summary>
+        public string? BrokerId { get; set; }
+
+        /// <summary>
         /// Spot API options
         /// </summary>
         public RestApiOptions SpotOptions { get; private set; } = new RestApiOptions
@@ -38,6 +43,7 @@ namespace BingX.Net.Objects.Options
         {
             var options = Copy<BingXRestOptions>();
             options.ReceiveWindow = ReceiveWindow;
+            options.BrokerId = BrokerId;
             options.SpotOptions = SpotOptions.Copy<RestApiOptions>();
             options.FuturesOptions = FuturesOptions.Copy<RestApiOptions>();
             return options;
