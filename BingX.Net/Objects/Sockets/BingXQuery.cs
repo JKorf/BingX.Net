@@ -2,8 +2,6 @@
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using BingX.Net.Objects.Models;
 
 namespace BingX.Net.Objects.Sockets
 {

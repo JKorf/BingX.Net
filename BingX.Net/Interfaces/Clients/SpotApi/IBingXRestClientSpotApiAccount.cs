@@ -165,5 +165,14 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult> StopUserStreamAsync(string listenKey, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get trading fees for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Trading%20Commission%20Rate" /></para>
+        /// </summary>
+        /// <param name="symbol">The symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default);
     }
 }

@@ -197,6 +197,9 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.TryParseError(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.SortedDictionary{System.String,System.Object},System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
@@ -254,6 +257,9 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.StopUserStreamAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTradingFeesAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData">
             <inheritdoc />
         </member>
@@ -291,6 +297,33 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceMultipleOrdersAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXPlaceOrderRequest},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelAllOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi">
@@ -968,6 +1001,15 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetTradingFeesAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get trading fees for a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Trading%20Commission%20Rate" /></para>
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData">
             <summary>
             BingX Spot exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
@@ -1086,6 +1128,108 @@
             <param name="quoteQuantity">Order quantity in quote asset</param>
             <param name="stopPrice">Stop price</param>
             <param name="clientOrderId">Client order id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceMultipleOrdersAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXPlaceOrderRequest},System.Threading.CancellationToken)">
+            <summary>
+            Place multiple orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Batch%20Placing%20Orders" /></para>
+            </summary>
+            <param name="orders">Orders to place</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Cancel an active order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20an%20Order" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="orderId">Order id, either this or clientOrderId should be provided</param>
+            <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Cancel multiple active orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20a%20Batch%20of%20Orders" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="orderIds">The order ids to cancel</param>
+            <param name="clientOrderIds">The client order ids to cancel</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelAllOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Cancel all active orders on a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20orders%20by%20symbol" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20orders%20in%20countdown" /></para>
+            </summary>
+            <param name="activate">True to activate the trigger, false to disable the trigger</param>
+            <param name="cancelAfterSeconds">Seconds after which to cancel all orders, between 10 and 120</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get an order by orderId or clientOrderId
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Orders" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="orderId">Order id, either this or clientOrderId should be provided</param>
+            <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get open orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Open%20Orders" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get order history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20History" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol</param>
+            <param name="orderId">Filter by order id</param>
+            <param name="status">Filter by status</param>
+            <param name="type">Filter by type</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="page">Page</param>
+            <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get user trade history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details." /></para>
+            </summary>
+            <param name="symbol">Filter by symbol</param>
+            <param name="orderId">Filter by order id</param>
+            <param name="status">Filter by status</param>
+            <param name="type">Filter by type</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="fromId">Return trades after this id</param>
+            <param name="limit">Max amount of results</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1407,6 +1551,26 @@
             Best ask quantity
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXCancelAfterResult">
+            <summary>
+            Cancel after timeout setting result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXCancelAfterResult.TriggerTime">
+            <summary>
+            Trigger time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXCancelAfterResult.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXCancelAfterResult.Note">
+            <summary>
+            Note
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXDeposit">
             <summary>
             Deposit info
@@ -1712,6 +1876,71 @@
             Type
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOrder">
+            <summary>
+            Order info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.Timestamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.Price">
+            <summary>
+            Order price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.StopPrice">
+            <summary>
+            Stop price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.Quantity">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.QuantityFilled">
+            <summary>
+            Quantity filled
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.ValueFilled">
+            <summary>
+            Total value filled (price * quantity)
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.Status">
+            <summary>
+            Order status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.Type">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.Side">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrder.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXOrderBook">
             <summary>
             Order book info
@@ -1745,6 +1974,91 @@
         <member name="P:BingX.Net.Objects.Models.BingXOrderBookEntry.Quantity">
             <summary>
             The quantity
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOrderDetails">
+            <summary>
+            Order info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.Price">
+            <summary>
+            Order price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.StopPrice">
+            <summary>
+            Stop price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.Quantity">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.QuantityFilled">
+            <summary>
+            Quantity filled
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.ValueFilled">
+            <summary>
+            Total value filled (price * quantity)
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.Status">
+            <summary>
+            Order status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.Type">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.Side">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.CreateTime">
+            <summary>
+            Creation timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.UpdateTime">
+            <summary>
+            Update timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.QuoteQuantity">
+            <summary>
+            Original quote order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.Fee">
+            <summary>
+            Fee paid
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.FeeAsset">
+            <summary>
+            The fee asset
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXOrderUpdate">
@@ -1845,6 +2159,51 @@
         <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.QuoteOrderQuantity">
             <summary>
             Original quote order quantity
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXPlaceOrderRequest">
+            <summary>
+            Order to place
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.Side">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.Type">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.StopPrice">
+            <summary>
+            Stop price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.QuoteOrderQuantity">
+            <summary>
+            Quantity in quote asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.Price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.ClientOrderId">
+            <summary>
+            Client order id
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXPriceUpdate">
@@ -2172,6 +2531,21 @@
             Whether buyer is maker
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTradingFees">
+            <summary>
+            Trading fee info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingFees.TakerFeeRate">
+            <summary>
+            Taker fee rate
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingFees.MakerFeeRate">
+            <summary>
+            Maker fee rate
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXTransactionResult">
             <summary>
             Transaction result
@@ -2225,6 +2599,66 @@
         <member name="P:BingX.Net.Objects.Models.BingXTransfer.Timestamp">
             <summary>
             Timestamp
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXUserTrade">
+            <summary>
+            User trade info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.Price">
+            <summary>
+            Trade price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.Quantity">
+            <summary>
+            Quantity traded
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.Value">
+            <summary>
+            Value traded in quote asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.Fee">
+            <summary>
+            Fee paid
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.FeeAsset">
+            <summary>
+            Fee asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.Timestamp">
+            <summary>
+            Trade time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.IsBuyer">
+            <summary>
+            Is buyer
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserTrade.IsMaker">
+            <summary>
+            Is maker
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXWithdrawal">

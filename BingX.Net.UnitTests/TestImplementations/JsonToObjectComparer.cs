@@ -107,7 +107,7 @@ namespace BingX.Net.UnitTests.TestImplementations
                     jsonObject = jsonObject[nested];
             }
 
-            if (jsonObject is JArray array && useFirstItemInArray.Contains(method))
+            if (jsonObject is JArray array && useFirstItemInArray?.Contains(method) == true)
                 jsonObject = array[0];
 
             if (resultData.GetType().GetInterfaces().Contains(typeof(IDictionary)))

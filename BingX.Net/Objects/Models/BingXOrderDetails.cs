@@ -5,16 +5,16 @@ using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
-    internal record BingXOrderWrapper
+    internal record BingXOrderDetailsWrapper
     {
         [JsonPropertyName("orders")]
-        public IEnumerable<BingXOrder> Orders { get; set; } = Array.Empty<BingXOrder>();
+        public IEnumerable<BingXOrderDetails> Orders { get; set; } = Array.Empty<BingXOrderDetails>();
     }
 
     /// <summary>
     /// Order info
     /// </summary>
-    public record BingXOrder
+    public record BingXOrderDetails
     {
         /// <summary>
         /// Symbol
@@ -26,11 +26,6 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
-        /// <summary>
-        /// Timestamp
-        /// </summary>
-        [JsonPropertyName("transactTime")]
-        public DateTime Timestamp { get; set; }
         /// <summary>
         /// Order price
         /// </summary>
@@ -76,5 +71,30 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("clientOrderID")]
         public string? ClientOrderId { get; set; }
+        /// <summary>
+        /// Creation timestamp
+        /// </summary>
+        [JsonPropertyName("time")]
+        public DateTime CreateTime { get; set; }
+        /// <summary>
+        /// Update timestamp
+        /// </summary>
+        [JsonPropertyName("updateTime")]
+        public DateTime? UpdateTime { get; set; }
+        /// <summary>
+        /// Original quote order quantity
+        /// </summary>
+        [JsonPropertyName("origQuoteOrderQty")]
+        public decimal? QuoteQuantity { get; set; }
+        /// <summary>
+        /// Fee paid
+        /// </summary>
+        [JsonPropertyName("fee")]
+        public decimal Fee { get; set; }
+        /// <summary>
+        /// The fee asset
+        /// </summary>
+        [JsonPropertyName("feeAsset")]
+        public string? FeeAsset { get; set; } = string.Empty;
     }
 }

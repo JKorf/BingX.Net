@@ -16,6 +16,8 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Converters.MessageParsing;
+using System.Linq;
+using System.Globalization;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -55,6 +57,7 @@ namespace BingX.Net.Clients.SpotApi
             Trading = new BingXRestClientSpotApiTrading(logger, this);
 
             ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;
+            RequestBodyFormat = RequestBodyFormat.FormData;
         }
         #endregion
 
@@ -105,7 +108,15 @@ namespace BingX.Net.Clients.SpotApi
                 return null;
 
             var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
-            return new ServerError(msg!, code);
+            return new ServerError(code, msg!);
+        }
+
+        /// <inheritdoc />
+        protected override void WriteParamBody(IRequest request, SortedDictionary<string, object> parameters, string contentType)
+        {
+            // Write the parameters as form data in the body
+            var stringData = string.Join("&", parameters.Select(p => p.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", p.Value)));
+            request.SetContent(stringData, contentType);
         }
 
         /// <inheritdoc />

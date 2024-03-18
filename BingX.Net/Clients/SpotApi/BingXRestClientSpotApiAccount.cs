@@ -3,12 +3,10 @@ using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
 using CryptoExchange.Net.Objects;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net.NetworkInformation;
 using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Clients.SpotApi
@@ -133,7 +131,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         #endregion
-
+        
         #region Get Transfers
 
         /// <inheritdoc />
@@ -225,6 +223,20 @@ namespace BingX.Net.Clients.SpotApi
                 { "listenKey", listenKey }
             };
             return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Delete, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Trading Fees
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection()
+            {
+                { "symbol", symbol }
+            };
+            return await _baseClient.SendRequestInternal<BingXTradingFees>(_baseClient.GetUri("/openApi/spot/v1/user/commissionRate"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
         }
 
         #endregion

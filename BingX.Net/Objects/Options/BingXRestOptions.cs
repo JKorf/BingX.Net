@@ -1,9 +1,5 @@
-﻿using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Options;
+﻿using CryptoExchange.Net.Objects.Options;
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
 
 namespace BingX.Net.Objects.Options
 {

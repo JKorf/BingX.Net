@@ -5,9 +5,6 @@ using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Interfaces;
 

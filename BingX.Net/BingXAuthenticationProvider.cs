@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Net.Http;
-using System.Text;
 using BingX.Net.Objects.Options;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Converters.SystemTextJson;
 
 namespace BingX.Net
 {
@@ -29,15 +31,14 @@ namespace BingX.Net
 
             headers.Add("X-BX-APIKEY", GetApiKey());
             var parameters = parameterPosition == HttpMethodParameterPosition.InUri ? uriParameters : bodyParameters;
-            var timestamp = GetMillisecondTimestamp(apiClient);
+            var timestamp = DateTimeConverter.ConvertToMilliseconds(GetTimestamp(apiClient)).Value;
             parameters.Add("timestamp", timestamp);
-            var receiveWindow = ((BingXRestOptions)apiClient.ClientOptions).ReceiveWindow ?? TimeSpan.Zero;
+            var receiveWindow = ((BingXRestOptions)apiClient.ClientOptions).ReceiveWindow ?? TimeSpan.FromSeconds(5);
             parameters.Add("recvWindow", (int)receiveWindow.TotalMilliseconds);
 
             uri = uri.SetParameters(uriParameters, arraySerialization);
-            var signData = parameterPosition == HttpMethodParameterPosition.InUri ? uri.Query.Replace("?", "") : parameters.ToFormData();
+            var signData = parameterPosition == HttpMethodParameterPosition.InUri ? uri.Query.Replace("?", "") : string.Join("&", parameters.Select(p => p.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", p.Value)));
             parameters.Add("signature", SignHMACSHA256(signData, SignOutputType.Hex));
-            
         }
     }
 }
