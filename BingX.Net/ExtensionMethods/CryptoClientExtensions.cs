@@ -2,7 +2,7 @@
 using BingX.Net.Clients;
 using BingX.Net.Interfaces.Clients;
 
-namespace BingX.Net.ExtensionMethods
+namespace CryptoExchange.Net.Interfaces
 {
     /// <summary>
     /// Extensions for the ICryptoRestClient and ICryptoSocketClient interfaces

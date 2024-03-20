@@ -216,6 +216,18 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetPositionsAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi">
             <summary>
             Client providing access to the BingX futures websocket Api
@@ -256,7 +268,7 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToBookPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBookTickerUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToUserDataUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToUserDataUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesAccountUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesOrderUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.PreprocessStreamMessage(System.Net.WebSockets.WebSocketMessageType,System.ReadOnlyMemory{System.Byte})">
@@ -546,6 +558,61 @@
             Completed
             </summary>
         </member>
+        <member name="T:BingX.Net.Enums.FuturesOrderType">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.Market">
+            <summary>
+            Market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.Limit">
+            <summary>
+            Limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.TakeProfitMarket">
+            <summary>
+            Take profit market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.StopMarket">
+            <summary>
+            Stop market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.StopLimit">
+            <summary>
+            Stop limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.TakeProfitLimit">
+            <summary>
+            Take profit limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.TriggerLimit">
+            <summary>
+            Stop Limit Order with Trigger
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.TriggerMarket">
+            <summary>
+            Stop Market Order with Trigger
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.TrailingStopMarket">
+            <summary>
+            Trailing stop market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.FuturesOrderType.TrailingTpSl">
+            <summary>
+            Trailing TakeProfit or StopLoss
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.IncomeType">
             <summary>
             Income type
@@ -811,6 +878,11 @@
             Short position
             </summary>
         </member>
+        <member name="F:BingX.Net.Enums.PositionSide.Both">
+            <summary>
+            Both
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.SymbolStatus">
             <summary>
             Status of a symbol
@@ -834,6 +906,51 @@
         <member name="F:BingX.Net.Enums.SymbolStatus.Suspended">
             <summary>
             Trading suspended
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.TakeProfitStopLossMode">
+            <summary>
+            Take Profit / Stop Loss mode
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TakeProfitStopLossMode.StopMarket">
+            <summary>
+            Stop loss market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TakeProfitStopLossMode.Stop">
+            <summary>
+            Stop loss limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TakeProfitStopLossMode.TakeProfitMarket">
+            <summary>
+            Take profit market order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TakeProfitStopLossMode.TakeProfit">
+            <summary>
+            Take profit limit order
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.TimeInForce">
+            <summary>
+            Time in force
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TimeInForce.GoodTillCanceled">
+            <summary>
+            Good till canceled
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TimeInForce.ImmediateOrCancel">
+            <summary>
+            At least partially fill the order upon placement or cancel
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TimeInForce.FillOrKill">
+            <summary>
+            Fill the order upon placement or cancel
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.TransferType">
@@ -871,6 +988,26 @@
             Perpetual Futures -> Standard Contract
             </summary>
         </member>
+        <member name="T:BingX.Net.Enums.TriggerType">
+            <summary>
+            Trigger price type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TriggerType.MarkPrice">
+            <summary>
+            Mark price
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TriggerType.LastPrice">
+            <summary>
+            Last price
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TriggerType.IndexPrice">
+            <summary>
+            Index price
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.WithdrawalStatus">
             <summary>
             Withdrawal status
@@ -895,40 +1032,6 @@
             <summary>
             Extension methods specific to using the BingX API
             </summary>
-        </member>
-        <member name="T:BingX.Net.ExtensionMethods.CryptoClientExtensions">
-            <summary>
-            Extensions for the ICryptoRestClient and ICryptoSocketClient interfaces
-            </summary>
-        </member>
-        <member name="M:BingX.Net.ExtensionMethods.CryptoClientExtensions.BingX(CryptoExchange.Net.Interfaces.ICryptoRestClient)">
-            <summary>
-            Get the BingX REST Api client
-            </summary>
-            <param name="baseClient"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BingX.Net.ExtensionMethods.CryptoClientExtensions.BingX(CryptoExchange.Net.Interfaces.ICryptoSocketClient)">
-            <summary>
-            Get the BingX Websocket Api client
-            </summary>
-            <param name="baseClient"></param>
-            <returns></returns>
-        </member>
-        <member name="T:BingX.Net.ExtensionMethods.ServiceCollectionExtensions">
-            <summary>
-            Extensions for DI
-            </summary>
-        </member>
-        <member name="M:BingX.Net.ExtensionMethods.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXRestOptions},System.Action{BingX.Net.Objects.Options.BingXSocketOptions},System.Nullable{Microsoft.Extensions.DependencyInjection.ServiceLifetime})">
-            <summary>
-            Add the IBingXClient and IBingXSocketClient to the sevice collection so they can be injected
-            </summary>
-            <param name="services">The service collection</param>
-            <param name="defaultRestOptionsDelegate">Set default options for the rest client</param>
-            <param name="defaultSocketOptionsDelegate">Set default options for the socket client</param>
-            <param name="socketClientLifeTime">The lifetime of the IBingXSocketClient for the service collection. Defaults to Singleton.</param>
-            <returns></returns>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.IBingXRestClient">
             <summary>
@@ -1201,6 +1304,88 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place a new test order. Order won't actually get placed
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="side">Order side</param>
+            <param name="type">Order type</param>
+            <param name="quantity">Quantity</param>
+            <param name="price">Limit price</param>
+            <param name="positionSide">Position side</param>
+            <param name="reduceOnly">Reduce only</param>
+            <param name="stopPrice">Stop price</param>
+            <param name="priceRate">Trailing percentage (between 0 and 1)</param>
+            <param name="stopLossType">Stop loss type</param>
+            <param name="stopLossStopPrice">Stop loss trigger price</param>
+            <param name="stopLossPrice">Stop loss order price</param>
+            <param name="stopLossTriggerType">Stop loss trigger price type</param>
+            <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
+            <param name="takeProfitType">Take profit type</param>
+            <param name="takeProfitStopPrice">Take profit trigger price</param>
+            <param name="takeProfitPrice">Take profit order price</param>
+            <param name="takeProfitTriggerType">Take profit trigger price type</param>
+            <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
+            <param name="timeInForce">Time in force</param>
+            <param name="closePosition">Close the position</param>
+            <param name="triggerPrice">Trigger price</param>
+            <param name="stopGuaranteed">Stop guaranteed</param>
+            <param name="clientOrderId">Client order id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place a new order
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="side">Order side</param>
+            <param name="type">Order type</param>
+            <param name="quantity">Quantity</param>
+            <param name="price">Limit price</param>
+            <param name="positionSide">Position side</param>
+            <param name="reduceOnly">Reduce only</param>
+            <param name="stopPrice">Stop price</param>
+            <param name="priceRate">Trailing percentage (between 0 and 1)</param>
+            <param name="stopLossType">Stop loss type</param>
+            <param name="stopLossStopPrice">Stop loss trigger price</param>
+            <param name="stopLossPrice">Stop loss order price</param>
+            <param name="stopLossTriggerType">Stop loss trigger price type</param>
+            <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
+            <param name="takeProfitType">Take profit type</param>
+            <param name="takeProfitStopPrice">Take profit trigger price</param>
+            <param name="takeProfitPrice">Take profit order price</param>
+            <param name="takeProfitTriggerType">Take profit trigger price type</param>
+            <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
+            <param name="timeInForce">Time in force</param>
+            <param name="closePosition">Close the position</param>
+            <param name="triggerPrice">Trigger price</param>
+            <param name="stopGuaranteed">Stop guaranteed</param>
+            <param name="clientOrderId">Client order id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get an order
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
+            <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Cancel an order
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
+            <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi">
             <summary>
             BingX futures streams
@@ -1276,6 +1461,19 @@
             </summary>
             <param name="symbol">The symbol</param>
             <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToUserDataUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesAccountUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesOrderUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}},System.Threading.CancellationToken)">
+            <summary>
+            Listen to user data update events. Get the listenKey by calling StartUserStream on the rest client
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /></para>
+            </summary>
+            <param name="listenKey">Listen key</param>
+            <param name="onAccountUpdate">Event handler for balance and position updates</param>
+            <param name="onOrderUpdate">Event handler for order updates</param>
+            <param name="onConfigurationUpdate">Event handler for account configuration updates</param>
+            <param name="onListenKeyExpiredUpdate">Event handler for listenkey expired event</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
@@ -2353,6 +2551,101 @@
             Frozen margin
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesAccountUpdate">
+            <summary>
+            Account update
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesAccountUpdate.Update">
+            <summary>
+            Account change info
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesAccountChange">
+            <summary>
+            Account change info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesAccountChange.Trigger">
+            <summary>
+            Event trigger reason
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesAccountChange.Balances">
+            <summary>
+            Balance changes
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesAccountChange.Positions">
+            <summary>
+            Position changes
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesBalanceChange">
+            <summary>
+            Balance change info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesBalanceChange.Asset">
+            <summary>
+            Asset name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesBalanceChange.Balance">
+            <summary>
+            Wallet balance
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesBalanceChange.BalanceExIsolatedMargin">
+            <summary>
+            Balance excluding isolated margin
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesBalanceChange.BalanceChange">
+            <summary>
+            Balance change
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesPositionChange">
+            <summary>
+            Position change info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.Size">
+            <summary>
+            Position size
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.EntryPrice">
+            <summary>
+            Entry price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.UnrealizedPnl">
+            <summary>
+            Unrealized profit and loss
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.MarginMode">
+            <summary>
+            Margin mode
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.PositionMargin">
+            <summary>
+            Position margin (isolated position)
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.Side">
+            <summary>
+            Position side
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesBookTicker">
             <summary>
             Best offer info
@@ -2491,6 +2784,151 @@
         <member name="P:BingX.Net.Objects.Models.BingXFuturesMarkPriceKline.CloseTime">
             <summary>
             Close time
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesOrder">
+            <summary>
+            Order info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.Type">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.Side">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.TriggerType">
+            <summary>
+            Price trigger type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.StopGuaranteed">
+            <summary>
+            Stop guaranteed
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesOrderUpdate">
+            <summary>
+            Order update
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.Side">
+            <summary>
+            Side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.Type">
+            <summary>
+            Type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.Price">
+            <summary>
+            Order price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.Quantity">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.EventType">
+            <summary>
+            Order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.Status">
+            <summary>
+            Order status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.QuantityFilled">
+            <summary>
+            Quantity filled
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.Fee">
+            <summary>
+            Fee paid
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.FeeAsset">
+            <summary>
+            Fee asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.UpdateTime">
+            <summary>
+            Update time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.VolumeFilled">
+            <summary>
+            Quantity filled in quote asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.TriggerPrice">
+            <summary>
+            Trigger price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.TriggerType">
+            <summary>
+            Trigger type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.AveragePrice">
+            <summary>
+            Average order price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.PositionSide">
+            <summary>
+            Trigger type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.ProfitAndLoss">
+            <summary>
+            Profit and loss of the transaction
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesTicker">
@@ -4102,12 +4540,11 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}})">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesAccountUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesOrderUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}})">
             <summary>
             ctor
             </summary>
             <param name="logger"></param>
-            <param name="topics"></param>
             <param name="orderHandler"></param>
             <param name="configHandler"></param>
             <param name="accountHandler"></param>
@@ -4208,6 +4645,40 @@
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook.Dispose(System.Boolean)">
             <inheritdoc />
+        </member>
+        <member name="T:CryptoExchange.Net.Interfaces.CryptoClientExtensions">
+            <summary>
+            Extensions for the ICryptoRestClient and ICryptoSocketClient interfaces
+            </summary>
+        </member>
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.BingX(CryptoExchange.Net.Interfaces.ICryptoRestClient)">
+            <summary>
+            Get the BingX REST Api client
+            </summary>
+            <param name="baseClient"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CryptoExchange.Net.Interfaces.CryptoClientExtensions.BingX(CryptoExchange.Net.Interfaces.ICryptoSocketClient)">
+            <summary>
+            Get the BingX Websocket Api client
+            </summary>
+            <param name="baseClient"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions">
+            <summary>
+            Extensions for DI
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXRestOptions},System.Action{BingX.Net.Objects.Options.BingXSocketOptions},System.Nullable{Microsoft.Extensions.DependencyInjection.ServiceLifetime})">
+            <summary>
+            Add the IBingXClient and IBingXSocketClient to the sevice collection so they can be injected
+            </summary>
+            <param name="services">The service collection</param>
+            <param name="defaultRestOptionsDelegate">Set default options for the rest client</param>
+            <param name="defaultSocketOptionsDelegate">Set default options for the socket client</param>
+            <param name="socketClientLifeTime">The lifetime of the IBingXSocketClient for the service collection. Defaults to Singleton.</param>
+            <returns></returns>
         </member>
     </members>
 </doc>

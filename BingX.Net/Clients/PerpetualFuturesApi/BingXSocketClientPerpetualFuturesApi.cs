@@ -116,12 +116,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
             string listenKey, 
             Action<DataEvent<BingXFuturesAccountUpdate>> onAccountUpdate,
-            //Action<DataEvent<BingXOrderUpdate>> onOrderUpdate,
+            Action<DataEvent<BingXFuturesOrderUpdate>> onOrderUpdate,
             Action<DataEvent<BingXConfigUpdate>> onConfigurationUpdate,
             Action<DataEvent<BingXListenKeyExpiredUpdate>> onListenKeyExpiredUpdate,
             CancellationToken ct = default)
         {
-            var subscription = new BingXUserDataSubscription(_logger, onAccountUpdate,/*  onOrderUpdate,*/ onConfigurationUpdate, onListenKeyExpiredUpdate);
+            var subscription = new BingXUserDataSubscription(_logger, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
         }
 
@@ -131,11 +131,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (type != WebSocketMessageType.Binary)
                 return data;
 
-            var decompressedStream = new MemoryStream();
+            using var decompressedStream = new MemoryStream();
             using var deflateStream = new GZipStream(new MemoryStream(data.ToArray()), CompressionMode.Decompress);
             deflateStream.CopyTo(decompressedStream);
-            decompressedStream.Position = 0;
-            return new ReadOnlyMemory<byte>(decompressedStream.ToArray());
+            return new ReadOnlyMemory<byte>(decompressedStream.GetBuffer(), 0, (int)decompressedStream.Length);
         }
 
         /// <inheritdoc />

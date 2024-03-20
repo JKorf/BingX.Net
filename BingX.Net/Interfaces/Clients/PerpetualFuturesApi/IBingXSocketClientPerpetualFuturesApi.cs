@@ -89,10 +89,21 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default);
 
+        /// <summary>
+        /// Listen to user data update events. Get the listenKey by calling StartUserStream on the rest client
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /></para>
+        /// </summary>
+        /// <param name="listenKey">Listen key</param>
+        /// <param name="onAccountUpdate">Event handler for balance and position updates</param>
+        /// <param name="onOrderUpdate">Event handler for order updates</param>
+        /// <param name="onConfigurationUpdate">Event handler for account configuration updates</param>
+        /// <param name="onListenKeyExpiredUpdate">Event handler for listenkey expired event</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
             string listenKey,
-            //Action<DataEvent<BingXOrderUpdate>> onBalanceUpdate,
-            //Action<DataEvent<BingXOrderUpdate>> onOrderUpdate,
+            Action<DataEvent<BingXFuturesAccountUpdate>> onAccountUpdate,
+            Action<DataEvent<BingXFuturesOrderUpdate>> onOrderUpdate,
             Action<DataEvent<BingXConfigUpdate>> onConfigurationUpdate,
             Action<DataEvent<BingXListenKeyExpiredUpdate>> onListenKeyExpiredUpdate,
             CancellationToken ct = default);

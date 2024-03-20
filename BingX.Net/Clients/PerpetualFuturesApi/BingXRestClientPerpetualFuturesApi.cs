@@ -16,6 +16,7 @@ using CryptoExchange.Net.Converters.MessageParsing;
 using System.Linq;
 using System.Globalization;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
+using System.Data;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -107,9 +108,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         protected override void WriteParamBody(IRequest request, SortedDictionary<string, object> parameters, string contentType)
         {
-            // Write the parameters as form data in the body
-            var stringData = string.Join("&", parameters.Select(p => p.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", p.Value)));
-            request.SetContent(stringData, contentType);
+            //if (request.Uri.ToString().EndsWith("trade/order/test"))
+            //{
+            //    // Write the parameters as json in the body
+            //    request.SetContent(stringData, contentType);
+            //}
+            //else
+            //{
+                // Write the parameters as form data in the body
+                var stringData = string.Join("&", parameters.Select(p => p.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", p.Value)));
+                request.SetContent(stringData, contentType);
+            //}
         }
 
         /// <inheritdoc />

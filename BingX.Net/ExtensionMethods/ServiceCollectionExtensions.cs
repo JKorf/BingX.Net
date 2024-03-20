@@ -8,9 +8,8 @@ using BingX.Net.Interfaces;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
 using BingX.Net.SymbolOrderBooks;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace BingX.Net.ExtensionMethods
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Extensions for DI

@@ -11,6 +11,6 @@ namespace BingX.Net.Objects.Models
         /// Transaction id
         /// </summary>
         [JsonPropertyName("tranId")]
-        public string TransactionId { get; set; } = string.Empty;
+        public long TransactionId { get; set; }
     }
 }

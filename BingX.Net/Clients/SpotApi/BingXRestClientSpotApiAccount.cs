@@ -123,11 +123,14 @@ namespace BingX.Net.Clients.SpotApi
         {
             var parameters = new ParameterCollection()
             {
-                { "coin", asset },
+                { "asset", asset },
                 { "amount", quantity }
             };
             parameters.AddEnum("type", tranferType);
-            return await _baseClient.SendRequestInternal<BingXTransactionResult>(_baseClient.GetUri("/openApi/api/v3/post/asset/transfer"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+            var result = await _baseClient.SendRequestInternalRaw<BingXTransactionResult>(_baseClient.GetUri("/openApi/api/v3/post/asset/transfer"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+            if (result.Data == null)
+                return result.AsError<BingXTransactionResult>(new ServerError("Transfer failed"));
+            return result;
         }
 
         #endregion

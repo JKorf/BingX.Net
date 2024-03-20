@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
+using BingX.Net.Enums;
 
 namespace BingX.Net.Objects.Models
 {
@@ -73,6 +73,40 @@ namespace BingX.Net.Objects.Models
     /// </summary>
     public record BingXFuturesPositionChange
     {
-
+        /// <summary>
+        /// Symbol
+        /// </summary>
+        [JsonPropertyName("s")]
+        public string Symbol { get; set; } = string.Empty;
+        /// <summary>
+        /// Position size
+        /// </summary>
+        [JsonPropertyName("pa")]
+        public decimal Size { get; set; }
+        /// <summary>
+        /// Entry price
+        /// </summary>
+        [JsonPropertyName("ep")]
+        public decimal EntryPrice { get; set; }
+        /// <summary>
+        /// Unrealized profit and loss
+        /// </summary>
+        [JsonPropertyName("up")]
+        public decimal UnrealizedPnl { get; set; }
+        /// <summary>
+        /// Margin mode
+        /// </summary>
+        [JsonPropertyName("mt")]
+        public MarginMode MarginMode { get; set; }
+        /// <summary>
+        /// Position margin (isolated position)
+        /// </summary>
+        [JsonPropertyName("iw")]
+        public decimal? PositionMargin { get; set; }
+        /// <summary>
+        /// Position side
+        /// </summary>
+        [JsonPropertyName("ps")]
+        public PositionSide Side { get; set; }
     }
 }

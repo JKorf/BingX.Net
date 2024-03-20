@@ -19,7 +19,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public override HashSet<string> ListenerIdentifiers { get; set; }
 
-        //private readonly Action<DataEvent<BinanceFuturesStreamOrderUpdate>>? _orderHandler;
+        private readonly Action<DataEvent<BingXFuturesOrderUpdate>>? _orderHandler;
         private readonly Action<DataEvent<BingXConfigUpdate>>? _configHandler;
         private readonly Action<DataEvent<BingXFuturesAccountUpdate>>? _accountHandler;
         private readonly Action<DataEvent<BingXListenKeyExpiredUpdate>>? _listenkeyHandler;
@@ -32,8 +32,8 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                 return typeof(BingXConfigUpdate);
             if (identifier == "ACCOUNT_UPDATE")
                 return typeof(BingXFuturesAccountUpdate);
-            //if (identifier == "ORDER_TRADE_UPDATE")
-            //    return typeof(BinanceFuturesStreamOrderUpdate);
+            if (identifier == "ORDER_TRADE_UPDATE")
+                return typeof(BingXFuturesOrderUpdate);
             if (identifier == "listenKeyExpired")
                 return typeof(BingXListenKeyExpiredUpdate);
 
@@ -51,13 +51,13 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public BingXUserDataSubscription(
             ILogger logger,
             Action<DataEvent<BingXFuturesAccountUpdate>>? accountHandler,
-            //Action<DataEvent<BinanceFuturesStreamOrderUpdate>>? orderHandler,
+            Action<DataEvent<BingXFuturesOrderUpdate>>? orderHandler,
             Action<DataEvent<BingXConfigUpdate>>? configHandler,
             Action<DataEvent<BingXListenKeyExpiredUpdate>>? listenkeyHandler) : base(logger, false)
         {
-            //_orderHandler = orderHandler;
+            _orderHandler = orderHandler;
             _configHandler = configHandler;
-            //_accountHandler = accountHandler;
+            _accountHandler = accountHandler;
             _listenkeyHandler = listenkeyHandler;
             HandleUpdatesBeforeConfirmation = true;
             ListenerIdentifiers = new HashSet<string>
@@ -86,13 +86,11 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             {
                 _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Update.Trigger, SocketUpdateType.Update));
             }
-            //else if (message.Data is BinanceFuturesStreamOrderUpdate orderUpdate)
-            //{
-            //    orderUpdate.Data.ListenKey = orderUpdate.Stream;
-            //    _orderHandler?.Invoke(message.As(orderUpdate.Data, orderUpdate.Stream, SocketUpdateType.Update));
-            //}
-            //else
-            if (message.Data is BingXListenKeyExpiredUpdate listenKeyUpdate)
+            else if (message.Data is BingXFuturesOrderUpdate orderUpdate)
+            {
+                _orderHandler?.Invoke(message.As(orderUpdate, orderUpdate.Symbol, SocketUpdateType.Update));
+            }
+            else if (message.Data is BingXListenKeyExpiredUpdate listenKeyUpdate)
             {
                 _listenkeyHandler?.Invoke(message.As(listenKeyUpdate!, listenKeyUpdate!.ListenKey, SocketUpdateType.Update));
             }

@@ -16,6 +16,11 @@ namespace BingX.Net.Enums
         /// Short position
         /// </summary>
         [Map("SHORT")]
-        Short
+        Short,
+        /// <summary>
+        /// Both
+        /// </summary>
+        [Map("BOTH")]
+        Both
     }
 }
