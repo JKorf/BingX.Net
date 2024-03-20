@@ -67,9 +67,9 @@ namespace BingX.Net.UnitTests.TestImplementations
             BingXSocketClient client;
             client = options != null ? new BingXSocketClient(options) : new BingXSocketClient();
             client.SpotApi.SocketFactory = Mock.Of<IWebsocketFactory>();
-            client.FuturesApi.SocketFactory = Mock.Of<IWebsocketFactory>();
+            client.PerpetualFuturesApi.SocketFactory = Mock.Of<IWebsocketFactory>();
             Mock.Get(client.SpotApi.SocketFactory).Setup(f => f.CreateWebsocket(It.IsAny<ILogger>(), It.IsAny<WebSocketParameters>())).Returns(socket);
-            Mock.Get(client.FuturesApi.SocketFactory).Setup(f => f.CreateWebsocket(It.IsAny<ILogger>(), It.IsAny<WebSocketParameters>())).Returns(socket);
+            Mock.Get(client.PerpetualFuturesApi.SocketFactory).Setup(f => f.CreateWebsocket(It.IsAny<ILogger>(), It.IsAny<WebSocketParameters>())).Returns(socket);
             return client;
         }
 
@@ -78,7 +78,7 @@ namespace BingX.Net.UnitTests.TestImplementations
             IBingXRestClient client;
             client = options != null ? new BingXRestClient(options) : new BingXRestClient();
             client.SpotApi.RequestFactory = Mock.Of<IRequestFactory>();
-            client.FuturesApi.RequestFactory = Mock.Of<IRequestFactory>();
+            client.PerpetualFuturesApi.RequestFactory = Mock.Of<IRequestFactory>();
             return client;
         }
 
@@ -116,7 +116,7 @@ namespace BingX.Net.UnitTests.TestImplementations
             factory.Setup(c => c.Create(It.IsAny<HttpMethod>(), It.IsAny<Uri>(), It.IsAny<int>()))
                 .Returns(request.Object);
 
-            factory = Mock.Get(client.FuturesApi.RequestFactory);
+            factory = Mock.Get(client.PerpetualFuturesApi.RequestFactory);
             factory.Setup(c => c.Create(It.IsAny<HttpMethod>(), It.IsAny<Uri>(), It.IsAny<int>()))
                 .Returns(request.Object);
         }
@@ -141,7 +141,7 @@ namespace BingX.Net.UnitTests.TestImplementations
             factory.Setup(c => c.Create(It.IsAny<HttpMethod>(), It.IsAny<Uri>(), It.IsAny<int>()))
                 .Returns(request.Object);
 
-            factory = Mock.Get(client.FuturesApi.RequestFactory);
+            factory = Mock.Get(client.PerpetualFuturesApi.RequestFactory);
             factory.Setup(c => c.Create(It.IsAny<HttpMethod>(), It.IsAny<Uri>(), It.IsAny<int>()))
                 .Returns(request.Object);
         }

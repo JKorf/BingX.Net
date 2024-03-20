@@ -14,18 +14,25 @@ namespace BingX.Net
         public string RestClientAddress { get; }
 
         /// <summary>
-        /// Socket API address
+        /// Socket Spot API address
         /// </summary>
-        public string SocketClientAddress { get; }
+        public string SocketClientSpotAddress { get; }
+
+        /// <summary>
+        /// Socket Swap API address
+        /// </summary>
+        public string SocketClientSwapAddress { get; }
 
         internal BingXEnvironment(
             string name,
             string restAddress,
-            string streamAddress) :
+            string streamSpotAddress,
+            string streamSwapAddress) :
             base(name)
         {
             RestClientAddress = restAddress;
-            SocketClientAddress = streamAddress;
+            SocketClientSpotAddress = streamSpotAddress;
+            SocketClientSwapAddress = streamSwapAddress;
         }
 
         /// <summary>
@@ -34,19 +41,22 @@ namespace BingX.Net
         public static BingXEnvironment Live { get; }
             = new BingXEnvironment(TradeEnvironmentNames.Live,
                                      BingXApiAddresses.Default.RestClientAddress,
-                                     BingXApiAddresses.Default.SocketClientAddress);
+                                     BingXApiAddresses.Default.SocketClientSpotAddress,
+                                     BingXApiAddresses.Default.SocketClientSwapAddress);
 
         /// <summary>
         /// Create a custom environment
         /// </summary>
         /// <param name="name"></param>
         /// <param name="spotRestAddress"></param>
-        /// <param name="spotSocketStreamsAddress"></param>
+        /// <param name="spotSocketAddress"></param>
+        /// <param name="swapSocketAddress"></param>
         /// <returns></returns>
         public static BingXEnvironment CreateCustom(
                         string name,
                         string spotRestAddress,
-                        string spotSocketStreamsAddress)
-            => new BingXEnvironment(name, spotRestAddress, spotSocketStreamsAddress);
+                        string spotSocketAddress,
+                        string swapSocketAddress)
+            => new BingXEnvironment(name, spotRestAddress, spotSocketAddress, swapSocketAddress);
     }
 }

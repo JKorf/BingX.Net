@@ -10,9 +10,13 @@
         /// </summary>
         public string RestClientAddress { get; set; } = "";
         /// <summary>
-        /// The address used by the BingXSocketClient for the websocket API
+        /// The address used by the BingXSocketClient for the Spot websocket API
         /// </summary>
-        public string SocketClientAddress { get; set; } = "";
+        public string SocketClientSpotAddress { get; set; } = "";
+        /// <summary>
+        /// The address used by the BingXSocketClient for the Swap websocket API
+        /// </summary>
+        public string SocketClientSwapAddress { get; set; } = "";
 
         /// <summary>
         /// The default addresses to connect to the BingX.com API
@@ -20,7 +24,8 @@
         public static BingXApiAddresses Default = new BingXApiAddresses
         {
             RestClientAddress = "https://open-api.bingx.com",
-            SocketClientAddress = "wss://open-api-ws.bingx.com"
+            SocketClientSpotAddress = "wss://open-api-ws.bingx.com",
+            SocketClientSwapAddress = "wss://open-api-swap.bingx.com"
         };
     }
 }

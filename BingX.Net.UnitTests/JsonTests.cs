@@ -73,7 +73,13 @@ namespace BingX.Net.UnitTests
         {
             await _comparer.ProcessSubject(
                 "Futures/Account",
-                c => c.FuturesApi.Account);
+                c => c.PerpetualFuturesApi.Account,
+                 useNestedJsonPropertyForCompare: new Dictionary<string, string>
+                {
+                    { "GetBalancesAsync", "data:balance" },
+                    { "GetIncomesAsync", "data" },
+                    { "GetTradingFeesAsync", "data:commission" },
+                 });
         }
 
         [Test]
@@ -81,7 +87,10 @@ namespace BingX.Net.UnitTests
         {
             await _comparer.ProcessSubject(
                 "Futures/ExchangeData",
-                c => c.FuturesApi.ExchangeData);
+                c => c.PerpetualFuturesApi.ExchangeData,
+                 useNestedJsonPropertyForCompare: new Dictionary<string, string>
+                {
+                 });
         }
 
         [Test]
@@ -89,7 +98,11 @@ namespace BingX.Net.UnitTests
         {
             await _comparer.ProcessSubject(
                 "Futures/Trading",
-                c => c.FuturesApi.Trading);
+                c => c.PerpetualFuturesApi.Trading,
+                 useNestedJsonPropertyForCompare: new Dictionary<string, string>
+                {
+                    { "GetPositionsAsync", "data" },
+                 });
         }
     }
 }

@@ -27,6 +27,12 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("ts")]
         public DateTime? Timestamp { get; set; }
+
+        /// <summary>
+        /// Futures timestamp
+        /// </summary>
+        [JsonPropertyName("T")]
+        public DateTime? T { set => Timestamp = value; }
     }
 
     /// <summary>

@@ -41,7 +41,7 @@ namespace BingX.Net.Clients.SpotApi
         /// ctor
         /// </summary>
         internal BingXSocketClientSpotApi(ILogger logger, BingXSocketOptions options) :
-            base(logger, options.Environment.SocketClientAddress!, options, options.FuturesOptions)
+            base(logger, options.Environment.SocketClientSpotAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXPingSubscription(_logger));
         }
@@ -107,7 +107,6 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default)
         {
-            // TODO Doesn't work?
             var stream = "spot.executionReport";
             var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, stream, stream, onMessage, false);
             return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
@@ -127,11 +126,10 @@ namespace BingX.Net.Clients.SpotApi
             if (type != WebSocketMessageType.Binary)
                 return data;
 
-            var decompressedStream = new MemoryStream();
+            using var decompressedStream = new MemoryStream();
             using var deflateStream = new GZipStream(new MemoryStream(data.ToArray()), CompressionMode.Decompress);
             deflateStream.CopyTo(decompressedStream);
-            decompressedStream.Position = 0;
-            return new ReadOnlyMemory<byte>(decompressedStream.ToArray());
+            return new ReadOnlyMemory<byte>(decompressedStream.GetBuffer(), 0, (int)decompressedStream.Length);
         }
 
         /// <inheritdoc />
