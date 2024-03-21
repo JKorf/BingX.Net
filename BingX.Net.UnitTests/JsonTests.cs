@@ -104,11 +104,15 @@ namespace BingX.Net.UnitTests
                     { "GetPositionsAsync", "data" },
                     { "PlaceOrderAsync", "data:order" },
                     { "GetOrderAsync", "data:order" },
+                    { "GetUserTradesAsync", "data:fill_orders" },
+                    { "GetLiquidationOrdersAsync", "data:orders" },
                  },
                  ignoreProperties: new Dictionary<string, List<string>>
                  {
                      { "PlaceOrderAsync", new List<string> { "takeProfit", "stopLoss" } }, // Just returns the input
-                     { "GetOrderAsync", new List<string> { "advanceAttr", "triggerOrderId", "onlyOnePosition", "stopLossEntrustPrice" , "takeProfitEntrustPrice", "positionID", "orderType" } } // Not described in API documentation, not clear what they mean
+                     { "GetOrderAsync", new List<string> { "advanceAttr", "triggerOrderId", "onlyOnePosition", "stopLossEntrustPrice" , "takeProfitEntrustPrice", "positionID", "orderType" } }, // Not described in API documentation, not clear what they mean
+                     { "GetLiquidationOrdersAsync", new List<string> { "advanceAttr", "triggerOrderId", "onlyOnePosition", "stopLossEntrustPrice", "takeProfitEntrustPrice", "positionID", "orderType" } }, // Not described in API documentation, not clear what they mean
+                     { "GetUserTradesAsync", new List<string> { "filledTime" } }, // Just returns the input
                  });
         }
     }

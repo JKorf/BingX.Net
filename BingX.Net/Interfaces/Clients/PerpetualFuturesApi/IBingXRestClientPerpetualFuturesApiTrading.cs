@@ -191,5 +191,42 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get liquidation order history
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20Force%20Orders" /></para>
+        /// </summary>
+        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="closeType">Filter by close type</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="limit">Max results</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get closed orders
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+        /// </summary>
+        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="orderId">Filter by order id</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="limit">Max results</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetClosedOrderAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get user trade history
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+        /// </summary>
+        /// <param name="orderId">Filter by order id</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default);
     }
 }

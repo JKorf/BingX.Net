@@ -107,5 +107,35 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <returns></returns>
         Task<WebCallResult<BingXLeverageResult>> SetLeverageAsync(string symbol, PositionSide side, int leverage, CancellationToken ct = default);
 
+        /// <summary>
+        /// Adjust isolated margin for a position
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="quantity">Quantity to adjust with</param>
+        /// <param name="direction">Direction</param>
+        /// <param name="side">Position side</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXIsolatedMarginResult>> AdjustIsolatedMarginAsync(string symbol, decimal quantity, AdjustDirection direction, PositionSide side, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get current position mode
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Get%20Position%20Mode" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXPositionMode>> GetPositionModeAsync(string symbol, CancellationToken ct = default);
+
+        /// <summary>
+        /// Set position mode
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="positionMode">Position mode</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(string symbol, PositionMode positionMode, CancellationToken ct = default);
     }
 }

@@ -180,6 +180,15 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.SetLeverageAsync(System.String,BingX.Net.Enums.PositionSide,System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.AdjustIsolatedMarginAsync(System.String,System.Decimal,BingX.Net.Enums.AdjustDirection,BingX.Net.Enums.PositionSide,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetPositionModeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.SetPositionModeAsync(System.String,BingX.Net.Enums.PositionMode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData">
             <inheritdoc />
         </member>
@@ -247,6 +256,15 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetLiquidationOrdersAsync(System.String,System.Nullable{BingX.Net.Enums.AutoCloseType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetClosedOrderAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi">
@@ -557,6 +575,36 @@
         <member name="F:BingX.Net.Enums.AccountType.Perpetual">
             <summary>
             Perpetual account
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.AdjustDirection">
+            <summary>
+            Direction to adjust in
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AdjustDirection.Increase">
+            <summary>
+            Increase
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AdjustDirection.Decrease">
+            <summary>
+            Decrease
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.AutoCloseType">
+            <summary>
+            Auto closed order type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AutoCloseType.Liquidation">
+            <summary>
+            Liquidation
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.AutoCloseType.Adl">
+            <summary>
+            Adl
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.DepositStatus">
@@ -882,6 +930,21 @@
         <member name="F:BingX.Net.Enums.OrderType.TriggerMarket">
             <summary>
             Trigger market order
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.PositionMode">
+            <summary>
+            Position mode
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.PositionMode.DualPositionMode">
+            <summary>
+            Dual position mode
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.PositionMode.SinglePositionMode">
+            <summary>
+            Single position mode
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.PositionSide">
@@ -1215,6 +1278,37 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.AdjustIsolatedMarginAsync(System.String,System.Decimal,BingX.Net.Enums.AdjustDirection,BingX.Net.Enums.PositionSide,System.Threading.CancellationToken)">
+            <summary>
+            Adjust isolated margin for a position
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="quantity">Quantity to adjust with</param>
+            <param name="direction">Direction</param>
+            <param name="side">Position side</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetPositionModeAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get current position mode
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Get%20Position%20Mode" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.SetPositionModeAsync(System.String,BingX.Net.Enums.PositionMode,System.Threading.CancellationToken)">
+            <summary>
+            Set position mode
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /></para>
+            </summary>
+            <param name="symbol">Symbol</param>
+            <param name="positionMode">Position mode</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData">
             <summary>
             BingX futures exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
@@ -1474,6 +1568,43 @@
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20all%20current%20pending%20orders" /></para>
             </summary>
             <param name="symbol">Filter by symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetLiquidationOrdersAsync(System.String,System.Nullable{BingX.Net.Enums.AutoCloseType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get liquidation order history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20Force%20Orders" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol</param>
+            <param name="closeType">Filter by close type</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="limit">Max results</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetClosedOrderAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get closed orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol</param>
+            <param name="orderId">Filter by order id</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="limit">Max results</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Get user trade history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+            </summary>
+            <param name="orderId">Filter by order id</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -3537,6 +3668,66 @@
             Maker fee rate
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesUserTrade">
+            <summary>
+            User trade info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Price">
+            <summary>
+            Trade price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Value">
+            <summary>
+            Value traded
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Fee">
+            <summary>
+            Fee paid
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Timestamp">
+            <summary>
+            Trade time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.LiquidatedPrice">
+            <summary>
+            Liquidation price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.LiquidatedMarginRatio">
+            <summary>
+            Liquidation margin ratio
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXId">
             <summary>
             Id result
@@ -3635,6 +3826,21 @@
         <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.Status">
             <summary>
             Status
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXIsolatedMarginResult">
+            <summary>
+            Set isolated margin result 
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIsolatedMarginResult.Quantity">
+            <summary>
+            Adjusted quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIsolatedMarginResult.Direction">
+            <summary>
+            Direction
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXKline">
@@ -4305,6 +4511,16 @@
         <member name="P:BingX.Net.Objects.Models.BingXPosition.LiquidationPrice">
             <summary>
             Liquidation price
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXPositionMode">
+            <summary>
+            Position mode
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionMode.PositionMode">
+            <summary>
+            Position mode
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXPriceUpdate">

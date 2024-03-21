@@ -162,5 +162,52 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
+        #region Set Isolated Margin
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXIsolatedMarginResult>> AdjustIsolatedMarginAsync(string symbol, decimal quantity, AdjustDirection direction, PositionSide side, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol },
+                { "amount", quantity }
+            };
+            parameters.AddEnum("type", direction);
+            parameters.AddEnum("positionSide", side);
+            return await _baseClient.SendRequestInternal<BingXIsolatedMarginResult>(_baseClient.GetUri("/openApi/swap/v2/trade/positionMargin"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Position Mode
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXPositionMode>> GetPositionModeAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol }
+            };
+            return await _baseClient.SendRequestInternal<BingXPositionMode>(_baseClient.GetUri("/openApi/swap/v1/positionSide/dual"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Set Margin Mode
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(string symbol, PositionMode positionMode, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol }
+            };
+            parameters.AddEnum("dualSidePosition", positionMode);
+            return await _baseClient.SendRequestInternal<BingXPositionMode>(_baseClient.GetUri("/openApi/swap/v1/positionSide/dual"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
     }
 }

@@ -25,7 +25,7 @@ namespace BingX.Net.Clients.SpotApi
             _baseClient = baseClient;
             _logger = logger;
 
-            _brokerId = !string.IsNullOrEmpty(baseClient.ClientOptions.BrokerId) ? baseClient.ClientOptions.BrokerId! : "TODO";
+            _brokerId = !string.IsNullOrEmpty(baseClient.ClientOptions.BrokerId) ? baseClient.ClientOptions.BrokerId! : "easytrading";
         }
 
         #region Place Order

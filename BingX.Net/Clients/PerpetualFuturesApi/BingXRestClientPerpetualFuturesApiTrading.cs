@@ -9,6 +9,7 @@ using System.Threading;
 using System.Net.Http;
 using System.Security.Cryptography;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -22,7 +23,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         {
             _baseClient = baseClient;
 
-            _brokerId = !string.IsNullOrEmpty(baseClient.ClientOptions.BrokerId) ? baseClient.ClientOptions.BrokerId! : "TODO";
+            _brokerId = !string.IsNullOrEmpty(baseClient.ClientOptions.BrokerId) ? baseClient.ClientOptions.BrokerId! : "easytrading";
         }
 
         #region Get Positions
@@ -270,6 +271,55 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptional("symbol", symbol);
             var result = await _baseClient.SendRequestInternal<BingXFuturesOrdersDetailsWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/openOrders"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
             return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+        }
+
+        #endregion
+
+        #region Get Liquidation Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            parameters.AddOptionalEnum("autoCloseType", closeType);
+            parameters.AddOptionalMilliseconds("startTime", startTime);
+            parameters.AddOptionalMilliseconds("endTime", endTime);
+            parameters.AddOptional("limit", limit);
+            var result = await _baseClient.SendRequestInternal<BingXFuturesOrdersDetailsWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/forceOrders"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+        }
+
+        #endregion
+
+        #region Get Closed Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetClosedOrderAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            parameters.AddOptional("orderId", orderId);
+            parameters.AddOptionalMilliseconds("startTime", startTime);
+            parameters.AddOptionalMilliseconds("endTime", endTime);
+            parameters.AddOptional("limit", limit);
+            var result = await _baseClient.SendRequestInternal<BingXFuturesOrdersDetailsWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/allOrders"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+        }
+
+        #endregion
+
+        #region Get User Trades
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("orderId", orderId);
+            parameters.AddOptionalMilliseconds("startTs", startTime);
+            parameters.AddOptionalMilliseconds("endTs", endTime);
+            var result = await _baseClient.SendRequestInternal<BingXFuturesUserTradeWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/allFillOrders"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXFuturesUserTrade>>(result.Data?.Trades);
         }
 
         #endregion
