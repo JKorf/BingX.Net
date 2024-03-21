@@ -19,6 +19,7 @@ using CryptoExchange.Net.Converters.MessageParsing;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Enums;
+using System.Runtime.InteropServices;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -126,10 +127,7 @@ namespace BingX.Net.Clients.SpotApi
             if (type != WebSocketMessageType.Binary)
                 return data;
 
-            using var decompressedStream = new MemoryStream();
-            using var deflateStream = new GZipStream(new MemoryStream(data.ToArray()), CompressionMode.Decompress);
-            deflateStream.CopyTo(decompressedStream);
-            return new ReadOnlyMemory<byte>(decompressedStream.GetBuffer(), 0, (int)decompressedStream.Length);
+            return data.DecompressGzip();
         }
 
         /// <inheritdoc />

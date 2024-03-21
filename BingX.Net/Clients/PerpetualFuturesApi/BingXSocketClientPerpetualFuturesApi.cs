@@ -20,6 +20,7 @@ using System.IO.Compression;
 using System.IO;
 using System.Net.WebSockets;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -131,10 +132,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (type != WebSocketMessageType.Binary)
                 return data;
 
-            using var decompressedStream = new MemoryStream();
-            using var deflateStream = new GZipStream(new MemoryStream(data.ToArray()), CompressionMode.Decompress);
-            deflateStream.CopyTo(decompressedStream);
-            return new ReadOnlyMemory<byte>(decompressedStream.GetBuffer(), 0, (int)decompressedStream.Length);
+            return data.DecompressGzip();
         }
 
         /// <inheritdoc />

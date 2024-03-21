@@ -3827,6 +3827,21 @@
             Max short position leverage
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXLeverageResult">
+            <summary>
+            Set leverage result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate">
             <summary>
             Listenkey has expired
