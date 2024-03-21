@@ -15,7 +15,7 @@ namespace BingX.Net.Enums
         /// <summary>
         /// Cross margin mode
         /// </summary>
-        [Map("cross")]
+        [Map("CROSSED", "cross")]
         Cross
     }
 }

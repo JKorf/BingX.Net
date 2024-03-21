@@ -104,5 +104,63 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
+        #region Get Margin Mode
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXMarginMode>> GetMarginModeAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol }
+            };
+            return await _baseClient.SendRequestInternal<BingXMarginMode>(_baseClient.GetUri("/openApi/swap/v2/trade/marginType"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Set Margin Mode
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXMarginMode>> SetMarginModeAsync(string symbol, MarginMode marginMode, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol }
+            };
+            parameters.AddEnum("marginType", marginMode);
+            return await _baseClient.SendRequestInternal<BingXMarginMode>(_baseClient.GetUri("/openApi/swap/v2/trade/marginType"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Leverage
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXLeverage>> GetLeverageAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol }
+            };
+            return await _baseClient.SendRequestInternal<BingXLeverage>(_baseClient.GetUri("/openApi/swap/v2/trade/leverage"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Set Leverage
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXLeverageResult>> SetLeverageAsync(string symbol, PositionSide side, int leverage, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol },
+                { "leverage", leverage }
+            };
+            parameters.AddEnum("side", side);
+            return await _baseClient.SendRequestInternal<BingXLeverageResult>(_baseClient.GetUri("/openApi/swap/v2/trade/leverage"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
     }
 }

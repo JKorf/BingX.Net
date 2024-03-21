@@ -68,5 +68,44 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <returns></returns>
         Task<WebCallResult> StopUserStreamAsync(string listenKey, CancellationToken ct = default);
 
+        /// <summary>
+        /// Get the current margin mode for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Mode" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXMarginMode>> GetMarginModeAsync(string symbol, CancellationToken ct = default);
+
+        /// <summary>
+        /// Change the margin mode for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Margin%20Mode" /></para>
+        /// </summary>=
+        /// <param name="symbol">Symbol</param>
+        /// <param name="marginMode">New margin mode</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXMarginMode>> SetMarginModeAsync(string symbol, MarginMode marginMode, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get the current leverage setrings for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXLeverage>> GetLeverageAsync(string symbol, CancellationToken ct = default);
+
+        /// <summary>
+        /// Set new leverage settings for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="side">Position side. In the One-way mode, only supports BOTH.</param>
+        /// <param name="leverage">Leverage</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXLeverageResult>> SetLeverageAsync(string symbol, PositionSide side, int leverage, CancellationToken ct = default);
+
     }
 }

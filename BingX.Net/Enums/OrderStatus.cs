@@ -30,7 +30,7 @@ namespace BingX.Net.Enums
         /// <summary>
         /// Canceled
         /// </summary>
-        [Map("CANCELED")]
+        [Map("CANCELED", "CANCELLED")]
         Canceled,
         /// <summary>
         /// Failed

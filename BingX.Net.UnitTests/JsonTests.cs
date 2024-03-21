@@ -102,6 +102,13 @@ namespace BingX.Net.UnitTests
                  useNestedJsonPropertyForCompare: new Dictionary<string, string>
                 {
                     { "GetPositionsAsync", "data" },
+                    { "PlaceOrderAsync", "data:order" },
+                    { "GetOrderAsync", "data:order" },
+                 },
+                 ignoreProperties: new Dictionary<string, List<string>>
+                 {
+                     { "PlaceOrderAsync", new List<string> { "takeProfit", "stopLoss" } }, // Just returns the input
+                     { "GetOrderAsync", new List<string> { "advanceAttr", "triggerOrderId", "onlyOnePosition", "stopLossEntrustPrice" , "takeProfitEntrustPrice", "positionID", "orderType" } } // Not described in API documentation, not clear what they mean
                  });
         }
     }

@@ -206,7 +206,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXFuturesOrder>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -214,8 +214,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameters.AddOptional("orderId", orderId);
             parameters.AddOptional("clientOrderId", clientOrderId);
-            var result = await _baseClient.SendRequestInternal<BingXFuturesOrderWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/order"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
-            return result.As<BingXFuturesOrder>(result.Data?.Order);
+            var result = await _baseClient.SendRequestInternal<BingXFuturesOrderDetailsWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/order"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            return result.As<BingXFuturesOrderDetails>(result.Data?.Order);
         }
 
         #endregion
@@ -223,7 +223,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Cancel Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXFuturesOrder>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesOrderDetails>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -231,8 +231,45 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameters.AddOptional("orderId", orderId);
             parameters.AddOptional("clientOrderId", clientOrderId);
-            var result = await _baseClient.SendRequestInternal<BingXFuturesOrderWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/order"), HttpMethod.Delete, ct, parameters, true).ConfigureAwait(false);
-            return result.As<BingXFuturesOrder>(result.Data?.Order);
+            var result = await _baseClient.SendRequestInternal<BingXFuturesOrderDetailsWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/order"), HttpMethod.Delete, ct, parameters, true).ConfigureAwait(false);
+            return result.As<BingXFuturesOrderDetails>(result.Data?.Order);
+        }
+
+        #endregion
+
+        #region Close All Positions
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXClosePositionsResult>> CloseAllPositionsAsync(string? symbol = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            return await _baseClient.SendRequestInternal<BingXClosePositionsResult>(_baseClient.GetUri("/openApi/swap/v2/trade/closeAllPositions"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Cancel All Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXCancelAllResult>> CancelAllOrderAsync(string? symbol = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            return await _baseClient.SendRequestInternal<BingXCancelAllResult>(_baseClient.GetUri("/openApi/swap/v2/trade/allOpenOrders"), HttpMethod.Delete, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Open Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            var result = await _baseClient.SendRequestInternal<BingXFuturesOrdersDetailsWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/openOrders"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
         }
 
         #endregion

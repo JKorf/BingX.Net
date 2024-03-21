@@ -24,6 +24,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Place a new test order. Order won't actually get placed
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order%20test" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="side">Order side</param>
@@ -84,6 +85,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Place a new order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="side">Order side</param>
@@ -143,22 +145,51 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get an order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
         /// <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrder>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel an order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20an%20Order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
         /// <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrder>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesOrderDetails>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Close all positions. Positions will be closed via market order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#One-Click%20Close%20All%20Positions" /></para>
+        /// </summary>
+        /// <param name="symbol">Only close for a specific symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXClosePositionsResult>> CloseAllPositionsAsync(string? symbol = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Cancel all open orders
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Orders" /></para>
+        /// </summary>
+        /// <param name="symbol">Only cancel orders for this symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXCancelAllResult>> CancelAllOrderAsync(string? symbol = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get all open orders
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20all%20current%20pending%20orders" /></para>
+        /// </summary>
+        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
     }
 }

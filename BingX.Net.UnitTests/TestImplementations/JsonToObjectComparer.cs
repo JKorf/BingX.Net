@@ -348,9 +348,15 @@ namespace BingX.Net.UnitTests.TestImplementations
                 {
                     // timestamp, hard to check..
                 }
+                else if (objectValue.GetType().IsEnum)
+                {
+                    var serialized = EnumConverter.GetString(objectValue.GetType(), objectValue);
+                    if (jsonValue.Value<string>() != serialized)
+                        throw new Exception($"{method}: {property} not equal: {jsonValue.Value<string>()} vs {serialized}");
+                }
                 else if (jsonValue.Value<string>().ToLowerInvariant() != objectValue.ToString().ToLowerInvariant())
                 {
-                    throw new Exception($"{method}: {property} not equal: {jsonValue.Value<string>()} vs {objectValue.ToString()}");
+                    throw new Exception($"{method}: {property} not equal: {jsonValue.Value<string>()} vs {objectValue}");
                 }
             }
             else if (jsonValue.Type == JTokenType.Integer)
