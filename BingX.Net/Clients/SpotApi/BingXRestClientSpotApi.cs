@@ -18,6 +18,9 @@ using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Converters.MessageParsing;
 using System.Linq;
 using System.Globalization;
+using System.Diagnostics;
+using System.Drawing;
+using BingX.Net.Enums;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -83,7 +86,7 @@ namespace BingX.Net.Clients.SpotApi
 
         internal async Task<WebCallResult<T>> SendRequestInternal<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
             Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false, Dictionary<string, string> additionalHeaders = null) where T : class
+            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false, Dictionary<string, string>? additionalHeaders = null) where T : class
         {
             var result = await SendRequestAsync<BingXResult<T>>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, weight, ignoreRatelimit: ignoreRateLimit, additionalHeaders: additionalHeaders).ConfigureAwait(false);
             if (!result.Success)
@@ -114,14 +117,6 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        protected override void WriteParamBody(IRequest request, SortedDictionary<string, object> parameters, string contentType)
-        {
-            // Write the parameters as form data in the body
-            var stringData = string.Join("&", parameters.Select(p => p.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", p.Value)));
-            request.SetContent(stringData, contentType);
-        }
-
-        /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
             => ExchangeData.GetServerTimeAsync();
 
@@ -137,8 +132,14 @@ namespace BingX.Net.Clients.SpotApi
         public ISpotClient CommonSpotClient => this;
 
         /// <inheritdoc />
-        public string GetSymbolName(string baseAsset, string quoteAsset) =>
-            throw new NotImplementedException();
+        protected override void WriteParamBody(IRequest request, SortedDictionary<string, object> parameters, string contentType)
+        {
+            var stringData = parameters.CreateParamString(false, ArraySerialization);
+            request.SetContent(stringData, contentType);
+        }
+
+        /// <inheritdoc />
+        public string GetSymbolName(string baseAsset, string quoteAsset) => baseAsset + "-" + quoteAsset;
 
         internal void InvokeOrderPlaced(OrderId id)
         {
@@ -152,67 +153,290 @@ namespace BingX.Net.Clients.SpotApi
 
         async Task<WebCallResult<OrderId>> ISpotClient.PlaceOrderAsync(string symbol, CommonOrderSide side, CommonOrderType type, decimal quantity, decimal? price, string? accountId, string? clientOrderId, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var order = await Trading.PlaceOrderAsync(symbol,
+                side == CommonOrderSide.Sell ? Enums.OrderSide.Sell : Enums.OrderSide.Buy,
+                type == CommonOrderType.Limit ? Enums.OrderType.Limit : Enums.OrderType.Market,
+                quantity,
+                price,
+                clientOrderId: clientOrderId,
+                ct: ct).ConfigureAwait(false);
+
+            if (!order)
+                return order.As<OrderId>(null);
+
+            return order.As(new OrderId
+            {
+                SourceObject = order,
+                Id = order.Data.OrderId.ToString(CultureInfo.InvariantCulture)
+            });
         }
 
         async Task<WebCallResult<Order>> IBaseRestClient.GetOrderAsync(string orderId, string? symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetOrderAsync), nameof(symbol));
+
+            if (!long.TryParse(orderId, out var longId))
+                throw new ArgumentException(nameof(symbol) + " invalid orderId for BingX " + nameof(ISpotClient.GetOrderAsync), nameof(symbol));
+
+            var order = await Trading.GetOrderAsync(symbol!, longId, ct: ct).ConfigureAwait(false);
+            if (!order)
+                return order.As<Order>(null);
+
+            return order.As(new Order
+            {
+                SourceObject = order.Data,
+                Id = order.Data.OrderId.ToString(CultureInfo.InvariantCulture),
+                Price = order.Data.Price,
+                Quantity = order.Data.Quantity,
+                QuantityFilled = order.Data.QuantityFilled,
+                Side = order.Data.Side == Enums.OrderSide.Buy ? CommonOrderSide.Buy: CommonOrderSide.Sell,
+                Symbol = order.Data.Symbol,
+                Timestamp = order.Data.CreateTime,
+                Type = order.Data.Type == Enums.OrderType.Limit ? CommonOrderType.Limit : order.Data.Type == Enums.OrderType.Market ? CommonOrderType.Market : CommonOrderType.Other,
+                Status = order.Data.Status == Enums.OrderStatus.Canceled ? CommonOrderStatus.Canceled: order.Data.Status == Enums.OrderStatus.Filled ? CommonOrderStatus.Filled : order.Data.Status == Enums.OrderStatus.Failed ? CommonOrderStatus.Canceled : CommonOrderStatus.Active
+            });
         }
 
         async Task<WebCallResult<IEnumerable<UserTrade>>> IBaseRestClient.GetOrderTradesAsync(string orderId, string? symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetOrderTradesAsync), nameof(symbol));
+
+            if (!long.TryParse(orderId, out var longId))
+                throw new ArgumentException(nameof(symbol) + " invalid orderId for BingX " + nameof(ISpotClient.GetOrderTradesAsync), nameof(symbol));
+
+            var trades = await Trading.GetUserTradesAsync(symbol!, longId, ct: ct).ConfigureAwait(false);
+            if (!trades)
+                return trades.As<IEnumerable<UserTrade>>(null);
+
+            return trades.As<IEnumerable<UserTrade>>(trades.Data.Select(t => new UserTrade
+            {
+                SourceObject = t,
+                Fee = t.Fee,
+                FeeAsset = t.FeeAsset,
+                Id = t.Id.ToString(),
+                OrderId = t.OrderId.ToString(),
+                Price = t.Price,
+                Quantity = t.Quantity,
+                Symbol = t.Symbol,
+                Timestamp = t.Timestamp
+            }));
         }
 
         async Task<WebCallResult<IEnumerable<Order>>> IBaseRestClient.GetOpenOrdersAsync(string? symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetOpenOrdersAsync), nameof(symbol));
+
+            var order = await Trading.GetOpenOrdersAsync(symbol, ct: ct).ConfigureAwait(false);
+            if (!order)
+                return order.As<IEnumerable<Order>>(null);
+
+            return order.As(order.Data.Select(order => new Order
+            {
+                SourceObject = order,
+                Id = order.OrderId.ToString(CultureInfo.InvariantCulture),
+                Price = order.Price,
+                Quantity = order.Quantity,
+                QuantityFilled = order.QuantityFilled,
+                Side = order.Side == Enums.OrderSide.Buy ? CommonOrderSide.Buy : CommonOrderSide.Sell,
+                Symbol = order.Symbol,
+                Timestamp = order.CreateTime,
+                Type = order.Type == Enums.OrderType.Limit ? CommonOrderType.Limit : order.Type == Enums.OrderType.Market ? CommonOrderType.Market : CommonOrderType.Other,
+                Status = order.Status == Enums.OrderStatus.Canceled ? CommonOrderStatus.Canceled : order.Status == Enums.OrderStatus.Filled ? CommonOrderStatus.Filled : order.Status == Enums.OrderStatus.Failed ? CommonOrderStatus.Canceled : CommonOrderStatus.Active
+            }));
         }
 
         async Task<WebCallResult<IEnumerable<Order>>> IBaseRestClient.GetClosedOrdersAsync(string? symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetClosedOrdersAsync), nameof(symbol));
+
+            var order = await Trading.GetOrdersAsync(symbol, ct: ct).ConfigureAwait(false);
+            if (!order)
+                return order.As<IEnumerable<Order>>(null);
+
+            return order.As(order.Data.Select(order => new Order
+            {
+                SourceObject = order,
+                Id = order.OrderId.ToString(CultureInfo.InvariantCulture),
+                Price = order.Price,
+                Quantity = order.Quantity,
+                QuantityFilled = order.QuantityFilled,
+                Side = order.Side == Enums.OrderSide.Buy ? CommonOrderSide.Buy : CommonOrderSide.Sell,
+                Symbol = order.Symbol,
+                Timestamp = order.CreateTime,
+                Type = order.Type == Enums.OrderType.Limit ? CommonOrderType.Limit : order.Type == Enums.OrderType.Market ? CommonOrderType.Market : CommonOrderType.Other,
+                Status = order.Status == Enums.OrderStatus.Canceled ? CommonOrderStatus.Canceled : order.Status == Enums.OrderStatus.Filled ? CommonOrderStatus.Filled : order.Status == Enums.OrderStatus.Failed ? CommonOrderStatus.Canceled : CommonOrderStatus.Active
+            }));
         }
 
         async Task<WebCallResult<OrderId>> IBaseRestClient.CancelOrderAsync(string orderId, string? symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.CancelOrderAsync), nameof(symbol));
+
+            if (!long.TryParse(orderId, out var longId))
+                throw new ArgumentException(nameof(symbol) + " invalid orderId for BingX " + nameof(ISpotClient.CancelOrderAsync), nameof(symbol));
+
+            var order = await Trading.CancelOrderAsync(symbol!, longId, ct: ct).ConfigureAwait(false);
+            if (!order)
+                return order.As<OrderId>(null);
+
+            return order.As(new OrderId
+            {
+                SourceObject = order,
+                Id = order.Data.OrderId.ToString()
+            });
         }
 
         async Task<WebCallResult<IEnumerable<Symbol>>> IBaseRestClient.GetSymbolsAsync(CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var symbols = await ExchangeData.GetSymbolsAsync(ct: ct).ConfigureAwait(false);
+            if (!symbols)
+                return symbols.As<IEnumerable<Symbol>>(null);
+
+            return symbols.As<IEnumerable<Symbol>>(symbols.Data.Select(t => new Symbol
+            {
+                SourceObject = t,
+                MinTradeQuantity = t.MinOrderQuantity,
+                Name = t.Name,
+                QuantityStep = t.StepSize,
+                PriceStep = t.TickSize
+            }));
         }
 
         async Task<WebCallResult<Ticker>> IBaseRestClient.GetTickerAsync(string symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetTickerAsync), nameof(symbol));
+
+            var ticker = await ExchangeData.GetTickersAsync(symbol, ct: ct).ConfigureAwait(false);
+            if (!ticker)
+                return ticker.As<Ticker>(null);
+
+            return ticker.As(new Ticker
+            {
+                SourceObject = ticker,
+                HighPrice = ticker.Data.Single().HighPrice,
+                LastPrice = ticker.Data.Single().LastPrice,
+                LowPrice = ticker.Data.Single().LowPrice,
+                Symbol = ticker.Data.Single().Symbol,
+                Volume = ticker.Data.Single().Volume,
+                Price24H = ticker.Data.Single().OpenPrice
+            });
         }
 
         async Task<WebCallResult<IEnumerable<Ticker>>> IBaseRestClient.GetTickersAsync(CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var symbols = await ExchangeData.GetTickersAsync(ct: ct).ConfigureAwait(false);
+            if (!symbols)
+                return symbols.As<IEnumerable<Ticker>>(null);
+
+            return symbols.As<IEnumerable<Ticker>>(symbols.Data.Select(t => new Ticker
+            {
+                SourceObject = t,
+                HighPrice = t.HighPrice,
+                LastPrice = t.LastPrice,
+                LowPrice = t.LowPrice,
+                Symbol = t.Symbol,
+                Volume = t.Volume,
+                Price24H = t.OpenPrice
+            }));
         }
 
         async Task<WebCallResult<IEnumerable<Kline>>> IBaseRestClient.GetKlinesAsync(string symbol, TimeSpan timespan, DateTime? startTime, DateTime? endTime, int? limit, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetKlinesAsync), nameof(symbol));
+
+            var symbols = await ExchangeData.GetKlinesAsync(symbol, GetKlineIntervalFromTimespan(timespan), startTime, endTime, ct: ct).ConfigureAwait(false);
+            if (!symbols)
+                return symbols.As<IEnumerable<Kline>>(null);
+
+            return symbols.As<IEnumerable<Kline>>(symbols.Data.Select(t => new Kline
+            {
+                SourceObject = t,
+                HighPrice = t.HighPrice,
+                ClosePrice = t.ClosePrice,
+                LowPrice = t.LowPrice,
+                OpenPrice = t.OpenPrice,
+                Volume = t.Volume,
+                OpenTime = t.OpenTime
+            }));
         }
 
         async Task<WebCallResult<OrderBook>> IBaseRestClient.GetOrderBookAsync(string symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetOrderBookAsync), nameof(symbol));
+
+            var book = await ExchangeData.GetOrderBookAsync(symbol, ct: ct).ConfigureAwait(false);
+            if (!book)
+                return book.As<OrderBook>(null);
+
+            return book.As(new OrderBook
+            {
+                SourceObject = book,
+                Asks = book.Data.Asks.Select(a => new OrderBookEntry { Price = a.Price, Quantity = a.Quantity }),
+                Bids = book.Data.Bids.Select(b => new OrderBookEntry { Price = b.Price, Quantity = b.Quantity })
+            });
         }
 
         async Task<WebCallResult<IEnumerable<Trade>>> IBaseRestClient.GetRecentTradesAsync(string symbol, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(symbol))
+                throw new ArgumentException(nameof(symbol) + " required for BingX " + nameof(ISpotClient.GetRecentTradesAsync), nameof(symbol));
+
+            var trades = await ExchangeData.GetRecentTradesAsync(symbol, ct: ct).ConfigureAwait(false);
+            if (!trades)
+                return trades.As<IEnumerable<Trade>>(null);
+
+            return trades.As<IEnumerable<Trade>>(trades.Data.Select(t => new Trade
+            {
+                SourceObject = t,
+                Price = t.Price,
+                Quantity = t.Quantity,
+                Symbol = symbol,
+                Timestamp = t.Timestamp
+            }));
         }
 
         async Task<WebCallResult<IEnumerable<Balance>>> IBaseRestClient.GetBalancesAsync(string? accountId, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var balances = await Account.GetBalancesAsync(ct: ct).ConfigureAwait(false);
+            if (!balances)
+                return balances.As<IEnumerable<Balance>>(null);
+
+            return balances.As<IEnumerable<Balance>>(balances.Data.Select(t => new Balance
+            {
+                SourceObject = t,
+                Asset = t.Asset,
+                Available = t.Free,
+                Total = t.Total
+            }));
+        }
+
+        private static KlineInterval GetKlineIntervalFromTimespan(TimeSpan timeSpan)
+        {
+            if (timeSpan == TimeSpan.FromMinutes(1)) return KlineInterval.OneMinute;
+            if (timeSpan == TimeSpan.FromMinutes(3)) return KlineInterval.ThreeMinutes;
+            if (timeSpan == TimeSpan.FromMinutes(5)) return KlineInterval.FiveMinutes;
+            if (timeSpan == TimeSpan.FromMinutes(15)) return KlineInterval.FifteenMinutes;
+            if (timeSpan == TimeSpan.FromMinutes(30)) return KlineInterval.ThirtyMinutes;
+            if (timeSpan == TimeSpan.FromHours(1)) return KlineInterval.OneHour;
+            if (timeSpan == TimeSpan.FromHours(2)) return KlineInterval.TwoHours;
+            if (timeSpan == TimeSpan.FromHours(4)) return KlineInterval.FourHours;
+            if (timeSpan == TimeSpan.FromHours(6)) return KlineInterval.SixHours;
+            if (timeSpan == TimeSpan.FromHours(8)) return KlineInterval.EightHours;
+            if (timeSpan == TimeSpan.FromHours(12)) return KlineInterval.TwelveHours;
+            if (timeSpan == TimeSpan.FromDays(1)) return KlineInterval.OneDay;
+            if (timeSpan == TimeSpan.FromDays(3)) return KlineInterval.ThreeDay;
+            if (timeSpan == TimeSpan.FromDays(7)) return KlineInterval.OneWeek;
+            if (timeSpan == TimeSpan.FromDays(30) || timeSpan == TimeSpan.FromDays(31)) return KlineInterval.OneMonth;
+
+            throw new ArgumentException("Unsupported timespan for BingX Klines, check supported intervals using BingX.Net.Enums.KlineInterval");
         }
     }
 }

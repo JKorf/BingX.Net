@@ -25,7 +25,6 @@ namespace BingX.Net.SymbolOrderBooks
         private readonly IBingXRestClient _restClient;
         private readonly IBingXSocketClient _socketClient;
         private readonly TimeSpan _initialDataTimeout;
-        private bool _initial = true;
 
         /// <summary>
         /// Create a new order book instance
@@ -49,9 +48,9 @@ namespace BingX.Net.SymbolOrderBooks
         public BingXSpotSymbolOrderBook(
             string symbol,
             Action<BingXOrderBookOptions>? optionsDelegate,
-            ILogger<BingXSpotSymbolOrderBook>? logger,
+            ILoggerFactory? logger,
             IBingXRestClient? restClient,
-            IBingXSocketClient? socketClient) : base(logger, "BingX", symbol)
+            IBingXSocketClient? socketClient) : base(logger, "BingX", "Spot", symbol)
         {
             var options = BingXOrderBookOptions.Default.Copy();
             if (optionsDelegate != null)
@@ -90,12 +89,6 @@ namespace BingX.Net.SymbolOrderBooks
         private void HandleOrderBookUpdate(DataEvent<BingXOrderBook> @event)
         {
             SetInitialOrderBook(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids.Select(b => (ISymbolOrderBookEntry)b), @event.Data.Asks.Select(b => (ISymbolOrderBookEntry)b));
-        }
-
-        /// <inheritdoc />
-        protected override void DoReset()
-        {
-            _initial = true;
         }
 
         /// <inheritdoc />

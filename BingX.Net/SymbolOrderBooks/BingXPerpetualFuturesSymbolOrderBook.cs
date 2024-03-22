@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.OrderBook;
@@ -9,6 +10,9 @@ using Microsoft.Extensions.Logging;
 using BingX.Net.Clients;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
+using BingX.Net.Objects.Models;
+using System.Linq;
+using CryptoExchange.Net.Interfaces;
 
 namespace BingX.Net.SymbolOrderBooks
 {
@@ -21,6 +25,7 @@ namespace BingX.Net.SymbolOrderBooks
         private readonly IBingXRestClient _restClient;
         private readonly IBingXSocketClient _socketClient;
         private readonly bool _clientOwner;
+        private readonly TimeSpan _initialDataTimeout;
 
         /// <summary>
         /// Create a new order book instance
@@ -45,9 +50,9 @@ namespace BingX.Net.SymbolOrderBooks
         public BingXPerpetualFuturesSymbolOrderBook(
             string symbol,
             Action<BingXOrderBookOptions>? optionsDelegate,
-            ILogger<BingXPerpetualFuturesSymbolOrderBook>? logger,
+            ILoggerFactory? logger,
             IBingXRestClient? restClient,
-            IBingXSocketClient? socketClient) : base(logger, "BingX", symbol)
+            IBingXSocketClient? socketClient) : base(logger, "BingX", "PerpetualFutures", symbol)
         {
             var options = BingXOrderBookOptions.Default.Copy();
             if (optionsDelegate != null)
@@ -58,6 +63,7 @@ namespace BingX.Net.SymbolOrderBooks
             _sequencesAreConsecutive = options?.Limit == null;
 
             Levels = options?.Limit;
+            _initialDataTimeout = options?.InitialDataTimeout ?? TimeSpan.FromSeconds(30);
             _clientOwner = socketClient == null;
             _socketClient = socketClient ?? new BingXSocketClient();
             _restClient = restClient ?? new BingXRestClient();
@@ -66,20 +72,31 @@ namespace BingX.Net.SymbolOrderBooks
         /// <inheritdoc />
         protected override async Task<CallResult<UpdateSubscription>> DoStartAsync(CancellationToken ct)
         {
-            // BingX
-            return new CallResult<UpdateSubscription>(new ServerError("", ""));
+            var result = await _socketClient.PerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync(Symbol, Levels ?? 20, 500, HandleOrderBookUpdate).ConfigureAwait(false);
+            if (!result)
+                return result;
+
+            if (ct.IsCancellationRequested)
+            {
+                await result.Data.CloseAsync().ConfigureAwait(false);
+                return result.AsError<UpdateSubscription>(new CancellationRequestedError());
+            }
+
+            Status = OrderBookStatus.Syncing;
+
+            var setResult = await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
+            return setResult ? result : new CallResult<UpdateSubscription>(setResult.Error!);
         }
 
-        /// <inheritdoc />
-        protected override void DoReset()
+        private void HandleOrderBookUpdate(DataEvent<BingXOrderBook> @event)
         {
+            SetInitialOrderBook(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids.Select(b => (ISymbolOrderBookEntry)b), @event.Data.Asks.Select(b => (ISymbolOrderBookEntry)b));
         }
 
         /// <inheritdoc />
         protected override async Task<CallResult<bool>> DoResyncAsync(CancellationToken ct)
         {
-            // BingX
-            return new CallResult<bool>(true);
+            return await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

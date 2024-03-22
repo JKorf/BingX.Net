@@ -237,10 +237,13 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetPositionsAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
@@ -250,6 +253,9 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CloseAllPositionsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelMultipleOrderAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelAllOrderAsync(System.String,System.Threading.CancellationToken)">
@@ -265,6 +271,12 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.ClosePositionAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi">
@@ -356,9 +368,6 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.TryParseError(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.SortedDictionary{System.String,System.Object},System.String)">
-            <inheritdoc />
-        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
@@ -369,6 +378,9 @@
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CommonSpotClient">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.SortedDictionary{System.String,System.Object},System.String)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetSymbolName(System.String,System.String)">
@@ -1458,7 +1470,7 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
             <summary>
             Place a new test order. Order won't actually get placed
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order%20test" /></para>
@@ -1472,16 +1484,6 @@
             <param name="reduceOnly">Reduce only</param>
             <param name="stopPrice">Stop price</param>
             <param name="priceRate">Trailing percentage (between 0 and 1)</param>
-            <param name="stopLossType">Stop loss type</param>
-            <param name="stopLossStopPrice">Stop loss trigger price</param>
-            <param name="stopLossPrice">Stop loss order price</param>
-            <param name="stopLossTriggerType">Stop loss trigger price type</param>
-            <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
-            <param name="takeProfitType">Take profit type</param>
-            <param name="takeProfitStopPrice">Take profit trigger price</param>
-            <param name="takeProfitPrice">Take profit order price</param>
-            <param name="takeProfitTriggerType">Take profit trigger price type</param>
-            <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
             <param name="timeInForce">Time in force</param>
             <param name="closePosition">Close the position</param>
             <param name="triggerPrice">Trigger price</param>
@@ -1490,7 +1492,7 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
             <summary>
             Place a new order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order" /></para>
@@ -1504,21 +1506,19 @@
             <param name="reduceOnly">Reduce only</param>
             <param name="stopPrice">Stop price</param>
             <param name="priceRate">Trailing percentage (between 0 and 1)</param>
-            <param name="stopLossType">Stop loss type</param>
-            <param name="stopLossStopPrice">Stop loss trigger price</param>
-            <param name="stopLossPrice">Stop loss order price</param>
-            <param name="stopLossTriggerType">Stop loss trigger price type</param>
-            <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
-            <param name="takeProfitType">Take profit type</param>
-            <param name="takeProfitStopPrice">Take profit trigger price</param>
-            <param name="takeProfitPrice">Take profit order price</param>
-            <param name="takeProfitTriggerType">Take profit trigger price type</param>
-            <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
             <param name="timeInForce">Time in force</param>
             <param name="closePosition">Close the position</param>
             <param name="triggerPrice">Trigger price</param>
             <param name="stopGuaranteed">Stop guaranteed</param>
             <param name="clientOrderId">Client order id</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Threading.CancellationToken)">
+            <summary>
+            Place multiple new orders in one go
+            </summary>
+            <param name="orders">Orders to place</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1550,6 +1550,16 @@
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#One-Click%20Close%20All%20Positions" /></para>
             </summary>
             <param name="symbol">Only close for a specific symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelMultipleOrderAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Cancel multiple orders on a symbol
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="orderIds">The ids of orders to cancel</param>
+            <param name="clientOrderIds">The client order ids of orders to cancel</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1605,6 +1615,25 @@
             <param name="orderId">Filter by order id</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20all%20orders%20in%20countdown" /></para>
+            </summary>
+            <param name="activate">True to activate the trigger, false to disable the trigger</param>
+            <param name="cancelAfterSeconds">Seconds after which to cancel all orders, between 10 and 120</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.ClosePositionAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Close a position by its id
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20the%20position%20by%20position%20ID" /></para>
+            </summary>
+            <param name="positionId">The id of the position to close</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1899,48 +1928,52 @@
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
             <summary>
-            
-            <para><a href="BingX" /></para>
+            Get the server time
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/base-info.html#Server%20time" /></para>
             </summary>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetSymbolsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
-            
+            Get symbol information
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20Symbols" /></para>
             </summary>
-            <param name="symbol"></param>
-            <param name="ct"></param>
+            <param name="symbol">The symbol</param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetRecentTradesAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
-            
+            Get a list of the most recent trades
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20transaction%20records" /></para>
             </summary>
-            <param name="symbol"></param>
-            <param name="limit"></param>
-            <param name="ct"></param>
+            <param name="symbol">The symbol</param>
+            <param name="limit">Max amount of results</param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
-            
+            Get the orderbook for a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20depth%20information" /></para>
             </summary>
-            <param name="symbol"></param>
-            <param name="limit"></param>
-            <param name="ct"></param>
+            <param name="symbol">The symbol</param>
+            <param name="limit">Max amount of results</param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
-            
+            Get kline/candlestick data
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Candlestick%20chart%20data" /></para>
             </summary>
-            <param name="symbol"></param>
-            <param name="interval"></param>
-            <param name="startTime"></param>
-            <param name="endTime"></param>
-            <param name="limit"></param>
-            <param name="ct"></param>
+            <param name="symbol">The symbol</param>
+            <param name="interval">Kline interval</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="limit">Max amount of results</param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetTickersAsync(System.String,System.Threading.CancellationToken)">
@@ -2491,6 +2524,46 @@
         <member name="P:BingX.Net.Objects.Models.BingXFailedCancel.ErrorMessage">
             <summary>
             Error message
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXClosePositionResult">
+            <summary>
+            Close position result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXClosePositionResult.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXClosePositionResult.PositionId">
+            <summary>
+            Position id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXClosePositionResult.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXClosePositionResult.Side">
+            <summary>
+            Side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXClosePositionResult.Type">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXClosePositionResult.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXClosePositionResult.Quantity">
+            <summary>
+            Quantity
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXClosePositionsResult">
@@ -3405,12 +3478,92 @@
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.PositionSide">
             <summary>
-            Trigger type
+            Position side
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.ProfitAndLoss">
             <summary>
             Profit and loss of the transaction
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest">
+            <summary>
+            Futures place order request for bulk placement
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.OrderType">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.Side">
+            <summary>
+            Order side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.ReduceOnly">
+            <summary>
+            Reduce only
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.Price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.StopPrice">
+            <summary>
+            Stop price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.PriceRate">
+            <summary>
+            Price rate
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.TriggerType">
+            <summary>
+            Trigger type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.TimeInForce">
+            <summary>
+            Time in force
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.ClosePosition">
+            <summary>
+            Close position
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.TriggerPrice">
+            <summary>
+            Trigger price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest.StopGuaranteed">
+            <summary>
+            Stop guaranteed
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesTicker">
@@ -5206,7 +5359,7 @@
             <param name="symbol">The symbol the order book is for</param>
             <param name="optionsDelegate">Option configuration delegate</param>
         </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions},Microsoft.Extensions.Logging.ILogger{BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook},BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient)">
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions},Microsoft.Extensions.Logging.ILoggerFactory,BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient)">
             <summary>
             Create a new order book instance
             </summary>
@@ -5217,9 +5370,6 @@
             <param name="socketClient">Socket client instance</param>
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.DoReset">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXPerpetualFuturesSymbolOrderBook.DoResyncAsync(System.Threading.CancellationToken)">
@@ -5241,7 +5391,7 @@
             <param name="symbol">The symbol the order book is for</param>
             <param name="optionsDelegate">Option configuration delegate</param>
         </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions},Microsoft.Extensions.Logging.ILogger{BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook},BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient)">
+        <member name="M:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook.#ctor(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions},Microsoft.Extensions.Logging.ILoggerFactory,BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient)">
             <summary>
             Create a new order book instance
             </summary>
@@ -5252,9 +5402,6 @@
             <param name="socketClient">Socket client instance</param>
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook.DoReset">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXSpotSymbolOrderBook.DoResyncAsync(System.Threading.CancellationToken)">

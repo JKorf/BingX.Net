@@ -78,11 +78,33 @@ A Discord server is available [here](https://discord.gg/MSpeEtSY8t). For discuss
 |Spot account|✓|`restClient.SpotApi.Account`|
 |Trade interface|X||
 |Websocket Market Data|✓|`socketClient.SpotApi`|
-|Websocket Account Data|X||
-### Futures
+|Websocket Account Data|✓|`socketClient.SpotApi`|
+
+### Perpetual Futures
 |API|Supported|Location|
 |--|--:|--|
-|BingX|✓|`restClient.FuturesApi.ExchangeData`|
+|Market Interface|✓|`restClient.PerpetualFuturesApi.ExchangeData`|
+|Account Interface|✓|`restClient.PerpetualFuturesApi.Account`|
+|Trade Interface|✓|`restClient.PerpetualFuturesApi.Account`/`restClient.PerpetualFuturesApi.Trading`|
+|Websocket Market Data|✓|`socketClient.PerpetualFuturesApi`|
+|Websocket Account Data|✓|`socketClient.PerpetualFuturesApi`|
+
+### Standard Contract
+|API|Supported|Location|
+|--|--:|--|
+|Standard Contract Interface|X||
+
+### Account & Wallet
+|API|Supported|Location|
+|--|--:|--|
+|Spot account|✓|`restClient.SpotApi.Account`|
+|Wallet deposits and withdrawals|✓|`restClient.SpotApi.Account`|
+|Sub-account|X||
+
+### Copy Trading
+|API|Supported|Location|
+|--|--:|--|
+|Standard Contract Interface|X||
 
 ## Support the project
 I develop and maintain this package on my own for free in my spare time, any support is greatly appreciated.

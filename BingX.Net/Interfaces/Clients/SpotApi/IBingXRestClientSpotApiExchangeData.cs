@@ -14,48 +14,52 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     public interface IBingXRestClientSpotApiExchangeData
     {
         /// <summary>
-        /// 
-        /// <para><a href="BingX" /></para>
+        /// Get the server time
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/base-info.html#Server%20time" /></para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<DateTime>> GetServerTimeAsync(CancellationToken ct = default);
 
         /// <summary>
-        /// 
+        /// Get symbol information
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20Symbols" /></para>
         /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="ct"></param>
+        /// <param name="symbol">The symbol</param>
+        /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXSymbol>>> GetSymbolsAsync(string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
-        /// 
+        /// Get a list of the most recent trades
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20transaction%20records" /></para>
         /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="limit"></param>
-        /// <param name="ct"></param>
+        /// <param name="symbol">The symbol</param>
+        /// <param name="limit">Max amount of results</param>
+        /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXTrade>>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
-        /// 
+        /// Get the orderbook for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20depth%20information" /></para>
         /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="limit"></param>
-        /// <param name="ct"></param>
+        /// <param name="symbol">The symbol</param>
+        /// <param name="limit">Max amount of results</param>
+        /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
-        /// 
+        /// Get kline/candlestick data
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Candlestick%20chart%20data" /></para>
         /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="interval"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        /// <param name="limit"></param>
-        /// <param name="ct"></param>
+        /// <param name="symbol">The symbol</param>
+        /// <param name="interval">Kline interval</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="limit">Max amount of results</param>
+        /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXKline>>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 

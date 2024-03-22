@@ -31,7 +31,7 @@ namespace BingX.Net.Objects.Models
         /// Order id
         /// </summary>
         [JsonPropertyName("orderId")]
-        public ulong OrderId { get; set; }
+        public long OrderId { get; set; }
         /// <summary>
         /// Order type
         /// </summary>

@@ -35,10 +35,8 @@ namespace BingX.Net
             parameters.Add("timestamp", timestamp);
             var receiveWindow = ((BingXRestOptions)apiClient.ClientOptions).ReceiveWindow ?? TimeSpan.FromSeconds(5);
             parameters.Add("recvWindow", (int)receiveWindow.TotalMilliseconds);
-
-            uri = uri.SetParameters(uriParameters, arraySerialization);
-            var signData = parameterPosition == HttpMethodParameterPosition.InUri ? uri.Query.Replace("?", "") : string.Join("&", parameters.Select(p => p.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", p.Value)));
-            parameters.Add("signature", SignHMACSHA256(signData, SignOutputType.Hex));
+            var parameterSignData = parameters.CreateParamString(false, arraySerialization);
+            parameters.Add("signature", SignHMACSHA256(parameterSignData, SignOutputType.Hex));
         }
     }
 }

@@ -35,16 +35,6 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="reduceOnly">Reduce only</param>
         /// <param name="stopPrice">Stop price</param>
         /// <param name="priceRate">Trailing percentage (between 0 and 1)</param>
-        /// <param name="stopLossType">Stop loss type</param>
-        /// <param name="stopLossStopPrice">Stop loss trigger price</param>
-        /// <param name="stopLossPrice">Stop loss order price</param>
-        /// <param name="stopLossTriggerType">Stop loss trigger price type</param>
-        /// <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
-        /// <param name="takeProfitType">Take profit type</param>
-        /// <param name="takeProfitStopPrice">Take profit trigger price</param>
-        /// <param name="takeProfitPrice">Take profit order price</param>
-        /// <param name="takeProfitTriggerType">Take profit trigger price type</param>
-        /// <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
         /// <param name="timeInForce">Time in force</param>
         /// <param name="closePosition">Close the position</param>
         /// <param name="triggerPrice">Trigger price</param>
@@ -63,17 +53,17 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
             decimal? stopPrice = null,
             decimal? priceRate = null,
 
-            TakeProfitStopLossMode? stopLossType = null,
-            decimal? stopLossStopPrice = null,
-            decimal? stopLossPrice = null,
-            TriggerType? stopLossTriggerType = null,
-            bool? stopLossStopGuaranteed = null,
+            //TakeProfitStopLossMode? stopLossType = null,
+            //decimal? stopLossStopPrice = null,
+            //decimal? stopLossPrice = null,
+            //TriggerType? stopLossTriggerType = null,
+            //bool? stopLossStopGuaranteed = null,
 
-            TakeProfitStopLossMode? takeProfitType = null,
-            decimal? takeProfitStopPrice = null,
-            decimal? takeProfitPrice = null,
-            TriggerType? takeProfitTriggerType = null,
-            bool? takeProfitStopGuaranteed = null,
+            //TakeProfitStopLossMode? takeProfitType = null,
+            //decimal? takeProfitStopPrice = null,
+            //decimal? takeProfitPrice = null,
+            //TriggerType? takeProfitTriggerType = null,
+            //bool? takeProfitStopGuaranteed = null,
 
             TimeInForce? timeInForce = null,
             bool? closePosition = null,
@@ -96,16 +86,6 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="reduceOnly">Reduce only</param>
         /// <param name="stopPrice">Stop price</param>
         /// <param name="priceRate">Trailing percentage (between 0 and 1)</param>
-        /// <param name="stopLossType">Stop loss type</param>
-        /// <param name="stopLossStopPrice">Stop loss trigger price</param>
-        /// <param name="stopLossPrice">Stop loss order price</param>
-        /// <param name="stopLossTriggerType">Stop loss trigger price type</param>
-        /// <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
-        /// <param name="takeProfitType">Take profit type</param>
-        /// <param name="takeProfitStopPrice">Take profit trigger price</param>
-        /// <param name="takeProfitPrice">Take profit order price</param>
-        /// <param name="takeProfitTriggerType">Take profit trigger price type</param>
-        /// <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
         /// <param name="timeInForce">Time in force</param>
         /// <param name="closePosition">Close the position</param>
         /// <param name="triggerPrice">Trigger price</param>
@@ -124,23 +104,33 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
             decimal? stopPrice = null,
             decimal? priceRate = null,
 
-            TakeProfitStopLossMode? stopLossType = null,
-            decimal? stopLossStopPrice = null,
-            decimal? stopLossPrice = null,
-            TriggerType? stopLossTriggerType = null,
-            bool? stopLossStopGuaranteed = null,
+            //TakeProfitStopLossMode? stopLossType = null,
+            //decimal? stopLossStopPrice = null,
+            //decimal? stopLossPrice = null,
+            //TriggerType? stopLossTriggerType = null,
+            //bool? stopLossStopGuaranteed = null,
 
-            TakeProfitStopLossMode? takeProfitType = null,
-            decimal? takeProfitStopPrice = null,
-            decimal? takeProfitPrice = null,
-            TriggerType? takeProfitTriggerType = null,
-            bool? takeProfitStopGuaranteed = null,
+            //TakeProfitStopLossMode? takeProfitType = null,
+            //decimal? takeProfitStopPrice = null,
+            //decimal? takeProfitPrice = null,
+            //TriggerType? takeProfitTriggerType = null,
+            //bool? takeProfitStopGuaranteed = null,
 
             TimeInForce? timeInForce = null,
             bool? closePosition = null,
             decimal? triggerPrice = null,
             bool? stopGuaranteed = null,
             string? clientOrderId = null,
+            CancellationToken ct = default);
+
+        /// <summary>
+        /// Place multiple new orders in one go
+        /// </summary>
+        /// <param name="orders">Orders to place</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXFuturesOrder>>> PlaceMultipleOrderAsync(
+            IEnumerable<BingXFuturesPlaceOrderRequest> orders,
             CancellationToken ct = default);
 
         /// <summary>
@@ -173,6 +163,16 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXClosePositionsResult>> CloseAllPositionsAsync(string? symbol = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Cancel multiple orders on a symbol
+        /// </summary>
+        /// <param name="symbol">The symbol</param>
+        /// <param name="orderIds">The ids of orders to cancel</param>
+        /// <param name="clientOrderIds">The client order ids of orders to cancel</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXCancelAllResult>> CancelMultipleOrderAsync(string symbol, IEnumerable<long>? orderIds, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all open orders
@@ -228,5 +228,24 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20all%20orders%20in%20countdown" /></para>
+        /// </summary>
+        /// <param name="activate">True to activate the trigger, false to disable the trigger</param>
+        /// <param name="cancelAfterSeconds">Seconds after which to cancel all orders, between 10 and 120</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXCancelAfterResult>> CancelAllOrdersAfterAsync(bool activate, int cancelAfterSeconds, CancellationToken ct = default);
+
+        /// <summary>
+        /// Close a position by its id
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20the%20position%20by%20position%20ID" /></para>
+        /// </summary>
+        /// <param name="positionId">The id of the position to close</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXClosePositionResult>> ClosePositionAsync(string positionId, CancellationToken ct = default);
     }
 }

@@ -1,7 +1,7 @@
 # Examples
 
-### TODO.Examples.Api
-A minimal API showing how to integrate TODO.Net in a web API project
+### BingX.Examples.Api
+A minimal API showing how to integrate BingX.Net in a web API project
 
-### TODO.Examples.Console
+### BingX.Examples.Console
 A simple console client demonstrating basic usage

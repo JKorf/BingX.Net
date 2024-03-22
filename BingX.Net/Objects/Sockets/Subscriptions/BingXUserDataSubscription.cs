@@ -33,7 +33,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             if (identifier == "ACCOUNT_UPDATE")
                 return typeof(BingXFuturesAccountUpdate);
             if (identifier == "ORDER_TRADE_UPDATE")
-                return typeof(BingXFuturesOrderUpdate);
+                return typeof(BingXFuturesOrderUpdateWrapper);
             if (identifier == "listenKeyExpired")
                 return typeof(BingXListenKeyExpiredUpdate);
 
@@ -86,9 +86,9 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             {
                 _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Update.Trigger, SocketUpdateType.Update));
             }
-            else if (message.Data is BingXFuturesOrderUpdate orderUpdate)
+            else if (message.Data is BingXFuturesOrderUpdateWrapper orderUpdate)
             {
-                _orderHandler?.Invoke(message.As(orderUpdate, orderUpdate.Symbol, SocketUpdateType.Update));
+                _orderHandler?.Invoke(message.As(orderUpdate.Data, orderUpdate.Data.Symbol, SocketUpdateType.Update));
             }
             else if (message.Data is BingXListenKeyExpiredUpdate listenKeyUpdate)
             {

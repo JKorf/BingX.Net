@@ -194,7 +194,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
-        #region Set Margin Mode
+        #region Set Position Mode
 
         /// <inheritdoc />
         public async Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(string symbol, PositionMode positionMode, CancellationToken ct = default)

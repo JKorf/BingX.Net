@@ -50,6 +50,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;
             RequestBodyFormat = RequestBodyFormat.FormData;
+            ArraySerialization = ArrayParametersSerialization.JsonArray;
         }
 
         #endregion
@@ -75,7 +76,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         internal async Task<WebCallResult<T>> SendRequestInternal<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
             Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false, Dictionary<string, string> additionalHeaders = null) where T : class
+            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false, Dictionary<string, string>? additionalHeaders = null) where T : class
         {
             var result = await SendRequestAsync<BingXResult<T>>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, weight, ignoreRatelimit: ignoreRateLimit, additionalHeaders: additionalHeaders).ConfigureAwait(false);
             if (!result.Success)
@@ -108,17 +109,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         protected override void WriteParamBody(IRequest request, SortedDictionary<string, object> parameters, string contentType)
         {
-            //if (request.Uri.ToString().EndsWith("trade/order/test"))
-            //{
-            //    // Write the parameters as json in the body
-            //    request.SetContent(stringData, contentType);
-            //}
-            //else
-            //{
-                // Write the parameters as form data in the body
-                var stringData = string.Join("&", parameters.Select(p => p.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", p.Value)));
-                request.SetContent(stringData, contentType);
-            //}
+            var stringData = parameters.CreateParamString(false, ArraySerialization);
+            request.SetContent(stringData, contentType);
         }
 
         /// <inheritdoc />

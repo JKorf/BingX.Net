@@ -28,7 +28,7 @@ namespace BingX.Net.SymbolOrderBooks
         public ISymbolOrderBook CreateSpot(string symbol, Action<BingXOrderBookOptions>? options = null)
             => new BingXSpotSymbolOrderBook(symbol,
                                              options,
-                                             _serviceProvider.GetRequiredService<ILogger<BingXSpotSymbolOrderBook>>(),
+                                             _serviceProvider.GetRequiredService<ILoggerFactory>(),
                                              _serviceProvider.GetRequiredService<IBingXRestClient>(),
                                              _serviceProvider.GetRequiredService<IBingXSocketClient>());
 
@@ -37,7 +37,7 @@ namespace BingX.Net.SymbolOrderBooks
         public ISymbolOrderBook CreatePerpetualFutures(string symbol, Action<BingXOrderBookOptions>? options = null)
             => new BingXPerpetualFuturesSymbolOrderBook(symbol,
                                              options,
-                                             _serviceProvider.GetRequiredService<ILogger<BingXPerpetualFuturesSymbolOrderBook>>(),
+                                             _serviceProvider.GetRequiredService<ILoggerFactory>(),
                                              _serviceProvider.GetRequiredService<IBingXRestClient>(),
                                              _serviceProvider.GetRequiredService<IBingXSocketClient>());
     }

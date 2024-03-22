@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using BingX.Net.Enums;
 
 namespace BingX.Net.Objects.Models
@@ -7,6 +8,12 @@ namespace BingX.Net.Objects.Models
     {
         [JsonPropertyName("order")]
         public BingXFuturesOrder Order { get; set; } = null!;
+    }
+
+    internal record BingXFuturesOrdersWrapper
+    {
+        [JsonPropertyName("orders")]
+        public IEnumerable<BingXFuturesOrder> Orders { get; set; } = null!;
     }
 
     /// <summary>

@@ -4,10 +4,16 @@ using BingX.Net.Enums;
 
 namespace BingX.Net.Objects.Models
 {
+    internal record BingXFuturesOrderUpdateWrapper : BingXSocketUpdate
+    {
+        [JsonPropertyName("o")]
+        public BingXFuturesOrderUpdate Data { get; set; } = null!;
+    }
+
     /// <summary>
     /// Order update
     /// </summary>
-    public record BingXFuturesOrderUpdate : BingXSocketUpdate
+    public record BingXFuturesOrderUpdate
     {
         /// <summary>
         /// Symbol
@@ -96,7 +102,7 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("ap")]
         public decimal? AveragePrice { get; set; }
         /// <summary>
-        /// Trigger type
+        /// Position side
         /// </summary>
         [JsonPropertyName("ps")]
         public PositionSide PositionSide { get; set; }
