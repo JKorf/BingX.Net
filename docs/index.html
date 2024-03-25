@@ -188,11 +188,138 @@ var socketClient = new BingXSocketClient();</code></pre>
 		<section id="idocs_examples">
           <h2>Examples</h2>
           
-		  <b id="idocs_example_symbols">Get Symbols</b><br />
-		  <p>Get a list of supported symbols on BingX</p>
-		  <pre><code>var bingXClient = new BingXRestClient();
-await bingXClient.SpotApi.ExchangeData.GetSymbolsAsync();</code></pre>
+		  <h3>Spot API</h3>
 		  
+		  <b id="idocs_example_symbols">Get Symbols</b><br />
+		  <p>Get a list of supported spot symbols</p>
+		  <pre><code>var bingXClient = new BingXRestClient();
+
+var result = await bingXClient.SpotApi.ExchangeData.GetSymbolsAsync();
+Console.WriteLine(result.Data.First());</code></pre>
+		  
+		  <b id="idocs_example_symbols">Get Symbol Ticker</b><br />
+		  <p>Get the 24h price ticker of a spot symbol</p>
+		  <pre><code>var bingXClient = new BingXRestClient();
+
+var result = await bingXClient.SpotApi.ExchangeData.GetTickersAsync("ETH-USDT");
+Console.WriteLine(result.Data.First());</code></pre>
+
+		  <b id="idocs_example_symbols">Get Recent Trades</b><br />
+		  <p>Get the most recent trades for a spot symbol</p>
+		  <pre><code>var bingXClient = new BingXRestClient();
+
+var result = await bingXClient.SpotApi.ExchangeData.GetRecentTradesAsync("ETH-USDT");
+Console.WriteLine(result.Data.First());</code></pre>
+
+		  <b id="idocs_example_symbols">Get Balances</b><br />
+		  <p>Get asset balances of the spot account</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.SpotApi.Account.GetBalancesAsync();
+Console.WriteLine(result.Data.First());</code></pre>
+
+		  <b id="idocs_example_symbols">Place Limit Order</b><br />
+		  <p>Place a new limit order for buying 0.1 ETH at a price of 2000 USDT</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.SpotApi.Trading.PlaceOrderAsync(
+	"ETH-USDT",
+	BingX.Net.Enums.OrderSide.Buy,
+	BingX.Net.Enums.OrderType.Limit,
+	0.1m,
+	2000);
+Console.WriteLine(result.Data);</code></pre>
+
+		  <b id="idocs_example_symbols">Place Market Order</b><br />
+		  <p>Place a new market order for buying 50 USDT worth of ETH at the best available price</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.SpotApi.Trading.PlaceOrderAsync(
+	"ETH-USDT",
+	BingX.Net.Enums.OrderSide.Buy,
+	BingX.Net.Enums.OrderType.Market,
+	quoteQuantity: 50);
+Console.WriteLine(result.Data);</code></pre>
+
+		  <b id="idocs_example_symbols">Get Order Info</b><br />
+		  <p>Retrieve order information for a specific order</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.SpotApi.Trading.GetOrderAsync("ETH-USDT", 123);
+Console.WriteLine(result.Data);</code></pre>
+
+		  <b id="idocs_example_symbols">Cancel an order</b><br />
+		  <p>Cancel a currently active order</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.SpotApi.Trading.CancelOrderAsync("ETH-USDT", 123);
+Console.WriteLine(result.Data);</code></pre>
+
+		  <h3>Futures API</h3>
+		  <b id="idocs_example_symbols">Get Contracts</b><br />
+		  <p>Get a list of supported perpetual futures contracts</p>
+		  <pre><code>var bingXClient = new BingXRestClient();
+
+var result = await bingXClient.PerpetualFuturesApi.ExchangeData.GetContractsAsync();
+Console.WriteLine(result.Data.First());</code></pre>
+		  
+		  <b id="idocs_example_symbols">Get Symbol Ticker</b><br />
+		  <p>Get the 24h price ticker of a spot symbol</p>
+		  <pre><code>var bingXClient = new BingXRestClient();
+
+var result = await bingXClient.PerpetualFuturesApi.ExchangeData.GetTickerAsync("ETH-USDT");
+Console.WriteLine(result.Data.First());</code></pre>
+
+		  <b id="idocs_example_symbols">Get Recent Trades</b><br />
+		  <p>Get the most recent trades for a spot symbol</p>
+		  <pre><code>var bingXClient = new BingXRestClient();
+
+var result = await bingXClient.PerpetualFuturesApi.ExchangeData.GetRecentTradesAsync("ETH-USDT");
+Console.WriteLine(result.Data.First());</code></pre>
+
+		  <b id="idocs_example_symbols">Get Balances</b><br />
+		  <p>Get balance of the perpetual futures account</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.PerpetualFuturesApi.Account.GetBalancesAsync();
+Console.WriteLine(result.Data);</code></pre>
+
+		  <b id="idocs_example_symbols">Get Positions</b><br />
+		  <p>Get open positions</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.PerpetualFuturesApi.Account.GetPositionsAsync();
+Console.WriteLine(result.Data.First());</code></pre>
+
+<b id="idocs_example_symbols">Place Limit Order</b><br />
+		  <p>Place a new limit order for going long on 0.1 ETH at a price of 2000 USDT</p>
+		  <pre><code>var bingXClient = new BingXRestClient(options => {
+  options.ApiCredentials = new ApiCredentials("KEY", "SECRET");		  
+});
+
+var result = await bingXClient.PerpetualFuturesApi.Trading.PlaceOrderAsync(
+    "ETH-USDT",
+    BingX.Net.Enums.OrderSide.Buy,
+    BingX.Net.Enums.FuturesOrderType.Limit,
+    BingX.Net.Enums.PositionSide.Long,
+    0.1m,
+    2000);
+Console.WriteLine(result.Data);
+</code></pre>
         </section>
         		
 		<hr class="divider">
