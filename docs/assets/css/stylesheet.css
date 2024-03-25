@@ -2430,6 +2430,9 @@ hr {
   padding: 0;
   overflow: visible;
 }
+.social-icons-ce {
+    margin-right: 120px !important;
+}
 .social-icons-nuget{
 	margin-right: 24px !important;
 }

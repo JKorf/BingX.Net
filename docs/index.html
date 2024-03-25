@@ -59,6 +59,7 @@
 		<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#header-nav"><span></span><span></span><span></span></button>
         
         <ul class="social-icons social-icons-sm ml-lg-2 mr-2">
+          <li class="social-icons-ce"><a data-toggle="tooltip" href="https://jkorf.github.io/CryptoExchange.Net/" target="_blank" title="" data-original-title="Nuget">CryptoExchange.Net</a></li>
           <li class="social-icons-nuget"><a data-toggle="tooltip" href="http://www.nuget.org/profiles/JKorf/BingX.Net" target="_blank" title="" data-original-title="Nuget">Nuget</a></li>
           <li><a data-toggle="tooltip" href="http://www.github.com/JKorf/BingX.Net" target="_blank" title="" data-original-title="GitHub"><i class="fab fa-github"></i></a></li>
           <li><a data-toggle="tooltip" href="https://discord.gg/Wyqd4hegMZ" target="_blank" title="" data-original-title="Discord"><i class="fab fa-discord"></i></a></li>
@@ -84,6 +85,7 @@
             <li class="nav-item"><a class="nav-link" href="#idocs_apiaccess">API Access</a></li>
           </ul>
         </li>
+        <li class="nav-item"><a class="nav-link active" href="#idocs_examples">Examples</a>
 		<!--<li class="nav-item"><a class="nav-link" href="#idocs_faq">FAQ</a></li>-->
       </ul>
     </div>
@@ -183,12 +185,13 @@ var socketClient = new BingXSocketClient();</code></pre>
         		
 		<hr class="divider">
 		
-		<section id="idocs_apiaccess">
+		<section id="idocs_examples">
           <h2>Examples</h2>
           
 		  <b id="idocs_example_symbols">Get Symbols</b><br />
 		  <p>Get a list of supported symbols on BingX</p>
-		  <pre><code>await bingXClient.SpotApi.ExchangeData.GetSymbolsAsync();</code></pre>
+		  <pre><code>var bingXClient = new BingXRestClient();
+await bingXClient.SpotApi.ExchangeData.GetSymbolsAsync();</code></pre>
 		  
         </section>
         		
