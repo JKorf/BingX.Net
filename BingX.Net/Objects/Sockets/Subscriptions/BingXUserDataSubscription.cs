@@ -1,5 +1,4 @@
-﻿using BingX.Net.Objects.Internal;
-using BingX.Net.Objects.Models;
+﻿using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Converters.MessageParsing;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
@@ -8,7 +7,6 @@ using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {

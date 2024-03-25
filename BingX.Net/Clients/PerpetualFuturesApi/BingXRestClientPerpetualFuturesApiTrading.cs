@@ -1,14 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using System.Threading.Tasks;
-using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
 using System.Collections.Generic;
 using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
 using System.Threading;
 using System.Net.Http;
-using System.Security.Cryptography;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Linq;
@@ -54,17 +52,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             decimal? stopPrice = null,
             decimal? priceRate = null,
 
-            TakeProfitStopLossMode? stopLossType = null,
-            decimal? stopLossStopPrice = null,
-            decimal? stopLossPrice = null,
-            TriggerType? stopLossTriggerType = null,
-            bool? stopLossStopGuaranteed = null,
+            //TakeProfitStopLossMode? stopLossType = null,
+            //decimal? stopLossStopPrice = null,
+            //decimal? stopLossPrice = null,
+            //TriggerType? stopLossTriggerType = null,
+            //bool? stopLossStopGuaranteed = null,
 
-            TakeProfitStopLossMode? takeProfitType = null,
-            decimal? takeProfitStopPrice = null,
-            decimal? takeProfitPrice = null,
-            TriggerType? takeProfitTriggerType = null,
-            bool? takeProfitStopGuaranteed = null,
+            //TakeProfitStopLossMode? takeProfitType = null,
+            //decimal? takeProfitStopPrice = null,
+            //decimal? takeProfitPrice = null,
+            //TriggerType? takeProfitTriggerType = null,
+            //bool? takeProfitStopGuaranteed = null,
 
             TimeInForce? timeInForce = null,
             bool? closePosition = null,
@@ -92,27 +90,27 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddOptional("stopGuaranteed", stopGuaranteed);
 
             // TODO how to pass this?
-            if (stopLossType != null)
-            {
-                var stopLossParams = new ParameterCollection();
-                stopLossParams.AddEnum("type", stopLossType);
-                stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
-                stopLossParams.AddOptional("price", stopLossPrice);
-                stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
-                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed);
-                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
-            }
+            //if (stopLossType != null)
+            //{
+            //    var stopLossParams = new ParameterCollection();
+            //    stopLossParams.AddEnum("type", stopLossType);
+            //    stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
+            //    stopLossParams.AddOptional("price", stopLossPrice);
+            //    stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
+            //    stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed);
+            //    parameter.Add("stopLoss", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
+            //}
 
-            if (takeProfitType != null)
-            {
-                var stopLossParams = new ParameterCollection();
-                stopLossParams.AddEnum("type", takeProfitType);
-                stopLossParams.AddOptional("stopPrice", takeProfitStopPrice);
-                stopLossParams.AddOptional("price", takeProfitPrice);
-                stopLossParams.AddOptionalEnum("workingType", takeProfitTriggerType);
-                stopLossParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed);
-                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
-            }
+            //if (takeProfitType != null)
+            //{
+            //    var stopLossParams = new ParameterCollection();
+            //    stopLossParams.AddEnum("type", takeProfitType);
+            //    stopLossParams.AddOptional("stopPrice", takeProfitStopPrice);
+            //    stopLossParams.AddOptional("price", takeProfitPrice);
+            //    stopLossParams.AddOptionalEnum("workingType", takeProfitTriggerType);
+            //    stopLossParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed);
+            //    parameter.Add("takeProfit", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
+            //}
 
             var result = await _baseClient.SendRequestInternal<BingXFuturesOrderWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/order/test"), HttpMethod.Post, ct, parameter, true,
                  additionalHeaders: new Dictionary<string, string>
@@ -138,17 +136,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             decimal? stopPrice = null,
             decimal? priceRate = null,
 
-            TakeProfitStopLossMode? stopLossType = null,
-            decimal? stopLossStopPrice = null,
-            decimal? stopLossPrice = null,
-            TriggerType? stopLossTriggerType = null,
-            bool? stopLossStopGuaranteed = null,
+            //TakeProfitStopLossMode? stopLossType = null,
+            //decimal? stopLossStopPrice = null,
+            //decimal? stopLossPrice = null,
+            //TriggerType? stopLossTriggerType = null,
+            //bool? stopLossStopGuaranteed = null,
 
-            TakeProfitStopLossMode? takeProfitType = null,
-            decimal? takeProfitStopPrice = null,
-            decimal? takeProfitPrice = null,
-            TriggerType? takeProfitTriggerType = null,
-            bool? takeProfitStopGuaranteed = null,
+            //TakeProfitStopLossMode? takeProfitType = null,
+            //decimal? takeProfitStopPrice = null,
+            //decimal? takeProfitPrice = null,
+            //TriggerType? takeProfitTriggerType = null,
+            //bool? takeProfitStopGuaranteed = null,
 
             TimeInForce? timeInForce = null,
             bool? closePosition = null,
@@ -176,31 +174,29 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddOptional("stopGuaranteed", stopGuaranteed);
 
             // TODO how to pass this?
-            if (stopLossType != null)
-            {
-                var stopLossParams = new ParameterCollection();
-                stopLossParams.AddEnum("type", stopLossType);
-                stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
-                stopLossParams.AddOptional("price", stopLossPrice);
-                stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
-                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed);
-                parameter.Add("stopLoss", Uri.EscapeDataString(new SystemTextJsonMessageSerializer().Serialize(stopLossParams)));
-            }
+            //if (stopLossType != null)
+            //{
+            //    var stopLossParams = new ParameterCollection();
+            //    stopLossParams.AddEnum("type", stopLossType);
+            //    stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
+            //    stopLossParams.AddOptional("price", stopLossPrice);
+            //    stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
+            //    stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed);
+            //    parameter.Add("stopLoss", Uri.EscapeDataString(new SystemTextJsonMessageSerializer().Serialize(stopLossParams)));
+            //}
 
-            if (takeProfitType != null)
-            {
-                var stopLossParams = new ParameterCollection();
-                stopLossParams.AddEnum("type", takeProfitType);
-                stopLossParams.AddOptional("stopPrice", takeProfitStopPrice);
-                stopLossParams.AddOptional("price", takeProfitPrice);
-                stopLossParams.AddOptionalEnum("workingType", takeProfitTriggerType);
-                stopLossParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed);
-                parameter.Add("takeProfit", Uri.EscapeDataString(new SystemTextJsonMessageSerializer().Serialize(stopLossParams)));
-            }
+            //if (takeProfitType != null)
+            //{
+            //    var stopLossParams = new ParameterCollection();
+            //    stopLossParams.AddEnum("type", takeProfitType);
+            //    stopLossParams.AddOptional("stopPrice", takeProfitStopPrice);
+            //    stopLossParams.AddOptional("price", takeProfitPrice);
+            //    stopLossParams.AddOptionalEnum("workingType", takeProfitTriggerType);
+            //    stopLossParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed);
+            //    parameter.Add("takeProfit", Uri.EscapeDataString(new SystemTextJsonMessageSerializer().Serialize(stopLossParams)));
+            //}
 
             var result = await _baseClient.SendRequestInternal<BingXFuturesOrderWrapper>(_baseClient.GetUri("/openApi/swap/v2/trade/order"), HttpMethod.Post, ct, parameter, true,
-                HttpMethodParameterPosition.InUri,
-                
                  additionalHeaders: new Dictionary<string, string>
                  {
                      { "X-SOURCE-KEY", _brokerId }

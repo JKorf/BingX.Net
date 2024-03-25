@@ -100,10 +100,10 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("Z")]
         public decimal? VolumeFilled { get; set; }
         /// <summary>
-        /// Last fill quantity
+        /// Last fill value
         /// </summary>
         [JsonPropertyName("Y")]
-        public decimal? LastFillQuantity2 { get; set; } // TODO
+        public decimal? LastFillValue { get; set; }
         /// <summary>
         /// Original quote order quantity
         /// </summary>

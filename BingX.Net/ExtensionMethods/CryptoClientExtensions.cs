@@ -1,5 +1,4 @@
-﻿using CryptoExchange.Net.Interfaces;
-using BingX.Net.Clients;
+﻿using BingX.Net.Clients;
 using BingX.Net.Interfaces.Clients;
 
 namespace CryptoExchange.Net.Interfaces

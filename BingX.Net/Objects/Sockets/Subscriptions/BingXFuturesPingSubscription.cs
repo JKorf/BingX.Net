@@ -1,5 +1,4 @@
-﻿using BingX.Net.Objects.Internal;
-using CryptoExchange.Net;
+﻿using CryptoExchange.Net;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;

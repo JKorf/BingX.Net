@@ -18,8 +18,6 @@ using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Converters.MessageParsing;
 using System.Linq;
 using System.Globalization;
-using System.Diagnostics;
-using System.Drawing;
 using BingX.Net.Enums;
 
 namespace BingX.Net.Clients.SpotApi

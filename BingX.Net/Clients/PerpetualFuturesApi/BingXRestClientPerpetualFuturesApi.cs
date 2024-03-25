@@ -13,10 +13,7 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.MessageParsing;
-using System.Linq;
-using System.Globalization;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
-using System.Data;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {

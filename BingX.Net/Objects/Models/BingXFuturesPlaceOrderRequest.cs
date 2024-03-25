@@ -6,7 +6,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Futures place order request for bulk placement
     /// </summary>
-    public class BingXFuturesPlaceOrderRequest
+    public record BingXFuturesPlaceOrderRequest
     {
         /// <summary>
         /// Symbol

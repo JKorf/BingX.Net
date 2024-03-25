@@ -16,11 +16,8 @@ using System.Threading.Tasks;
 using BingX.Net.Objects.Sockets.Subscriptions;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Converters.SystemTextJson;
-using System.IO.Compression;
-using System.IO;
 using System.Net.WebSockets;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {

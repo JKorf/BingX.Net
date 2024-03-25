@@ -11,7 +11,6 @@ using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Sockets.Subscriptions;
-using System.IO.Compression;
 using System.IO;
 using System.Net.WebSockets;
 using CryptoExchange.Net.Interfaces;
@@ -19,7 +18,6 @@ using CryptoExchange.Net.Converters.MessageParsing;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Enums;
-using System.Runtime.InteropServices;
 
 namespace BingX.Net.Clients.SpotApi
 {
