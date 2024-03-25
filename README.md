@@ -37,7 +37,7 @@ var lastPrice = tickerResult.Data.Single().LastPrice;
 ```csharp
 // Subscribe to ETH/USDT ticker updates via the websocket API
 var socketClient = new BingXSocketClient();
-var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsync("ETHUSDT", (update) =>
+var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsync("ETH-USDT", (update) =>
 {
     var lastPrice = update.Data.LastPrice;
 });
