@@ -4541,9 +4541,9 @@
             Quantity filled in quote asset
             </summary>
         </member>
-        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.LastFillQuantity2">
+        <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.LastFillValue">
             <summary>
-            Last fill quantity
+            Last fill value
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXOrderUpdate.QuoteOrderQuantity">
