@@ -1,8 +1,8 @@
-# ![.BingX.Net](https://raw.githubusercontent.com/JKorf/BingX.Net/master/BingX.Net/Icon/icon.png) BingX.Net  
+# ![.BingX.Net](https://raw.githubusercontent.com/JKorf/BingX.Net/main/BingX.Net/Icon/icon.png) BingX.Net  
 
 [![.NET](https://img.shields.io/github/actions/workflow/status/JKorf/BingX.Net/dotnet.yml?style=for-the-badge)](https://github.com/JKorf/BingX.Net/actions/workflows/dotnet.yml) ![License](https://img.shields.io/github/license/JKorf/BingX.Net?style=for-the-badge)
 
-BingX.Net is a client library for accessing the [BingX REST and Websocket API](BingX). All data is mapped to readable models and enum values. Additional features include an implementation for maintaining a client side order book, easy integration with other exchange client libraries and more.
+BingX.Net is a client library for accessing the [BingX REST and Websocket API](https://bingx-api.github.io/docs/#/en-us/swapV2/changelog). All data is mapped to readable models and enum values. Additional features include an implementation for maintaining a client side order book, easy integration with other exchange client libraries and more.
 
 ## Supported Frameworks
 The library is targeting both `.NET Standard 2.0` and `.NET Standard 2.1` for optimal compatibility
@@ -28,8 +28,8 @@ The library is targeting both `.NET Standard 2.0` and `.NET Standard 2.1` for op
 ```csharp
 // Get the ETH/USDT ticker via rest request
 var restClient = new BingXRestClient();
-var tickerResult = await restClient.SpotApi.ExchangeData.BingXAsync("ETHUSDT");
-var lastPrice = tickerResult.Data.LastPrice;
+var tickerResult = await restClient.SpotApi.ExchangeData.GetTickersAsync("ETH-USDT");
+var lastPrice = tickerResult.Data.Single().LastPrice;
 ```
 	
 *Websocket streams*  
@@ -37,13 +37,13 @@ var lastPrice = tickerResult.Data.LastPrice;
 ```csharp
 // Subscribe to ETH/USDT ticker updates via the websocket API
 var socketClient = new BingXSocketClient();
-var tickerSubscriptionResult = socketClient.SpotApi.ExchangeData.SubscribeToBingXUpdatesAsync("ETHUSDT", (update) => 
+var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsync("ETHUSDT", (update) =>
 {
-  var lastPrice = update.Data.LastPrice;
+    var lastPrice = update.Data.LastPrice;
 });
 ```
 
-For information on the clients, dependency injection, response processing and more see the [documentation](https://jkorf.github.io/CryptoExchange.Net), or have a look at the examples [here](https://github.com/JKorf/BingX.Net/tree/master/Examples) or [here](https://github.com/JKorf/CryptoExchange.Net/tree/master/Examples).
+For information on the clients, dependency injection, response processing and more see the [documentation](https://jkorf.github.io/CryptoExchange.Net), or have a look at the examples [here](https://github.com/JKorf/BingX.Net/tree/main/Examples) or [here](https://github.com/JKorf/CryptoExchange.Net/tree/master/Examples).
 
 ## CryptoExchange.Net
 BingX.Net is based on the [CryptoExchange.Net](https://github.com/JKorf/CryptoExchange.Net) base library. Other exchange API implementations based on the CryptoExchange.Net base library are available and follow the same logic.
