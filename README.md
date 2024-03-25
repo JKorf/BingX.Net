@@ -18,9 +18,9 @@ The library is targeting both `.NET Standard 2.0` and `.NET Standard 2.1` for op
 |Unity|`2018.1` and higher|
 
 ## Get the library
-[![Nuget version](https://img.shields.io/nuget/v/BingX.net.svg?style=for-the-badge)](https://www.nuget.org/packages/BingX.Net)  [![Nuget downloads](https://img.shields.io/nuget/dt/BingX.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/BingX.Net)
+[![Nuget version](https://img.shields.io/nuget/v/JK.BingX.net.svg?style=for-the-badge)](https://www.nuget.org/packages/JK.BingX.Net)  [![Nuget downloads](https://img.shields.io/nuget/dt/JK.BingX.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/JK.BingX.Net)
 
-	dotnet add package BingX.Net
+	dotnet add package JK.BingX.Net
 	
 ## How to use
 *REST Endpoints*  
