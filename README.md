@@ -76,7 +76,7 @@ A Discord server is available [here](https://discord.gg/MSpeEtSY8t). For discuss
 |Market Interface|✓|`restClient.SpotApi.ExchangeData`|
 |Wallet deposits and withdrawals|✓|`restClient.SpotApi.Account`|
 |Spot account|✓|`restClient.SpotApi.Account`|
-|Trade interface|X||
+|Trade interface|✓|`restClient.SpotApi.Trading`|
 |Websocket Market Data|✓|`socketClient.SpotApi`|
 |Websocket Account Data|✓|`socketClient.SpotApi`|
 
