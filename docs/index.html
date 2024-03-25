@@ -81,9 +81,10 @@
         <li class="nav-item"><a class="nav-link active" href="#idocs_start">Getting Started</a>
           <ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link" href="#idocs_installation">Installation</a></li>
+            <li class="nav-item"><a class="nav-link" href="#idocs_apiaccess">API Access</a></li>
           </ul>
         </li>
-		<li class="nav-item"><a class="nav-link" href="#idocs_faq">FAQ</a></li>
+		<!--<li class="nav-item"><a class="nav-link" href="#idocs_faq">FAQ</a></li>-->
       </ul>
     </div>
     
@@ -141,7 +142,9 @@
 		============================ -->
         <section id="idocs_start">
         <h1>Getting Started</h1>
-		<p>All packages are available on Nuget. After installing the package the API is available by using one of the library clients, or through the <code>ICrypoRestClient</code>, <code>ICryptoSocketClient</code> or <code>ISpotClient</code> interfaces.</p>
+		<p>The packge is available on Nuget. After installing the package the BingX API is available by using the <code>BingXRestClient</code> and <code>BingXSocketClient</code>.</p>
+		<div class="alert alert-info">More information and usage documentation is available at the <a href="https://jkorf.github.io/CryptoExchange.Net/" target="_blank">CryptoExchange.Net</a> documentation page</div>
+		
         </section>
         		
 		<hr class="divider">
@@ -158,8 +161,40 @@
         		
 		<hr class="divider">
 		
+		<section id="idocs_apiaccess">
+          <h2>API Access</h2>
+          
+		  <p>BingX.Net can be configured using Dotnet dependency injection, after which the clients can be injected into your services. It also correctly configures logging and HttpClient usage.</p>
+		  
+		  <pre><code>builder.Services.AddBingX(options => {
+  // Options can be configured here, for example:
+  options.ApiCredentials = new ApiCredentials("APIKEY", "APISECRET");
+});</code></pre>
+		  
+		  <p>The <code>IBingXRestClient</code> and <code>IBingXSocketClient</code> can then be injected.</p>
+		  <p>Alternatively the rest and socket client can be constructed directly</p>
+		  <pre><code>var restClient = new BingXRestClient(options => {
+  // Options can be configured here, for example:
+  options.ApiCredentials = new ApiCredentials("APIKEY", "APISECRET");
+});
+var socketClient = new BingXSocketClient();</code></pre>
+		  
+        </section>
+        		
+		<hr class="divider">
+		
+		<section id="idocs_apiaccess">
+          <h2>Examples</h2>
+          
+		  <b id="idocs_example_symbols">Get Symbols</b><br />
+		  <p>Get a list of supported symbols on BingX</p>
+		  <pre><code>await bingXClient.SpotApi.ExchangeData.GetSymbolsAsync();</code></pre>
+		  
+        </section>
+        		
+		<hr class="divider">
+		
 		<!-- FAQ
-		============================ -->
 		<section id="idocs_faq">
           <h2>FAQ</h2>
           <b>I occasionally get a NullReferenceException, what's wrong?</b><br />
@@ -178,7 +213,7 @@ else
 		  </p>
 		  
 		<hr class="divider">
-        
+        -->
       </div>
     </div>
 	
