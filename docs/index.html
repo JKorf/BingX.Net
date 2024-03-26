@@ -274,14 +274,14 @@ var result = await bingXClient.PerpetualFuturesApi.ExchangeData.GetContractsAsyn
 Console.WriteLine(result.Data.First());</code></pre>
 		  
 		  <b id="idocs_example_symbols">Get Symbol Ticker</b><br />
-		  <p>Get the 24h price ticker of a spot symbol</p>
+		  <p>Get the 24h price ticker of a futures symbol</p>
 		  <pre><code>var bingXClient = new BingXRestClient();
 
 var result = await bingXClient.PerpetualFuturesApi.ExchangeData.GetTickerAsync("ETH-USDT");
 Console.WriteLine(result.Data.First());</code></pre>
 
 		  <b id="idocs_example_symbols">Get Recent Trades</b><br />
-		  <p>Get the most recent trades for a spot symbol</p>
+		  <p>Get the most recent trades for a futures symbol</p>
 		  <pre><code>var bingXClient = new BingXRestClient();
 
 var result = await bingXClient.PerpetualFuturesApi.ExchangeData.GetRecentTradesAsync("ETH-USDT");

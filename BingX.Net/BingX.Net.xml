@@ -1034,6 +1034,11 @@
             Time in force
             </summary>
         </member>
+        <member name="F:BingX.Net.Enums.TimeInForce.PostOnly">
+            <summary>
+            Post only order
+            </summary>
+        </member>
         <member name="F:BingX.Net.Enums.TimeInForce.GoodTillCanceled">
             <summary>
             Good till canceled
