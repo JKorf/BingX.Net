@@ -8,6 +8,11 @@ namespace BingX.Net.Enums
     public enum TimeInForce
     {
         /// <summary>
+        /// Post only order
+        /// </summary>
+        [Map("PostOnly")]
+        PostOnly,
+        /// <summary>
         /// Good till canceled
         /// </summary>
         [Map("GTC")]
