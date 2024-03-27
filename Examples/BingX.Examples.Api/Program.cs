@@ -7,12 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add the Bybit services
+// Add the BingX services
 builder.Services.AddBingX();
 
 // OR to provide API credentials for accessing private endpoints, or setting other options:
 /*
-builder.Services.AddBybit(restOptions =>
+builder.Services.AddBingX(restOptions =>
 {
     restOptions.ApiCredentials = new ApiCredentials("<APIKEY>", "<APISECRET>");
     restOptions.RequestTimeout = TimeSpan.FromSeconds(5);
@@ -27,7 +27,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
-// Map the endpoints and inject the bybit rest client
+// Map the endpoints and inject the BingX rest client
 app.MapGet("/{Symbol}", async ([FromServices] IBingXRestClient client, string symbol) =>
 {
     var result = await client.SpotApi.ExchangeData.GetTickersAsync(symbol);
