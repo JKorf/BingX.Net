@@ -43,7 +43,7 @@ var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsyn
 });
 ```
 
-For information on the clients, dependency injection, response processing and more see the [documentation](https://jkorf.github.io/BingX.Net/), or have a look at the examples [here](https://github.com/JKorf/BingX.Net/tree/main/Examples) or [here](https://github.com/JKorf/CryptoExchange.Net/tree/master/Examples).
+For information on the clients, dependency injection, response processing and more see the [BingX.Net documentation](https://jkorf.github.io/BingX.Net), [CryptoExchange.Net documentation](https://jkorf.github.io/CryptoExchange.Net), or have a look at the examples [here](https://github.com/JKorf/BingX.Net/tree/main/Examples) or [here](https://github.com/JKorf/CryptoExchange.Net/tree/master/Examples).
 
 ## CryptoExchange.Net
 BingX.Net is based on the [CryptoExchange.Net](https://github.com/JKorf/CryptoExchange.Net) base library. Other exchange API implementations based on the CryptoExchange.Net base library are available and follow the same logic.
