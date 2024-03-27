@@ -26,13 +26,13 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public override Type? GetMessageType(IMessageAccessor message)
         {
             var identifier = message.GetValue<string>(_ePath);
-            if (identifier == "ACCOUNT_CONFIG_UPDATE")
+            if (string.Equals(identifier, "ACCOUNT_CONFIG_UPDATE", StringComparison.Ordinal))
                 return typeof(BingXConfigUpdate);
-            if (identifier == "ACCOUNT_UPDATE")
+            if (string.Equals(identifier, "ACCOUNT_UPDATE", StringComparison.Ordinal))
                 return typeof(BingXFuturesAccountUpdate);
-            if (identifier == "ORDER_TRADE_UPDATE")
+            if (string.Equals(identifier, "ORDER_TRADE_UPDATE", StringComparison.Ordinal))
                 return typeof(BingXFuturesOrderUpdateWrapper);
-            if (identifier == "listenKeyExpired")
+            if (string.Equals(identifier, "listenKeyExpired", StringComparison.Ordinal))
                 return typeof(BingXListenKeyExpiredUpdate);
 
             return null;

@@ -135,7 +135,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public override string? GetListenerIdentifier(IMessageAccessor message)
         {
-            if (!message.IsJson && message.GetOriginalString() == "Ping")
+            if (!message.IsJson && string.Equals(message.GetOriginalString(), "Ping", StringComparison.Ordinal))
                 return "Ping";
 
             var id = message.GetValue<string>(_idPath);
