@@ -2656,9 +2656,24 @@
             Transaction fee rate
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.MakerFeeRate">
+            <summary>
+            Maker fee rate
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.TakerFeeRate">
+            <summary>
+            Taker fee rate
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXContract.MinOrderQuantity">
             <summary>
             Min order quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.MinOrderValue">
+            <summary>
+            Trade minimal value in USDT
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXContract.MaxLongLeverage">
@@ -2694,6 +2709,16 @@
         <member name="P:BingX.Net.Objects.Models.BingXContract.ApiCanClose">
             <summary>
             Can close positions from API
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.EnsureTrigger">
+            <summary>
+            Whether to support guaranteed stop loss.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.TriggerFeeRate">
+            <summary>
+            The fee rate for guaranteed stop loss.
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXDeposit">
@@ -3884,6 +3909,26 @@
         <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.LiquidatedMarginRatio">
             <summary>
             Liquidation margin ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.TriggerPriceType">
+            <summary>
+            Stop price trigger type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Side">
+            <summary>
+            Trade side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.Type">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.PositionSide">
+            <summary>
+            Position side
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXId">

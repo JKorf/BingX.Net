@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BingX.Net.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -70,5 +71,25 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("liquidatedMarginRatio")]
         public decimal? LiquidatedMarginRatio { get; set; }
+        /// <summary>
+        /// Stop price trigger type
+        /// </summary>
+        [JsonPropertyName("workingType")]
+        public TriggerType? TriggerPriceType { get; set; }
+        /// <summary>
+        /// Trade side
+        /// </summary>
+        [JsonPropertyName("side")]
+        public OrderSide Side { get; set; }
+        /// <summary>
+        /// Order type
+        /// </summary>
+        [JsonPropertyName("type")]
+        public FuturesOrderType Type { get; set; }
+        /// <summary>
+        /// Position side
+        /// </summary>
+        [JsonPropertyName("positionSide")]
+        public PositionSide? PositionSide { get; set; }
     }
 }
