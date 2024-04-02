@@ -38,10 +38,25 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("feeRate")]
         public decimal FeeRate { get; set; }
         /// <summary>
+        /// Maker fee rate
+        /// </summary>
+        [JsonPropertyName("makerFeeRate")]
+        public decimal MakerFeeRate { get; set; }
+        /// <summary>
+        /// Taker fee rate
+        /// </summary>
+        [JsonPropertyName("takerFeeRate")]
+        public decimal TakerFeeRate { get; set; }
+        /// <summary>
         /// Min order quantity
         /// </summary>
-        [JsonPropertyName("tradeMinLimit")]
+        [JsonPropertyName("tradeMinQuantity")]
         public decimal MinOrderQuantity { get; set; }
+        /// <summary>
+        /// Trade minimal value in USDT
+        /// </summary>
+        [JsonPropertyName("tradeMinUSDT")]
+        public decimal MinOrderValue { get; set; }
         /// <summary>
         /// Max long leverage
         /// </summary>
@@ -77,5 +92,15 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("apiStateClose")]
         public bool ApiCanClose { get; set; }
+        /// <summary>
+        /// Whether to support guaranteed stop loss.
+        /// </summary>
+        [JsonPropertyName("ensureTrigger")]
+        public bool EnsureTrigger { get; set; }
+        /// <summary>
+        /// The fee rate for guaranteed stop loss.
+        /// </summary>
+        [JsonPropertyName("triggerFeeRate")]
+        public decimal TriggerFeeRate { get; set; }
     }
 }
