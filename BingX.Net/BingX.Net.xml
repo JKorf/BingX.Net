@@ -2926,6 +2926,11 @@
             Frozen margin
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesBalance.ShortUid">
+            <summary>
+            Short uid
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesAccountUpdate">
             <summary>
             Account update
@@ -4236,6 +4241,36 @@
             Max short position leverage
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverage.AvailableLongVolume">
+            <summary>
+            Available Long Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverage.AvailableShortVolume">
+            <summary>
+            Available Short Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverage.AvailableLongValue">
+            <summary>
+            Available Long Value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverage.AvailableShortValue">
+            <summary>
+            Available Short Value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverage.MaxPositionLongValue">
+            <summary>
+            Maximum Position Long Value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverage.MaxPositionShortValue">
+            <summary>
+            Maximum Position Short Value
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXLeverageResult">
             <summary>
             Set leverage result
@@ -4249,6 +4284,36 @@
         <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.Leverage">
             <summary>
             Leverage
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.AvailableLongVolume">
+            <summary>
+            Available Long Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.AvailableShortVolume">
+            <summary>
+            Available Short Volume
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.AvailableLongValue">
+            <summary>
+            Available Long Value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.AvailableShortValue">
+            <summary>
+            Available Short Value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.MaxPositionLongValue">
+            <summary>
+            Maximum Position Long Value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLeverageResult.MaxPositionShortValue">
+            <summary>
+            Maximum Position Short Value
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate">
@@ -4714,6 +4779,11 @@
         <member name="P:BingX.Net.Objects.Models.BingXPosition.LiquidationPrice">
             <summary>
             Liquidation price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.UpdateTime">
+            <summary>
+            Last update timestamp
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXPositionMode">

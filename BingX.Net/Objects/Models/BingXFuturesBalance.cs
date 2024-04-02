@@ -58,5 +58,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("freezedMargin")]
         public decimal FrozenMargin { get; set; }
+        /// <summary>
+        /// Short uid
+        /// </summary>
+        [JsonPropertyName("shortUid")]
+        public string? ShortUid { get; set; }
     }
 }

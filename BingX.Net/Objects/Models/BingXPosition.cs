@@ -1,4 +1,5 @@
 ﻿using BingX.Net.Enums;
+using System;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
@@ -73,5 +74,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("liquidationPrice")]
         public decimal LiquidationPrice { get; set; }
+        /// <summary>
+        /// Last update timestamp
+        /// </summary>
+        [JsonPropertyName("updateTime")]
+        public DateTime? UpdateTime { get; set; }
     }
 }

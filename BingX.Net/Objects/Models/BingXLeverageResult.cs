@@ -17,5 +17,35 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("leverage")]
         public int Leverage { get; set; }
+        /// <summary>
+        /// Available Long Volume
+        /// </summary>
+        [JsonPropertyName("availableLongVol")]
+        public decimal? AvailableLongVolume { get; set; }
+        /// <summary>
+        /// Available Short Volume
+        /// </summary>
+        [JsonPropertyName("availableShortVol")]
+        public decimal? AvailableShortVolume { get; set; }
+        /// <summary>
+        /// Available Long Value
+        /// </summary>
+        [JsonPropertyName("availableLongVal")]
+        public decimal? AvailableLongValue { get; set; }
+        /// <summary>
+        /// Available Short Value
+        /// </summary>
+        [JsonPropertyName("availableShortVal")]
+        public decimal? AvailableShortValue { get; set; }
+        /// <summary>
+        /// Maximum Position Long Value
+        /// </summary>
+        [JsonPropertyName("maxPositionLongVal")]
+        public decimal? MaxPositionLongValue { get; set; }
+        /// <summary>
+        /// Maximum Position Short Value
+        /// </summary>
+        [JsonPropertyName("maxPositionShortVal")]
+        public decimal? MaxPositionShortValue { get; set; }
     }
 }
