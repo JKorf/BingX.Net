@@ -28,12 +28,12 @@ namespace BingX.Net.Objects.Models
         /// Position size
         /// </summary>
         [JsonPropertyName("positionAmt")]
-        public string Size { get; set; } = string.Empty;
+        public decimal Size { get; set; }
         /// <summary>
         /// Availalbe quantity
         /// </summary>
         [JsonPropertyName("availableAmt")]
-        public string Available { get; set; } = string.Empty;
+        public decimal Available { get; set; }
         /// <summary>
         /// Position side
         /// </summary>
