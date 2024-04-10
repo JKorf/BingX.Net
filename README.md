@@ -120,5 +120,13 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.0.1 - 10 Apr 2024
+    * Added PostOnly TimeInForce enum value
+    * Updated PerpetualFuturesApi.ExchangeData.GetContractsAsync response model
+    * Updated PerpetualFuturesApi.Trading.GetUserTradesAsync response model
+    * Some other minor model updates
+    * Updated string comparison for improved performance
+    * Fixed property types on Position model
+
 * Version 1.0.0 - 25 Mar 2024
     * Initial release
