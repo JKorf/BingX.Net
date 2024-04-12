@@ -66,16 +66,16 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         internal async Task<WebCallResult> SendRequestInternal(Uri uri, HttpMethod method, CancellationToken cancellationToken,
             Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false)
+            ArrayParametersSerialization? arraySerialization = null)
         {
-            return await SendRequestAsync(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, weight, ignoreRatelimit: ignoreRateLimit).ConfigureAwait(false);
+            return await SendRequestAsync(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, 0).ConfigureAwait(false);
         }
 
         internal async Task<WebCallResult<T>> SendRequestInternal<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
             Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false, Dictionary<string, string>? additionalHeaders = null) where T : class
+            ArrayParametersSerialization? arraySerialization = null, Dictionary<string, string>? additionalHeaders = null) where T : class
         {
-            var result = await SendRequestAsync<BingXResult<T>>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, weight, ignoreRatelimit: ignoreRateLimit, additionalHeaders: additionalHeaders).ConfigureAwait(false);
+            var result = await SendRequestAsync<BingXResult<T>>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, 0, additionalHeaders: additionalHeaders).ConfigureAwait(false);
             if (!result.Success)
                 return result.As<T>(null);
 
@@ -87,9 +87,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         internal async Task<WebCallResult<T>> SendRequestInternalRaw<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
             Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null, int weight = 1, bool ignoreRateLimit = false) where T : class
+            ArrayParametersSerialization? arraySerialization = null) where T : class
         {
-            return await SendRequestAsync<T>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, weight, ignoreRatelimit: ignoreRateLimit).ConfigureAwait(false);
+            return await SendRequestAsync<T>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, 0).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

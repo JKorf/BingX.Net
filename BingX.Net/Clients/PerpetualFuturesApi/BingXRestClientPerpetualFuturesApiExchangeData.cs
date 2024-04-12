@@ -30,7 +30,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<DateTime>> GetServerTimeAsync(CancellationToken ct = default)
         {
-            var result = await _baseClient.SendRequestInternal<BingXServerTime>(_baseClient.GetUri("/openApi/swap/v2/server/time"), HttpMethod.Get, ct, ignoreRateLimit: true).ConfigureAwait(false);
+            var result = await _baseClient.SendRequestInternal<BingXServerTime>(_baseClient.GetUri("/openApi/swap/v2/server/time"), HttpMethod.Get, ct).ConfigureAwait(false);
             return result.As(result.Data?.ServerTime ?? default);
         }
 
