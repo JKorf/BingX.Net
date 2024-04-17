@@ -20,6 +20,7 @@ namespace BingX.Net.UnitTests.TestImplementations
         public event Func<Task> OnReconnected;
         public event Func<Task> OnReconnecting;
         public event Func<Exception, Task> OnError;
+        public event Func<int, Task> OnRequestRateLimited;
 #pragma warning restore 0067
         public event Func<int, Task> OnRequestSent;
         public event Action<WebSocketMessageType, ReadOnlyMemory<byte>> OnStreamMessage;
@@ -48,10 +49,10 @@ namespace BingX.Net.UnitTests.TestImplementations
         public TimeSpan KeepAliveInterval { get; set; }
         public Func<Task<Uri>> GetReconnectionUrl { get; set; }
 
-        public Task<bool> ConnectAsync()
+        public Task<CallResult> ConnectAsync()
         {
             Connected = CanConnect;
-            return Task.FromResult(CanConnect);
+            return Task.FromResult(CanConnect ? new CallResult(null) : new CallResult(new CantConnectError()));
         }
 
         public void Send(int requestId, string data, int weight)
