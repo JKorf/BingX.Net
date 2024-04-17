@@ -14,7 +14,7 @@ namespace BingX.Net.UnitTests
         private JsonToObjectComparer<IBingXRestClient> _comparer = new JsonToObjectComparer<IBingXRestClient>((json) => TestHelpers.CreateResponseClient(json, options =>
         {
             options.ApiCredentials = new ApiCredentials("123", "123");
-            options.RatelimiterEnabled = false;
+            options.RateLimiterEnabled = false;
             options.SpotOptions.AutoTimestamp = false;
             options.FuturesOptions.AutoTimestamp = false;
         }));

@@ -20,9 +20,9 @@ namespace BingX.Net.UnitTests.TestImplementations
         public event Func<Task> OnReconnected;
         public event Func<Task> OnReconnecting;
         public event Func<Exception, Task> OnError;
+        public event Func<int, Task> OnRequestRateLimited;
 #pragma warning restore 0067
         public event Func<int, Task> OnRequestSent;
-        public event Func<int, Task> OnRequestRateLimited;
         public event Action<WebSocketMessageType, ReadOnlyMemory<byte>> OnStreamMessage;
         public event Func<Task> OnOpen;
 
