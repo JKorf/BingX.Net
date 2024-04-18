@@ -120,6 +120,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.0.2 - 18 Apr 2024
+    * Updated CryptoExchange.Net, see https://github.com/JKorf/CryptoExchange.Net?tab=readme-ov-file#release-notes for release notes
+
 * Version 1.0.1 - 10 Apr 2024
     * Added PostOnly TimeInForce enum value
     * Updated PerpetualFuturesApi.ExchangeData.GetContractsAsync response model
