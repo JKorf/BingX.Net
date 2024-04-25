@@ -10,6 +10,15 @@ namespace BingX.Net.Interfaces
     public interface IBingXOrderBookFactory
     {
         /// <summary>
+        /// Spot order book factory methods
+        /// </summary>
+        public IOrderBookFactory<BingXOrderBookOptions> Spot { get; }
+        /// <summary>
+        /// Perpetual Futures order book factory methods
+        /// </summary>
+        public IOrderBookFactory<BingXOrderBookOptions> PerpetualFutures { get; }
+
+        /// <summary>
         /// Create a new futures local order book instance
         /// </summary>
         /// <param name="symbol"></param>
