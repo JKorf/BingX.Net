@@ -39,6 +39,26 @@
             <param name="swapSocketAddress"></param>
             <returns></returns>
         </member>
+        <member name="T:BingX.Net.BingXExchange">
+            <summary>
+            BingX exchange information and configuration
+            </summary>
+        </member>
+        <member name="P:BingX.Net.BingXExchange.ExchangeName">
+            <summary>
+            Exchange name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.BingXExchange.Url">
+            <summary>
+            Url to the main website
+            </summary>
+        </member>
+        <member name="P:BingX.Net.BingXExchange.ApiDocsUrl">
+            <summary>
+            Urls to the API documentation
+            </summary>
+        </member>
         <member name="T:BingX.Net.Clients.BingXRestClient">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.IBingXRestClient" />
         </member>
