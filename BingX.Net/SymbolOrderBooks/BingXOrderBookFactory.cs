@@ -24,7 +24,7 @@ namespace BingX.Net.SymbolOrderBooks
         {
             _serviceProvider = serviceProvider;
 
-            Spot = new OrderBookFactory<BingXOrderBookOptions>((symbol, options) => CreateSpot(symbol, options), (baseAsset, quoteAsset, options) => CreateSpot(baseAsset + quoteAsset, options));
+            Spot = new OrderBookFactory<BingXOrderBookOptions>((symbol, options) => CreateSpot(symbol, options), (baseAsset, quoteAsset, options) => CreateSpot(baseAsset + "-" + quoteAsset, options));
             PerpetualFutures = new OrderBookFactory<BingXOrderBookOptions>((symbol, options) => CreatePerpetualFutures(symbol, options), (baseAsset, quoteAsset, options) => CreatePerpetualFutures(baseAsset + quoteAsset, options));
         }
 
