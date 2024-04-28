@@ -5,6 +5,7 @@ using System;
 using BingX.Net.Interfaces;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
+using CryptoExchange.Net.OrderBook;
 
 namespace BingX.Net.SymbolOrderBooks
 {
@@ -22,7 +23,15 @@ namespace BingX.Net.SymbolOrderBooks
         public BingXOrderBookFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+
+            Spot = new OrderBookFactory<BingXOrderBookOptions>((symbol, options) => CreateSpot(symbol, options), (baseAsset, quoteAsset, options) => CreateSpot(baseAsset + "-" + quoteAsset, options));
+            PerpetualFutures = new OrderBookFactory<BingXOrderBookOptions>((symbol, options) => CreatePerpetualFutures(symbol, options), (baseAsset, quoteAsset, options) => CreatePerpetualFutures(baseAsset + quoteAsset, options));
         }
+
+        /// <inheritdoc />
+        public IOrderBookFactory<BingXOrderBookOptions> Spot { get; }
+        /// <inheritdoc />
+        public IOrderBookFactory<BingXOrderBookOptions> PerpetualFutures { get; }
 
         /// <inheritdoc />
         public ISymbolOrderBook CreateSpot(string symbol, Action<BingXOrderBookOptions>? options = null)

@@ -60,7 +60,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddTransient<ICryptoRestClient, CryptoRestClient>();
             services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
-            services.AddSingleton<IBingXOrderBookFactory, BingXOrderBookFactory>();
+            services.AddTransient<IBingXOrderBookFactory, BingXOrderBookFactory>();
             services.AddTransient(x => x.GetRequiredService<IBingXRestClient>().SpotApi.CommonSpotClient);
             if (socketClientLifeTime == null)
                 services.AddSingleton<IBingXSocketClient, BingXSocketClient>();

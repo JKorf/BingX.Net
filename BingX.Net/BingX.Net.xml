@@ -39,6 +39,26 @@
             <param name="swapSocketAddress"></param>
             <returns></returns>
         </member>
+        <member name="T:BingX.Net.BingXExchange">
+            <summary>
+            BingX exchange information and configuration
+            </summary>
+        </member>
+        <member name="P:BingX.Net.BingXExchange.ExchangeName">
+            <summary>
+            Exchange name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.BingXExchange.Url">
+            <summary>
+            Url to the main website
+            </summary>
+        </member>
+        <member name="P:BingX.Net.BingXExchange.ApiDocsUrl">
+            <summary>
+            Urls to the API documentation
+            </summary>
+        </member>
         <member name="T:BingX.Net.Clients.BingXRestClient">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.IBingXRestClient" />
         </member>
@@ -121,6 +141,9 @@
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.ExchangeName">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.FormatSymbol(System.String,System.String)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateSerializer">
@@ -289,6 +312,9 @@
             ctor
             </summary>
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.FormatSymbol(System.String,System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
@@ -355,6 +381,9 @@
             <summary>
             Event triggered when an order is canceled via this client. Note that this does not trigger when using CancelAllOrdersAsync. Only available for Spot orders
             </summary>
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.FormatSymbol(System.String,System.String)">
+            <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CreateSerializer">
             <inheritdoc />
@@ -508,6 +537,9 @@
             </summary>
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.FormatSymbol(System.String,System.String)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateSerializer">
@@ -2243,6 +2275,16 @@
         <member name="T:BingX.Net.Interfaces.IBingXOrderBookFactory">
             <summary>
             BingX local order book factory
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.IBingXOrderBookFactory.Spot">
+            <summary>
+            Spot order book factory methods
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.IBingXOrderBookFactory.PerpetualFutures">
+            <summary>
+            Perpetual Futures order book factory methods
             </summary>
         </member>
         <member name="M:BingX.Net.Interfaces.IBingXOrderBookFactory.CreatePerpetualFutures(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
@@ -5459,6 +5501,12 @@
             ctor
             </summary>
             <param name="serviceProvider">Service provider for resolving logging and clients</param>
+        </member>
+        <member name="P:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.Spot">
+            <inheritdoc />
+        </member>
+        <member name="P:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.PerpetualFutures">
+            <inheritdoc />
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.CreateSpot(System.String,System.Action{BingX.Net.Objects.Options.BingXOrderBookOptions})">
             <inheritdoc />

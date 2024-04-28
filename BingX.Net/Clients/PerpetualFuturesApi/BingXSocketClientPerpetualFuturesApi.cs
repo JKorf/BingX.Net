@@ -45,6 +45,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         /// <inheritdoc />
+        public override string FormatSymbol(string baseAsset, string quoteAsset) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+
+        /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
             => new BingXAuthenticationProvider(credentials);
 
