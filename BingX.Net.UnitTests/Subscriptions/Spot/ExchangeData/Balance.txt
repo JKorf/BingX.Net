@@ -1,0 +1,22 @@
+> { "id": "|1|", "reqType": "sub", "dataType": "ACCOUNT_UPDATE" }
+< { "id": "|1|", "code": 0, "msg": "" }
+= 
+{
+  "code": 0,
+  "dataType": "ACCOUNT_UPDATE",
+  "success": true,
+	"data": {
+	  "e": "",
+	  "E": 1709889719098,
+	  "T": 1709889719098,
+	  "a": {
+		  "B": {
+			  "a": "BTC-USDT",
+			  "bc": "123",
+			  "cw": "123",
+			  "wb": "123"
+			},
+		  "m": ""
+		}
+	}
+}
