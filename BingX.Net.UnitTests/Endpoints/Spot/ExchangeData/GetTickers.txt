@@ -1,0 +1,26 @@
+GET
+/openApi/spot/v1/ticker/24hr
+false
+{
+  "code": 0,
+  "timestamp": 1707147866795,
+  "data": [
+    {
+      "symbol": "BTC-USDT",
+      "openPrice": 42827.65,
+      "highPrice": 42893.56,
+      "lowPrice": 41648.71,
+      "lastPrice": 42215.15,
+      "priceChange": 1244.85,
+      "priceChangePercent": "2.91%",
+      "volume": 5099.21,
+      "quoteVolume": 214948771.34,
+      "openTime": 1702634423624,
+      "closeTime": 1702720823624,
+      "askPrice": 42215.55,
+      "askQty": 2.20125,
+      "bidPrice": 42214.65,
+      "bidQty": 0.8962
+    }
+  ]
+}

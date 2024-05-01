@@ -133,7 +133,7 @@ namespace BingX.Net.Clients.SpotApi
         public ISpotClient CommonSpotClient => this;
 
         /// <inheritdoc />
-        protected override void WriteParamBody(IRequest request, SortedDictionary<string, object> parameters, string contentType)
+        protected override void WriteParamBody(IRequest request, IDictionary<string, object> parameters, string contentType)
         {
             var stringData = parameters.CreateParamString(false, ArraySerialization);
             request.SetContent(stringData, contentType);

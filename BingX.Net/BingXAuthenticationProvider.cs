@@ -18,21 +18,21 @@ namespace BingX.Net
         {
         }
 
-        public override void AuthenticateRequest(RestApiClient apiClient, Uri uri, HttpMethod method, Dictionary<string, object> providedParameters, bool auth, ArrayParametersSerialization arraySerialization, HttpMethodParameterPosition parameterPosition, RequestBodyFormat bodyFormat, out SortedDictionary<string, object> uriParameters, out SortedDictionary<string, object> bodyParameters, out Dictionary<string, string> headers)
+        public override void AuthenticateRequest(RestApiClient apiClient, Uri uri, HttpMethod method, IDictionary<string, object> uriParams, IDictionary<string, object> bodyParams, Dictionary<string, string> headers, bool auth, ArrayParametersSerialization arraySerialization, HttpMethodParameterPosition parameterPosition, RequestBodyFormat bodyFormat)
         {
-            uriParameters = parameterPosition == HttpMethodParameterPosition.InUri ? new SortedDictionary<string, object>(providedParameters) : new SortedDictionary<string, object>();
-            bodyParameters = parameterPosition == HttpMethodParameterPosition.InBody ? new SortedDictionary<string, object>(providedParameters) : new SortedDictionary<string, object>();
-            headers = new Dictionary<string, string>() { };
-
             if (!auth)
                 return;
 
             headers.Add("X-BX-APIKEY", GetApiKey());
-            var parameters = parameterPosition == HttpMethodParameterPosition.InUri ? uriParameters : bodyParameters;
+            var parameters = parameterPosition == HttpMethodParameterPosition.InUri ? uriParams : bodyParams;
             var timestamp = DateTimeConverter.ConvertToMilliseconds(GetTimestamp(apiClient)).Value;
             parameters.Add("timestamp", timestamp);
-            var receiveWindow = ((BingXRestOptions)apiClient.ClientOptions).ReceiveWindow ?? TimeSpan.FromSeconds(5);
-            parameters.Add("recvWindow", (int)receiveWindow.TotalMilliseconds);
+            if (!parameters.ContainsKey("recvWindow"))
+            {
+                var receiveWindow = ((BingXRestOptions)apiClient.ClientOptions).ReceiveWindow ?? TimeSpan.FromSeconds(5);
+                parameters.Add("recvWindow", (int)receiveWindow.TotalMilliseconds);
+            }
+
             var parameterSignData = parameters.CreateParamString(true, arraySerialization);
             parameters.Add("signature", SignHMACSHA256(parameterSignData, SignOutputType.Hex));
         }

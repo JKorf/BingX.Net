@@ -6,6 +6,11 @@ using System.Reflection;
 using System.Diagnostics;
 using BingX.Net.Clients;
 using NUnit.Framework.Legacy;
+using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Clients;
+using System.Net.Http;
+using System.Collections.Generic;
+using CryptoExchange.Net.Converters.JsonNet;
 
 namespace BingX.Net.UnitTests
 {
@@ -13,25 +18,36 @@ namespace BingX.Net.UnitTests
     public class BingXRestClientTests
     {
         [Test]
-        public void CheckRestInterfaces()
+        public void CheckSignatureExample1()
         {
-            var assembly = Assembly.GetAssembly(typeof(BingXRestClient));
-            var ignore = new string[] { };
-            var clientInterfaces = assembly.GetTypes().Where(t => t.Name.StartsWith("IBingXRestClient") && !ignore.Contains(t.Name));
+            var authProvider = new BingXAuthenticationProvider(new ApiCredentials("hO6oQotzTE0S5FRYze2Jx2wGx7eVnJGMolpA1nZyehsoMgCcgKNWQHd4QgTFZuwl4Zt4xMe2PqGBegWXO4A", "mheO6dR8ovSsxZQCOYEFCtelpuxcWGTfHw7te326y6jOwq5WpvFQ9JNljoTwBXZGv5It07m9RXSPpDQEK2w"));
+            var client = (RestApiClient)new BingXRestClient().SpotApi;
 
-            foreach (var clientInterface in clientInterfaces)
-            {
-                var implementation = assembly.GetTypes().Single(t => t.IsAssignableTo(clientInterface) && t != clientInterface);
-                int methods = 0;
-                foreach (var method in implementation.GetMethods().Where(m => m.ReturnType.IsAssignableTo(typeof(Task))))
+            CryptoExchange.Net.Testing.TestHelpers.CheckSignature(
+                client,
+                authProvider,
+                HttpMethod.Post,
+                "",
+                (uriParams, bodyParams, headers) =>
                 {
-                    var interfaceMethod = clientInterface.GetMethod(method.Name, method.GetParameters().Select(p => p.ParameterType).ToArray());
-                    ClassicAssert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.Name}");
-                    methods++;
-                }
-                Debug.WriteLine($"{clientInterface.Name} {methods} methods validated");
-            }
+                    return bodyParams["signature"].ToString();
+                },
+                "8D0D3EA9B592BE3678C33332AB13E9102E093E67255921E15A581146C87C272F",
+                new Dictionary<string, object>
+                {
+                    { "recvWindow", 0 },
+                    { "subAccountString", "abc12345" },
+                },
+                DateTimeConverter.ParseFromLong(1696751141337),
+                true,
+                false);
         }
 
+        [Test]
+        public void CheckInterfaces()
+        {
+            CryptoExchange.Net.Testing.TestHelpers.CheckForMissingRestInterfaces<BingXRestClient>();
+            CryptoExchange.Net.Testing.TestHelpers.CheckForMissingSocketInterfaces<BingXSocketClient>();
+        }
     }
 }

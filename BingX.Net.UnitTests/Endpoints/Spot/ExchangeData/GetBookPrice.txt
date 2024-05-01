@@ -1,0 +1,18 @@
+GET
+/openApi/spot/v1/ticker/bookTicker
+false
+{
+  "code": 0,
+  "timestamp": 1707147866795,
+  "data": [
+    {
+      "eventType": "bookTicker",
+      "time": 1707147866623,
+      "symbol": "BTC-USDT",
+      "bidPrice": "42738.64",
+      "bidVolume": "5.19530",
+      "askPrice": "42739.50",
+      "askVolume": "5.72867"
+    }
+  ]
+}

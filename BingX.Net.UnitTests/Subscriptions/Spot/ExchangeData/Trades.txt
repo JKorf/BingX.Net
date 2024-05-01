@@ -1,0 +1,18 @@
+> { "id": "|1|", "reqType": "sub", "dataType": "BTC-USDT@trade" }
+< { "id": "|1|", "code": 0, "msg": "" }
+= 
+{
+  "code": 0,
+  "dataType": "BTC-USDT@trade",
+  "Success": true,
+  "data": {
+	  "e": "trade",
+	  "E": "1649832413551",
+	  "s": "BTC-USDT",
+	  "t": "33685717",
+	  "p": "40125.48",
+	  "q": "0.007146",
+	  "T": "1649832413512",
+	  "m": "true"
+	}
+}
