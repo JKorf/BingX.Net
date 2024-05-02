@@ -1,0 +1,4 @@
+POST
+/openApi/user/auth/userDataStream
+false
+{"listenKey":"a8ea75681542e66f1a50a1616dd06ed77dab61baa0c296bca03a9b13ee5f2dd7"}

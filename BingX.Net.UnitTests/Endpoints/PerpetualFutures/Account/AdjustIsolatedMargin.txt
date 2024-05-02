@@ -1,0 +1,9 @@
+POST
+/openApi/swap/v2/trade/positionMargin
+true
+{
+  "code": 0,
+  "msg": "",
+  "amount": 3,
+  "type": 1
+}

@@ -1,0 +1,40 @@
+POST
+/openApi/spot/v1/trade/cancelOpenOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "orders": [
+      {
+        "symbol": "GM-USDT",
+        "orderId": 1735964997957275600,
+        "transactTime": 1702721242701,
+        "price": "0.00000398",
+        "stopPrice": "0.00000398",
+        "origQty": "8061558",
+        "executedQty": "0",
+        "cummulativeQuoteQty": "0",
+        "status": "CANCELED",
+        "type": "LIMIT",
+        "side": "SELL",
+        "clientOrderID": "2most51702721242645506402"
+      },
+      {
+        "symbol": "GM-USDT",
+        "orderId": 1735965127519326200,
+        "transactTime": 1702721249787,
+        "price": "0.00000398",
+        "stopPrice": "0.00000398",
+        "origQty": "5806281",
+        "executedQty": "0",
+        "cummulativeQuoteQty": "0",
+        "status": "CANCELED",
+        "type": "LIMIT",
+        "side": "SELL",
+        "clientOrderID": "2most51702721249647382871"
+      }
+    ]
+  }
+}

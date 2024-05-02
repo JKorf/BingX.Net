@@ -5,13 +5,8 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Price update
     /// </summary>
-    public record BingXPriceUpdate
+    public record BingXPriceUpdate : BingXSocketUpdate
     {
-        /// <summary>
-        /// Event name
-        /// </summary>
-        [JsonPropertyName("e")]
-        public string Event { get; set; } = string.Empty;
         /// <summary>
         /// Symbol
         /// </summary>

@@ -41,7 +41,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Whether buyer was the maker
         /// </summary>
-        [JsonPropertyName("buyerMaker")]
+        [JsonPropertyName("isBuyerMaker")]
         public bool BuyerIsMaker { get; set; }
     }
 }

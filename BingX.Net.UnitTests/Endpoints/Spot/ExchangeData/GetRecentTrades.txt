@@ -1,0 +1,44 @@
+GET
+/openApi/spot/v1/market/trades
+false
+{
+  "code": 0,
+  "timestamp": 1702720325973,
+  "data": [
+    {
+      "id": 76909154,
+      "price": 42195.21,
+      "qty": 0.00195,
+      "time": 1702720325553,
+      "buyerMaker": true
+    },
+    {
+      "id": 76909153,
+      "price": 42195.31,
+      "qty": 0.00139,
+      "time": 1702720325552,
+      "buyerMaker": true
+    },
+    {
+      "id": 76909152,
+      "price": 42195.48,
+      "qty": 0.00177,
+      "time": 1702720325552,
+      "buyerMaker": false
+    },
+    {
+      "id": 76909151,
+      "price": 42195.15,
+      "qty": 0.00247,
+      "time": 1702720324643,
+      "buyerMaker": true
+    },
+    {
+      "id": 76909150,
+      "price": 42195.25,
+      "qty": 0.02968,
+      "time": 1702720324643,
+      "buyerMaker": true
+    }
+  ]
+}

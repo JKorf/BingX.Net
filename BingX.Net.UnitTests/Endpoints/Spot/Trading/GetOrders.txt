@@ -1,0 +1,28 @@
+GET
+/openApi/spot/v1/trade/historyOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "orders": [
+      {
+        "symbol": "SWCH-USDT",
+        "orderId": 1735966927102231300,
+        "price": "0.8548",
+        "StopPrice": "0",
+        "origQty": "5.9",
+        "executedQty": "1.1",
+        "cummulativeQuoteQty": "0.9402800000000001",
+        "status": "CANCELED",
+        "type": "LIMIT",
+        "side": "SELL",
+        "time": 1702721743000,
+        "updateTime": 1702721743000,
+        "origQuoteOrderQty": "0",
+        "fee": 0
+      }
+    ]
+  }
+}

@@ -128,6 +128,9 @@ namespace BingX.Net.Clients.SpotApi
             };
             parameters.AddEnum("type", tranferType);
             var result = await _baseClient.SendRequestInternalRaw<BingXTransactionResult>(_baseClient.GetUri("/openApi/api/v3/post/asset/transfer"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+            if (!result)
+                return result;
+
             if (result.Data == null)
                 return result.AsError<BingXTransactionResult>(new ServerError("Transfer failed"));
             return result;
@@ -152,7 +155,7 @@ namespace BingX.Net.Clients.SpotApi
 
         #endregion
 
-        #region Transfer
+        #region Transfer Internal
 
         /// <inheritdoc />
         public async Task<WebCallResult<BingXId>> TransferInternalAsync(string asset, AccountIdentifierType targetAccountType, string targetAccount, decimal quantity, AccountType accountType, string? areaCode = null, string? clientOrderId = null, CancellationToken ct = default)
@@ -196,7 +199,7 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<string>> StartUserStreamAsync(CancellationToken ct = default)
         {
-            var result = await _baseClient.SendRequestInternalRaw<BingXListenKey>(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Post, ct, null, true).ConfigureAwait(false);
+            var result = await _baseClient.SendRequestInternalRaw<BingXListenKey>(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Post, ct, null, false).ConfigureAwait(false);
             return result.As<string>(result.Data?.ListenKey);
         }
 
@@ -211,7 +214,7 @@ namespace BingX.Net.Clients.SpotApi
             {
                 { "listenKey", listenKey }
             };
-            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Put, ct, parameters, true).ConfigureAwait(false);
+            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Put, ct, parameters, false).ConfigureAwait(false);
         }
 
         #endregion
@@ -225,7 +228,7 @@ namespace BingX.Net.Clients.SpotApi
             {
                 { "listenKey", listenKey }
             };
-            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Delete, ct, parameters, true).ConfigureAwait(false);
+            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Delete, ct, parameters, false).ConfigureAwait(false);
         }
 
         #endregion

@@ -1,0 +1,10 @@
+POST
+/openApi/wallets/v1/capital/innerTransfer/apply
+true
+{
+  "code": 0,
+  "timestamp": 1702558152381,
+  "data": {
+    "id": "121"
+  }
+}

@@ -1,0 +1,24 @@
+GET
+/openApi/swap/v2/user/positions
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "positionId": "1735*****52",
+      "symbol": "BNB-USDT",
+      "currency": "USDT",
+      "positionAmt": "0.20",
+      "availableAmt": "0.20",
+      "positionSide": "SHORT",
+      "isolated": true,
+      "avgPrice": "246.43",
+      "initialMargin": "9.7914",
+      "leverage": 5,
+      "unrealizedProfit": "-0.0653",
+      "realisedProfit": "-0.0251",
+      "liquidationPrice": 294.16914617776246
+    }
+  ]
+}

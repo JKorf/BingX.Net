@@ -102,10 +102,10 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
             string listenKey,
-            Action<DataEvent<BingXFuturesAccountUpdate>> onAccountUpdate,
-            Action<DataEvent<BingXFuturesOrderUpdate>> onOrderUpdate,
-            Action<DataEvent<BingXConfigUpdate>> onConfigurationUpdate,
-            Action<DataEvent<BingXListenKeyExpiredUpdate>> onListenKeyExpiredUpdate,
+            Action<DataEvent<BingXFuturesAccountUpdate>>? onAccountUpdate = null,
+            Action<DataEvent<BingXFuturesOrderUpdate>>? onOrderUpdate = null,
+            Action<DataEvent<BingXConfigUpdate>>? onConfigurationUpdate = null,
+            Action<DataEvent<BingXListenKeyExpiredUpdate>>? onListenKeyExpiredUpdate = null,
             CancellationToken ct = default);
     }
 }

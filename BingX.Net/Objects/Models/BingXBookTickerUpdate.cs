@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
@@ -32,5 +33,15 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("A")]
         public decimal BestAskQuantity { get; set; }
+        /// <summary>
+        /// Last update id
+        /// </summary>
+        [JsonPropertyName("u")]
+        public long? UpdateId { get; set; }
+        /// <summary>
+        /// Last update time
+        /// </summary>
+        [JsonPropertyName("T")]
+        public DateTime? UpdateTime { get; set; }
     }
 }

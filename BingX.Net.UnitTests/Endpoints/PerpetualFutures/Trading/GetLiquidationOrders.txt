@@ -1,0 +1,51 @@
+GET
+/openApi/swap/v2/trade/forceOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "orders": [
+      {
+        "symbol": "ATOM-USDT",
+        "orderId": 17226485464302233,
+        "side": "SELL",
+        "positionSide": "LONG",
+        "type": "LIMIT",
+        "origQty": "2.36",
+        "price": "8.096",
+        "executedQty": "2.36",
+        "avgPrice": "8.095",
+        "cumQuote": "19",
+        "stopPrice": "",
+        "profit": "-0.9346",
+        "commission": "-0.009553",
+        "status": "FILLED",
+        "time": 1699546393000,
+        "updateTime": 1699546393000,
+        "clientOrderId": "",
+        "leverage": "21X",
+        "takeProfit": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "stopLoss": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "advanceAttr": 0,
+        "positionID": 0,
+        "takeProfitEntrustPrice": 0,
+        "stopLossEntrustPrice": 0,
+        "orderType": "",
+        "workingType": "MARK_PRICE"
+      }
+    ]
+  }
+}

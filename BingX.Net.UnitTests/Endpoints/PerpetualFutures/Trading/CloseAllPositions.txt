@@ -1,0 +1,13 @@
+POST
+/openApi/swap/v2/trade/closeAllPositions
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "success": [
+      1736008778921491200
+    ],
+    "failed": null
+  }
+}

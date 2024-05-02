@@ -290,7 +290,7 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetLiquidationOrdersAsync(System.String,System.Nullable{BingX.Net.Enums.AutoCloseType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetClosedOrderAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetClosedOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Threading.CancellationToken)">
@@ -1631,7 +1631,7 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetClosedOrderAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetClosedOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get closed orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
@@ -2448,6 +2448,61 @@
             Balance update
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceUpdate.UpdateTime">
+            <summary>
+            Timestamp of the update
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceUpdate.EventData">
+            <summary>
+            Event info
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXBalanceItems">
+            <summary>
+            Balance change event data
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceItems.Balances">
+            <summary>
+            Changed balances
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceItems.UpdateType">
+            <summary>
+            The event that caused the update
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXBalanceItem">
+            <summary>
+            Balance update item
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceItem.Asset">
+            <summary>
+            Asset name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceItem.BalanceChange">
+            <summary>
+            Balance change
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceItem.NewBalance">
+            <summary>
+            New balance
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceItem.Total">
+            <summary>
+            Total balance
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBalanceItem.Locked">
+            <summary>
+            Locked balance
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXBookTicker">
             <summary>
             Best book prices
@@ -2516,6 +2571,16 @@
         <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.BestAskQuantity">
             <summary>
             Best ask quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.UpdateId">
+            <summary>
+            Last update id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXBookTickerUpdate.UpdateTime">
+            <summary>
+            Last update time
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXCancelAfterResult">
@@ -3293,6 +3358,36 @@
             Close position
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesOrderBook">
+            <summary>
+            Order book info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderBook.Bids">
+            <summary>
+            List of bids where quantity is in contracts
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderBook.Asks">
+            <summary>
+            List of asks where quantity is in contracts
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderBook.BidsAsset">
+            <summary>
+            List of bids where quantity is in the quote asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderBook.AsksAsset">
+            <summary>
+            List of asks where quantity is in the quote asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderBook.Timestamp">
+            <summary>
+            Timestamp of the data
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesOrderDetails">
             <summary>
             Order info
@@ -3418,6 +3513,16 @@
             Trigger price
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.TrailingStopRate">
+            <summary>
+            Trailing stop rate
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.TrailingStopDistance">
+            <summary>
+            Trailing stop distance
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.ClosePosition">
             <summary>
             Close position
@@ -3431,6 +3536,16 @@
         <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.TakeProfit">
             <summary>
             Take profit order info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.TriggerOrderId">
+            <summary>
+            Trigger order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.PostOnly">
+            <summary>
+            Is post onlyorder
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXStopOrder">
@@ -3461,6 +3576,11 @@
         <member name="P:BingX.Net.Objects.Models.BingXStopOrder.TriggerType">
             <summary>
             Trigger type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXStopOrder.StopGuaranteed">
+            <summary>
+            Stop guarenteed
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesOrderUpdate">
@@ -4843,11 +4963,6 @@
             Price update
             </summary>
         </member>
-        <member name="P:BingX.Net.Objects.Models.BingXPriceUpdate.Event">
-            <summary>
-            Event name
-            </summary>
-        </member>
         <member name="P:BingX.Net.Objects.Models.BingXPriceUpdate.Symbol">
             <summary>
             Symbol
@@ -5213,6 +5328,11 @@
             Asset
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTransfer.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXTransfer.Quantity">
             <summary>
             Quantity transfered
@@ -5437,6 +5557,31 @@
             <summary>
             Options for the Futures API
             </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription">
+            <inheritdoc />
+        </member>
+        <member name="P:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.ListenerIdentifiers">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}})">
+            <summary>
+            ctor
+            </summary>
+            <param name="logger"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetUnsubQuery">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+            <inheritdoc />
         </member>
         <member name="T:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1">
             <inheritdoc />

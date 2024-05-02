@@ -70,7 +70,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<string>> StartUserStreamAsync(CancellationToken ct = default)
         {
-            var result = await _baseClient.SendRequestInternalRaw<BingXListenKey>(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Post, ct, null, true).ConfigureAwait(false);
+            var result = await _baseClient.SendRequestInternalRaw<BingXListenKey>(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Post, ct, null).ConfigureAwait(false);
             return result.As<string>(result.Data?.ListenKey);
         }
 
@@ -85,7 +85,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "listenKey", listenKey }
             };
-            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Put, ct, parameters, true).ConfigureAwait(false);
+            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Put, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -99,7 +99,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "listenKey", listenKey }
             };
-            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Delete, ct, parameters, true).ConfigureAwait(false);
+            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/user/auth/userDataStream"), HttpMethod.Delete, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -121,14 +121,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Set Margin Mode
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXMarginMode>> SetMarginModeAsync(string symbol, MarginMode marginMode, CancellationToken ct = default)
+        public async Task<WebCallResult> SetMarginModeAsync(string symbol, MarginMode marginMode, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection
             {
                 { "symbol", symbol }
             };
             parameters.AddEnum("marginType", marginMode);
-            return await _baseClient.SendRequestInternal<BingXMarginMode>(_baseClient.GetUri("/openApi/swap/v2/trade/marginType"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/swap/v2/trade/marginType"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
         }
 
         #endregion
@@ -166,7 +166,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Set Isolated Margin
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXIsolatedMarginResult>> AdjustIsolatedMarginAsync(string symbol, decimal quantity, AdjustDirection direction, PositionSide side, CancellationToken ct = default)
+        public async Task<WebCallResult> AdjustIsolatedMarginAsync(string symbol, decimal quantity, AdjustDirection direction, PositionSide side, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection
             {
@@ -175,7 +175,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameters.AddEnum("type", direction);
             parameters.AddEnum("positionSide", side);
-            return await _baseClient.SendRequestInternal<BingXIsolatedMarginResult>(_baseClient.GetUri("/openApi/swap/v2/trade/positionMargin"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+            return await _baseClient.SendRequestInternal(_baseClient.GetUri("/openApi/swap/v2/trade/positionMargin"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
         }
 
         #endregion

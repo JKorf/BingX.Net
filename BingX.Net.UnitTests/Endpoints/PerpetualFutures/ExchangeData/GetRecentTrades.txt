@@ -1,0 +1,79 @@
+GET
+/openApi/swap/v2/quote/trades
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "time": 1702719269849,
+      "isBuyerMaker": true,
+      "price": "42214.0",
+      "qty": "0.0248",
+      "quoteQty": "1046.91"
+    },
+    {
+      "time": 1702719269559,
+      "isBuyerMaker": false,
+      "price": "42214.1",
+      "qty": "0.4985",
+      "quoteQty": "21043.73"
+    },
+    {
+      "time": 1702719269274,
+      "isBuyerMaker": true,
+      "price": "42213.9",
+      "qty": "0.0394",
+      "quoteQty": "1663.23"
+    },
+    {
+      "time": 1702719268954,
+      "isBuyerMaker": false,
+      "price": "42214.4",
+      "qty": "0.1116",
+      "quoteQty": "4711.13"
+    },
+    {
+      "time": 1702719268253,
+      "isBuyerMaker": true,
+      "price": "42214.5",
+      "qty": "0.4476",
+      "quoteQty": "18895.21"
+    },
+    {
+      "time": 1702719267963,
+      "isBuyerMaker": false,
+      "price": "42215.2",
+      "qty": "0.0708",
+      "quoteQty": "2988.84"
+    },
+    {
+      "time": 1702719267148,
+      "isBuyerMaker": false,
+      "price": "42215.8",
+      "qty": "0.6055",
+      "quoteQty": "25561.67"
+    },
+    {
+      "time": 1702719265743,
+      "isBuyerMaker": false,
+      "price": "42216.1",
+      "qty": "0.2031",
+      "quoteQty": "8574.09"
+    },
+    {
+      "time": 1702719265463,
+      "isBuyerMaker": false,
+      "price": "42216.1",
+      "qty": "0.0160",
+      "quoteQty": "675.46"
+    },
+    {
+      "time": 1702719265198,
+      "isBuyerMaker": true,
+      "price": "42217.2",
+      "qty": "0.0112",
+      "quoteQty": "472.83"
+    }
+  ]
+}

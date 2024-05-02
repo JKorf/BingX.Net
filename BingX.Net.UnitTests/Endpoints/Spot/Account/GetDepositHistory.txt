@@ -1,0 +1,17 @@
+GET
+/openApi/api/v3/capital/deposit/hisrec
+true
+[
+  {
+    "amount": "49999.00000000000000000000",
+    "coin": "USDTTRC20",
+    "network": "TRC20",
+    "status": 1,
+    "address": "TP******B4v",
+    "addressTag": "",
+    "txId": "60*****1d",
+    "insertTime": 1701557778000,
+    "unlockConfirm": "2/2",
+    "confirmTimes": "2/2"
+  }
+]

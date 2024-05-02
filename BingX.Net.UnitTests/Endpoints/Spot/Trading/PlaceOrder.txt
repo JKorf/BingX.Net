@@ -1,0 +1,20 @@
+POST
+/openApi/spot/v1/trade/order
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "symbol": "NEMS-USDT",
+    "orderId": 1735963671248581000,
+    "transactTime": 1702720966528,
+    "price": "0.1557",
+    "origQty": "115",
+    "executedQty": "0",
+    "cummulativeQuoteQty": "0",
+    "status": "PENDING",
+    "type": "LIMIT",
+    "side": "SELL"
+  }
+}

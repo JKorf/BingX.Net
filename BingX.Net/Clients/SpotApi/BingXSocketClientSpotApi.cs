@@ -31,6 +31,7 @@ namespace BingX.Net.Clients.SpotApi
         private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");
         private static readonly MessagePath _pingPath = MessagePath.Get().Property("ping");
         private static readonly MessagePath _eventPath = MessagePath.Get().Property("data").Property("e");
+        private static readonly MessagePath _eventPath2 = MessagePath.Get().Property("e");
         private static readonly MessagePath _symbolPath = MessagePath.Get().Property("data").Property("s");
         #endregion
 
@@ -117,8 +118,7 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(string listenKey, Action<DataEvent<BingXBalanceUpdate>> onMessage, CancellationToken ct = default)
         {
-            var stream = "ACCOUNT_UPDATE";
-            var subscription = new BingXSubscription<BingXBalanceUpdate>(_logger, stream, stream, onMessage, false);
+            var subscription = new BingXBalanceSubscription(_logger, onMessage);
             return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
         }
 
@@ -146,6 +146,11 @@ namespace BingX.Net.Clients.SpotApi
             var symbol = message.GetValue<string>(_symbolPath);
             if (evnt != null)
                 return evnt + symbol;
+
+            var evnt2 = message.GetValue<string>(_eventPath2);
+            if (evnt2 != null)
+                // Specifically for ACCOUNT_UPDATE messages which aren't wrapped
+                return evnt2;
 
             var ping = message.GetValue<string>(_pingPath);
             return ping != null ? "ping" : ping;

@@ -20,10 +20,11 @@ namespace BingX.Net
 
         public override void AuthenticateRequest(RestApiClient apiClient, Uri uri, HttpMethod method, IDictionary<string, object> uriParams, IDictionary<string, object> bodyParams, Dictionary<string, string> headers, bool auth, ArrayParametersSerialization arraySerialization, HttpMethodParameterPosition parameterPosition, RequestBodyFormat bodyFormat)
         {
+            headers.Add("X-BX-APIKEY", GetApiKey());
+
             if (!auth)
                 return;
 
-            headers.Add("X-BX-APIKEY", GetApiKey());
             var parameters = parameterPosition == HttpMethodParameterPosition.InUri ? uriParams : bodyParams;
             var timestamp = DateTimeConverter.ConvertToMilliseconds(GetTimestamp(apiClient)).Value;
             parameters.Add("timestamp", timestamp);

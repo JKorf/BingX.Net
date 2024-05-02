@@ -1,0 +1,13 @@
+GET
+/openApi/swap/v2/trade/leverage
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "longLeverage": 50,
+    "shortLeverage": 50,
+    "maxLongLeverage": 75,
+    "maxShortLeverage": 75
+  }
+}

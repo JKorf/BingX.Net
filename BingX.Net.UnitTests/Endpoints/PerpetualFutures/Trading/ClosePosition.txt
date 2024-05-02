@@ -1,0 +1,17 @@
+POST
+/openApi/swap/v1/trade/closePosition
+true
+{
+  "code": 0,
+  "msg": "",
+  "timestamp": 0,
+  "data": {
+    "orderId": 1769649628749234200,
+    "positionId": "1769649551460794368",
+    "symbol": "BTC-USDT",
+    "side": "Ask",
+    "type": "Market",
+    "positionSide": "BOTH",
+    "origQty": "1.0000"
+  }
+}

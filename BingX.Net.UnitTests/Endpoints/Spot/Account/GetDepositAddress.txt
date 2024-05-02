@@ -1,0 +1,61 @@
+GET
+/openApi/wallets/v1/capital/deposit/address
+true
+{
+  "code": 0,
+  "timestamp": 1702623918163,
+  "data": {
+    "data": [
+      {
+        "coinId": 760,
+        "coin": "USDT",
+        "network": "ERC20",
+        "address": "40e*****95",
+        "tag": ""
+      },
+      {
+        "coinId": 780,
+        "coin": "USDT",
+        "network": "TRC20",
+        "address": "40e*****95",
+        "tag": ""
+      },
+      {
+        "coinId": 799,
+        "coin": "USDT",
+        "network": "BEP20",
+        "address": "40e*****95",
+        "tag": ""
+      },
+      {
+        "coinId": 857,
+        "coin": "USDT",
+        "network": "SOL",
+        "address": "40e*****95",
+        "tag": ""
+      },
+      {
+        "coinId": 1192,
+        "coin": "USDT",
+        "network": "POLYGON",
+        "address": "40e*****95",
+        "tag": ""
+      },
+      {
+        "coinId": 1367,
+        "coin": "USDT",
+        "network": "ARBITRUM",
+        "address": "40e*****95",
+        "tag": ""
+      },
+      {
+        "coinId": 1371,
+        "coin": "USDT",
+        "network": "OPTIMISM",
+        "address": "40e*****95",
+        "tag": ""
+      }
+    ],
+    "total": 7
+  }
+}

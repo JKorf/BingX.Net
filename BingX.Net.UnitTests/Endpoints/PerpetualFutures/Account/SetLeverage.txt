@@ -1,0 +1,11 @@
+POST
+/openApi/swap/v2/trade/leverage
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "leverage": 8,
+    "symbol": "ETH-USDT"
+  }
+}

@@ -1,0 +1,13 @@
+POST
+/openApi/swap/v2/trade/cancelAllAfter
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "triggerTime": 1710389137,
+    "status": "ACTIVATED",
+    "note": "All your spot pending orders will be closed automatically at 2024-03-14 04:05:37 UTC(+0),before that you can cancel the timer, or extend triggerTime time by this request"
+  }
+}

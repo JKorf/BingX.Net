@@ -1,0 +1,53 @@
+GET
+/openApi/swap/v2/trade/allOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "orders": [
+      {
+        "symbol": "PYTH-USDT",
+        "orderId": 1736007506620112100,
+        "side": "SELL",
+        "positionSide": "SHORT",
+        "type": "LIMIT",
+        "origQty": "33",
+        "price": "0.3916",
+        "executedQty": "33",
+        "avgPrice": "0.3916",
+        "cumQuote": "13",
+        "stopPrice": "",
+        "profit": "0.0000",
+        "commission": "-0.002585",
+        "status": "FILLED",
+        "time": 1702731418000,
+        "updateTime": 1702731470000,
+        "clientOrderId": "",
+        "leverage": "15X",
+        "takeProfit": {
+          "type": "TAKE_PROFIT",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "stopLoss": {
+          "type": "STOP",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "advanceAttr": 0,
+        "positionID": 0,
+        "takeProfitEntrustPrice": 0,
+        "stopLossEntrustPrice": 0,
+        "orderType": "",
+        "workingType": "MARK_PRICE",
+        "stopGuaranteed": false,
+        "triggerOrderId": 1736012449498123500
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+DELETE
+/openApi/swap/v2/trade/order
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "order": {
+      "symbol": "OP-USDT",
+      "orderId": 1736012449498123500,
+      "side": "SELL",
+      "positionSide": "LONG",
+      "type": "LIMIT",
+      "origQty": "1.0",
+      "price": "2.1710",
+      "executedQty": "0.0",
+      "avgPrice": "0.0000",
+      "cumQuote": "0",
+      "stopPrice": "",
+      "profit": "0.0000",
+      "commission": "0.000000",
+      "status": "PENDING",
+      "time": 1702732596168,
+      "updateTime": 1702732596188,
+      "clientOrderId": "l*****e",
+      "leverage": "",
+      "takeProfit": {
+        "type": "",
+        "quantity": 0,
+        "stopPrice": 0,
+        "price": 0,
+        "workingType": ""
+      },
+      "stopLoss": {
+        "type": "",
+        "quantity": 0,
+        "stopPrice": 0,
+        "price": 0,
+        "workingType": ""
+      },
+      "advanceAttr": 0,
+      "positionID": 0,
+      "takeProfitEntrustPrice": 0,
+      "stopLossEntrustPrice": 0,
+      "orderType": "",
+      "workingType": "MARK_PRICE",
+      "stopGuaranteed": false,
+      "triggerOrderId": 1736012449498123500
+    }
+  }
+}

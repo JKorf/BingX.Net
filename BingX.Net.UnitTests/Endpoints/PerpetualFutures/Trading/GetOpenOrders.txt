@@ -1,0 +1,101 @@
+GET
+/openApi/swap/v2/trade/openOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "orders": [
+      {
+        "symbol": "BTC-USDT",
+        "orderId": 1733405587011123500,
+        "side": "SELL",
+        "positionSide": "LONG",
+        "type": "LIMIT",
+        "origQty": "0.0030",
+        "price": "44459.6",
+        "executedQty": "0.0000",
+        "avgPrice": "0.0",
+        "cumQuote": "0",
+        "stopPrice": "",
+        "profit": "0.0",
+        "commission": "0.0",
+        "status": "PENDING",
+        "time": 1702256915574,
+        "updateTime": 1702256915610,
+        "clientOrderId": "",
+        "leverage": "",
+        "takeProfit": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": "",
+          "StopGuaranteed": ""
+        },
+        "stopLoss": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": "",
+          "StopGuaranteed": ""
+        },
+        "advanceAttr": 0,
+        "positionID": 0,
+        "takeProfitEntrustPrice": 0,
+        "stopLossEntrustPrice": 0,
+        "orderType": "",
+        "trailingStopRate": 0,
+        "trailingStopDistance": 0,
+        "postOnly": false,
+        "workingType": "MARK_PRICE"
+      },
+      {
+        "symbol": "BTC-USDT",
+        "orderId": 1733405587011123500,
+        "side": "SELL",
+        "positionSide": "LONG",
+        "type": "LIMIT",
+        "origQty": "0.0030",
+        "price": "44454.6",
+        "executedQty": "0.0000",
+        "avgPrice": "0.0",
+        "cumQuote": "0",
+        "stopPrice": "",
+        "profit": "0.0",
+        "commission": "0.0",
+        "status": "PENDING",
+        "time": 1702111071719,
+        "updateTime": 1702111071735,
+        "clientOrderId": "",
+        "leverage": "",
+        "takeProfit": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": "",
+          "StopGuaranteed": ""
+        },
+        "stopLoss": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": "",
+          "StopGuaranteed": ""
+        },
+        "advanceAttr": 0,
+        "positionID": 0,
+        "takeProfitEntrustPrice": 0,
+        "stopLossEntrustPrice": 0,
+        "orderType": "",
+        "trailingStopRate": 0,
+        "trailingStopDistance": 0,
+        "postOnly": false,
+        "workingType": "MARK_PRICE"
+      }
+    ]
+  }
+}

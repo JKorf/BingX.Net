@@ -1,0 +1,4 @@
+> { "id": "|1|", "reqType": "sub", "dataType": "BTC-USDT@lastPrice" }
+< { "id": "|1|", "code": 0, "msg": "" }
+= 
+{"code":0,"data":{"c":"57793.37","e":"lastPriceUpdate","s":"BTC-USDT"},"dataType":"BTC-USDT@lastPrice","success":true}

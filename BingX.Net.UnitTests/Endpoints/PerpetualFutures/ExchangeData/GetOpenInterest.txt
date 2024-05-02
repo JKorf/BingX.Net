@@ -1,0 +1,12 @@
+GET
+/openApi/swap/v2/quote/openInterest
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "openInterest": "7409966.52",
+    "symbol": "EOS-USDT",
+    "time": 1702719692859
+  }
+}

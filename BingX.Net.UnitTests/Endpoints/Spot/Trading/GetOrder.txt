@@ -1,0 +1,25 @@
+GET
+/openApi/spot/v1/trade/query
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "symbol": "BRG-USDT",
+    "orderId": 1735965009395131100,
+    "price": "0.0005027",
+    "StopPrice": "0",
+    "origQty": "4038",
+    "executedQty": "0",
+    "cummulativeQuoteQty": "0",
+    "status": "PENDING",
+    "type": "LIMIT",
+    "side": "BUY",
+    "time": 1702721285567,
+    "updateTime": 1702721285567,
+    "origQuoteOrderQty": "0",
+    "fee": "0",
+    "feeAsset": "BRG"
+  }
+}

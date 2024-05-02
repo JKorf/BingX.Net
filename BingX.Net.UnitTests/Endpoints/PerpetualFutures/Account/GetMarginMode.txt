@@ -1,0 +1,10 @@
+GET
+/openApi/swap/v2/trade/marginType
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "marginType": "CROSSED"
+  }
+}

@@ -1,0 +1,19 @@
+GET
+/openApi/wallets/v1/capital/innerTransfer/records
+true
+{
+  "code": 0,
+  "timestamp": 1702383898844,
+  "data": {
+    "data": [
+      {
+        "id": 1251111922229444400,
+        "coin": "BTC",
+        "receiver": 1128763679,
+        "amount": 0.0072366,
+        "status": 6
+      }
+    ],
+    "total": 1
+  }
+}

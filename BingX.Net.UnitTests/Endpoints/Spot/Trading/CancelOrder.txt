@@ -1,0 +1,20 @@
+POST
+/openApi/spot/v1/trade/cancel
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "symbol": "NEMS-USDT",
+    "orderId": 1735964079647111200,
+    "price": "0.1532",
+    "stopPrice": "0.1532",
+    "origQty": "126",
+    "executedQty": "0",
+    "cummulativeQuoteQty": "0",
+    "status": "CANCELED",
+    "type": "LIMIT",
+    "side": "SELL"
+  }
+}

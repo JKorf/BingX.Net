@@ -115,7 +115,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Client order id
         /// </summary>
-        [JsonPropertyName("clientOrderID")]
+        [JsonPropertyName("clientOrderId")]
         public string? ClientOrderId { get; set; }
         /// <summary>
         /// Stop guaranteed
@@ -143,6 +143,16 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("activationPrice")]
         public decimal? TriggerPrice { get; set; }
         /// <summary>
+        /// Trailing stop rate
+        /// </summary>
+        [JsonPropertyName("trailingStopRate")]
+        public decimal? TrailingStopRate { get; set; }
+        /// <summary>
+        /// Trailing stop distance
+        /// </summary>
+        [JsonPropertyName("trailingStopDistance")]
+        public decimal? TrailingStopDistance { get; set; }
+        /// <summary>
         /// Close position
         /// </summary>
         [JsonPropertyName("closePosition")]
@@ -157,6 +167,16 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("takeProfit")]
         public BingXStopOrder? TakeProfit { get; set; }
+        /// <summary>
+        /// Trigger order id
+        /// </summary>
+        [JsonPropertyName("triggerOrderId")]
+        public long? TriggerOrderId { get; set; }
+        /// <summary>
+        /// Is post onlyorder
+        /// </summary>
+        [JsonPropertyName("postOnly")]
+        public bool? PostOnly { get; set; }
     }
 
     /// <summary>
@@ -189,5 +209,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("workingType")]
         public TriggerType? TriggerType { get; set; }
+        /// <summary>
+        /// Stop guarenteed
+        /// </summary>
+        [JsonPropertyName("stopGuaranteed")]
+        public bool? StopGuaranteed { get; set; }
     }
 }

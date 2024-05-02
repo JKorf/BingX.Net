@@ -1,0 +1,27 @@
+GET
+/openApi/spot/v1/account/balance
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "balances": [
+      {
+        "asset": "USDT",
+        "free": "566773.193402631",
+        "locked": "244.18616265388994"
+      },
+      {
+        "asset": "CHEEMS",
+        "free": "294854132046232",
+        "locked": "18350553840"
+      },
+      {
+        "asset": "VST",
+        "free": "0",
+        "locked": "0"
+      }
+    ]
+  }
+}

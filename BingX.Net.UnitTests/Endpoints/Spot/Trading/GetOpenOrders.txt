@@ -1,0 +1,28 @@
+GET
+/openApi/spot/v1/trade/openOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "orders": [
+      {
+        "symbol": "BNB-USDC",
+        "orderId": 1735930294290081300,
+        "price": "255.27",
+        "StopPrice": "0",
+        "origQty": "0.16261",
+        "executedQty": "0",
+        "cummulativeQuoteQty": "0",
+        "status": "PENDING",
+        "type": "LIMIT",
+        "side": "SELL",
+        "time": 1702713008841,
+        "updateTime": 1702713008841,
+        "origQuoteOrderQty": "0",
+        "fee": 0
+      }
+    ]
+  }
+}

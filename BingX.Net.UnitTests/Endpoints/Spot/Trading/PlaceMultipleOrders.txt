@@ -1,0 +1,25 @@
+POST
+/openApi/spot/v1/trade/batchOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "orders": [
+      {
+        "symbol": "ETHS-USDT",
+        "orderId": 1735967859282101200,
+        "transactTime": 1702721965033,
+        "price": "12.479",
+        "origQty": "7.663",
+        "executedQty": "0",
+        "cummulativeQuoteQty": "0",
+        "status": "PENDING",
+        "type": "LIMIT",
+        "side": "BUY",
+        "clientOrderID": "abc122345"
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+GET
+/openApi/spot/v1/user/commissionRate
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "takerCommissionRate": 0.000325,
+    "makerCommissionRate": 0.0001
+  }
+}

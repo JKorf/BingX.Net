@@ -1,0 +1,92 @@
+DELETE
+/openApi/swap/v2/trade/allOpenOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "success": [
+      {
+        "symbol": "ATOM-USDT",
+        "orderId": 1736013373487123500,
+        "side": "SELL",
+        "positionSide": "SHORT",
+        "type": "LIMIT",
+        "origQty": "3.00",
+        "price": "13.044",
+        "executedQty": "0.00",
+        "avgPrice": "0.000",
+        "cumQuote": "0",
+        "stopPrice": "",
+        "profit": "0",
+        "commission": "0",
+        "status": "CANCELLED",
+        "time": 1702732816465,
+        "updateTime": 1702732816488,
+        "clientOrderId": "",
+        "leverage": "",
+        "takeProfit": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "stopLoss": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "advanceAttr": 0,
+        "positionID": 0,
+        "takeProfitEntrustPrice": 0,
+        "stopLossEntrustPrice": 0,
+        "orderType": "",
+        "workingType": ""
+      },
+      {
+        "symbol": "ATOM-USDT",
+        "orderId": 1736013373487123500,
+        "side": "BUY",
+        "positionSide": "SHORT",
+        "type": "LIMIT",
+        "origQty": "3.00",
+        "price": "11.292",
+        "executedQty": "0.00",
+        "avgPrice": "0.000",
+        "cumQuote": "0",
+        "stopPrice": "",
+        "profit": "0",
+        "commission": "0",
+        "status": "CANCELLED",
+        "time": 1702732816820,
+        "updateTime": 1702732816839,
+        "clientOrderId": "",
+        "leverage": "",
+        "takeProfit": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "stopLoss": {
+          "type": "",
+          "quantity": 0,
+          "stopPrice": 0,
+          "price": 0,
+          "workingType": ""
+        },
+        "advanceAttr": 0,
+        "positionID": 0,
+        "takeProfitEntrustPrice": 0,
+        "stopLossEntrustPrice": 0,
+        "orderType": "",
+        "workingType": ""
+      }
+    ],
+    "failed": null
+  }
+}

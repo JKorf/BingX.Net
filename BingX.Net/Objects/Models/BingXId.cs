@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
@@ -10,7 +10,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Id
         /// </summary>
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; } = string.Empty;
     }
 }

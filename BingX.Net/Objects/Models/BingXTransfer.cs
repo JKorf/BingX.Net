@@ -34,6 +34,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("asset")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
+        /// Status
+        /// </summary>
+        [JsonPropertyName("status")]
+        public string Status { get; set; } = string.Empty;
+        /// <summary>
         /// Quantity transfered
         /// </summary>
         [JsonPropertyName("amount")]

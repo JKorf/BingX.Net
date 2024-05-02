@@ -1,4 +1,5 @@
 ﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -19,7 +20,7 @@ namespace BingX.Net.Objects.Models
         /// Transfer list
         /// </summary>
         [JsonPropertyName("data")]
-        public IEnumerable<BingXTransfer> Transfers { get; set; } = Array.Empty<BingXTransfer>();
+        public IEnumerable<BingXInternalTransfer> Transfers { get; set; } = Array.Empty<BingXInternalTransfer>();
         
     }
 
@@ -51,7 +52,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Status
         /// </summary>
-        [JsonPropertyName("status")]
+        [JsonPropertyName("status"), JsonConverter(typeof(EnumConverter))]
         public InternalTransferStatus Status { get; set; }
     }
 }

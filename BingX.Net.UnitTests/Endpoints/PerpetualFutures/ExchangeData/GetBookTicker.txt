@@ -1,0 +1,16 @@
+GET
+/openApi/swap/v2/quote/bookTicker
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "book_ticker": {
+      "symbol": "BTC-USDT",
+      "bid_price": 42211.1,
+      "bid_qty": 12663,
+      "ask_price": 42211.8,
+      "ask_qty": 128854
+    }
+  }
+}

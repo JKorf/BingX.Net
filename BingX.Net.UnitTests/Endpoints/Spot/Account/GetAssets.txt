@@ -1,0 +1,39 @@
+GET
+/openApi/wallets/v1/capital/config/getall
+true
+{
+  "code": 0,
+  "timestamp": 1702623271477,
+  "data": [
+    {
+      "coin": "BTC",
+      "name": "BTC",
+      "networkList": [
+        {
+          "name": "BTC",
+          "network": "BTC",
+          "isDefault": true,
+          "minConfirm": 2,
+          "withdrawEnable": true,
+          "depositEnable": true,
+          "withdrawFee": "0.0006",
+          "withdrawMax": "1.17522",
+          "withdrawMin": "0.0005",
+          "depositMin": "0.0002"
+        },
+        {
+          "name": "BTC",
+          "network": "BEP20",
+          "isDefault": false,
+          "minConfirm": 15,
+          "withdrawEnable": true,
+          "depositEnable": true,
+          "withdrawFee": "0.0000066",
+          "withdrawMax": "1.17522",
+          "withdrawMin": "0.0000066",
+          "depositMin": "0.0002"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+GET
+/openApi/swap/v1/ticker/price
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "symbol": "TIA-USDT",
+    "price": "14.0658",
+    "time": 1702718922941
+  }
+}

@@ -49,14 +49,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Order Book
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
                 { "symbol", symbol }
             };
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<BingXOrderBook>(_baseClient.GetUri("/openApi/swap/v2/quote/depth"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            return await _baseClient.SendRequestInternal<BingXFuturesOrderBook>(_baseClient.GetUri("/openApi/swap/v2/quote/depth"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -87,7 +87,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameters.AddOptional("limit", limit);
             parameters.AddOptional("fromId", fromId);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesTrade>>(_baseClient.GetUri("/openApi/swap/v1/market/historicalTrades"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
+            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesTrade>>(_baseClient.GetUri("/openApi/swap/v1/market/historicalTrades"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -154,10 +155,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptionalMilliseconds("startTime", startTime);
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesMarkPriceKline>>(_baseClient.GetUri("/openApi/swap/v1/market/markPriceKlines"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
+            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesMarkPriceKline>>(_baseClient.GetUri("/openApi/swap/v1/market/markPriceKlines"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion
+
         #region Get Open Interest
 
         /// <inheritdoc />
@@ -195,7 +198,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "symbol", symbol }
             };
-            var result = await _baseClient.SendRequestInternal<BingXFuturesBookTickerWrapper>(_baseClient.GetUri("/openApi/swap/v2/quote/bookTicker"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
+            var result = await _baseClient.SendRequestInternal<BingXFuturesBookTickerWrapper>(_baseClient.GetUri("/openApi/swap/v2/quote/bookTicker"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
             return result.As<BingXFuturesBookTicker>(result.Data?.BookTicker);
         }
 
@@ -210,7 +214,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "symbol", symbol }
             };
-            return await _baseClient.SendRequestInternal<BingXLastTradePrice>(_baseClient.GetUri("/openApi/swap/v1/ticker/price"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+            parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
+            return await _baseClient.SendRequestInternal<BingXLastTradePrice>(_baseClient.GetUri("/openApi/swap/v1/ticker/price"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion

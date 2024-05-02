@@ -1,0 +1,25 @@
+GET
+/openApi/swap/v1/market/historicalTrades
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "time": 1705063108365,
+      "isBuyerMaker": true,
+      "price": "2662.83",
+      "qty": "0.10",
+      "quoteQty": "266.28",
+      "id": "8179911"
+    },
+    {
+      "time": 1705063108486,
+      "isBuyerMaker": true,
+      "price": "2662.82",
+      "qty": "0.10",
+      "quoteQty": "266.28",
+      "id": "8179912"
+    }
+  ]
+}

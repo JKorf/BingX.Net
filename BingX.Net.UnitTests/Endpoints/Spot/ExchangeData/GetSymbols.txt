@@ -1,0 +1,22 @@
+GET
+/openApi/spot/v1/common/symbols
+false
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "symbols": [
+      {
+        "symbol": "BTC-USDT",
+        "minQty": 0.0001826,
+        "maxQty": 18.2663756,
+        "minNotional": 5,
+        "maxNotional": 500000,
+        "status": 1,
+        "tickSize": 0.01,
+        "stepSize": 0.00001
+      }
+    ]
+  }
+}

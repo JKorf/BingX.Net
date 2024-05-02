@@ -1,0 +1,25 @@
+GET
+/openApi/swap/v2/quote/ticker
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "symbol": "SFP-USDT",
+    "priceChange": "0.0295",
+    "priceChangePercent": "4.15",
+    "lastPrice": "0.7409",
+    "lastQty": "10",
+    "highPrice": "0.7506",
+    "lowPrice": "0.6903",
+    "volume": "4308212",
+    "quoteVolume": "3085449.53",
+    "openPrice": "0.7114",
+    "openTime": 1702719833853,
+    "closeTime": 1702719798603,
+    "askPrice": "0.7414",
+    "askQty": "99",
+    "bidPrice": "0.7413",
+    "bidQty": "84"
+  }
+}

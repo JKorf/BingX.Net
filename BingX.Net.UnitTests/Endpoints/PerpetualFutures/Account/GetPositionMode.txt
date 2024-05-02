@@ -1,0 +1,10 @@
+GET
+/openApi/swap/v1/positionSide/dual
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "dualSidePosition": "true"
+  }
+}

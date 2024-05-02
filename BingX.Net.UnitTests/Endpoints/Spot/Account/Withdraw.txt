@@ -1,0 +1,10 @@
+POST
+/openApi/wallets/v1/capital/withdraw/apply
+true
+{
+  "code": 0,
+  "timestamp": 1702619168218,
+  "data": {
+    "id": "125*****4"
+  }
+}

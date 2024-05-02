@@ -1,0 +1,4 @@
+> { "id": "|1|", "reqType": "sub", "dataType": "ETH-USDT@bookTicker" }
+< { "id": "|1|", "code": 0, "msg": "" }
+= 
+{"code":0,"dataType":"ETH-USDT@bookTicker","data":{"e":"bookTicker","u":309869207,"E":1714650946618,"T":1714650946596,"s":"ETH-USDT","b":"2993.59","B":"13.24","a":"2993.67","A":"9.78"}}

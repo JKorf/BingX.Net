@@ -116,10 +116,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
             string listenKey, 
-            Action<DataEvent<BingXFuturesAccountUpdate>> onAccountUpdate,
-            Action<DataEvent<BingXFuturesOrderUpdate>> onOrderUpdate,
-            Action<DataEvent<BingXConfigUpdate>> onConfigurationUpdate,
-            Action<DataEvent<BingXListenKeyExpiredUpdate>> onListenKeyExpiredUpdate,
+            Action<DataEvent<BingXFuturesAccountUpdate>>? onAccountUpdate = null,
+            Action<DataEvent<BingXFuturesOrderUpdate>>? onOrderUpdate = null,
+            Action<DataEvent<BingXConfigUpdate>>? onConfigurationUpdate = null,
+            Action<DataEvent<BingXListenKeyExpiredUpdate>>? onListenKeyExpiredUpdate = null,
             CancellationToken ct = default)
         {
             var subscription = new BingXUserDataSubscription(_logger, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate);

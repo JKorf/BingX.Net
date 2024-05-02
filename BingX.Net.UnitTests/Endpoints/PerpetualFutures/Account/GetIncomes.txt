@@ -1,0 +1,19 @@
+GET
+/openApi/swap/v2/user/income
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "symbol": "LDO-USDT",
+      "incomeType": "FUNDING_FEE",
+      "income": "-0.0292",
+      "asset": "USDT",
+      "info": "Funding Fee",
+      "time": 1702713615000,
+      "tranId": "170***6*2_3*9_20***97",
+      "tradeId": "170***6*2_3*9_20***97"
+    }
+  ]
+}

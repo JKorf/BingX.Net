@@ -1,0 +1,24 @@
+GET
+/openApi/api/v3/asset/transfer
+true
+{
+  "total": 2,
+  "rows": [
+    {
+      "asset": "VST",
+      "amount": "100000.00000000000000000000",
+      "type": "FUND_PFUTURES",
+      "status": "CONFIRMED",
+      "tranId": 37600111,
+      "timestamp": 1702252271000
+    },
+    {
+      "asset": "USDT",
+      "amount": "2218.72352626000000000000",
+      "type": "FUND_PFUTURES",
+      "status": "CONFIRMED",
+      "tranId": 37600222,
+      "timestamp": 1702351131000
+    }
+  ]
+}

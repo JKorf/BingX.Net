@@ -1,0 +1,3 @@
+PUT
+/openApi/user/auth/userDataStream
+false

@@ -1,0 +1,14 @@
+GET
+/openApi/swap/v2/quote/premiumIndex
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "symbol": "BTC-USDT",
+    "markPrice": "42216.4",
+    "indexPrice": "42219.9",
+    "lastFundingRate": "0.00025100",
+    "nextFundingTime": 1702742400000
+  }
+}

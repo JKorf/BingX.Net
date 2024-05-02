@@ -1,0 +1,38 @@
+GET
+/openApi/spot/v1/trade/myTrades
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "fills": [
+      {
+        "symbol": "BTC-USDT",
+        "id": 36767057,
+        "orderId": 1745362930595004400,
+        "price": "46820.155",
+        "qty": "0.1430254",
+        "quoteQty": "6696.471396937",
+        "commission": -0.000046483255,
+        "commissionAsset": "BTC",
+        "time": 1704961925000,
+        "isBuyer": true,
+        "isMaker": false
+      },
+      {
+        "symbol": "BTC-USDT",
+        "id": 36767058,
+        "orderId": 1745362930595004400,
+        "price": "46820.155",
+        "qty": "0.0003844",
+        "quoteQty": "17.997667582000002",
+        "commission": -1.2493e-7,
+        "commissionAsset": "BTC",
+        "time": 1704961925000,
+        "isBuyer": true,
+        "isMaker": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+GET
+/openApi/swap/v2/trade/allFillOrders
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "fill_orders": [
+      {
+        "filledTm": "2023-12-16T20:58:36Z",
+        "volume": "4.10",
+        "price": "3.1088",
+        "amount": "12.7492",
+        "commission": "-0.0025",
+        "currency": "USDT",
+        "orderId": "1736007768311123456",
+        "liquidatedPrice": "",
+        "liquidatedMarginRatio": "",
+        "filledTime": "2023-12-16T20:58:36.000+0800",
+        "clientOrderID": "",
+        "symbol": "WLD-USDT"
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+GET
+/openApi/swap/v1/market/markPriceKlines
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "open": "0.7034",
+      "close": "0.7065",
+      "high": "0.7081",
+      "low": "0.7033",
+      "volume": "635494.00",
+      "openTime": 1705820520000,
+      "closeTime": 1705820520000
+    }
+  ]
+}

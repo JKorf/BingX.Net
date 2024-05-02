@@ -1,0 +1,19 @@
+GET
+/openApi/swap/v2/quote/fundingRate
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "symbol": "QNT-USDT",
+      "fundingRate": "0.00027100",
+      "fundingTime": 1702713600000
+    },
+    {
+      "symbol": "QNT-USDT",
+      "fundingRate": "0.00012800",
+      "fundingTime": 1702684800000
+    }
+  ]
+}

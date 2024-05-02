@@ -1,0 +1,18 @@
+GET
+/openApi/api/v3/capital/withdraw/history
+true
+[
+  {
+    "address": "TR****zc",
+    "amount": "3500.00000000000000000000",
+    "applyTime": "2023-12-14T04:05:02.000+08:00",
+    "coin": "USDTTRC20",
+    "id": "125*****98",
+    "network": "TRC20",
+    "transferType": 1,
+    "transactionFee": "1.00000000000000000000",
+    "confirmNo": 2,
+    "info": "",
+    "txId": "b9***********b67"
+  }
+]

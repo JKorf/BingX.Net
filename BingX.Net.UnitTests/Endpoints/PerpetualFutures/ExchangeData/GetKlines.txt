@@ -1,0 +1,17 @@
+GET
+/openApi/swap/v3/quote/klines
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "open": "0.7034",
+      "close": "0.7065",
+      "high": "0.7081",
+      "low": "0.7033",
+      "volume": "635494.00",
+      "time": 1702717200000
+    }
+  ]
+}

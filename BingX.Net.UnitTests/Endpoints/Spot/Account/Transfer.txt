@@ -1,0 +1,6 @@
+POST
+/openApi/api/v3/post/asset/transfer
+true
+{
+  "tranId": "1728"
+}

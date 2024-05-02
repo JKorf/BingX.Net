@@ -1,0 +1,4 @@
+> { "id": "|1|", "reqType": "sub", "dataType": "ETH-USDT@kline_1m" }
+< { "id": "|1|", "code": 0, "msg": "" }
+= 
+{"code":0,"dataType":"ETH-USDT@kline_1m","s":"ETH-USDT","data":[{"c":"2989.57","o":"2991.50","h":"2991.55","l":"2989.04","v":"215.89","T":1714650540000}]}
