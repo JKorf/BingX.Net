@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using BingX.Net.Enums;
 
 namespace BingX.Net.Objects.Models
 {
@@ -39,6 +40,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("network")]
         public string Network { get; set; } = string.Empty;
         /// <summary>
+        /// Withdrawal status
+        /// </summary>
+        [JsonPropertyName("status")]
+        public WithdrawalStatus Status { get; set; }
+        /// <summary>
         /// Transfer type
         /// </summary>
         [JsonPropertyName("transferType")]
@@ -53,6 +59,11 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("confirmNo")]
         public int Confirmations { get; set; }
+        /// <summary>
+        /// Address tag
+        /// </summary>
+        [JsonPropertyName("addressTag")]
+        public string? AddressTag { get; set; } = string.Empty;
         /// <summary>
         /// Extra info
         /// </summary>
