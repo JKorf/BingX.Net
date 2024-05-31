@@ -1,0 +1,24 @@
+GET
+/openApi/swap/v1/maintMarginRatio
+true
+{
+  "code": 0,
+  "msg": "",
+  "timestamp": 1716388317402,
+  "data": [
+    {
+      "symbol": "BTC-USDT",
+      "minPositionVal": "0",
+      "maxPositionVal": "150000",
+      "maintMarginRatio": "0.003800",
+      "maintAmount": "0.000000"
+    },
+    {
+      "symbol": "BTC-USDT",
+      "minPositionVal": "150000",
+      "maxPositionVal": "900000",
+      "maintMarginRatio": "0.004000",
+      "maintAmount": "30.000000"
+    }
+  ]
+}

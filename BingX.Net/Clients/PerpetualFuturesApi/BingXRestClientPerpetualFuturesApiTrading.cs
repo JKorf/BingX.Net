@@ -392,5 +392,19 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
+        #region Close Position
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXPositionMarginInfo>>> GetPositionAndMarginInfoAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection()
+            {
+                { "symbol", symbol }
+            };
+            return await _baseClient.SendRequestInternal<IEnumerable<BingXPositionMarginInfo>>(_baseClient.GetUri("/openApi/swap/v1/maintMarginRatio"), HttpMethod.Get, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        #endregion
     }
 }

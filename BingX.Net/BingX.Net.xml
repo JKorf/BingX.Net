@@ -302,6 +302,9 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.ClosePositionAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetPositionAndMarginInfoAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi">
             <summary>
             Client providing access to the BingX futures websocket Api
@@ -1672,6 +1675,15 @@
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20the%20position%20by%20position%20ID" /></para>
             </summary>
             <param name="positionId">The id of the position to close</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetPositionAndMarginInfoAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get position and margin info
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Position%20and%20Maintenance%20Margin%20Ratio" /></para>
+            </summary>
+            <param name="symbol">Symbol name</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -4952,6 +4964,36 @@
         <member name="P:BingX.Net.Objects.Models.BingXPosition.UpdateTime">
             <summary>
             Last update timestamp
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXPositionMarginInfo">
+            <summary>
+            Position and maintanance margin ratio info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.MinPositionValue">
+            <summary>
+            Minimal position value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.MaxPositionValue">
+            <summary>
+            Max position value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.MaintenanceMarginRatio">
+            <summary>
+            Maintenance margin ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.MaintenanceAmount">
+            <summary>
+            Maintenance amount
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXPositionMode">
