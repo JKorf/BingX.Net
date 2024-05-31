@@ -218,7 +218,7 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetContractsAsync(System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetContractsAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
@@ -1371,11 +1371,12 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetContractsAsync(System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetContractsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get list of contracts
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Contract%20Information" /></para>
             </summary>
+            <param name="symbol">Filter by symbol name</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -4923,6 +4924,11 @@
             Initial margin
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.Margin">
+            <summary>
+            Margin
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXPosition.Leverage">
             <summary>
             Leverage
@@ -5448,6 +5454,11 @@
             Withdrawal network
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Status">
+            <summary>
+            Withdrawal status
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.transferType">
             <summary>
             Transfer type
@@ -5461,6 +5472,11 @@
         <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Confirmations">
             <summary>
             Confirmations
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.AddressTag">
+            <summary>
+            Address tag
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXWithdrawal.Info">

@@ -25,9 +25,10 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get list of contracts
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Contract%20Information" /></para>
         /// </summary>
+        /// <param name="symbol">Filter by symbol name</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXContract>>> GetContractsAsync(CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXContract>>> GetContractsAsync(string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get order book for a symbol

@@ -39,9 +39,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Contracts
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXContract>>> GetContractsAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXContract>>> GetContractsAsync(string? symbol = null, CancellationToken ct = default)
         {
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXContract>>(_baseClient.GetUri("/openApi/swap/v2/quote/contracts"), HttpMethod.Get, ct).ConfigureAwait(false);
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            return await _baseClient.SendRequestInternal<IEnumerable<BingXContract>>(_baseClient.GetUri("/openApi/swap/v2/quote/contracts"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
         }
 
         #endregion
