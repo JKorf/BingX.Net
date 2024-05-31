@@ -55,6 +55,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("initialMargin")]
         public decimal InitialMargin { get; set; }
         /// <summary>
+        /// Margin
+        /// </summary>
+        [JsonPropertyName("Margin")]
+        public decimal? Margin { get; set; }
+        /// <summary>
         /// Leverage
         /// </summary>
         [JsonPropertyName("leverage")]
