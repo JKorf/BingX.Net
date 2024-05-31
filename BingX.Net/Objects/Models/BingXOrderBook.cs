@@ -13,6 +13,11 @@ namespace BingX.Net.Objects.Models
     public record BingXOrderBook
     {
         /// <summary>
+        /// Symbol
+        /// </summary>
+        [JsonPropertyName("symbol")]
+        public string? Symbol { get; set; }
+        /// <summary>
         /// List of bids
         /// </summary>
         [JsonPropertyName("bids")]

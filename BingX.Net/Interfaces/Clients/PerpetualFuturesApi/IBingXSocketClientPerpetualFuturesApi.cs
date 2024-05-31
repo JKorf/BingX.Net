@@ -39,6 +39,17 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(string symbol, int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default);
 
         /// <summary>
+        /// Subscribe to order book updates for all symbols
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data%20of%20all%20trading%20pairs" /></para>
+        /// </summary>
+        /// <param name="depth">Book depth, 5, 10, 20, 50 or 100</param>
+        /// <param name="updateInterval">The update interval in ms, 100, 200, 500 or 1000</param>
+        /// <param name="onMessage">The event handler for the received data</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
         /// Subscribe to kline/candlestick updates
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /></para>
         /// </summary>
@@ -50,14 +61,33 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<IEnumerable<BingXFuturesKlineUpdate>>> onMessage, CancellationToken ct = default);
 
         /// <summary>
+        /// Subscribe to kline/candlestick updates for all symbols
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /></para>
+        /// </summary>
+        /// <param name="interval">The kline interval</param>
+        /// <param name="onMessage">The event handler for the received data</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(KlineInterval interval, Action<DataEvent<IEnumerable<BingXFuturesKlineUpdate>>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
         /// Subscribe to live price statistics updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%2024-hour%20price%20changes" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data%20of%20all%20trading%20pairs" /></para>
         /// </summary>
         /// <param name="symbol">The symbol</param>
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
+        /// Subscribe to live price statistics updates for all symbols
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%2024-hour%20price%20changes%20of%20all%20trading%20pairs" /></para>
+        /// </summary>
+        /// <param name="onMessage">The event handler for the received data</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to live price updates

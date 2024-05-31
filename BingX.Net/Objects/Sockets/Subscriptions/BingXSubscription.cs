@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Interfaces;
+using BingX.Net.Objects.Models;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
@@ -62,6 +63,13 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
         {
             var update = (BingXUpdate<T>)message.Data;
+
+            if (update is BingXUpdate<IEnumerable<BingXFuturesKlineUpdate>> klineUpdates)
+            {
+                foreach (var klineUpdate in klineUpdates.Data!)
+                    klineUpdate.Symbol = update.Symbol!;
+            }
+
             _handler.Invoke(message.As(update.Data!, update.DataType, SocketUpdateType.Update));
             return new CallResult(null);
         }

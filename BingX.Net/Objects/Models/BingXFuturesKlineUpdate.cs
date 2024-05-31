@@ -9,6 +9,11 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesKlineUpdate
     {
         /// <summary>
+        /// Symbol
+        /// </summary>
+        [JsonPropertyName("s")]
+        public string Symbol { get; set; } = string.Empty; // NOTE; not returned on this level, but set internally
+        /// <summary>
         /// Open price
         /// </summary>
         [JsonPropertyName("o")]

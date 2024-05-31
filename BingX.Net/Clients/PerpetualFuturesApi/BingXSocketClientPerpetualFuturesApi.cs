@@ -75,6 +75,25 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
+        {
+            depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);
+            updateInterval.ValidateIntValues(nameof(updateInterval), 100, 200, 500, 1000);
+
+            var stream = $"all@depth{depth}@{updateInterval}ms";
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, stream, stream, onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(KlineInterval interval, Action<DataEvent<IEnumerable<BingXFuturesKlineUpdate>>> onMessage, CancellationToken ct = default)
+        {
+            var stream = "all@kline_" + EnumConverter.GetString(interval);
+            var subscription = new BingXSubscription<IEnumerable<BingXFuturesKlineUpdate>>(_logger, stream, stream, onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<IEnumerable<BingXFuturesKlineUpdate>>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + EnumConverter.GetString(interval);
@@ -86,6 +105,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, symbol + "@ticker", symbol + "@ticker", onMessage, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
+        {
+            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, "all@ticker", "all@ticker", onMessage, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 

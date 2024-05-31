@@ -12,5 +12,7 @@ namespace BingX.Net.Objects.Internal
         public string DataType { get; set; } = string.Empty;
         [JsonPropertyName("success")]
         public bool Success { get; set; }
+        [JsonPropertyName("s")]
+        public string? Symbol { get; set; }
     }
 }
