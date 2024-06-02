@@ -120,6 +120,13 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.2.0 - 02 Jun 2024
+    * Added PerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync, PerpetualFuturesApi.SubscribeToKlineUpdatesAsync and PerpetualFuturesApi.SubscribeToTickerUpdatesAsync subscriptions for all symbols
+    * Added PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync endpoint
+    * Added optional symbol parameter PerpetualFuturesApi.ExchangeData.GetContractsAsync
+    * Updated BingXWithdrawal response model
+    * Updated BingXPosition response model
+
 * Version 1.1.1 - 07 May 2024
     * Updated CryptoExchange.Net to v7.5.2, see https://github.com/JKorf/CryptoExchange.Net?tab=readme-ov-file#release-notes for release notes
 
