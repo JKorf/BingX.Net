@@ -78,19 +78,19 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
             if (message.Data is BingXConfigUpdate configUpdate)
             {
-                _configHandler?.Invoke(message.As(configUpdate, configUpdate.Configuration.Symbol, SocketUpdateType.Update));
+                _configHandler?.Invoke(message.As(configUpdate, configUpdate.Event, configUpdate.Configuration.Symbol, SocketUpdateType.Update));
             }
             else if (message.Data is BingXFuturesAccountUpdate accountUpdate)
             {
-                _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Update.Trigger, SocketUpdateType.Update));
+                _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Event, null, SocketUpdateType.Update));
             }
             else if (message.Data is BingXFuturesOrderUpdateWrapper orderUpdate)
             {
-                _orderHandler?.Invoke(message.As(orderUpdate.Data, orderUpdate.Data.Symbol, SocketUpdateType.Update));
+                _orderHandler?.Invoke(message.As(orderUpdate.Data, orderUpdate.Event, orderUpdate.Data.Symbol, SocketUpdateType.Update));
             }
             else if (message.Data is BingXListenKeyExpiredUpdate listenKeyUpdate)
             {
-                _listenkeyHandler?.Invoke(message.As(listenKeyUpdate!, listenKeyUpdate!.ListenKey, SocketUpdateType.Update));
+                _listenkeyHandler?.Invoke(message.As(listenKeyUpdate!, listenKeyUpdate.Event, null, SocketUpdateType.Update));
             }
 
             return new CallResult(null);

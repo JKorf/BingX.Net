@@ -18,6 +18,7 @@ using CryptoExchange.Net.Converters.MessageParsing;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Enums;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -62,7 +63,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
         {
-            var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, symbol + "@trade", symbol + "@trade", onMessage, false);
+            var stream = symbol + "@trade";
+            var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -70,7 +72,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXKlineUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + KlineIntervalToWebsocketString(interval);
-            var subscription = new BingXSubscription<BingXKlineUpdate>(_logger, stream, stream, onMessage, false);
+            var subscription = new BingXSubscription<BingXKlineUpdate>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -80,14 +82,15 @@ namespace BingX.Net.Clients.SpotApi
             depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);
 
             var stream = symbol + "@depth" + depth;
-            var subscription = new BingXSubscription<BingXOrderBook>(_logger, stream, stream, onMessage, false);
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
         {
-            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, symbol + "@ticker", "24hTicker" + symbol, onMessage, false);
+            var stream = symbol + "@ticker";
+            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, stream, "24hTicker" + symbol, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -95,7 +98,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@lastPrice";
-            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, stream, stream, onMessage, false);
+            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -103,7 +106,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@bookTicker";
-            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, stream, stream, onMessage, false);
+            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -111,7 +114,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = "spot.executionReport";
-            var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, stream, stream, onMessage, false);
+            var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
         }
 

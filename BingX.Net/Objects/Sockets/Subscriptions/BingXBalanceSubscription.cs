@@ -59,7 +59,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
         {
             var update = (BingXBalanceUpdate)message.Data;
-            _handler.Invoke(message.As(update!, update.Event, SocketUpdateType.Update));
+            _handler.Invoke(message.As(update!, update.Event, null, SocketUpdateType.Update));
             return new CallResult(null);
         }
     }

@@ -70,7 +70,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                     klineUpdate.Symbol = update.Symbol!;
             }
 
-            _handler.Invoke(message.As(update.Data!, update.DataType, SocketUpdateType.Update));
+            _handler.Invoke(message.As(update.Data!, update.DataType, update.Symbol, SocketUpdateType.Update));
             return new CallResult(null);
         }
     }
