@@ -78,10 +78,10 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("asset")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Contract status
+        /// 0: Online, 1:Offline. Different unknown values have been observed. 
         /// </summary>
         [JsonPropertyName("status")]
-        public bool Online { get; set; }
+        public int Status { get; set; }
         /// <summary>
         /// Can open positions from API
         /// </summary>

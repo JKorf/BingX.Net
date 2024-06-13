@@ -2855,9 +2855,9 @@
             Contract trading asset
             </summary>
         </member>
-        <member name="P:BingX.Net.Objects.Models.BingXContract.Online">
+        <member name="P:BingX.Net.Objects.Models.BingXContract.Status">
             <summary>
-            Contract status
+            0: Online, 1:Offline. Different unknown values have been observed. 
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXContract.ApiCanOpen">
