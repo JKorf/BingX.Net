@@ -160,7 +160,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        protected override Query? GetAuthenticationRequest() => null;
+        protected override Query? GetAuthenticationRequest(SocketConnection connection) => null;
 
         private string KlineIntervalToWebsocketString(KlineInterval interval) => interval switch
         {

@@ -57,7 +57,6 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _configHandler = configHandler;
             _accountHandler = accountHandler;
             _listenkeyHandler = listenkeyHandler;
-            HandleUpdatesBeforeConfirmation = true;
             ListenerIdentifiers = new HashSet<string>
             {
                 "listenKeyExpired",
