@@ -59,6 +59,21 @@
             Urls to the API documentation
             </summary>
         </member>
+        <member name="P:BingX.Net.BingXExchange.RateLimiter">
+            <summary>
+            Rate limiter configuration for the BingX API
+            </summary>
+        </member>
+        <member name="T:BingX.Net.BingXRateLimiters">
+            <summary>
+            Rate limiter configuration for the BingX API
+            </summary>
+        </member>
+        <member name="E:BingX.Net.BingXRateLimiters.RateLimitTriggered">
+            <summary>
+            Event for when a rate limit is triggered
+            </summary>
+        </member>
         <member name="T:BingX.Net.Clients.BingXRestClient">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.IBingXRestClient" />
         </member>

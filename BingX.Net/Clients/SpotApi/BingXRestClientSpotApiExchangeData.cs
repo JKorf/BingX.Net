@@ -18,6 +18,7 @@ namespace BingX.Net.Clients.SpotApi
     /// <inheritdoc />
     public class BingXRestClientSpotApiExchangeData : IBingXRestClientSpotApiExchangeData
     {
+        private static readonly RequestDefinitionCache _definitions = new();
         private readonly BingXRestClientSpotApi _baseClient;
 
         internal BingXRestClientSpotApiExchangeData(ILogger logger, BingXRestClientSpotApi baseClient)
@@ -30,7 +31,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<DateTime>> GetServerTimeAsync(CancellationToken ct = default)
         {
-            var result = await _baseClient.SendRequestInternal<BingXServerTime>(_baseClient.GetUri("/openApi/spot/v1/server/time"), HttpMethod.Get, ct).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/server/time", BingXExchange.RateLimiter.RestMarket, 1, false, preventCaching: true);
+            var result = await _baseClient.SendAsync<BingXServerTime>(request, null, ct).ConfigureAwait(false);
             return result.As(result.Data?.ServerTime ?? default);
         }
 
@@ -43,7 +45,9 @@ namespace BingX.Net.Clients.SpotApi
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
-            var result = await _baseClient.SendRequestInternal<BingXSymbolsWrapper>(_baseClient.GetUri("/openApi/spot/v1/common/symbols"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/common/symbols", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var result =  await _baseClient.SendAsync<BingXSymbolsWrapper>(request, parameters, ct).ConfigureAwait(false);
             return result.As<IEnumerable<BingXSymbol>>(result.Data?.Symbols);
         }
 
@@ -59,7 +63,8 @@ namespace BingX.Net.Clients.SpotApi
                 { "symbol", symbol }
             };
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXTrade>>(_baseClient.GetUri("/openApi/spot/v1/market/trades"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/market/trades", BingXExchange.RateLimiter.RestMarket, 1, false);
+            return await _baseClient.SendAsync<IEnumerable<BingXTrade>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -74,7 +79,9 @@ namespace BingX.Net.Clients.SpotApi
                 { "symbol", symbol }
             };
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<BingXOrderBook>(_baseClient.GetUri("/openApi/spot/v1/market/depth"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/market/depth", BingXExchange.RateLimiter.RestMarket, 1, false);
+            return await _baseClient.SendAsync<BingXOrderBook>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -95,7 +102,9 @@ namespace BingX.Net.Clients.SpotApi
                 { "depth", limit },
                 { "type", "step" + mergeDepth }
             };
-            return await _baseClient.SendRequestInternal<BingXOrderBook>(_baseClient.GetUri("/openApi/spot/v2/market/depth"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v2/market/depth", BingXExchange.RateLimiter.RestMarket, 1, false);
+            return await _baseClient.SendAsync<BingXOrderBook>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -113,7 +122,9 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptionalMilliseconds("startTime", startTime);
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXKline>>(_baseClient.GetUri("/openApi/spot/v2/market/kline"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v2/market/kline", BingXExchange.RateLimiter.RestMarket, 1, false);
+            return await _baseClient.SendAsync<IEnumerable<BingXKline>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -128,7 +139,9 @@ namespace BingX.Net.Clients.SpotApi
                 { "timestamp", DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow) }
             };
             parameters.AddOptional("symbol", symbol);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXTicker>>(_baseClient.GetUri("/openApi/spot/v1/ticker/24hr"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/ticker/24hr", BingXExchange.RateLimiter.RestMarket, 1, false);
+            return await _baseClient.SendAsync<IEnumerable<BingXTicker>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -142,7 +155,9 @@ namespace BingX.Net.Clients.SpotApi
             {
                 { "symbol", symbol }
             };
-            var result = await _baseClient.SendRequestInternal<IEnumerable<BingXLastTradeWrapper>>(_baseClient.GetUri("/openApi/spot/v1/ticker/price"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/ticker/price", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXLastTradeWrapper>>(request, parameters, ct).ConfigureAwait(false);
             return result.As<BingXLastTrade>(result.Data?.Single().Trades.Single());
         }
 
@@ -157,7 +172,8 @@ namespace BingX.Net.Clients.SpotApi
             {
                 { "symbol", symbol }
             };
-            var result = await _baseClient.SendRequestInternal<IEnumerable<BingXBookTicker>>(_baseClient.GetUri("/openApi/spot/v1/ticker/bookTicker"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/ticker/bookTicker", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXBookTicker>>(request, parameters, ct).ConfigureAwait(false);
             return result.As<BingXBookTicker>(result.Data?.Single());
         }
 
@@ -174,7 +190,9 @@ namespace BingX.Net.Clients.SpotApi
             };
             parameters.AddOptional("limit", limit);
             parameters.AddOptional("fromId", fromId);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXTrade>>(_baseClient.GetUri("/openApi/spot/v1/market/trades"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/market/trades", BingXExchange.RateLimiter.RestMarket, 1, false);
+            return await _baseClient.SendAsync<IEnumerable<BingXTrade>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion

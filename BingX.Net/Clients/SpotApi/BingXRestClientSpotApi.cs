@@ -78,18 +78,20 @@ namespace BingX.Net.Clients.SpotApi
 
         internal Uri GetUri(string path) => new Uri(BaseAddress.AppendPath(path));
 
-        internal async Task<WebCallResult> SendRequestInternal(Uri uri, HttpMethod method, CancellationToken cancellationToken,
-            Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null)
+        internal Task<WebCallResult> SendAsync(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)
+            => SendToAddressAsync(BaseAddress, definition, parameters, cancellationToken, weight);
+
+        internal async Task<WebCallResult> SendToAddressAsync(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)
         {
-            return await SendRequestAsync(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, 0).ConfigureAwait(false);
+            return await base.SendAsync(baseAddress, definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
         }
 
-        internal async Task<WebCallResult<T>> SendRequestInternal<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
-            Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null, Dictionary<string, string>? additionalHeaders = null) where T : class
+        internal Task<WebCallResult<T>> SendAsync<T>(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null, Dictionary<string, string>? additionalHeaders = null) where T : class
+            => SendToAddressAsync<T>(BaseAddress, definition, parameters, cancellationToken, weight, additionalHeaders);
+
+        internal async Task<WebCallResult<T>> SendToAddressAsync<T>(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null, Dictionary<string, string>? additionalHeaders = null) where T : class
         {
-            var result = await SendRequestAsync<BingXResult<T>>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, 0, additionalHeaders: additionalHeaders).ConfigureAwait(false);
+            var result = await base.SendAsync<BingXResult<T>>(baseAddress, definition, parameters, cancellationToken, additionalHeaders, weight).ConfigureAwait(false);
             if (!result.Success)
                 return result.As<T>(null);
 
@@ -99,11 +101,12 @@ namespace BingX.Net.Clients.SpotApi
             return result.As<T>(result.Data.Data);
         }
 
-        internal async Task<WebCallResult<T>> SendRequestInternalRaw<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken,
-            Dictionary<string, object>? parameters = null, bool signed = false, HttpMethodParameterPosition? postPosition = null,
-            ArrayParametersSerialization? arraySerialization = null) where T : class
+        internal Task<WebCallResult<T>> SendRawAsync<T>(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null) where T : class
+            => SendRawToAddressAsync<T>(BaseAddress, definition, parameters, cancellationToken, weight);
+
+        internal async Task<WebCallResult<T>> SendRawToAddressAsync<T>(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null) where T : class
         {
-            return await SendRequestAsync<T>(uri, method, cancellationToken, parameters, signed, null, postPosition, arraySerialization, 0).ConfigureAwait(false);
+            return await base.SendAsync<T>(baseAddress, definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

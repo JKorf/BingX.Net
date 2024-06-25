@@ -17,6 +17,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     {
         private readonly ILogger _logger;
 
+        private static readonly RequestDefinitionCache _definitions = new();
         private readonly BingXRestClientPerpetualFuturesApi _baseClient;
 
         internal BingXRestClientPerpetualFuturesApiExchangeData(ILogger logger, BingXRestClientPerpetualFuturesApi baseClient)
@@ -30,7 +31,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<DateTime>> GetServerTimeAsync(CancellationToken ct = default)
         {
-            var result = await _baseClient.SendRequestInternal<BingXServerTime>(_baseClient.GetUri("/openApi/swap/v2/server/time"), HttpMethod.Get, ct).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/server/time", BingXExchange.RateLimiter.RestMarket, 1, false, preventCaching: true);
+            var result = await _baseClient.SendAsync<BingXServerTime>(request, null, ct).ConfigureAwait(false);
             return result.As(result.Data?.ServerTime ?? default);
         }
 
@@ -43,7 +45,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXContract>>(_baseClient.GetUri("/openApi/swap/v2/quote/contracts"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/contracts", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXContract>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -58,7 +61,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 { "symbol", symbol }
             };
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<BingXFuturesOrderBook>(_baseClient.GetUri("/openApi/swap/v2/quote/depth"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/depth", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<BingXFuturesOrderBook>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -73,7 +77,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 { "symbol", symbol }
             };
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesTrade>>(_baseClient.GetUri("/openApi/swap/v2/quote/trades"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/trades", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXFuturesTrade>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -90,7 +95,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptional("limit", limit);
             parameters.AddOptional("fromId", fromId);
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesTrade>>(_baseClient.GetUri("/openApi/swap/v1/market/historicalTrades"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/market/historicalTrades", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXFuturesTrade>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -104,7 +110,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "symbol", symbol }
             };
-            return await _baseClient.SendRequestInternal<BingXFundingRate>(_baseClient.GetUri("/openApi/swap/v2/quote/premiumIndex"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/premiumIndex", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<BingXFundingRate>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -121,7 +129,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptionalMilliseconds("startTime", startTime);
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXFundingRateHistory>>(_baseClient.GetUri("/openApi/swap/v2/quote/fundingRate"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/fundingRate", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXFundingRateHistory>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -139,7 +149,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptionalMilliseconds("startTime", startTime);
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("limit", limit);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesKline>>(_baseClient.GetUri("/openApi/swap/v3/quote/klines"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v3/quote/klines", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXFuturesKline>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -158,7 +170,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("limit", limit);
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
-            return await _baseClient.SendRequestInternal<IEnumerable<BingXFuturesMarkPriceKline>>(_baseClient.GetUri("/openApi/swap/v1/market/markPriceKlines"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/market/markPriceKlines", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXFuturesMarkPriceKline>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -172,7 +186,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "symbol", symbol }
             };
-            return await _baseClient.SendRequestInternal<BingXOpenInterest>(_baseClient.GetUri("/openApi/swap/v2/quote/openInterest"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/openInterest", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<BingXOpenInterest>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -186,7 +201,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "symbol", symbol }
             };
-            return await _baseClient.SendRequestInternal<BingXFuturesTicker>(_baseClient.GetUri("/openApi/swap/v2/quote/ticker"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/ticker", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<BingXFuturesTicker>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -201,7 +217,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 { "symbol", symbol }
             };
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
-            var result = await _baseClient.SendRequestInternal<BingXFuturesBookTickerWrapper>(_baseClient.GetUri("/openApi/swap/v2/quote/bookTicker"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/bookTicker", BingXExchange.RateLimiter.RestMarket, 1);
+            var result = await _baseClient.SendAsync<BingXFuturesBookTickerWrapper>(request, parameters, ct).ConfigureAwait(false);
             return result.As<BingXFuturesBookTicker>(result.Data?.BookTicker);
         }
 
@@ -217,7 +234,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 { "symbol", symbol }
             };
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
-            return await _baseClient.SendRequestInternal<BingXLastTradePrice>(_baseClient.GetUri("/openApi/swap/v1/ticker/price"), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/ticker/price", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<BingXLastTradePrice>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
