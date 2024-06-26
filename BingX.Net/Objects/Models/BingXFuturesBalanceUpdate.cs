@@ -107,6 +107,6 @@ namespace BingX.Net.Objects.Models
         /// Position side
         /// </summary>
         [JsonPropertyName("ps")]
-        public PositionSide Side { get; set; }
+        public TradeSide Side { get; set; }
     }
 }

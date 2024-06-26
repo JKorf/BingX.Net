@@ -1113,6 +1113,21 @@
             Fill the order upon placement or cancel
             </summary>
         </member>
+        <member name="T:BingX.Net.Enums.TradeSide">
+            <summary>
+            Trade side
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TradeSide.Long">
+            <summary>
+            Long position
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TradeSide.Short">
+            <summary>
+            Short position
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.TransferType">
             <summary>
             Transfer type
@@ -4953,7 +4968,7 @@
         <member name="T:BingX.Net.Objects.Models.BingXPosition">
             <summary>
             Position information
-            </summary>
+            </summary> 
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXPosition.PositionId">
             <summary>
@@ -4978,6 +4993,11 @@
         <member name="P:BingX.Net.Objects.Models.BingXPosition.Available">
             <summary>
             Availalbe quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.PositionValue">
+            <summary>
+            Value of the position
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXPosition.Side">
@@ -5005,6 +5025,21 @@
             Margin
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.MarkPrice">
+            <summary>
+            Mark price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.MaxMarginReduction">
+            <summary>
+            Maximum margin reduction
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.OnlyOnePosition">
+            <summary>
+            Max margin reduction
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXPosition.Leverage">
             <summary>
             Leverage
@@ -5020,9 +5055,19 @@
             Realized profit
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.RiskRate">
+            <summary>
+            Risk rate
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXPosition.LiquidationPrice">
             <summary>
             Liquidation price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPosition.UnrealizedPnlRatio">
+            <summary>
+            Unrealized Profit and loss ratio
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXPosition.UpdateTime">

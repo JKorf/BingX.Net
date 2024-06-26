@@ -6,7 +6,7 @@ namespace BingX.Net.Objects.Models
 {
     /// <summary>
     /// Position information
-    /// </summary>
+    /// </summary> 
     public record BingXPosition
     {
         /// <summary>
@@ -35,10 +35,15 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("availableAmt")]
         public decimal Available { get; set; }
         /// <summary>
+        /// Value of the position
+        /// </summary>
+        [JsonPropertyName("positionValue")]
+        public decimal PositionValue { get; set; }
+        /// <summary>
         /// Position side
         /// </summary>
         [JsonPropertyName("positionSide")]
-        public PositionSide Side { get; set; }
+        public TradeSide Side { get; set; }
         /// <summary>
         /// Is isolated margin mode
         /// </summary>
@@ -57,8 +62,23 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Margin
         /// </summary>
-        [JsonPropertyName("Margin")]
+        [JsonPropertyName("margin")]
         public decimal? Margin { get; set; }
+        /// <summary>
+        /// Mark price
+        /// </summary>
+        [JsonPropertyName("markPrice")]
+        public decimal? MarkPrice { get; set; }
+        /// <summary>
+        /// Maximum margin reduction
+        /// </summary>
+        [JsonPropertyName("maxMarginReduction")]
+        public decimal? MaxMarginReduction { get; set; }
+        /// <summary>
+        /// Max margin reduction
+        /// </summary>
+        [JsonPropertyName("onlyOnePosition")]
+        public bool? OnlyOnePosition { get; set; }
         /// <summary>
         /// Leverage
         /// </summary>
@@ -75,10 +95,20 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("realisedProfit")]
         public decimal RealizedProfit { get; set; }
         /// <summary>
+        /// Risk rate
+        /// </summary>
+        [JsonPropertyName("riskRate")]
+        public decimal? RiskRate { get; set; }
+        /// <summary>
         /// Liquidation price
         /// </summary>
         [JsonPropertyName("liquidationPrice")]
         public decimal LiquidationPrice { get; set; }
+        /// <summary>
+        /// Unrealized Profit and loss ratio
+        /// </summary>
+        [JsonPropertyName("pnlRatio")]
+        public decimal UnrealizedPnlRatio { get; set; }
         /// <summary>
         /// Last update timestamp
         /// </summary>
