@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.RateLimiting.Guards;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -27,7 +28,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<IEnumerable<BingXBalance>>> GetBalancesAsync(CancellationToken ct = default)
         {
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/account/balance", BingXExchange.RateLimiter.RestAccount2, 1, true, 5, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/account/balance", BingXExchange.RateLimiter.RestAccount2, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXBalanceWrapper>(request, null, ct).ConfigureAwait(false);
             return result.As<IEnumerable<BingXBalance>>(result.Data?.Balances);
         }
@@ -46,7 +48,8 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("offset", offset);
             parameters.AddOptional("limit", limit);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/deposit/hisrec", BingXExchange.RateLimiter.RestAccount1, 1, true, 10, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/deposit/hisrec", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendRawAsync<IEnumerable<BingXDeposit>>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -67,7 +70,8 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("offset", offset);
             parameters.AddOptional("limit", limit);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/withdraw/history", BingXExchange.RateLimiter.RestAccount1, 1, true, 10, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/withdraw/history", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendRawAsync<IEnumerable<BingXWithdrawal>>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -81,7 +85,8 @@ namespace BingX.Net.Clients.SpotApi
             var parameters = new ParameterCollection();
             parameters.AddOptional("coin", asset);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/config/getall", BingXExchange.RateLimiter.RestAccount1, 1, true, 2, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/config/getall", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<IEnumerable<BingXAsset>>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -103,7 +108,8 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("addressTag", addressTag);
             parameters.AddOptional("withdrawOrderId", clientOrderId);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/wallets/v1/capital/withdraw/apply", BingXExchange.RateLimiter.RestAccount1, 1, true, 2, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/wallets/v1/capital/withdraw/apply", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXWithdrawResult>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -121,7 +127,8 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("offset", offset);
             parameters.AddOptional("limit", limit);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/deposit/address", BingXExchange.RateLimiter.RestAccount1, 1, true, 2, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/deposit/address", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXDepositAddresses>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -139,7 +146,8 @@ namespace BingX.Net.Clients.SpotApi
             };
             parameters.AddEnum("type", tranferType);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/api/v3/post/asset/transfer", BingXExchange.RateLimiter.RestAccount2, 1, true, 2, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/api/v3/post/asset/transfer", BingXExchange.RateLimiter.RestAccount2, 1, true,
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendRawAsync<BingXTransactionResult>(request, parameters, ct).ConfigureAwait(false);
             if (!result)
                 return result;
@@ -164,7 +172,8 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("current", page);
             parameters.AddOptional("size", pageSize);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/asset/transfer", BingXExchange.RateLimiter.RestAccount1, 1, true, 10, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/asset/transfer", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendRawAsync<BingXTransfers>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -186,7 +195,8 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("callingCode", areaCode);
             parameters.AddOptional("transferClientId", clientOrderId);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/wallets/v1/capital/innerTransfer/apply", BingXExchange.RateLimiter.RestAccount1, 1, true, 2, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/wallets/v1/capital/innerTransfer/apply", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXId>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -207,7 +217,8 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("offset", offset);
             parameters.AddOptional("limit", limit);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/innerTransfer/records", BingXExchange.RateLimiter.RestAccount1, 1, true, 10, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/innerTransfer/records", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXInternalTransfers>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -218,7 +229,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<string>> StartUserStreamAsync(CancellationToken ct = default)
         {
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false, 5, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendRawAsync<BingXListenKey>(request, null, ct).ConfigureAwait(false);
             return result.As<string>(result.Data?.ListenKey);
         }
@@ -234,7 +246,8 @@ namespace BingX.Net.Clients.SpotApi
             {
                 { "listenKey", listenKey }
             };
-            var request = _definitions.GetOrCreate(HttpMethod.Put, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false, 5, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Put, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -249,7 +262,8 @@ namespace BingX.Net.Clients.SpotApi
             {
                 { "listenKey", listenKey }
             };
-            var request = _definitions.GetOrCreate(HttpMethod.Delete, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false, 5, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Delete, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -265,7 +279,8 @@ namespace BingX.Net.Clients.SpotApi
                 { "symbol", symbol }
             };
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/user/commissionRate", BingXExchange.RateLimiter.RestAccount1, 1, true, 2, TimeSpan.FromSeconds(1));
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/user/commissionRate", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXTradingFees>(request, parameters, ct).ConfigureAwait(false);
         }
 

@@ -55,7 +55,9 @@ namespace BingX.Net
         private void Initialize()
         {
             RestMarket = new RateLimitGate("Spot Rest Market")
-                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 100, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)); // IP limit of 100 requests per 10 seconds in total 
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding)) // As suggested by BingX API support: IP limit of 10 requests per 1 second in total 
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 100, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 100 requests per 10 seconds in total 
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 500, TimeSpan.FromSeconds(60), RateLimitWindowType.Sliding)); // IP limit of 500 requests per 60 seconds in total 
             RestAccount1 = new RateLimitGate("Spot Rest Account 1")
                                             .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 1000, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 1000 requests per 10 seconds in total 
                                             .AddGuard(new RateLimitGuard(RateLimitGuard.PerEndpoint, new List<IGuardFilter>(), 100, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)); // IP limit of 100 requests per 10 seconds per endpoint
