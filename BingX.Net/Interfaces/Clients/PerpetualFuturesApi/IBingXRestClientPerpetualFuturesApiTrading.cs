@@ -35,6 +35,16 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="reduceOnly">Reduce only</param>
         /// <param name="stopPrice">Stop price</param>
         /// <param name="priceRate">Trailing percentage (between 0 and 1)</param>
+        /// <param name="stopLossType">Stop loss order type</param>
+        /// <param name="stopLossStopPrice">Stop loss trigger price</param>
+        /// <param name="stopLossPrice">Stop loss order price</param>
+        /// <param name="stopLossTriggerType">Stop loss trigger price type</param>
+        /// <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
+        /// <param name="takeProfitType">Take profit order type</param>
+        /// <param name="takeProfitStopPrice">Take profit trigger price</param>
+        /// <param name="takeProfitPrice">Take profit order price</param>
+        /// <param name="takeProfitTriggerType">Take profit trigger price type</param>
+        /// <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
         /// <param name="timeInForce">Time in force</param>
         /// <param name="closePosition">Close the position</param>
         /// <param name="triggerPrice">Trigger price</param>
@@ -53,17 +63,17 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
             decimal? stopPrice = null,
             decimal? priceRate = null,
 
-            //TakeProfitStopLossMode? stopLossType = null,
-            //decimal? stopLossStopPrice = null,
-            //decimal? stopLossPrice = null,
-            //TriggerType? stopLossTriggerType = null,
-            //bool? stopLossStopGuaranteed = null,
+            TakeProfitStopLossMode? stopLossType = null,
+            decimal? stopLossStopPrice = null,
+            decimal? stopLossPrice = null,
+            TriggerType? stopLossTriggerType = null,
+            bool? stopLossStopGuaranteed = null,
 
-            //TakeProfitStopLossMode? takeProfitType = null,
-            //decimal? takeProfitStopPrice = null,
-            //decimal? takeProfitPrice = null,
-            //TriggerType? takeProfitTriggerType = null,
-            //bool? takeProfitStopGuaranteed = null,
+            TakeProfitStopLossMode? takeProfitType = null,
+            decimal? takeProfitStopPrice = null,
+            decimal? takeProfitPrice = null,
+            TriggerType? takeProfitTriggerType = null,
+            bool? takeProfitStopGuaranteed = null,
 
             TimeInForce? timeInForce = null,
             bool? closePosition = null,
@@ -86,6 +96,16 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="reduceOnly">Reduce only</param>
         /// <param name="stopPrice">Stop price</param>
         /// <param name="priceRate">Trailing percentage (between 0 and 1)</param>
+        /// <param name="stopLossType">Stop loss order type</param>
+        /// <param name="stopLossStopPrice">Stop loss trigger price</param>
+        /// <param name="stopLossPrice">Stop loss order price</param>
+        /// <param name="stopLossTriggerType">Stop loss trigger price type</param>
+        /// <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
+        /// <param name="takeProfitType">Take profit order type</param>
+        /// <param name="takeProfitStopPrice">Take profit trigger price</param>
+        /// <param name="takeProfitPrice">Take profit order price</param>
+        /// <param name="takeProfitTriggerType">Take profit trigger price type</param>
+        /// <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
         /// <param name="timeInForce">Time in force</param>
         /// <param name="closePosition">Close the position</param>
         /// <param name="triggerPrice">Trigger price</param>
@@ -104,17 +124,17 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
             decimal? stopPrice = null,
             decimal? priceRate = null,
 
-            //TakeProfitStopLossMode? stopLossType = null,
-            //decimal? stopLossStopPrice = null,
-            //decimal? stopLossPrice = null,
-            //TriggerType? stopLossTriggerType = null,
-            //bool? stopLossStopGuaranteed = null,
+            TakeProfitStopLossMode? stopLossType = null,
+            decimal? stopLossStopPrice = null,
+            decimal? stopLossPrice = null,
+            TriggerType? stopLossTriggerType = null,
+            bool? stopLossStopGuaranteed = null,
 
-            //TakeProfitStopLossMode? takeProfitType = null,
-            //decimal? takeProfitStopPrice = null,
-            //decimal? takeProfitPrice = null,
-            //TriggerType? takeProfitTriggerType = null,
-            //bool? takeProfitStopGuaranteed = null,
+            TakeProfitStopLossMode? takeProfitType = null,
+            decimal? takeProfitStopPrice = null,
+            decimal? takeProfitPrice = null,
+            TriggerType? takeProfitTriggerType = null,
+            bool? takeProfitStopGuaranteed = null,
 
             TimeInForce? timeInForce = null,
             bool? closePosition = null,

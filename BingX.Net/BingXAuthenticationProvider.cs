@@ -7,6 +7,8 @@ using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using System.Linq;
+using System.Globalization;
 
 namespace BingX.Net
 {
@@ -44,7 +46,12 @@ namespace BingX.Net
                 parameters.Add("recvWindow", (int)receiveWindow.TotalMilliseconds);
             }
 
-            var parameterSignData = parameters.CreateParamString(true, arraySerialization);
+            string parameterSignData;
+            if (parameterPosition == HttpMethodParameterPosition.InBody)
+                parameterSignData = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", o.Value)));
+            else
+                parameterSignData = parameters.CreateParamString(true, arraySerialization);
+
             parameters.Add("signature", SignHMACSHA256(parameterSignData, SignOutputType.Hex));
         }
     }
