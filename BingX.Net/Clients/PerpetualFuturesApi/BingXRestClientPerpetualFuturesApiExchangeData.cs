@@ -13,7 +13,7 @@ using BingX.Net.Enums;
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     /// <inheritdoc />
-    public class BingXRestClientPerpetualFuturesApiExchangeData : IBingXRestClientPerpetualFuturesApiExchangeData
+    internal class BingXRestClientPerpetualFuturesApiExchangeData : IBingXRestClientPerpetualFuturesApiExchangeData
     {
         private readonly ILogger _logger;
 

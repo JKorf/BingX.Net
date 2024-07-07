@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     /// <inheritdoc />
-    public class BingXRestClientPerpetualFuturesApiAccount : IBingXRestClientPerpetualFuturesApiAccount
+    internal class BingXRestClientPerpetualFuturesApiAccount : IBingXRestClientPerpetualFuturesApiAccount
     {
         private static readonly RequestDefinitionCache _definitions = new();
         private readonly BingXRestClientPerpetualFuturesApi _baseClient;

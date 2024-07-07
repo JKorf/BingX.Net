@@ -16,7 +16,7 @@ using CryptoExchange.Net.RateLimiting.Guards;
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     /// <inheritdoc />
-    public class BingXRestClientPerpetualFuturesApiTrading : IBingXRestClientPerpetualFuturesApiTrading
+    internal class BingXRestClientPerpetualFuturesApiTrading : IBingXRestClientPerpetualFuturesApiTrading
     {
         private static readonly RequestDefinitionCache _definitions = new();
         private readonly BingXRestClientPerpetualFuturesApi _baseClient;

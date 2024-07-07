@@ -18,7 +18,7 @@ using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     /// <inheritdoc cref="IBingXRestClientPerpetualFuturesApi" />
-    public class BingXRestClientPerpetualFuturesApi : RestApiClient, IBingXRestClientPerpetualFuturesApi
+    internal class BingXRestClientPerpetualFuturesApi : RestApiClient, IBingXRestClientPerpetualFuturesApi
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Perpetual Futures Api");

@@ -25,7 +25,7 @@ namespace BingX.Net.Clients.SpotApi
     /// <summary>
     /// Client providing access to the BingX spot websocket Api
     /// </summary>
-    public class BingXSocketClientSpotApi : SocketApiClient, IBingXSocketClientSpotApi
+    internal class BingXSocketClientSpotApi : SocketApiClient, IBingXSocketClientSpotApi
     {
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");

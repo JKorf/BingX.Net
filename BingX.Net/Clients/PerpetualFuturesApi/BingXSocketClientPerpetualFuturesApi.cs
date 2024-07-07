@@ -27,7 +27,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     /// <summary>
     /// Client providing access to the BingX futures websocket Api
     /// </summary>
-    public class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
+    internal class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
     {
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");

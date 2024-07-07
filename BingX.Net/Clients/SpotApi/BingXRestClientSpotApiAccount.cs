@@ -13,7 +13,7 @@ using CryptoExchange.Net.RateLimiting.Guards;
 namespace BingX.Net.Clients.SpotApi
 {
     /// <inheritdoc />
-    public class BingXRestClientSpotApiAccount : IBingXRestClientSpotApiAccount
+    internal class BingXRestClientSpotApiAccount : IBingXRestClientSpotApiAccount
     {
         private static readonly RequestDefinitionCache _definitions = new();
         private readonly BingXRestClientSpotApi _baseClient;

@@ -23,7 +23,7 @@ using BingX.Net.Enums;
 namespace BingX.Net.Clients.SpotApi
 {
     /// <inheritdoc cref="IBingXRestClientSpotApi" />
-    public class BingXRestClientSpotApi : RestApiClient, IBingXRestClientSpotApi, ISpotClient
+    internal class BingXRestClientSpotApi : RestApiClient, IBingXRestClientSpotApi, ISpotClient
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Spot Api");

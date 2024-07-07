@@ -16,7 +16,7 @@ using System.Linq;
 namespace BingX.Net.Clients.SpotApi
 {
     /// <inheritdoc />
-    public class BingXRestClientSpotApiExchangeData : IBingXRestClientSpotApiExchangeData
+    internal class BingXRestClientSpotApiExchangeData : IBingXRestClientSpotApiExchangeData
     {
         private static readonly RequestDefinitionCache _definitions = new();
         private readonly BingXRestClientSpotApi _baseClient;
