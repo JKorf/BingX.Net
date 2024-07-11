@@ -1290,7 +1290,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetBalancesAsync(System.Threading.CancellationToken)">
             <summary>
             Get balance info
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Get%20Perpetual%20Swap%20Account%20Asset%20Information" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20account%20data" /></para>
             </summary>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -1319,7 +1319,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
             <summary>
             Generate a listen key used for subscribing to user data streams with the socket client
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#generate%20Listen%20Key" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20Trading%20Commission%20Rate" /></para>
             </summary>
             <param name="ct"></param>
             <returns></returns>
@@ -1345,7 +1345,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetMarginModeAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get the current margin mode for a symbol
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Mode" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Type" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -1354,7 +1354,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.SetMarginModeAsync(System.String,BingX.Net.Enums.MarginMode,System.Threading.CancellationToken)">
             <summary>
             Change the margin mode for a symbol
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Margin%20Mode" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Change%20Margin%20Type" /></para>
             </summary>=
             <param name="symbol">Symbol</param>
             <param name="marginMode">New margin mode</param>
@@ -1384,7 +1384,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.AdjustIsolatedMarginAsync(System.String,System.Decimal,BingX.Net.Enums.AdjustDirection,BingX.Net.Enums.PositionSide,System.Threading.CancellationToken)">
             <summary>
             Adjust isolated margin for a position
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Leverage" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="quantity">Quantity to adjust with</param>
@@ -1396,7 +1396,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetPositionModeAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get current position mode
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Get%20Position%20Mode" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -1580,7 +1580,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetPositionsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get positions
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Perpetual%20Swap%20Positions" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20position%20data" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -1589,7 +1589,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
             <summary>
             Place a new test order. Order won't actually get placed
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order%20test" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Test%20Order" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="side">Order side</param>
@@ -1621,7 +1621,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
             <summary>
             Place a new order
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20order" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="side">Order side</param>
@@ -1653,6 +1653,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Threading.CancellationToken)">
             <summary>
             Place multiple new orders in one go
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20multiple%20orders" /></para>
             </summary>
             <param name="orders">Orders to place</param>
             <param name="ct">Cancellation token</param>
@@ -1661,7 +1662,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
             <summary>
             Get an order
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20pending%20order%20status" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
@@ -1672,7 +1673,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
             <summary>
             Cancel an order
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20an%20Order" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20Order" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
@@ -1683,7 +1684,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CloseAllPositionsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Close all positions. Positions will be closed via market order
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#One-Click%20Close%20All%20Positions" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20All%20Positions" /></para>
             </summary>
             <param name="symbol">Only close for a specific symbol</param>
             <param name="ct">Cancellation token</param>
@@ -1692,6 +1693,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelMultipleOrderAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <summary>
             Cancel multiple orders on a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20multiple%20orders" /></para>
             </summary>
             <param name="symbol">The symbol</param>
             <param name="orderIds">The ids of orders to cancel</param>
@@ -1711,7 +1713,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get all open orders
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20all%20current%20pending%20orders" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Open%20Orders" /></para>
             </summary>
             <param name="symbol">Filter by symbol</param>
             <param name="ct">Cancellation token</param>
@@ -1733,7 +1735,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetClosedOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get closed orders
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order%20history" /></para>
             </summary>
             <param name="symbol">Filter by symbol</param>
             <param name="orderId">Filter by order id</param>
@@ -1746,7 +1748,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
             Get user trade history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20orders" /></para>
             </summary>
             <param name="orderId">Filter by order id</param>
             <param name="startTime">Filter by start time</param>
@@ -1757,7 +1759,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20all%20orders%20in%20countdown" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20After" /></para>
             </summary>
             <param name="activate">True to activate the trigger, false to disable the trigger</param>
             <param name="cancelAfterSeconds">Seconds after which to cancel all orders, between 10 and 120</param>
@@ -1767,7 +1769,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.ClosePositionAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Close a position by its id
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20the%20position%20by%20position%20ID" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20position%20by%20position%20ID" /></para>
             </summary>
             <param name="positionId">The id of the position to close</param>
             <param name="ct">Cancellation token</param>
@@ -1945,7 +1947,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetDepositHistoryAsync(System.String,System.Nullable{BingX.Net.Enums.DepositStatus},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get deposit history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20History(supporting%20network)" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20records" /></para>
             </summary>
             <param name="asset"></param>
             <param name="status"></param>
@@ -1959,7 +1961,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetWithdrawalHistoryAsync(System.String,System.String,System.String,System.Nullable{BingX.Net.Enums.WithdrawalStatus},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get withdrawal history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20History%20(supporting%20network)" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20records" /></para>
             </summary>
             <param name="id"></param>
             <param name="asset"></param>
@@ -1975,7 +1977,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetAssetsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get asset info
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#All%20Coins'%20Information" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /></para>
             </summary>
             <param name="asset"></param>
             <param name="ct">Cancellation token</param>
@@ -1999,7 +2001,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetDepositAddressAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get deposit addresses
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Query%20Main%20Account%20Deposit%20Address" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Main%20Account%20Deposit%20Address" /></para>
             </summary>
             <param name="asset">The asset</param>
             <param name="offset">Offset</param>
@@ -2010,7 +2012,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.TransferAsync(BingX.Net.Enums.TransferType,System.String,System.Decimal,System.Threading.CancellationToken)">
             <summary>
             Universal transfer
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#User%20Universal%20Transfer" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer" /></para>
             </summary>
             <param name="tranferType">Transfer type</param>
             <param name="asset">Asset to transfer</param>
@@ -2021,7 +2023,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetTransfersAsync(BingX.Net.Enums.TransferType,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get universal transfer history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20User%20Universal%20Transfer%20History%20(USER_DATA)" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20transfer%20records" /></para>
             </summary>
             <param name="type">Transaction type</param>
             <param name="transactionId">Filter by id</param>
@@ -2035,7 +2037,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.TransferInternalAsync(System.String,BingX.Net.Enums.AccountIdentifierType,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Transfer internal to an account on the BingX platform
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#User%20internal%20transfer" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Accoun%20internal%20transfer" /></para>
             </summary>
             <param name="asset">Asset</param>
             <param name="targetAccountType">Target account type</param>
@@ -2050,7 +2052,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetInternalTransfersAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get internal transfer history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Account%20Query%20Inner%20Transfer%20Records" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20account%20internal%20transfer%20records" /></para>
             </summary>
             <param name="asset">Asset</param>
             <param name="clientOrderId">Client order id</param>
@@ -2112,7 +2114,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetSymbolsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get symbol information
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20Symbols" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Spot%20trading%20symbols" /></para>
             </summary>
             <param name="symbol">The symbol</param>
             <param name="ct">Cancellation token</param>
@@ -2121,7 +2123,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetRecentTradesAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get a list of the most recent trades
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20transaction%20records" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Recent%20Trades%20List" /></para>
             </summary>
             <param name="symbol">The symbol</param>
             <param name="limit">Max amount of results</param>
@@ -2131,7 +2133,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get the orderbook for a symbol
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20depth%20information" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book" /></para>
             </summary>
             <param name="symbol">The symbol</param>
             <param name="limit">Max amount of results</param>
@@ -2141,7 +2143,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get kline/candlestick data
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Candlestick%20chart%20data" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Kline/Candlestick%20Data" /></para>
             </summary>
             <param name="symbol">The symbol</param>
             <param name="interval">Kline interval</param>
@@ -2154,7 +2156,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetTickersAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get ticker (24h price statistics)
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24-hour%20price%20changes" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
             </summary>
             <param name="symbol">Filter by symbol</param>
             <param name="ct">Cancellation token</param>
@@ -2163,7 +2165,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetAggregatedOrderBookAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get aggregated order book
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20Aggregate%20Depth" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book%20aggregation" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="limit">Book depth</param>
@@ -2174,7 +2176,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetLastTradeAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get the last trade for a symbol
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Latest%20Transaction%20Price" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -2183,7 +2185,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetLastTradesAsync(System.Threading.CancellationToken)">
             <summary>
             Get the last trade for all symbols
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Latest%20Transaction%20Price" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /></para>
             </summary>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -2191,7 +2193,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetBookPriceAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get the current best book prices
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Best%20Order%20Book" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Order%20Book%20Ticker" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -2200,7 +2202,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetTradeHistoryAsync(System.String,System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
             <summary>
             Get historic trades
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20historical%20transaction%20records" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Old%20Trade%20Lookup" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="limit">Amount or results</param>
@@ -2216,7 +2218,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
             <summary>
             Place a new order
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20Order" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20order" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="side">Order side</param>
@@ -2232,7 +2234,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceMultipleOrdersAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXPlaceOrderRequest},System.Threading.CancellationToken)">
             <summary>
             Place multiple orders
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Batch%20Placing%20Orders" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20multiple%20orders" /></para>
             </summary>
             <param name="orders">Orders to place</param>
             <param name="ct">Cancellation token</param>
@@ -2241,7 +2243,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
             <summary>
             Cancel an active order
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20an%20Order" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20Order" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="orderId">Order id, either this or clientOrderId should be provided</param>
@@ -2252,7 +2254,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <summary>
             Cancel multiple active orders
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20a%20Batch%20of%20Orders" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20multiple%20orders" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="orderIds">The order ids to cancel</param>
@@ -2263,7 +2265,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelAllOrdersAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Cancel all active orders on a symbol
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20orders%20by%20symbol" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20Open%20Orders%20on%20a%20Symbol" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -2272,7 +2274,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20orders%20in%20countdown" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20All%20After" /></para>
             </summary>
             <param name="activate">True to activate the trigger, false to disable the trigger</param>
             <param name="cancelAfterSeconds">Seconds after which to cancel all orders, between 10 and 120</param>
@@ -2282,7 +2284,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
             <summary>
             Get an order by orderId or clientOrderId
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Orders" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20details" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="orderId">Order id, either this or clientOrderId should be provided</param>
@@ -2293,7 +2295,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get open orders
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Open%20Orders" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Current%20Open%20Orders" /></para>
             </summary>
             <param name="symbol">Filter by symbol</param>
             <param name="ct">Cancellation token</param>
@@ -2302,7 +2304,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get order history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20History" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20history" /></para>
             </summary>
             <param name="symbol">Filter by symbol</param>
             <param name="orderId">Filter by order id</param>
@@ -2318,7 +2320,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get user trade history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details." /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details" /></para>
             </summary>
             <param name="symbol">Filter by symbol</param>
             <param name="orderId">Filter by order id</param>
