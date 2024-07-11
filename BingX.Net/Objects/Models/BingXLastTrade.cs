@@ -18,6 +18,11 @@ namespace BingX.Net.Objects.Models
     public record BingXLastTrade
     {
         /// <summary>
+        /// Symbol
+        /// </summary>
+        public string Symbol { get; set; } = string.Empty;
+
+        /// <summary>
         /// Timestamp
         /// </summary>
         [JsonPropertyName("timestamp")]
@@ -47,5 +52,6 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("type")]
         public int Type { get; set; }
+
     }
 }

@@ -158,7 +158,24 @@ namespace BingX.Net.Clients.SpotApi
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/ticker/price", BingXExchange.RateLimiter.RestMarket, 1, false);
             var result = await _baseClient.SendAsync<IEnumerable<BingXLastTradeWrapper>>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<BingXLastTrade>(result.Data?.Single().Trades.Single());
+            var tradeResult = result.As<BingXLastTrade>(result.Data?.Single().Trades.Single());
+            if (!tradeResult)
+                return tradeResult;
+
+            tradeResult.Data.Symbol = symbol;
+            return tradeResult;
+        }
+
+        #endregion
+
+        #region Get Last Trades
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXLastTrade>>> GetLastTradesAsync(CancellationToken ct = default)
+        {
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/ticker/price", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXLastTradeWrapper>>(request, null, ct).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXLastTrade>>(result.Data?.Select(x => x.Trades.Single() with { Symbol = x.Symbol }));
         }
 
         #endregion

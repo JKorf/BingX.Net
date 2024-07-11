@@ -15,7 +15,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     {
         /// <summary>
         /// Place a new order
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20Order" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="side">Order side</param>
@@ -31,7 +31,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Place multiple orders
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Batch%20Placing%20Orders" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20multiple%20orders" /></para>
         /// </summary>
         /// <param name="orders">Orders to place</param>
         /// <param name="ct">Cancellation token</param>
@@ -40,7 +40,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Cancel an active order
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20an%20Order" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20Order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="orderId">Order id, either this or clientOrderId should be provided</param>
@@ -51,7 +51,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Cancel multiple active orders
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20a%20Batch%20of%20Orders" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20multiple%20orders" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="orderIds">The order ids to cancel</param>
@@ -62,7 +62,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Cancel all active orders on a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20orders%20by%20symbol" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20Open%20Orders%20on%20a%20Symbol" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -71,7 +71,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20orders%20in%20countdown" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20All%20After" /></para>
         /// </summary>
         /// <param name="activate">True to activate the trigger, false to disable the trigger</param>
         /// <param name="cancelAfterSeconds">Seconds after which to cancel all orders, between 10 and 120</param>
@@ -81,7 +81,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get an order by orderId or clientOrderId
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Orders" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20details" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="orderId">Order id, either this or clientOrderId should be provided</param>
@@ -92,7 +92,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get open orders
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Open%20Orders" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Current%20Open%20Orders" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -101,7 +101,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get order history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20History" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20history" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol</param>
         /// <param name="orderId">Filter by order id</param>
@@ -117,7 +117,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get user trade history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details." /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol</param>
         /// <param name="orderId">Filter by order id</param>

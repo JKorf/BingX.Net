@@ -23,7 +23,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get symbol information
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20Symbols" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Spot%20trading%20symbols" /></para>
         /// </summary>
         /// <param name="symbol">The symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -32,7 +32,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get a list of the most recent trades
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20transaction%20records" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Recent%20Trades%20List" /></para>
         /// </summary>
         /// <param name="symbol">The symbol</param>
         /// <param name="limit">Max amount of results</param>
@@ -42,7 +42,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get the orderbook for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20depth%20information" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book" /></para>
         /// </summary>
         /// <param name="symbol">The symbol</param>
         /// <param name="limit">Max amount of results</param>
@@ -52,7 +52,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get kline/candlestick data
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Candlestick%20chart%20data" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Kline/Candlestick%20Data" /></para>
         /// </summary>
         /// <param name="symbol">The symbol</param>
         /// <param name="interval">Kline interval</param>
@@ -65,7 +65,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get ticker (24h price statistics)
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24-hour%20price%20changes" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -74,7 +74,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get aggregated order book
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20Aggregate%20Depth" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book%20aggregation" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="limit">Book depth</param>
@@ -84,8 +84,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         Task<WebCallResult<BingXOrderBook>> GetAggregatedOrderBookAsync(string symbol, int limit, int mergeDepth, CancellationToken ct = default);
 
         /// <summary>
-        /// Get the last trade
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Latest%20Transaction%20Price" /></para>
+        /// Get the last trade for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -93,8 +93,16 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         Task<WebCallResult<BingXLastTrade>> GetLastTradeAsync(string symbol, CancellationToken ct = default);
 
         /// <summary>
+        /// Get the last trade for all symbols
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXLastTrade>>> GetLastTradesAsync(CancellationToken ct = default);
+
+        /// <summary>
         /// Get the current best book prices
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Best%20Order%20Book" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Order%20Book%20Ticker" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -103,7 +111,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get historic trades
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Query%20historical%20transaction%20records" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Old%20Trade%20Lookup" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="limit">Amount or results</param>

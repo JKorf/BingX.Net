@@ -23,7 +23,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get deposit history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20History(supporting%20network)" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20records" /></para>
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="status"></param>
@@ -37,7 +37,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get withdrawal history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20History%20(supporting%20network)" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20records" /></para>
         /// </summary>
         /// <param name="id"></param>
         /// <param name="asset"></param>
@@ -53,7 +53,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get asset info
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#All%20Coins'%20Information" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /></para>
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="ct">Cancellation token</param>
@@ -77,7 +77,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get deposit addresses
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Query%20Main%20Account%20Deposit%20Address" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Main%20Account%20Deposit%20Address" /></para>
         /// </summary>
         /// <param name="asset">The asset</param>
         /// <param name="offset">Offset</param>
@@ -88,7 +88,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Universal transfer
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#User%20Universal%20Transfer" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer" /></para>
         /// </summary>
         /// <param name="tranferType">Transfer type</param>
         /// <param name="asset">Asset to transfer</param>
@@ -99,7 +99,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get universal transfer history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20User%20Universal%20Transfer%20History%20(USER_DATA)" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20transfer%20records" /></para>
         /// </summary>
         /// <param name="type">Transaction type</param>
         /// <param name="transactionId">Filter by id</param>
@@ -113,7 +113,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Transfer internal to an account on the BingX platform
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#User%20internal%20transfer" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Accoun%20internal%20transfer" /></para>
         /// </summary>
         /// <param name="asset">Asset</param>
         /// <param name="targetAccountType">Target account type</param>
@@ -128,7 +128,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get internal transfer history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Account%20Query%20Inner%20Transfer%20Records" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20account%20internal%20transfer%20records" /></para>
         /// </summary>
         /// <param name="asset">Asset</param>
         /// <param name="clientOrderId">Client order id</param>

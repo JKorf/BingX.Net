@@ -248,6 +248,9 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetFundingRateAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetFundingRatesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetFundingRateHistoryAsync(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -263,10 +266,16 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetTickerAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetTickersAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetBookTickerAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetLastTradePriceAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetLastTradePricesAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading">
@@ -512,6 +521,9 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetLastTradeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetLastTradesAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetBookPriceAsync(System.String,System.Threading.CancellationToken)">
@@ -1416,7 +1428,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetContractsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get list of contracts
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Contract%20Information" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#USDT-M%20Perp%20Futures%20symbols" /></para>
             </summary>
             <param name="symbol">Filter by symbol name</param>
             <param name="ct">Cancellation token</param>
@@ -1425,7 +1437,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get order book for a symbol
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Market%20Depth" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Order%20Book" /></para>
             </summary>
             <param name="symbol">Symbol name</param>
             <param name="limit">Number of rows in the book, 5, 10, 20, 50, 100, 500 or 1000</param>
@@ -1435,7 +1447,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetRecentTradesAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get list of the most recent trades
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#The%20latest%20Trade%20of%20a%20Trading%20Pair" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Recent%20Trades%20List" /></para>
             </summary>
             <param name="symbol">Symbol name</param>
             <param name="limit">Number of results</param>
@@ -1455,17 +1467,25 @@
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetFundingRateAsync(System.String,System.Threading.CancellationToken)">
             <summary>
-            Get the current funding rate
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Current%20Funding%20Rate" /></para>
+            Get the current funding rate for a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20and%20Funding%20Rate" /></para>
             </summary>
             <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetFundingRatesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get the current funding rate for all symbols
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20and%20Funding%20Rate" /></para>
+            </summary>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetFundingRateHistoryAsync(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get funding rate history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Funding%20Rate%20History" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Funding%20Rate%20History" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="startTime">Filter by start time</param>
@@ -1477,7 +1497,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get kline history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#K-Line%20Data" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Kline/Candlestick%20Data" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="interval">Kline interval</param>
@@ -1490,7 +1510,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetOpenInterestAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get open interest
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Swap%20Open%20Positions" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Open%20Interest%20Statistics" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -1498,17 +1518,25 @@
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetTickerAsync(System.String,System.Threading.CancellationToken)">
             <summary>
-            Get ticker (24h price stats)
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Ticker" /></para>
+            Get ticker (24h price stats) for a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
             </summary>
             <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetTickersAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get ticker (24h price stats) for all symbols
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
+            </summary>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetBookTickerAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get the best ask and bid info
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Current%20optimal%20listing" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Order%20Book%20Ticker" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="ct">Cancellation token</param>
@@ -1517,7 +1545,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetMarkPriceKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get mark price klines
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#K-Line%20Data%20-%20Mark%20Price" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20Kline/Candlestick%20Data" /></para>
             </summary>
             <param name="symbol">Symbol</param>
             <param name="interval">Kline interval</param>
@@ -1529,10 +1557,18 @@
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetLastTradePriceAsync(System.String,System.Threading.CancellationToken)">
             <summary>
-            Get the last trade price
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Latest%20Price%20of%20a%20Trading%20Pair" /></para>
+            Get the last trade price for a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Price%20Ticker" /></para>
             </summary>
             <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetLastTradePricesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get the last trade price for all symbols
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Price%20Ticker" /></para>
+            </summary>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2137,10 +2173,18 @@
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetLastTradeAsync(System.String,System.Threading.CancellationToken)">
             <summary>
-            Get the last trade
+            Get the last trade for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Latest%20Transaction%20Price" /></para>
             </summary>
             <param name="symbol">Symbol</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetLastTradesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get the last trade for all symbols
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Latest%20Transaction%20Price" /></para>
+            </summary>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -4483,6 +4527,11 @@
         <member name="T:BingX.Net.Objects.Models.BingXLastTrade">
             <summary>
             Last trade info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXLastTrade.Symbol">
+            <summary>
+            Symbol
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXLastTrade.Timestamp">

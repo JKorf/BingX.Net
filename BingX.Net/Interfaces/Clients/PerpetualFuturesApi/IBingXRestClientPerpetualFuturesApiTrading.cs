@@ -15,7 +15,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
     {
         /// <summary>
         /// Get positions
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Perpetual%20Swap%20Positions" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20position%20data" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -24,7 +24,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Place a new test order. Order won't actually get placed
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order%20test" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Test%20Order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="side">Order side</param>
@@ -85,7 +85,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Place a new order
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Trade%20order" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="side">Order side</param>
@@ -145,6 +145,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Place multiple new orders in one go
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20multiple%20orders" /></para>
         /// </summary>
         /// <param name="orders">Orders to place</param>
         /// <param name="ct">Cancellation token</param>
@@ -155,7 +156,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get an order
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20pending%20order%20status" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
@@ -166,7 +167,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Cancel an order
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20an%20Order" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20Order" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
@@ -177,7 +178,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Close all positions. Positions will be closed via market order
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#One-Click%20Close%20All%20Positions" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20All%20Positions" /></para>
         /// </summary>
         /// <param name="symbol">Only close for a specific symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -186,6 +187,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Cancel multiple orders on a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20multiple%20orders" /></para>
         /// </summary>
         /// <param name="symbol">The symbol</param>
         /// <param name="orderIds">The ids of orders to cancel</param>
@@ -205,7 +207,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get all open orders
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20all%20current%20pending%20orders" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Open%20Orders" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -227,7 +229,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get closed orders
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order%20history" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol</param>
         /// <param name="orderId">Filter by order id</param>
@@ -240,7 +242,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get user trade history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20History%20Orders" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20orders" /></para>
         /// </summary>
         /// <param name="orderId">Filter by order id</param>
         /// <param name="startTime">Filter by start time</param>
@@ -251,7 +253,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20all%20orders%20in%20countdown" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20After" /></para>
         /// </summary>
         /// <param name="activate">True to activate the trigger, false to disable the trigger</param>
         /// <param name="cancelAfterSeconds">Seconds after which to cancel all orders, between 10 and 120</param>
@@ -261,7 +263,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Close a position by its id
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20the%20position%20by%20position%20ID" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20position%20by%20position%20ID" /></para>
         /// </summary>
         /// <param name="positionId">The id of the position to close</param>
         /// <param name="ct">Cancellation token</param>

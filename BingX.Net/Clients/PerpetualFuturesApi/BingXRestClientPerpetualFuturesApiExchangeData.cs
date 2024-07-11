@@ -117,6 +117,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
+        #region Get Funding Rates
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFundingRate>>> GetFundingRatesAsync(CancellationToken ct = default)
+        {
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/premiumIndex", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXFundingRate>>(request, null, ct).ConfigureAwait(false);
+        }
+
+        #endregion
+
         #region Get Funding Rate History
 
         /// <inheritdoc />
@@ -207,6 +218,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
+        #region Get Ticker
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFuturesTicker>>> GetTickersAsync(CancellationToken ct = default)
+        {
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/ticker", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXFuturesTicker>>(request, null, ct).ConfigureAwait(false);
+        }
+
+        #endregion
+
         #region Get Book Ticker
 
         /// <inheritdoc />
@@ -229,13 +251,24 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXLastTradePrice>> GetLastTradePriceAsync(string symbol, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
-            {
-                { "symbol", symbol }
-            };
+            var parameters = new ParameterCollection();
+            parameters.Add("symbol", symbol);
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/ticker/price", BingXExchange.RateLimiter.RestMarket, 1);
             return await _baseClient.SendAsync<BingXLastTradePrice>(request, parameters, ct).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Last Trade Prices
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXLastTradePrice>>> GetLastTradePricesAsync(CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/ticker/price", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<IEnumerable<BingXLastTradePrice>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion

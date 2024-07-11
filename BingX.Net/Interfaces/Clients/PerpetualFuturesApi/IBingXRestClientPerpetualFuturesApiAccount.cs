@@ -15,7 +15,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
     {
         /// <summary>
         /// Get balance info
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Get%20Perpetual%20Swap%20Account%20Asset%20Information" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20account%20data" /></para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -44,7 +44,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Generate a listen key used for subscribing to user data streams with the socket client
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#generate%20Listen%20Key" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20Trading%20Commission%20Rate" /></para>
         /// </summary>
         /// <param name="ct"></param>
         /// <returns></returns>
@@ -70,7 +70,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get the current margin mode for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Mode" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Type" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="ct">Cancellation token</param>
@@ -79,7 +79,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Change the margin mode for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Margin%20Mode" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Change%20Margin%20Type" /></para>
         /// </summary>=
         /// <param name="symbol">Symbol</param>
         /// <param name="marginMode">New margin mode</param>
@@ -109,7 +109,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Adjust isolated margin for a position
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Leverage" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="quantity">Quantity to adjust with</param>
@@ -121,7 +121,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get current position mode
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Get%20Position%20Mode" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /></para>
         /// </summary>
         /// <param name="symbol">Symbol</param>
         /// <param name="ct">Cancellation token</param>
