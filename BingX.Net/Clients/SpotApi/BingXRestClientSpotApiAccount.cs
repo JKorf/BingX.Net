@@ -247,7 +247,7 @@ namespace BingX.Net.Clients.SpotApi
                 { "listenKey", listenKey }
             };
             var request = _definitions.GetOrCreate(HttpMethod.Put, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false,
-                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), parameterPosition: HttpMethodParameterPosition.InUri);
             return await _baseClient.SendAsync(request, parameters, ct).ConfigureAwait(false);
         }
 
