@@ -23,7 +23,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Client order id
         /// </summary>
-        [JsonPropertyName("c")]
+        [JsonPropertyName("C")]
         public string? ClientOrderId { get; set; }
         /// <summary>
         /// Side
