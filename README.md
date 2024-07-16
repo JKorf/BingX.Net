@@ -121,6 +121,20 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.6.0 - 16 Jul 2024
+    * Updated CryptoExchange.Net to version 7.9.0, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/7.9.0
+    * Updated internal classes to internal access modifier
+    * Added PerpetualFuturesApi.ExchangeData.GetTickersAsync endpoint
+    * Added PerpetualFuturesApi.ExchangeData.GetLastTradePricesAsync endpoint
+    * Added PerpetualFuturesApi.ExchangeData.GetFundingRatesAsync endpoint
+    * Added SpotApi.ExchangeData.GetLastTradesAsync endpoint
+    * Added SpotApi.Account.GetUserIdAsync endpoint
+    * Added SpotApi.Account.GetApiKeyPermissionsAsync endpoint
+    * Added sync parameter to SpotApi.Trading.PlaceMultipleOrdersAsync
+    * Updated API endpoint docs references
+    * Fixed Spot and Futures KeepAliveUserStreamAsync endpoint
+    * Fixed clientOrderId deserialization in websocket order updates
+
 * Version 1.5.0 - 02 Jul 2024
     * Updated CryptoExchange.Net to V7.8.0, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/7.8.0
     * Added TakeProfit/StopLoss parameters to perpetual futures order endpoints
