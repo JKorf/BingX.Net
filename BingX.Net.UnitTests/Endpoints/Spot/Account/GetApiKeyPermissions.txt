@@ -1,0 +1,28 @@
+GET
+/openApi/account/v1/apiKey/query
+true
+{
+  "code": 0,
+  "timestamp": 1702351994615,
+  "data": {
+    "apiInfos": [
+      {
+        "apiKey": "zF*******zQ",
+        "note": "note****",
+        "permissions": [
+          1,
+          2,
+          3,
+          4,
+          7
+        ],
+        "ipAddresses": [
+          ""
+        ],
+        "status": 0,
+        "createTime": 1702289687211,
+        "updateTime": 1702289687000
+      }
+    ]
+  }
+}

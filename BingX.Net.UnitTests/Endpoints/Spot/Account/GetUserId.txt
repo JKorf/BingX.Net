@@ -1,0 +1,10 @@
+GET
+/openApi/account/v1/uid
+true
+{
+  "code": 0,
+  "timestamp": 1702558965648,
+  "data": {
+    "uid": 16844999
+  }
+}

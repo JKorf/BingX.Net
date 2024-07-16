@@ -496,6 +496,12 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTradingFeesAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetUserIdAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetApiKeyPermissionsAsync(System.Int64,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData">
             <inheritdoc />
         </member>
@@ -673,6 +679,41 @@
         <member name="F:BingX.Net.Enums.AdjustDirection.Decrease">
             <summary>
             Decrease
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.ApiKeyPermission">
+            <summary>
+            API key permission types
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.ApiKeyPermission.SpotTrading">
+            <summary>
+            Spot trading
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.ApiKeyPermission.Read">
+            <summary>
+            Read
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.ApiKeyPermission.PerpetualFuturesTrading">
+            <summary>
+            Perpetual futures trading
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.ApiKeyPermission.UniversalTransfer">
+            <summary>
+            Universal transfer
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.ApiKeyPermission.Undocumented6">
+            <summary>
+            Permission 6
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.ApiKeyPermission.InternalTransferOfSubaccounts">
+            <summary>
+            Internal transfer of sub accounts
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.AutoCloseType">
@@ -2098,6 +2139,24 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetUserIdAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get user id
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20account%20uid" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetApiKeyPermissionsAsync(System.Int64,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get API key permissions and info
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20the%20API%20Key%20of%20a%20sub-account" /></para>
+            </summary>
+            <param name="userId">The user id, can be retrieved with <see cref="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetUserIdAsync(System.Threading.CancellationToken)" /> </param>
+            <param name="apiKey">Filter by API key</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData">
             <summary>
             BingX Spot exchange data endpoints. Exchange data includes market data (tickers, order books, etc) and system status.
@@ -2475,6 +2534,46 @@
         <member name="F:BingX.Net.Objects.BingXApiAddresses.Default">
             <summary>
             The default addresses to connect to the BingX.com API
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXApiKey">
+            <summary>
+            API key info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXApiKey.ApiKey">
+            <summary>
+            The api key
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXApiKey.Note">
+            <summary>
+            Note
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXApiKey.IpAddresses">
+            <summary>
+            IP address restrictions
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXApiKey.Permissions">
+            <summary>
+            IP address restrictions
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXApiKey.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXApiKey.CreateTime">
+            <summary>
+            Create time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXApiKey.UpdateTime">
+            <summary>
+            Update time
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXAsset">
@@ -5630,6 +5729,16 @@
         <member name="P:BingX.Net.Objects.Models.BingXTransfer.Timestamp">
             <summary>
             Timestamp
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXUserId">
+            <summary>
+            BingX user id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXUserId.UserId">
+            <summary>
+            User id
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXUserTrade">

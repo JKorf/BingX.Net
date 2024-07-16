@@ -174,5 +174,23 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get user id
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20account%20uid" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<BingXUserId>> GetUserIdAsync (CancellationToken ct = default);
+
+        /// <summary>
+        /// Get API key permissions and info
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20the%20API%20Key%20of%20a%20sub-account" /></para>
+        /// </summary>
+        /// <param name="userId">The user id, can be retrieved with <see cref="GetUserIdAsync(CancellationToken)" /> </param>
+        /// <param name="apiKey">Filter by API key</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXApiKey>>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default);
     }
 }

@@ -36,6 +36,8 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.SpotApi.Account.KeepAliveUserStreamAsync("123"), "KeepAliveUserStream");
             await tester.ValidateAsync(client => client.SpotApi.Account.StopUserStreamAsync("123"), "StopUserStream");
             await tester.ValidateAsync(client => client.SpotApi.Account.GetTradingFeesAsync("ETH"), "GetTradingFees", "data");
+            await tester.ValidateAsync(client => client.SpotApi.Account.GetUserIdAsync(), "GetUserId", "data");
+            await tester.ValidateAsync(client => client.SpotApi.Account.GetApiKeyPermissionsAsync(123), "GetApiKeyPermissions", "data.apiInfos", ignoreProperties: new List<string> { "permissions" });
         }
 
         [Test]

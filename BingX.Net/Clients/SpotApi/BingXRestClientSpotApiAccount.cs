@@ -285,5 +285,37 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         #endregion
+
+
+        #region Get User Id
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXUserId>> GetUserIdAsync(CancellationToken ct = default)
+        {
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/account/v1/uid", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+            return await _baseClient.SendAsync<BingXUserId>(request, null, ct).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Get Trading Fees
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXApiKey>>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection()
+            {
+                { "uid", userId }
+            };
+            parameters.AddOptional("apiKey", apiKey);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/account/v1/apiKey/query", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+            var result = await _baseClient.SendAsync<BingXApiKeyWrapper>(request, parameters, ct).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXApiKey>>(result.Data?.ApiInfos);
+        }
+
+        #endregion
     }
 }
