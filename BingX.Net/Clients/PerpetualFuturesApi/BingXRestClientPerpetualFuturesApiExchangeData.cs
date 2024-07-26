@@ -218,7 +218,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
-        #region Get Ticker
+        #region Get Tickers
 
         /// <inheritdoc />
         public async Task<WebCallResult<IEnumerable<BingXFuturesTicker>>> GetTickersAsync(CancellationToken ct = default)
