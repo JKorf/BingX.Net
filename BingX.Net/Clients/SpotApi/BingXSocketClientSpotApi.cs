@@ -126,7 +126,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public override ReadOnlyMemory<byte> PreprocessStreamMessage(WebSocketMessageType type, ReadOnlyMemory<byte> data)
+        public override ReadOnlyMemory<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlyMemory<byte> data)
         {
             if (type != WebSocketMessageType.Binary)
                 return data;
