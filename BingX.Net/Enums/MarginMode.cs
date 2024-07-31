@@ -10,7 +10,7 @@ namespace BingX.Net.Enums
         /// <summary>
         /// Isolated margin mode
         /// </summary>
-        [Map("isolated")]
+        [Map("ISOLATED", "isolated")]
         Isolated,
         /// <summary>
         /// Cross margin mode

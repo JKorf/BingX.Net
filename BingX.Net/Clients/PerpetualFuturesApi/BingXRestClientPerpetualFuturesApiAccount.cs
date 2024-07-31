@@ -146,7 +146,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameters.AddEnum("marginType", marginMode);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/marginType", BingXExchange.RateLimiter.RestAccount1, 1, true,
-                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), parameterPosition: HttpMethodParameterPosition.InUri);
             return await _baseClient.SendAsync(request, parameters, ct).ConfigureAwait(false);
         }
 
