@@ -25,7 +25,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get list of contracts
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#USDT-M%20Perp%20Futures%20symbols" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol name</param>
+        /// <param name="symbol">Filter by symbol name, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXContract>>> GetContractsAsync(string? symbol = null, CancellationToken ct = default);
@@ -34,7 +34,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get order book for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Order%20Book" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol name</param>
+        /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
         /// <param name="limit">Number of rows in the book, 5, 10, 20, 50, 100, 500 or 1000</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -44,7 +44,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get list of the most recent trades
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Recent%20Trades%20List" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol name</param>
+        /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
         /// <param name="limit">Number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -54,7 +54,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get list of trades
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Query%20historical%20transaction%20orders" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol name</param>
+        /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
         /// <param name="fromId">Return trades after this</param>
         /// <param name="limit">Number of results</param>
         /// <param name="ct">Cancellation token</param>
@@ -65,7 +65,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current funding rate for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20and%20Funding%20Rate" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFundingRate>> GetFundingRateAsync(string symbol, CancellationToken ct = default);
@@ -82,7 +82,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get funding rate history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Funding%20Rate%20History" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="limit">Max amount of results</param>
@@ -94,7 +94,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get kline history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Kline/Candlestick%20Data" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="interval">Kline interval</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
@@ -107,7 +107,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get open interest
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Open%20Interest%20Statistics" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXOpenInterest>> GetOpenInterestAsync(string symbol, CancellationToken ct = default);
@@ -116,7 +116,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get ticker (24h price stats) for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesTicker>> GetTickerAsync(string symbol, CancellationToken ct = default);
@@ -133,7 +133,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the best ask and bid info
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Order%20Book%20Ticker" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesBookTicker>> GetBookTickerAsync(string symbol, CancellationToken ct = default);
@@ -142,7 +142,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get mark price klines
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20Kline/Candlestick%20Data" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="interval">Kline interval</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
@@ -155,7 +155,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the last trade price for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Price%20Ticker" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXLastTradePrice>> GetLastTradePriceAsync(string symbol, CancellationToken ct = default);

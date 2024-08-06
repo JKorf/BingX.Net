@@ -17,7 +17,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get positions
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20position%20data" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXPosition>>> GetPositionsAsync(string? symbol = null, CancellationToken ct = default);
@@ -26,7 +26,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Place a new test order. Order won't actually get placed
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Test%20Order" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="side">Order side</param>
         /// <param name="type">Order type</param>
         /// <param name="quantity">Quantity</param>
@@ -87,7 +87,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Place a new order
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20order" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="side">Order side</param>
         /// <param name="type">Order type</param>
         /// <param name="quantity">Quantity</param>
@@ -158,7 +158,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get an order
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20pending%20order%20status" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
         /// <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
@@ -169,7 +169,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Cancel an order
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20Order" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
         /// <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
@@ -189,7 +189,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Cancel multiple orders on a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20multiple%20orders" /></para>
         /// </summary>
-        /// <param name="symbol">The symbol</param>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="orderIds">The ids of orders to cancel</param>
         /// <param name="clientOrderIds">The client order ids of orders to cancel</param>
         /// <param name="ct">Cancellation token</param>
@@ -209,7 +209,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get all open orders
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Open%20Orders" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
@@ -218,7 +218,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get liquidation order history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20Force%20Orders" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="closeType">Filter by close type</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
@@ -231,7 +231,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get closed orders
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order%20history" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Filter by order id</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
@@ -274,7 +274,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get position and margin info
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Position%20and%20Maintenance%20Margin%20Ratio" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol name</param>
+        /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXPositionMarginInfo>>> GetPositionAndMarginInfoAsync(string symbol, CancellationToken ct = default);

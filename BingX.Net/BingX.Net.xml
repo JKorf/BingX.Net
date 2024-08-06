@@ -1341,7 +1341,7 @@
             Get income history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Get%20Account%20Profit%20and%20Loss%20Fund%20Flow" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="incomeType">Filter by income type</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
@@ -1362,7 +1362,7 @@
             Generate a listen key used for subscribing to user data streams with the socket client
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20Trading%20Commission%20Rate" /></para>
             </summary>
-            <param name="ct"></param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
@@ -1388,7 +1388,7 @@
             Get the current margin mode for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Type" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1397,7 +1397,7 @@
             Change the margin mode for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Change%20Margin%20Type" /></para>
             </summary>=
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="marginMode">New margin mode</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -1407,7 +1407,7 @@
             Get the current leverage setrings for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1416,7 +1416,7 @@
             Set new leverage settings for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="side">Position side. In the One-way mode, only supports BOTH.</param>
             <param name="leverage">Leverage</param>
             <param name="ct">Cancellation token</param>
@@ -1427,7 +1427,7 @@
             Adjust isolated margin for a position
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Leverage" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="quantity">Quantity to adjust with</param>
             <param name="direction">Direction</param>
             <param name="side">Position side</param>
@@ -1439,7 +1439,7 @@
             Get current position mode
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1448,7 +1448,7 @@
             Set position mode
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="positionMode">Position mode</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -1471,7 +1471,7 @@
             Get list of contracts
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#USDT-M%20Perp%20Futures%20symbols" /></para>
             </summary>
-            <param name="symbol">Filter by symbol name</param>
+            <param name="symbol">Filter by symbol name, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1480,7 +1480,7 @@
             Get order book for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Order%20Book" /></para>
             </summary>
-            <param name="symbol">Symbol name</param>
+            <param name="symbol">Symbol name, for example `ETH-USDT`</param>
             <param name="limit">Number of rows in the book, 5, 10, 20, 50, 100, 500 or 1000</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -1490,7 +1490,7 @@
             Get list of the most recent trades
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Recent%20Trades%20List" /></para>
             </summary>
-            <param name="symbol">Symbol name</param>
+            <param name="symbol">Symbol name, for example `ETH-USDT`</param>
             <param name="limit">Number of results</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -1500,7 +1500,7 @@
             Get list of trades
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Query%20historical%20transaction%20orders" /></para>
             </summary>
-            <param name="symbol">Symbol name</param>
+            <param name="symbol">Symbol name, for example `ETH-USDT`</param>
             <param name="fromId">Return trades after this</param>
             <param name="limit">Number of results</param>
             <param name="ct">Cancellation token</param>
@@ -1511,7 +1511,7 @@
             Get the current funding rate for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20and%20Funding%20Rate" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1528,7 +1528,7 @@
             Get funding rate history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Funding%20Rate%20History" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
             <param name="limit">Max amount of results</param>
@@ -1540,7 +1540,7 @@
             Get kline history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Kline/Candlestick%20Data" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="interval">Kline interval</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
@@ -1553,7 +1553,7 @@
             Get open interest
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Open%20Interest%20Statistics" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1562,7 +1562,7 @@
             Get ticker (24h price stats) for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1579,7 +1579,7 @@
             Get the best ask and bid info
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Order%20Book%20Ticker" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1588,7 +1588,7 @@
             Get mark price klines
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20Kline/Candlestick%20Data" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="interval">Kline interval</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
@@ -1601,7 +1601,7 @@
             Get the last trade price for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Price%20Ticker" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1623,7 +1623,7 @@
             Get positions
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20position%20data" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1632,7 +1632,7 @@
             Place a new test order. Order won't actually get placed
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Test%20Order" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="side">Order side</param>
             <param name="type">Order type</param>
             <param name="quantity">Quantity</param>
@@ -1664,7 +1664,7 @@
             Place a new order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20order" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="side">Order side</param>
             <param name="type">Order type</param>
             <param name="quantity">Quantity</param>
@@ -1705,7 +1705,7 @@
             Get an order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20pending%20order%20status" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
             <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
             <param name="ct">Cancellation token</param>
@@ -1716,7 +1716,7 @@
             Cancel an order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20Order" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id. Either this or clientOrderId should be provided</param>
             <param name="clientOrderId">Client order id. Either this or orderId should be provided</param>
             <param name="ct">Cancellation token</param>
@@ -1736,7 +1736,7 @@
             Cancel multiple orders on a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20multiple%20orders" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="orderIds">The ids of orders to cancel</param>
             <param name="clientOrderIds">The client order ids of orders to cancel</param>
             <param name="ct">Cancellation token</param>
@@ -1756,7 +1756,7 @@
             Get all open orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Open%20Orders" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1765,7 +1765,7 @@
             Get liquidation order history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20Force%20Orders" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="closeType">Filter by close type</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
@@ -1778,7 +1778,7 @@
             Get closed orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order%20history" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="orderId">Filter by order id</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
@@ -1821,7 +1821,7 @@
             Get position and margin info
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Position%20and%20Maintenance%20Margin%20Ratio" /></para>
             </summary>
-            <param name="symbol">Symbol name</param>
+            <param name="symbol">Symbol name, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -1835,7 +1835,7 @@
             Subscribe to live trade updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20the%20Latest%20Trade%20Detail" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -1845,7 +1845,7 @@
             Subscribe to order book updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="depth">Book depth, 5, 10, 20, 50 or 100</param>
             <param name="updateInterval">The update interval in ms, 100, 200, 500 or 1000</param>
             <param name="onMessage">The event handler for the received data</param>
@@ -1868,7 +1868,7 @@
             Subscribe to kline/candlestick updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="interval">The kline interval</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
@@ -1889,7 +1889,7 @@
             Subscribe to live price statistics updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data%20of%20all%20trading%20pairs" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -1908,7 +1908,7 @@
             Subscribe to live price updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20price%20changes" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -1918,7 +1918,7 @@
             Subscribe to live mark price updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20mark%20price%20changes" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -1928,7 +1928,7 @@
             Subscribe to live best book price updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20the%20Book%20Ticker%20Streams" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -1990,12 +1990,12 @@
             Get deposit history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20records" /></para>
             </summary>
-            <param name="asset"></param>
-            <param name="status"></param>
-            <param name="startTime"></param>
-            <param name="endTime"></param>
-            <param name="offset"></param>
-            <param name="limit"></param>
+            <param name="asset">Filter by asset, for example `ETH`</param>
+            <param name="status">Filter by status</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="offset">Offset</param>
+            <param name="limit">Max number of results</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2004,14 +2004,14 @@
             Get withdrawal history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20records" /></para>
             </summary>
-            <param name="id"></param>
-            <param name="asset"></param>
-            <param name="clientOrderId"></param>
-            <param name="status"></param>
-            <param name="startTime"></param>
-            <param name="endTime"></param>
-            <param name="offset"></param>
-            <param name="limit"></param>
+            <param name="id">Filter by id</param>
+            <param name="asset">Filter by asset, for example `ETH`</param>
+            <param name="clientOrderId">Filter by client order id</param>
+            <param name="status">Filter by status</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="offset">Offset</param>
+            <param name="limit">Max number of results</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2020,7 +2020,7 @@
             Get asset info
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /></para>
             </summary>
-            <param name="asset"></param>
+            <param name="asset">Filter by asset name, for example `ETH`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2029,7 +2029,7 @@
             Withdraw funds
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw" /></para>
             </summary>
-            <param name="asset">The asset</param>
+            <param name="asset">The asset, for example `ETH`</param>
             <param name="address">Address to withdraw to</param>
             <param name="quantity">Quantity</param>
             <param name="walletType">Wallet type</param>
@@ -2044,7 +2044,7 @@
             Get deposit addresses
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Main%20Account%20Deposit%20Address" /></para>
             </summary>
-            <param name="asset">The asset</param>
+            <param name="asset">The asset, for example `ETH`</param>
             <param name="offset">Offset</param>
             <param name="limit">Limit</param>
             <param name="ct">Cancellation token</param>
@@ -2056,7 +2056,7 @@
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer" /></para>
             </summary>
             <param name="tranferType">Transfer type</param>
-            <param name="asset">Asset to transfer</param>
+            <param name="asset">Asset to transfer, for example `ETH`</param>
             <param name="quantity">Quantity to transfer</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -2080,7 +2080,7 @@
             Transfer internal to an account on the BingX platform
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Accoun%20internal%20transfer" /></para>
             </summary>
-            <param name="asset">Asset</param>
+            <param name="asset">Asset, for example `ETH`</param>
             <param name="targetAccountType">Target account type</param>
             <param name="targetAccount">Target account</param>
             <param name="quantity">Quantity</param>
@@ -2095,7 +2095,7 @@
             Get internal transfer history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20account%20internal%20transfer%20records" /></para>
             </summary>
-            <param name="asset">Asset</param>
+            <param name="asset">Asset, for example `ETH`</param>
             <param name="clientOrderId">Client order id</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
@@ -2135,7 +2135,7 @@
             Get trading fees for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Trading%20Commission%20Rate" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2175,7 +2175,7 @@
             Get symbol information
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Spot%20trading%20symbols" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2184,7 +2184,7 @@
             Get a list of the most recent trades
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Recent%20Trades%20List" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="limit">Max amount of results</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -2194,7 +2194,7 @@
             Get the orderbook for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="limit">Max amount of results</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
@@ -2204,7 +2204,7 @@
             Get kline/candlestick data
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Kline/Candlestick%20Data" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="interval">Kline interval</param>
             <param name="startTime">Filter by start time</param>
             <param name="endTime">Filter by end time</param>
@@ -2217,7 +2217,7 @@
             Get ticker (24h price statistics)
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2226,7 +2226,7 @@
             Get aggregated order book
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book%20aggregation" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="limit">Book depth</param>
             <param name="mergeDepth">0 is default precision, 1 to 5 are 10 to 100000 times precision respectively</param>
             <param name="ct">Cancellation token</param>
@@ -2237,7 +2237,7 @@
             Get the last trade for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2254,7 +2254,7 @@
             Get the current best book prices
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Order%20Book%20Ticker" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2263,7 +2263,7 @@
             Get historic trades
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Old%20Trade%20Lookup" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="limit">Amount or results</param>
             <param name="fromId">Return trades after this id</param>
             <param name="ct">Cancellation token</param>
@@ -2279,7 +2279,7 @@
             Place a new order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20order" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="side">Order side</param>
             <param name="type">Order type</param>
             <param name="quantity">Order quantity</param>
@@ -2305,7 +2305,7 @@
             Cancel an active order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20Order" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id, either this or clientOrderId should be provided</param>
             <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
             <param name="ct">Cancellation token</param>
@@ -2316,7 +2316,7 @@
             Cancel multiple active orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20multiple%20orders" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="orderIds">The order ids to cancel</param>
             <param name="clientOrderIds">The client order ids to cancel</param>
             <param name="ct">Cancellation token</param>
@@ -2327,7 +2327,7 @@
             Cancel all active orders on a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20Open%20Orders%20on%20a%20Symbol" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2346,7 +2346,7 @@
             Get an order by orderId or clientOrderId
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20details" /></para>
             </summary>
-            <param name="symbol">Symbol</param>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="orderId">Order id, either this or clientOrderId should be provided</param>
             <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
             <param name="ct">Cancellation token</param>
@@ -2357,7 +2357,7 @@
             Get open orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Current%20Open%20Orders" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2366,7 +2366,7 @@
             Get order history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20history" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="orderId">Filter by order id</param>
             <param name="status">Filter by status</param>
             <param name="type">Filter by type</param>
@@ -2382,7 +2382,7 @@
             Get user trade history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details" /></para>
             </summary>
-            <param name="symbol">Filter by symbol</param>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
             <param name="orderId">Filter by order id</param>
             <param name="status">Filter by status</param>
             <param name="type">Filter by type</param>
@@ -2403,7 +2403,7 @@
             Subscribe to live trade updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscription%20transaction%20by%20transaction" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -2413,7 +2413,7 @@
             Subscribe to live kline/candlestick data updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#K-line%20Streams" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="interval">The interval to subscribe. Currently only the 1 minute interval is supported</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
@@ -2424,7 +2424,7 @@
             Subscribe to live orderbook data updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20Market%20Depth%20Data" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="depth">The depth of the orderbook, 5, 10, 20, 50 or 100</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
@@ -2435,7 +2435,7 @@
             Subscribe to live price statistics updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%2024-hour%20Price%20Change" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -2445,7 +2445,7 @@
             Subscribe to live price updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Latest%20Trade%20Price" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -2455,7 +2455,7 @@
             Subscribe to live best book price updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Best%20Order%20Book" /></para>
             </summary>
-            <param name="symbol">The symbol</param>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>

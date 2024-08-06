@@ -25,7 +25,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get income history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Get%20Account%20Profit%20and%20Loss%20Fund%20Flow" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="incomeType">Filter by income type</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
@@ -46,7 +46,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Generate a listen key used for subscribing to user data streams with the socket client
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20Trading%20Commission%20Rate" /></para>
         /// </summary>
-        /// <param name="ct"></param>
+        /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<string>> StartUserStreamAsync(CancellationToken ct = default);
 
@@ -72,7 +72,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current margin mode for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Type" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXMarginMode>> GetMarginModeAsync(string symbol, CancellationToken ct = default);
@@ -81,7 +81,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Change the margin mode for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Change%20Margin%20Type" /></para>
         /// </summary>=
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="marginMode">New margin mode</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -91,7 +91,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current leverage setrings for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXLeverage>> GetLeverageAsync(string symbol, CancellationToken ct = default);
@@ -100,7 +100,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Set new leverage settings for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="side">Position side. In the One-way mode, only supports BOTH.</param>
         /// <param name="leverage">Leverage</param>
         /// <param name="ct">Cancellation token</param>
@@ -111,7 +111,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Adjust isolated margin for a position
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Leverage" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="quantity">Quantity to adjust with</param>
         /// <param name="direction">Direction</param>
         /// <param name="side">Position side</param>
@@ -123,7 +123,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get current position mode
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXPositionMode>> GetPositionModeAsync(string symbol, CancellationToken ct = default);
@@ -132,7 +132,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Set position mode
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="positionMode">Position mode</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>

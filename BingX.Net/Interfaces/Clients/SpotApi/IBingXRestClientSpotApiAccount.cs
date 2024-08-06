@@ -25,12 +25,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get deposit history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20records" /></para>
         /// </summary>
-        /// <param name="asset"></param>
-        /// <param name="status"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
+        /// <param name="asset">Filter by asset, for example `ETH`</param>
+        /// <param name="status">Filter by status</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="offset">Offset</param>
+        /// <param name="limit">Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXDeposit>>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
@@ -39,14 +39,14 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get withdrawal history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20records" /></para>
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="asset"></param>
-        /// <param name="clientOrderId"></param>
-        /// <param name="status"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
+        /// <param name="id">Filter by id</param>
+        /// <param name="asset">Filter by asset, for example `ETH`</param>
+        /// <param name="clientOrderId">Filter by client order id</param>
+        /// <param name="status">Filter by status</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="offset">Offset</param>
+        /// <param name="limit">Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXWithdrawal>>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
@@ -55,7 +55,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get asset info
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /></para>
         /// </summary>
-        /// <param name="asset"></param>
+        /// <param name="asset">Filter by asset name, for example `ETH`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXAsset>>> GetAssetsAsync(string? asset = null, CancellationToken ct = default);
@@ -64,7 +64,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Withdraw funds
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw" /></para>
         /// </summary>
-        /// <param name="asset">The asset</param>
+        /// <param name="asset">The asset, for example `ETH`</param>
         /// <param name="address">Address to withdraw to</param>
         /// <param name="quantity">Quantity</param>
         /// <param name="walletType">Wallet type</param>
@@ -79,7 +79,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get deposit addresses
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Main%20Account%20Deposit%20Address" /></para>
         /// </summary>
-        /// <param name="asset">The asset</param>
+        /// <param name="asset">The asset, for example `ETH`</param>
         /// <param name="offset">Offset</param>
         /// <param name="limit">Limit</param>
         /// <param name="ct">Cancellation token</param>
@@ -91,7 +91,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer" /></para>
         /// </summary>
         /// <param name="tranferType">Transfer type</param>
-        /// <param name="asset">Asset to transfer</param>
+        /// <param name="asset">Asset to transfer, for example `ETH`</param>
         /// <param name="quantity">Quantity to transfer</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -115,7 +115,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Transfer internal to an account on the BingX platform
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Accoun%20internal%20transfer" /></para>
         /// </summary>
-        /// <param name="asset">Asset</param>
+        /// <param name="asset">Asset, for example `ETH`</param>
         /// <param name="targetAccountType">Target account type</param>
         /// <param name="targetAccount">Target account</param>
         /// <param name="quantity">Quantity</param>
@@ -130,7 +130,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get internal transfer history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20account%20internal%20transfer%20records" /></para>
         /// </summary>
-        /// <param name="asset">Asset</param>
+        /// <param name="asset">Asset, for example `ETH`</param>
         /// <param name="clientOrderId">Client order id</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
@@ -170,7 +170,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get trading fees for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Trading%20Commission%20Rate" /></para>
         /// </summary>
-        /// <param name="symbol">The symbol</param>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default);
@@ -181,7 +181,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXUserId>> GetUserIdAsync (CancellationToken ct = default);
+        Task<WebCallResult<BingXUserId>> GetUserIdAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get API key permissions and info

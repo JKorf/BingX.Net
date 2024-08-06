@@ -17,7 +17,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Place a new order
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20order" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="side">Order side</param>
         /// <param name="type">Order type</param>
         /// <param name="quantity">Order quantity</param>
@@ -43,7 +43,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel an active order
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20Order" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id, either this or clientOrderId should be provided</param>
         /// <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
@@ -54,7 +54,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel multiple active orders
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20multiple%20orders" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="orderIds">The order ids to cancel</param>
         /// <param name="clientOrderIds">The client order ids to cancel</param>
         /// <param name="ct">Cancellation token</param>
@@ -65,7 +65,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel all active orders on a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20Open%20Orders%20on%20a%20Symbol" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXOrder>>> CancelAllOrdersAsync(string symbol, CancellationToken ct = default);
@@ -84,7 +84,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get an order by orderId or clientOrderId
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20details" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol</param>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Order id, either this or clientOrderId should be provided</param>
         /// <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
@@ -95,7 +95,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get open orders
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Current%20Open%20Orders" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
@@ -104,7 +104,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get order history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20history" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Filter by order id</param>
         /// <param name="status">Filter by status</param>
         /// <param name="type">Filter by type</param>
@@ -120,7 +120,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get user trade history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details" /></para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol</param>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="orderId">Filter by order id</param>
         /// <param name="status">Filter by status</param>
         /// <param name="type">Filter by type</param>
