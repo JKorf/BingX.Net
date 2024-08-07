@@ -6,6 +6,7 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects.Sockets;
 using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
+using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {
@@ -77,20 +78,20 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
-        /// Subscribe to user order updates. Get the listenKey by calling StartUserStream on the rest client
+        /// Subscribe to user order updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20order%20update%20data" /></para>
         /// </summary>
-        /// <param name="listenKey">Listen key</param>
+        /// <param name="listenKey">Listen key retrieved by the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method</param>
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         Task<CallResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
-        /// Subscribe to user balance updates. Get the listenKey by calling StartUserStream on the rest client
+        /// Subscribe to user balance updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20account%20balance%20push" /></para>
         /// </summary>
-        /// <param name="listenKey">Listen key</param>
+        /// <param name="listenKey">Listen key retrieved by the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method</param>
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>

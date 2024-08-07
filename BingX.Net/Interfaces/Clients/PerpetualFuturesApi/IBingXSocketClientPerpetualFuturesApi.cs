@@ -120,10 +120,10 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
-        /// Listen to user data update events. Get the listenKey by calling StartUserStream on the rest client
+        /// Listen to user data update events. Prior to using this, the <see cref="IBingXRestClientPerpetualFuturesApiAccount.StartUserStreamAsync(CancellationToken)">restClient.PerpetualFuturesApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /></para>
         /// </summary>
-        /// <param name="listenKey">Listen key</param>
+        /// <param name="listenKey">Listen key retrieved by the <see cref="IBingXRestClientPerpetualFuturesApiAccount.StartUserStreamAsync(CancellationToken)">restClient.PerpetualFuturesApi.Account.StartUserStreamAsync</see> method</param>
         /// <param name="onAccountUpdate">Event handler for balance and position updates</param>
         /// <param name="onOrderUpdate">Event handler for order updates</param>
         /// <param name="onConfigurationUpdate">Event handler for account configuration updates</param>
