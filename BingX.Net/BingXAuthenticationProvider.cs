@@ -14,8 +14,6 @@ namespace BingX.Net
 {
     internal class BingXAuthenticationProvider : AuthenticationProvider
     {
-        public string GetApiKey() => _credentials.Key!.GetString();
-
         public BingXAuthenticationProvider(ApiCredentials credentials) : base(credentials)
         {
         }
@@ -24,20 +22,31 @@ namespace BingX.Net
             RestApiClient apiClient,
             Uri uri,
             HttpMethod method,
-            IDictionary<string, object> uriParameters,
-            IDictionary<string, object> bodyParameters,
-            Dictionary<string, string> headers,
+            ref IDictionary<string, object>? uriParameters,
+            ref IDictionary<string, object>? bodyParameters,
+            ref Dictionary<string, string>? headers,
             bool auth,
             ArrayParametersSerialization arraySerialization,
             HttpMethodParameterPosition parameterPosition,
             RequestBodyFormat requestBodyFormat)
         {
-            headers.Add("X-BX-APIKEY", GetApiKey());
+            headers ??= new Dictionary<string, string>();
+            headers.Add("X-BX-APIKEY", ApiKey);
 
             if (!auth)
                 return;
 
-            var parameters = parameterPosition == HttpMethodParameterPosition.InUri ? uriParameters : bodyParameters;
+            IDictionary<string, object> parameters;
+            if (parameterPosition == HttpMethodParameterPosition.InUri)
+            {
+                uriParameters ??= new Dictionary<string, object>();
+                parameters = uriParameters;
+            }
+            else
+            {
+                bodyParameters ??= new Dictionary<string, object>();
+                parameters = bodyParameters;
+            }
             var timestamp = DateTimeConverter.ConvertToMilliseconds(GetTimestamp(apiClient)).Value;
             parameters.Add("timestamp", timestamp);
             if (!parameters.ContainsKey("recvWindow"))
