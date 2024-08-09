@@ -24,7 +24,7 @@ namespace BingX.Net.Clients.SpotApi
                 return new WebCallResult<IEnumerable<SharedKline>>(new ArgumentError("Interval not supported"));
 
             var result = await ExchangeData.GetKlinesAsync(
-                FormatSymbol(request.BaseAsset, request.QuoteAsset, request.FuturesType),
+                FormatSymbol(request.BaseAsset, request.QuoteAsset, request.ApiType),
                 interval,
                 request.StartTime,
                 request.EndTime,
@@ -66,7 +66,7 @@ namespace BingX.Net.Clients.SpotApi
 
         async Task<WebCallResult<SharedTicker>> ITickerClient.GetTickerAsync(TickerRequest request, CancellationToken ct)
         {
-            var result = await ExchangeData.GetTickersAsync(FormatSymbol(request.BaseAsset, request.QuoteAsset, request.FuturesType), ct).ConfigureAwait(false);
+            var result = await ExchangeData.GetTickersAsync(FormatSymbol(request.BaseAsset, request.QuoteAsset, request.ApiType), ct).ConfigureAwait(false);
             if (!result)
                 return result.As<SharedTicker>(default);
 
@@ -85,7 +85,7 @@ namespace BingX.Net.Clients.SpotApi
                 return new WebCallResult<IEnumerable<SharedTrade>>(new ArgumentError("Start/EndTime filtering not supported"));
 
             var result = await ExchangeData.GetRecentTradesAsync(
-                FormatSymbol(request.BaseAsset, request.QuoteAsset, request.FuturesType),
+                FormatSymbol(request.BaseAsset, request.QuoteAsset, request.ApiType),
                 limit: request.Limit,
                 ct: ct).ConfigureAwait(false);
             if (!result)
