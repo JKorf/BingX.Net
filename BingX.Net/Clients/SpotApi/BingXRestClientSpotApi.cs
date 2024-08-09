@@ -19,11 +19,12 @@ using CryptoExchange.Net.Converters.MessageParsing;
 using System.Linq;
 using System.Globalization;
 using BingX.Net.Enums;
+using CryptoExchange.Net.SharedApis.Interfaces;
 
 namespace BingX.Net.Clients.SpotApi
 {
     /// <inheritdoc cref="IBingXRestClientSpotApi" />
-    internal class BingXRestClientSpotApi : RestApiClient, IBingXRestClientSpotApi, ISpotClient
+    internal partial class BingXRestClientSpotApi : RestApiClient, IBingXRestClientSpotApi, ISpotClient
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Spot Api");
@@ -65,7 +66,7 @@ namespace BingX.Net.Clients.SpotApi
         #endregion
 
         /// <inheritdoc />
-        public override string FormatSymbol(string baseAsset, string quoteAsset) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+        public override string FormatSymbol(string baseAsset, string quoteAsset, FuturesType? futuresType = null) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
@@ -134,6 +135,7 @@ namespace BingX.Net.Clients.SpotApi
 
         /// <inheritdoc />
         public ISpotClient CommonSpotClient => this;
+        public ISharedClient SharedClient => this;
 
         /// <inheritdoc />
         protected override void WriteParamBody(IRequest request, IDictionary<string, object> parameters, string contentType)
