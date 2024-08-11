@@ -5,11 +5,8 @@ using System.Text;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {
-    public interface IBingXRestClientPerpetualFuturesApiShared :
-        ITickerRestClient,
-        IFuturesSymbolRestClient,
-        IKlineRestClient,
-        ITradeRestClient
+    public interface IBingXSocketClientSpotApiShared :
+        ITickerSocketClient
     {
     }
 }

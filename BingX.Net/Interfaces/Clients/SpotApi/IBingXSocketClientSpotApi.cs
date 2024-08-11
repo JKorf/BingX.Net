@@ -15,6 +15,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     /// </summary>
     public interface IBingXSocketClientSpotApi : ISocketApiClient, IDisposable
     {
+        IBingXSocketClientSpotApiShared SharedClient { get; }
+
         /// <summary>
         /// Subscribe to live trade updates
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscription%20transaction%20by%20transaction" /></para>

@@ -6,10 +6,10 @@ using System.Text;
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {
     public interface IBingXRestClientSpotApiShared:
-        ITickerClient,
-        ISpotSymbolClient,
-        IKlineClient,
-        ITradeClient
+        ITickerRestClient,
+        ISpotSymbolRestClient,
+        IKlineRestClient,
+        ITradeRestClient
     {
     }
 }
