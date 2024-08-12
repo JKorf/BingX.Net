@@ -91,6 +91,8 @@ namespace BingX.Net.Clients.SpotApi
                         QuantityFilled = update.Data.QuantityFilled,
                         QuoteQuantity = update.Data.QuoteOrderQuantity,
                         QuoteQuantityFilled = update.Data.VolumeFilled,
+                        Fee = update.Data.Fee,
+                        FeeAsset = update.Data.FeeAsset,
                         UpdateTime = update.Data.UpdateTime
                     }
                 })),
