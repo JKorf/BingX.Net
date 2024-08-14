@@ -25,9 +25,10 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="quoteQuantity">Order quantity in quote asset</param>
         /// <param name="stopPrice">Stop price</param>
         /// <param name="clientOrderId">Client order id</param>
+        /// <param name="timeInForce">Time in force</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, TimeInForce? timeInForce = null, CancellationToken ct = default);
 
         /// <summary>
         /// Place multiple orders

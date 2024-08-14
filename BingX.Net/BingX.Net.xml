@@ -541,7 +541,7 @@
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Nullable{BingX.Net.Enums.TimeInForce},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceMultipleOrdersAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
@@ -2274,7 +2274,7 @@
             BingX Spot trading endpoints, placing and managing orders.
             </summary>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Nullable{BingX.Net.Enums.TimeInForce},System.Threading.CancellationToken)">
             <summary>
             Place a new order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20order" /></para>
@@ -2287,6 +2287,7 @@
             <param name="quoteQuantity">Order quantity in quote asset</param>
             <param name="stopPrice">Stop price</param>
             <param name="clientOrderId">Client order id</param>
+            <param name="timeInForce">Time in force</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>

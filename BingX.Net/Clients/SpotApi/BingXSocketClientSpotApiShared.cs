@@ -95,7 +95,7 @@ namespace BingX.Net.Clients.SpotApi
                         Fee = update.Data.Fee,
                         FeeAsset = update.Data.FeeAsset,
                         UpdateTime = update.Data.UpdateTime,
-                        LastTrade = update.Data.LastFillQuantity > 0 ? null : new SharedUserTrade(update.Data.OrderId.ToString(), update.Data.TradeId.ToString(), update.Data.LastFillQuantity!.Value, update.Data.LastFillPrice!.Value, update.Data.UpdateTime!.Value)
+                        LastTrade = update.Data.LastFillQuantity > 0 ? null : new SharedUserTrade(update.Data.Symbol, update.Data.OrderId.ToString(), update.Data.TradeId.ToString(), update.Data.LastFillQuantity!.Value, update.Data.LastFillPrice!.Value, update.Data.UpdateTime!.Value)
                     }
                 })),
                 ct: ct).ConfigureAwait(false);
