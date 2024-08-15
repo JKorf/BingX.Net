@@ -9,7 +9,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         ITickerRestClient,
         ISpotSymbolRestClient,
         IKlineRestClient,
-        ITradeRestClient,
+        IRecentTradeRestClient,
         IBalanceRestClient,
         ISpotOrderRestClient
     {

@@ -31,7 +31,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <returns></returns>
         public ISpotClient CommonSpotClient { get; }
 
-        public ISharedClient SharedClient { get; }
+        public IBingXRestClientSpotApiShared SharedClient { get; }
 
     }
 }

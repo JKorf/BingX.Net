@@ -135,7 +135,7 @@ namespace BingX.Net.Clients.SpotApi
 
         /// <inheritdoc />
         public ISpotClient CommonSpotClient => this;
-        public ISharedClient SharedClient => this;
+        public IBingXRestClientSpotApiShared SharedClient => this;
 
         /// <inheritdoc />
         protected override void WriteParamBody(IRequest request, IDictionary<string, object> parameters, string contentType)
