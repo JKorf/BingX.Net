@@ -51,13 +51,28 @@ namespace BingX.Net.Clients.SpotApi
             if (pageToken is DateTimeToken dateTimeToken)
                 fromTimestamp = dateTimeToken.LastTime;
 
+            var startTime = request.Filter?.StartTime;
+            var endTime = request.Filter?.EndTime?.AddSeconds(-1);
+            var apiLimit = 1000;
+
+            // API returns the newest data first if the timespan is bigger than the api limit of 1000 results
+            // So we need to request the first 1000 from the start time, then the 1000 after that etc
+            if (request.Filter?.StartTime != null)
+            {
+                // Not paginated, check if the data will fit
+                var seconds = apiLimit * (int)request.Interval;
+                var maxEndTime = (fromTimestamp ?? request.Filter.StartTime).Value.AddSeconds(seconds - 1);
+                if (maxEndTime < endTime)
+                    endTime = maxEndTime;
+            }
+
             // Get data
             var result = await ExchangeData.GetKlinesAsync(
                 request.GetSymbol(FormatSymbol),
                 interval,
-                fromTimestamp ?? request.StartTime,
-                request.EndTime,
-                request.Limit ?? 500,
+                fromTimestamp ?? request.Filter?.StartTime,
+                endTime,
+                limit: request.Filter?.Limit ?? apiLimit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -65,10 +80,12 @@ namespace BingX.Net.Clients.SpotApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (result.Data.Count() == (request.Limit ?? 500))
-                nextToken = new DateTimeToken(result.Data.Max(o => o.OpenTime).AddSeconds((int)interval));
-            if (nextToken?.LastTime >= request.EndTime)
-                nextToken = null;
+            if (request.Filter?.StartTime != null && result.Data.Any())
+            {
+                var maxOpenTime = result.Data.Max(x => x.OpenTime);
+                if (maxOpenTime < request.Filter.EndTime!.Value.AddSeconds(-(int)request.Interval))
+                    nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
+            }
 
             // Reverse as data is returned in desc order instead of standard asc
             return result.AsExchangeResult(Exchange, result.Data.Reverse().Select(x => new SharedKline(x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume)), nextToken);
@@ -213,7 +230,7 @@ namespace BingX.Net.Clients.SpotApi
         {
             // Determine page token
             int page = 1;
-            int pageSize = request.Limit ?? 500;
+            int pageSize = request.Filter?.Limit ?? 500;
             if (pageToken is PageToken token)
             {
                 page = token.Page;
@@ -222,8 +239,8 @@ namespace BingX.Net.Clients.SpotApi
 
             // Get data
             var orders = await Trading.GetOrdersAsync(request.GetSymbol(FormatSymbol),
-                startTime: request.StartTime,
-                endTime: request.EndTime,
+                startTime: request.Filter?.StartTime,
+                endTime: request.Filter?.EndTime,
                 page: page,
                 pageSize: pageSize).ConfigureAwait(false);
             if (!orders)
@@ -287,16 +304,16 @@ namespace BingX.Net.Clients.SpotApi
             // Get data
             var orders = await Trading.GetUserTradesAsync(
                 request.GetSymbol(FormatSymbol),
-                startTime: request.StartTime,
-                endTime: request.EndTime,
-                limit: request.Limit ?? 500,
+                startTime: request.Filter?.StartTime,
+                endTime: request.Filter?.EndTime,
+                limit: request.Filter?.Limit ?? 500,
                 fromId: fromId).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, default);
 
             // Get next token
             FromIdToken? nextToken = null;
-            if (orders.Data.Count() == (request.Limit ?? 500))
+            if (orders.Data.Count() == (request.Filter?.Limit ?? 500))
                 nextToken = new FromIdToken(orders.Data.Max(o => o.Id).ToString());
 
             return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedUserTrade(

@@ -30,12 +30,27 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (pageToken is DateTimeToken dateTimeToken)
                 fromTimestamp = dateTimeToken.LastTime;
 
+            var startTime = request.Filter?.StartTime;
+            var endTime = request.Filter?.EndTime;
+            var apiLimit = 1000;
+
+            // API returns the newest data first if the timespan is bigger than the api limit of 1000 results
+            // So we need to request the first 1000 from the start time, then the 1000 after that etc
+            if (request.Filter?.StartTime != null)
+            {
+                // Not paginated, check if the data will fit
+                var seconds = apiLimit * (int)request.Interval;
+                var maxEndTime = (fromTimestamp ?? request.Filter.StartTime).Value.AddSeconds(seconds);
+                if (maxEndTime < endTime)
+                    endTime = maxEndTime;
+            }
+
             var result = await ExchangeData.GetKlinesAsync(
                 request.GetSymbol(FormatSymbol),
                 interval,
-                fromTimestamp ?? request.StartTime,
-                request.EndTime,
-                request.Limit ?? 500,
+                fromTimestamp ?? request.Filter?.StartTime,
+                endTime,
+                limit: request.Filter?.Limit ?? apiLimit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -43,10 +58,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (result.Data.Count() == (request.Limit ?? 500))
-                nextToken = new DateTimeToken(result.Data.Max(o => o.Timestamp).AddSeconds((int)interval));
-            if (nextToken?.LastTime >= request.EndTime)
-                nextToken = null;
+            if (request.Filter?.StartTime != null && result.Data.Any())
+            {
+                var maxOpenTime = result.Data.Max(x => x.Timestamp);
+                if (maxOpenTime < request.Filter.EndTime!.Value.AddSeconds(-(int)request.Interval))
+                    nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
+            }
 
             return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedKline(x.Timestamp, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume)), nextToken);
         }
