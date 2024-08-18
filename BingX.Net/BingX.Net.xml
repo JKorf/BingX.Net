@@ -290,7 +290,7 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
@@ -1691,12 +1691,13 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
             <summary>
             Place multiple new orders in one go
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20multiple%20orders" /></para>
             </summary>
             <param name="orders">Orders to place</param>
+            <param name="sync">When false (default): Parallel order processing, all orders need to target the same symbol. true: sequential order processing, orders can target different symbols</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
