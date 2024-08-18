@@ -12,6 +12,7 @@ using System;
 using System.Linq;
 using System.Data.Common;
 using CryptoExchange.Net.RateLimiting.Guards;
+using System.Security.Cryptography;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -217,6 +218,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<IEnumerable<BingXFuturesOrder>>> PlaceMultipleOrderAsync(
             IEnumerable<BingXFuturesPlaceOrderRequest> orders,
+            bool? sync = null,
             CancellationToken ct = default)
         {
             foreach(var order in orders)
@@ -231,6 +233,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "batchOrders", new SystemTextJsonMessageSerializer().Serialize(orders) }
             };
+            parameter.AddOptional("sync", sync);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/batchOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));

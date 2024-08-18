@@ -148,10 +148,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20multiple%20orders" /></para>
         /// </summary>
         /// <param name="orders">Orders to place</param>
+        /// <param name="sync">When false (default): Parallel order processing, all orders need to target the same symbol. true: sequential order processing, orders can target different symbols</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXFuturesOrder>>> PlaceMultipleOrderAsync(
             IEnumerable<BingXFuturesPlaceOrderRequest> orders,
+            bool? sync = null,
             CancellationToken ct = default);
 
         /// <summary>
