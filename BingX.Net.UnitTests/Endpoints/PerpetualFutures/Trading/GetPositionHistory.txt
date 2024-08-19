@@ -1,0 +1,4 @@
+GET
+/openApi/swap/v1/trade/positionHistory
+true
+{"code":0,"msg":"","data":{"positionHistory":[{"positionId":"123","symbol":"ADA-USDT","isolated":true,"positionSide":"SHORT","openTime":1723813661000,"updateTime":1723814217000,"avgPrice":"0.32984","avgClosePrice":"0.33407","realisedProfit":"-0.04230","netProfit":"-0.04563","positionAmt":"10","closePositionAmt":"10","leverage":75,"closeAllPositions":true,"positionCommission":"-0.0033195541562552056","totalFunding":"-0.0000083125104116677"},{"positionId":"456","symbol":"ADA-USDT","isolated":true,"positionSide":"LONG","openTime":1723813654000,"updateTime":1723814216000,"avgPrice":"0.32970","avgClosePrice":"0.33191","realisedProfit":"0.02210","netProfit":"0.01879","positionAmt":"10","closePositionAmt":"10","leverage":75,"closeAllPositions":true,"positionCommission":"-0.00330805","totalFunding":"0"}]}}

@@ -152,6 +152,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.CancelAllOrdersAfterAsync(true, 1), "CancelAllOrdersAfter");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.ClosePositionAsync("123"), "ClosePosition");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("123"), "GetPositionAndMarginInfo");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync(), "GetPositionHistory", nestedJsonProperty: "data");
         }
 
 

@@ -329,6 +329,9 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetPositionAndMarginInfoAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetPositionHistoryAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi">
             <summary>
             Client providing access to the BingX futures websocket Api
@@ -1825,6 +1828,19 @@
             <param name="symbol">Symbol name, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetPositionHistoryAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get position close history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="positionId">Filter by position id</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="page">Page number</param>
+            <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi">
             <summary>
@@ -5295,6 +5311,91 @@
         <member name="P:BingX.Net.Objects.Models.BingXPosition.UpdateTime">
             <summary>
             Last update timestamp
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXPositionHistory">
+            <summary>
+            Position history
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.PositionId">
+            <summary>
+            Position id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.Isolated">
+            <summary>
+            Isolated (true) or Cross (false) margin mode
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.OpenTime">
+            <summary>
+            Open time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.UpdateTime">
+            <summary>
+            Update time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.AveragePrice">
+            <summary>
+            Average price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.AverageClosePrice">
+            <summary>
+            Average close price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.RealisedPnl">
+            <summary>
+            Realised profit and loss
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.NetPnl">
+            <summary>
+            Net profit and loss
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.PositionQuantity">
+            <summary>
+            Position quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.ClosePositionQuantity">
+            <summary>
+            Close position quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.Leverage">
+            <summary>
+            Leverage
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.CloseAllPositions">
+            <summary>
+            Are all positions closed
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.PositionFee">
+            <summary>
+            Position fee
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionHistory.TotalFunding">
+            <summary>
+            Total funding
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXPositionMarginInfo">
