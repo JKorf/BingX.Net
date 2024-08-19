@@ -553,7 +553,7 @@ namespace BingX.Net.Clients.SpotApi
                 request.Asset,
                 request.Address,
                 request.Quantity,
-                AccountType.
+                AccountType.Funding,
                 network: request.Network,
                 addressTag: request.AddressTag,
                 ct: ct).ConfigureAwait(false);
