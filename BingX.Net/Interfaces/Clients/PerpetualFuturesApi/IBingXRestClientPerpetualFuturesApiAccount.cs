@@ -19,7 +19,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesBalance>> GetBalancesAsync(CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXFuturesBalance>>> GetBalancesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get income history
