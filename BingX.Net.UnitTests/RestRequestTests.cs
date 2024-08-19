@@ -89,7 +89,7 @@ namespace BingX.Net.UnitTests
                 opts.ApiCredentials = new ApiCredentials("123", "456");
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/PerpetualFutures/Account", "https://open-api.bingx.com", IsAuthenticated, "data");
-            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(), "GetBalances", nestedJsonProperty: "data.balance");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(), "GetBalances", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetIncomesAsync(), "GetIncomes");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(), "GetTradingFees", "data.commission");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.StartUserStreamAsync(), "StartUserStream", "listenKey");
@@ -152,6 +152,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.CancelAllOrdersAfterAsync(true, 1), "CancelAllOrdersAfter");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.ClosePositionAsync("123"), "ClosePosition");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("123"), "GetPositionAndMarginInfo");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ETH-USDT"), "GetPositionHistory", nestedJsonProperty: "data.positionHistory");
         }
 
 

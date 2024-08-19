@@ -1,20 +1,4 @@
 GET
-/openApi/swap/v2/user/balance
+/openApi/swap/v3/user/balance
 true
-{
-  "code": 0,
-  "msg": "",
-  "data": {
-    "balance": {
-      "userId": "116295",
-      "asset": "USDT",
-      "balance": "194.8212",
-      "equity": "196.7431",
-      "unrealizedProfit": "1.9219",
-      "realisedProfit": "-109.2504",
-      "availableMargin": "193.7609",
-      "usedMargin": "1.0602",
-      "freezedMargin": "0.0000"
-    }
-  }
-}
+{"code":0,"msg":"","data":[{"userId":"1341158271307522053","asset":"USDT","balance":"19.9003","equity":"19.9003","unrealizedProfit":"0.0000","realisedProfit":"0","availableMargin":"19.9003","usedMargin":"0.0000","freezedMargin":"0.0000","shortUid":"25307298"},{"userId":"1341158271307522053","asset":"USDC","balance":"0.0000","equity":"0.0000","unrealizedProfit":"0.0000","realisedProfit":"0","availableMargin":"0.0000","usedMargin":"0.0000","freezedMargin":"0.0000","shortUid":"25307298"}]}

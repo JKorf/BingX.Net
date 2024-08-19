@@ -12,6 +12,7 @@ using System;
 using System.Linq;
 using System.Data.Common;
 using CryptoExchange.Net.RateLimiting.Guards;
+using System.Security.Cryptography;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -217,6 +218,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<IEnumerable<BingXFuturesOrder>>> PlaceMultipleOrderAsync(
             IEnumerable<BingXFuturesPlaceOrderRequest> orders,
+            bool? sync = null,
             CancellationToken ct = default)
         {
             foreach(var order in orders)
@@ -231,6 +233,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 { "batchOrders", new SystemTextJsonMessageSerializer().Serialize(orders) }
             };
+            parameter.AddOptional("sync", sync);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/batchOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -448,5 +451,26 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
+        #region Get Position History
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            parameters.AddOptional("positionId", positionId);
+            parameters.AddOptionalMillisecondsString("startTs", startTime);
+            parameters.AddOptionalMillisecondsString("endTs", endTime);
+            parameters.AddOptional("pageIndex", page);
+            parameters.AddOptional("pageSize", pageSize);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/positionHistory", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+            var result = await _baseClient.SendAsync<BingXPositionHistoryWrapper>(request, parameters, ct).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXPositionHistory>>(result.Data?.History);
+        }
+
+        #endregion
+
     }
 }

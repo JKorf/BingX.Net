@@ -123,6 +123,7 @@ namespace BingX.Net.UnitTests
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetLiquidationOrdersAsync(default, default, default, default, default, default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("ETH-USDT", default), true);
+            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, default, default, default, default), true);
         }
     }
 }

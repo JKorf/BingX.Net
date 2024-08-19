@@ -26,12 +26,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Balances
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXFuturesBalance>> GetBalancesAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXFuturesBalance>>> GetBalancesAsync(CancellationToken ct = default)
         {
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/user/balance", BingXExchange.RateLimiter.RestAccount2, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v3/user/balance", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            var result = await _baseClient.SendAsync<BingXFuturesBalanceWrapper>(request, null, ct).ConfigureAwait(false);
-            return result.As<BingXFuturesBalance>(result.Data?.Balance);
+            return await _baseClient.SendAsync<IEnumerable<BingXFuturesBalance>>(request, null, ct).ConfigureAwait(false);
         }
 
         #endregion
