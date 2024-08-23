@@ -41,7 +41,7 @@ namespace BingX.Net.UnitTests
             var result = await CreateClient().SpotApi.ExchangeData.GetTickersAsync("TST-TST", default);
 
             Assert.That(result.Success, Is.False);
-            Assert.That(result.Error.Code, Is.EqualTo(100400));
+            Assert.That(result.Error.Code, Is.EqualTo(100204));
         }
 
         [Test]
