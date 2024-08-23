@@ -34,7 +34,7 @@ namespace BingX.Net.Objects.Models
         /// Type
         /// </summary>
         [JsonPropertyName("o")]
-        public OrderType Type { get; set; }
+        public FuturesOrderType Type { get; set; }
         /// <summary>
         /// Order price
         /// </summary>
