@@ -142,6 +142,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.9.1 - 23 Aug 2024
+    * Fixed enum type on OrderType property on socket perpetual futures order update
+
 * Version 1.9.0 - 19 Aug 2024
     * Added PerpetualFuturesApi.Trading.GetPositionHistoryAsync endpoint
     * Updated PerpetualFuturesApi.Account.GetBalancesAsync to V3, returning both USDT and USDC balances
