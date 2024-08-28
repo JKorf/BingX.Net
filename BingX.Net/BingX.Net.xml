@@ -5533,6 +5533,16 @@
             Time online
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXSymbol.TimeOffline">
+            <summary>
+            Time offline
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXSymbol.TimeMaintenance">
+            <summary>
+            Maintenance online
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXTicker">
             <summary>
             24 hour price statistics
