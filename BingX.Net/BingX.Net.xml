@@ -3398,6 +3398,11 @@
             Position side
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.RealizedPnl">
+            <summary>
+            Realized profit and loss of positions
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesBookTicker">
             <summary>
             Best offer info

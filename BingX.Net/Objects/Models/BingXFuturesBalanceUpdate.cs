@@ -108,5 +108,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("ps")]
         public TradeSide Side { get; set; }
+        /// <summary>
+        /// Realized profit and loss of positions
+        /// </summary>
+        [JsonPropertyName("cr")]
+        public decimal RealizedPnl { get; set; }
     }
 }
