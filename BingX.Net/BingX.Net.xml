@@ -3093,6 +3093,11 @@
             The fee rate for guaranteed stop loss.
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.BrokerProhibited">
+            <summary>
+            Whether broker user transaction are prohibited
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXDeposit">
             <summary>
             Deposit info
