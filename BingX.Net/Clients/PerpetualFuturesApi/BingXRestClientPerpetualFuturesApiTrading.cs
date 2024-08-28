@@ -85,14 +85,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddEnum("side", side);
             parameter.AddEnum("type", type);
             parameter.AddOptionalEnum("positionSide", positionSide);
-            parameter.AddOptional("reduceOnly", reduceOnly);
+            parameter.AddOptional("reduceOnly", reduceOnly?.ToString().ToLowerInvariant());
             parameter.AddOptional("quantity", quantity);
             parameter.AddOptional("price", price);
             parameter.AddOptional("stopPrice", stopPrice);
             parameter.AddOptional("newClientOrderId", clientOrderId);
             parameter.AddOptional("priceRate", priceRate);
             parameter.AddOptionalEnum("timeInForce", timeInForce);
-            parameter.AddOptional("closePosition", closePosition);
+            parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
             parameter.AddOptional("activationPrice", triggerPrice);
             parameter.AddOptional("stopGuaranteed", stopGuaranteed);
 
@@ -103,7 +103,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
                 stopLossParams.AddOptional("price", stopLossPrice);
                 stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
-                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed);
+                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
                 parameter.Add("stopLoss", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
             }
 
@@ -114,7 +114,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 takeProfitParams.AddOptional("stopPrice", takeProfitStopPrice);
                 takeProfitParams.AddOptional("price", takeProfitPrice);
                 takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
-                takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed);
+                takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
                 parameter.Add("takeProfit", new SystemTextJsonMessageSerializer().Serialize(takeProfitParams));
             }
 
@@ -169,14 +169,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddEnum("side", side);
             parameter.AddEnum("type", type);
             parameter.AddOptionalEnum("positionSide", positionSide);
-            parameter.AddOptional("reduceOnly", reduceOnly);
+            parameter.AddOptional("reduceOnly", reduceOnly?.ToString().ToLowerInvariant());
             parameter.AddOptional("quantity", quantity);
             parameter.AddOptional("price", price);
             parameter.AddOptional("stopPrice", stopPrice);
             parameter.AddOptional("newClientOrderId", clientOrderId);
             parameter.AddOptional("priceRate", priceRate);
             parameter.AddOptionalEnum("timeInForce", timeInForce);
-            parameter.AddOptional("closePosition", closePosition);
+            parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
             parameter.AddOptional("activationPrice", triggerPrice);
             parameter.AddOptional("stopGuaranteed", stopGuaranteed);
 
@@ -187,7 +187,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
                 stopLossParams.AddOptional("price", stopLossPrice);
                 stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
-                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed);
+                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
                 parameter.Add("stopLoss", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
             }
 
@@ -198,7 +198,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 takeProfitParams.AddOptional("stopPrice", takeProfitStopPrice);
                 takeProfitParams.AddOptional("price", takeProfitPrice);
                 takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
-                takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed);
+                takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
                 parameter.Add("takeProfit", new SystemTextJsonMessageSerializer().Serialize(takeProfitParams));
             }
 

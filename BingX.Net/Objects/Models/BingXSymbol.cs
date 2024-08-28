@@ -71,5 +71,15 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("timeOnline")]
         public DateTime? TimeOnline { get; set; }
+        /// <summary>
+        /// Time offline
+        /// </summary>
+        [JsonPropertyName("offTime")]
+        public DateTime? TimeOffline { get; set; }
+        /// <summary>
+        /// Maintenance online
+        /// </summary>
+        [JsonPropertyName("maintainTime")]
+        public DateTime? TimeMaintenance { get; set; }
     }
 }

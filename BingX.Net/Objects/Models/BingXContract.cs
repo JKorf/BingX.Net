@@ -102,5 +102,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("triggerFeeRate")]
         public decimal TriggerFeeRate { get; set; }
+        /// <summary>
+        /// Whether broker user transaction are prohibited
+        /// </summary>
+        [JsonPropertyName("brokerState")]
+        public bool BrokerProhibited { get; set; }
     }
 }

@@ -3094,6 +3094,11 @@
             The fee rate for guaranteed stop loss.
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.BrokerProhibited">
+            <summary>
+            Whether broker user transaction are prohibited
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXDeposit">
             <summary>
             Deposit info
@@ -3397,6 +3402,11 @@
         <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.Side">
             <summary>
             Position side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesPositionChange.RealizedPnl">
+            <summary>
+            Realized profit and loss of positions
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesBookTicker">
@@ -5527,6 +5537,16 @@
         <member name="P:BingX.Net.Objects.Models.BingXSymbol.TimeOnline">
             <summary>
             Time online
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXSymbol.TimeOffline">
+            <summary>
+            Time offline
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXSymbol.TimeMaintenance">
+            <summary>
+            Maintenance online
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXTicker">

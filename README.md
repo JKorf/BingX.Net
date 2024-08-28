@@ -142,6 +142,16 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.9.2 - 28 Aug 2024
+    * Updated CryptoExchange.Net to version 7.11.2, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/7.11.2
+    * Fixed Boolean parameter serialization on PerpetualFuturesApi.Trading order endpoints
+    * Added RealizedPnl property to PerpetualFuturesApi websocket position update
+    * Added TimeOffline, TimeMaintenance properties to SpotApi symbol model
+    * Added BrokerProhibited property to PerpetualFuturesApi contract response model
+
+* Version 1.9.1 - 23 Aug 2024
+    * Fixed enum type on OrderType property on socket perpetual futures order update
+
 * Version 1.9.0 - 19 Aug 2024
     * Added PerpetualFuturesApi.Trading.GetPositionHistoryAsync endpoint
     * Updated PerpetualFuturesApi.Account.GetBalancesAsync to V3, returning both USDT and USDC balances
