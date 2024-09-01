@@ -6,7 +6,7 @@ using System.Text;
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {
     public interface IBingXRestClientSpotApiShared :
-        IAssetRestClient,
+        IAssetsRestClient,
         IBalanceRestClient,
         IDepositRestClient,
         IKlineRestClient,

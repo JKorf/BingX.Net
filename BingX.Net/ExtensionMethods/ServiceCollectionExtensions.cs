@@ -8,6 +8,7 @@ using BingX.Net.Interfaces;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
 using BingX.Net.SymbolOrderBooks;
+using CryptoExchange.Net;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -62,6 +63,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
             services.AddTransient<IBingXOrderBookFactory, BingXOrderBookFactory>();
             services.AddTransient(x => x.GetRequiredService<IBingXRestClient>().SpotApi.CommonSpotClient);
+
+            services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().SpotApi.SharedClient);
+            services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().SpotApi.SharedClient);
+
             if (socketClientLifeTime == null)
                 services.AddSingleton<IBingXSocketClient, BingXSocketClient>();
             else
