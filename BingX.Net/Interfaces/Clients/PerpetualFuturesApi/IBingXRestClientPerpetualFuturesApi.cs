@@ -1,4 +1,5 @@
-﻿using CryptoExchange.Net.Interfaces;
+﻿using BingX.Net.Interfaces.Clients.SpotApi;
+using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.SharedApis.Interfaces;
 using System;
 
@@ -24,7 +25,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         public IBingXRestClientPerpetualFuturesApiTrading Trading { get; }
 
-        public ISharedClient SharedClient { get; }
+        public IBingXRestClientPerpetualFuturesApiShared SharedClient { get; }
 
     }
 }

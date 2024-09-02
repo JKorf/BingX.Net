@@ -403,6 +403,27 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
+
+        #region Get User Trades
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTradeDetails>>> GetUserTradesAsync(string symbol, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("symbol", symbol);
+            parameters.AddOptional("orderId", orderId);
+            parameters.AddOptional("lastFillId", fromId);
+            parameters.AddOptional("pageSize", limit);
+            parameters.AddOptionalMilliseconds("startTs", startTime);
+            parameters.AddOptionalMilliseconds("endTs", endTime);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/fillHistory", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+            var result = await _baseClient.SendAsync<BingXFuturesUserTradeDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXFuturesUserTradeDetails>>(result.Data?.Trades);
+        }
+
+        #endregion
+
         #region Cancel All Orders After
 
         /// <inheritdoc />

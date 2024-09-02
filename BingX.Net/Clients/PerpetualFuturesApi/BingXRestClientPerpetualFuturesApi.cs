@@ -15,6 +15,7 @@ using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.MessageParsing;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using CryptoExchange.Net.SharedApis.Interfaces;
+using BingX.Net.Interfaces.Clients.SpotApi;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -55,7 +56,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         /// <inheritdoc />
         public override string FormatSymbol(string baseAsset, string quoteAsset, ApiType? futuresType = null) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
-        public ISharedClient SharedClient => this;
+        public IBingXRestClientPerpetualFuturesApiShared SharedClient => this;
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
