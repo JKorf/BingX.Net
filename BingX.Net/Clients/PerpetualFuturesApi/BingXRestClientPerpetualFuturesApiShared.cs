@@ -194,30 +194,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
-        #region Positions client
-
-        EndpointOptions<GetPositionsRequest> IPositionRestClient.GetPositionsOptions { get; } = new EndpointOptions<GetPositionsRequest>(true);
-        async Task<ExchangeWebResult<IEnumerable<SharedPosition>>> IPositionRestClient.GetPositionsAsync(GetPositionsRequest request, ExchangeParameters? exchangeParameters, CancellationToken ct)
-        {
-            var validationError = ((IPositionRestClient)this).GetPositionsOptions.ValidateRequest(Exchange, request, exchangeParameters);
-            if (validationError != null)
-                return new ExchangeWebResult<IEnumerable<SharedPosition>>(Exchange, validationError);
-
-            var result = await Trading.GetPositionsAsync(symbol: request.Symbol?.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset)), ct: ct).ConfigureAwait(false);
-            if (!result)
-                return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, default);
-
-            return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, result.Data.Select(x => new SharedPosition(x.Symbol, x.Size, x.UpdateTime ?? default)
-            {
-                UnrealizedPnl = x.UnrealizedProfit,
-                LiquidationPrice = x.LiquidationPrice,
-                AverageEntryPrice = x.AveragePrice,
-                PositionSide = x.Side == TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long
-            }).ToList());
-        }
-
-        #endregion
-
         #region Leverage client
 
         EndpointOptions<GetLeverageRequest> ILeverageRestClient.GetLeverageOptions { get; } = new EndpointOptions<GetLeverageRequest>(true);
@@ -481,7 +457,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 positionSide: request.PositionSide == SharedPositionSide.Both ? PositionSide.Both : request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
                 reduceOnly: request.ReduceOnly,
                 timeInForce: GetTimeInForce(request.TimeInForce),
-                closePosition: request.ClosePosition,
                 clientOrderId: request.ClientOrderId).ConfigureAwait(false);
 
             if (!result)
@@ -691,6 +666,49 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return order.AsExchangeResult<SharedId>(Exchange, default);
 
             return order.AsExchangeResult(Exchange, new SharedId(order.Data.OrderId.ToString()));
+        }
+
+        EndpointOptions<GetPositionsRequest> IFuturesOrderRestClient.GetPositionsOptions { get; } = new EndpointOptions<GetPositionsRequest>(true);
+        async Task<ExchangeWebResult<IEnumerable<SharedPosition>>> IFuturesOrderRestClient.GetPositionsAsync(GetPositionsRequest request, ExchangeParameters? exchangeParameters, CancellationToken ct)
+        {
+            var validationError = ((IFuturesOrderRestClient)this).GetPositionsOptions.ValidateRequest(Exchange, request, exchangeParameters);
+            if (validationError != null)
+                return new ExchangeWebResult<IEnumerable<SharedPosition>>(Exchange, validationError);
+
+            var result = await Trading.GetPositionsAsync(symbol: request.Symbol?.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset)), ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, default);
+
+            return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, result.Data.Select(x => new SharedPosition(x.Symbol, x.Size, x.UpdateTime ?? default)
+            {
+                UnrealizedPnl = x.UnrealizedProfit,
+                LiquidationPrice = x.LiquidationPrice,
+                Leverage = x.Leverage,
+                AverageEntryPrice = x.AveragePrice,
+                PositionSide = x.Side == TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long
+            }).ToList());
+        }
+
+        EndpointOptions<ClosePositionRequest> IFuturesOrderRestClient.ClosePositionOptions { get; } = new EndpointOptions<ClosePositionRequest>(true);
+        async Task<ExchangeWebResult<SharedId>> IFuturesOrderRestClient.ClosePositionAsync(ClosePositionRequest request, ExchangeParameters? exchangeParameters, CancellationToken ct)
+        {
+            var validationError = ((IFuturesOrderRestClient)this).ClosePositionOptions.ValidateRequest(Exchange, request, exchangeParameters);
+            if (validationError != null)
+                return new ExchangeWebResult<SharedId>(Exchange, validationError);
+
+            var positions = await Trading.GetPositionsAsync(request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset))).ConfigureAwait(false);
+            if (!positions)
+                return positions.AsExchangeResult<SharedId>(Exchange, default);
+
+            var position = positions.Data.SingleOrDefault(x => x.Side == (request.PositionSide == SharedPositionSide.Short ? TradeSide.Short : TradeSide.Long));
+            if (position == null)
+                return positions.AsExchangeError<SharedId>(Exchange, new ServerError("Position not found"));
+
+            var result = await Trading.ClosePositionAsync(position.PositionId).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<SharedId>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, new SharedId(result.Data.OrderId.ToString()));
         }
 
         private TimeInForce? GetTimeInForce(SharedTimeInForce? tif)

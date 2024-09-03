@@ -16,7 +16,6 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         IRecentTradeRestClient,
         //ITradeHistoryRestClient,
         ILeverageRestClient,
-        IPositionRestClient,
         IMarkPriceKlineRestClient,
         IIndexPriceKlineRestClient,
         IOrderBookRestClient,
