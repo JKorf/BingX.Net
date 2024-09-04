@@ -22,6 +22,8 @@ namespace BingX.Net.Clients.SpotApi
     {
         public string Exchange => BingXExchange.ExchangeName;
 
+        public ApiType[] SupportedApiTypes { get; } = new[] { ApiType.Spot }; 
+
         async Task<ExchangeResult<UpdateSubscription>> ITickerSocketClient.SubscribeToTickerUpdatesAsync(TickerSubscribeRequest request, Action<DataEvent<SharedSpotTicker>> handler, CancellationToken ct)
         {
             var symbol = FormatSymbol(request.BaseAsset, request.QuoteAsset, request.ApiType);
