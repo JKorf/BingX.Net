@@ -24,7 +24,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     internal partial class BingXRestClientPerpetualFuturesApi : IBingXRestClientPerpetualFuturesApiShared
     {
         public string Exchange => BingXExchange.ExchangeName;
-        public ApiType[] SupportedApiTypes => new[] { ApiType.PerpetualLinear, ApiType.PerpetualInverse };
+        public ApiType[] SupportedApiTypes => new[] { ApiType.PerpetualLinear };
 
         #region Klines client
 
@@ -101,7 +101,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedFuturesSymbol>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(s => new SharedFuturesSymbol(SharedSymbolType.PerpetualLinear, s.Asset, s.Currency, s.Symbol)
+            return result.AsExchangeResult(Exchange, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(s => new SharedFuturesSymbol(SharedSymbolType.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
                 PriceDecimals = s.PricePrecision,

@@ -78,7 +78,7 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("asset")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// 0: Online, 1:Offline. Different unknown values have been observed. 
+        /// 1: Online, 25:Suspended. Different unknown values have been observed. 
         /// </summary>
         [JsonPropertyName("status")]
         public int Status { get; set; }
