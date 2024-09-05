@@ -48,17 +48,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (pageToken is DateTimeToken dateTimeToken)
                 fromTimestamp = dateTimeToken.LastTime;
 
-            var startTime = request.Filter?.StartTime;
-            var endTime = request.Filter?.EndTime;
+            var startTime = request.StartTime;
+            var endTime = request.EndTime;
             var apiLimit = 1000;
 
             // API returns the newest data first if the timespan is bigger than the api limit of 1000 results
             // So we need to request the first 1000 from the start time, then the 1000 after that etc
-            if (request.Filter?.StartTime != null)
+            if (request.StartTime != null)
             {
                 // Not paginated, check if the data will fit
                 var seconds = apiLimit * (int)request.Interval;
-                var maxEndTime = (fromTimestamp ?? request.Filter.StartTime).Value.AddSeconds(seconds);
+                var maxEndTime = (fromTimestamp ?? request.StartTime).Value.AddSeconds(seconds);
                 if (maxEndTime < endTime)
                     endTime = maxEndTime;
             }
@@ -66,9 +66,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var result = await ExchangeData.GetKlinesAsync(
                 request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset, request.ApiType)),
                 interval,
-                fromTimestamp ?? request.Filter?.StartTime,
+                fromTimestamp ?? request.StartTime,
                 endTime,
-                limit: request.Filter?.Limit ?? apiLimit,
+                limit: request.Limit ?? apiLimit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -76,10 +76,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (request.Filter?.StartTime != null && result.Data.Any())
+            if (request.StartTime != null && result.Data.Any())
             {
                 var maxOpenTime = result.Data.Max(x => x.Timestamp);
-                if (maxOpenTime < request.Filter.EndTime!.Value.AddSeconds(-(int)request.Interval))
+                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
                     nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
             }
 
@@ -220,7 +220,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (validationError != null)
                 return new ExchangeWebResult<SharedLeverage>(Exchange, validationError);
 
-            if (request.Side == SharedPositionSide.Both)
+            if (request.Side == null)
             {
                 var resultLong = await Account.SetLeverageAsync(symbol: request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset)),
                     PositionSide.Long,
@@ -236,10 +236,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 if (!resultShort)
                     return resultShort.AsExchangeResult<SharedLeverage>(Exchange, default);
 
-                return resultShort.AsExchangeResult(Exchange, new SharedLeverage(resultShort.Data.Leverage)
-                {
-                    Side = SharedPositionSide.Both
-                });
+                return resultShort.AsExchangeResult(Exchange, new SharedLeverage(resultShort.Data.Leverage));
             }
             else
             {
@@ -304,9 +301,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var result = await ExchangeData.GetMarkPriceKlinesAsync(
                 request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset)),
                 interval,
-                fromTimestamp ?? request.Filter?.StartTime,
-                request.Filter?.EndTime,
-                request.Filter?.Limit ?? 1000,
+                fromTimestamp ?? request.StartTime,
+                request.EndTime,
+                request.Limit ?? 1000,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -314,10 +311,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (request.Filter?.StartTime != null && result.Data.Any())
+            if (request.StartTime != null && result.Data.Any())
             {
                 var maxOpenTime = result.Data.Max(x => x.OpenTime);
-                if (maxOpenTime < request.Filter.EndTime!.Value.AddSeconds(-(int)request.Interval))
+                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
                     nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
             }
 
@@ -351,9 +348,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var result = await ExchangeData.GetMarkPriceKlinesAsync(
                 request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset)),
                 interval,
-                fromTimestamp ?? request.Filter?.StartTime,
-                request.Filter?.EndTime,
-                request.Filter?.Limit ?? 1000,
+                fromTimestamp ?? request.StartTime,
+                request.EndTime,
+                request.Limit ?? 1000,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -361,10 +358,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (request.Filter?.StartTime != null && result.Data.Any())
+            if (request.StartTime != null && result.Data.Any())
             {
                 var maxOpenTime = result.Data.Max(x => x.OpenTime);
-                if (maxOpenTime < request.Filter.EndTime!.Value.AddSeconds(-(int)request.Interval))
+                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
                     nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
             }
 
@@ -455,7 +452,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 request.OrderType == SharedOrderType.Limit ? Enums.FuturesOrderType.Limit : Enums.FuturesOrderType.Market,
                 quantity: request.Quantity,
                 price: request.Price,
-                positionSide: request.PositionSide == SharedPositionSide.Both ? PositionSide.Both : request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
+                positionSide: request.PositionSide == null ? PositionSide.Both : request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
                 reduceOnly: request.ReduceOnly,
                 timeInForce: GetTimeInForce(request.TimeInForce),
                 clientOrderId: request.ClientOrderId).ConfigureAwait(false);
@@ -496,7 +493,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 QuoteQuantityFilled = order.Data.ValueFilled,
                 TimeInForce = ParseTimeInForce(order.Data.TimeInForce),
                 UpdateTime = order.Data.UpdateTime,
-                PositionSide = order.Data.PositionSide == PositionSide.Both ? SharedPositionSide.Both : order.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
+                PositionSide = order.Data.PositionSide == PositionSide.Both ? null : order.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = order.Data.ReduceOnly
             });
         }
@@ -529,7 +526,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 QuoteQuantityFilled = x.ValueFilled,
                 TimeInForce = ParseTimeInForce(x.TimeInForce),
                 UpdateTime = x.UpdateTime,
-                PositionSide = x.PositionSide == PositionSide.Both ? SharedPositionSide.Both : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
+                PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = x.ReduceOnly
             }));
         }
@@ -548,15 +545,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get data
             var orders = await Trading.GetClosedOrdersAsync(request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset, request.ApiType)),
-                startTime: fromTimestamp ?? request.Filter?.StartTime,
-                endTime: request.Filter?.EndTime,
-                limit: request.Filter?.Limit ?? 1000).ConfigureAwait(false);
+                startTime: fromTimestamp ?? request.StartTime,
+                endTime: request.EndTime,
+                limit: request.Limit ?? 1000).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedFuturesOrder>>(Exchange, default);
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (orders.Data.Count() == (request.Filter?.Limit ?? 1000))
+            if (orders.Data.Count() == (request.Limit ?? 1000))
                 nextToken = new DateTimeToken(orders.Data.Max(o => o.CreateTime));
 
             return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedFuturesOrder(
@@ -575,7 +572,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 QuoteQuantityFilled = x.ValueFilled,
                 TimeInForce = ParseTimeInForce(x.TimeInForce),
                 UpdateTime = x.UpdateTime,
-                PositionSide = x.PositionSide == PositionSide.Both ? SharedPositionSide.Both : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
+                PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = x.ReduceOnly
             }), nextToken);
         }
@@ -623,9 +620,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get data
             var orders = await Trading.GetUserTradesAsync(request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset, request.ApiType)),
-                startTime: request.Filter?.StartTime,
-                endTime: request.Filter?.EndTime,
-                limit: request.Filter?.Limit ?? 500,
+                startTime: request.StartTime,
+                endTime: request.EndTime,
+                limit: request.Limit ?? 500,
                 fromId: fromId
                 ).ConfigureAwait(false);
             if (!orders)
@@ -633,7 +630,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get next token
             FromIdToken? nextToken = null;
-            if (orders.Data.Count() == (request.Filter?.Limit ?? 500))
+            if (orders.Data.Count() == (request.Limit ?? 500))
                 nextToken = new FromIdToken(orders.Data.Max(o => o.TradeId).ToString());
 
             return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedUserTrade(
@@ -680,7 +677,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, default);
 
-            return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, result.Data.Select(x => new SharedPosition(x.Symbol, x.Size, x.UpdateTime ?? default)
+            return result.AsExchangeResult<IEnumerable<SharedPosition>>(Exchange, result.Data.Select(x => new SharedPosition(x.Symbol, x.Size, x.UpdateTime)
             {
                 UnrealizedPnl = x.UnrealizedProfit,
                 LiquidationPrice = x.LiquidationPrice,
@@ -701,7 +698,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!positions)
                 return positions.AsExchangeResult<SharedId>(Exchange, default);
 
-            var position = positions.Data.SingleOrDefault(x => x.Side == (request.PositionSide == SharedPositionSide.Short ? TradeSide.Short : TradeSide.Long));
+            var position = positions.Data.FirstOrDefault(x => request.PositionSide == null ? x.Size != 0 : x.Side == (request.PositionSide == SharedPositionSide.Short ? TradeSide.Short : TradeSide.Long));
             if (position == null)
                 return positions.AsExchangeError<SharedId>(Exchange, new ServerError("Position not found"));
 
@@ -769,6 +766,37 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedBalance(x.Asset, x.Balance, x.Equity)));
         }
 
+        #endregion
+
+        #region Position Mode client
+
+        GetPositionModeOptions IPositionModeRestClient.GetPositionModeOptions { get; } = new GetPositionModeOptions(true);
+        async Task<ExchangeWebResult<SharedPositionModeResult>> IPositionModeRestClient.GetPositionModeAsync(GetPositionModeRequest request, ExchangeParameters? exchangeParameters, CancellationToken ct)
+        {
+            var validationError = ((IPositionModeRestClient)this).GetPositionModeOptions.ValidateRequest(Exchange, request, exchangeParameters, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<SharedPositionModeResult>(Exchange, validationError);
+
+            var result = await Account.GetPositionModeAsync(request.Symbol!.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset)), ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<SharedPositionModeResult>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, new SharedPositionModeResult(result.Data.PositionMode == PositionMode.DualPositionMode ? SharedPositionMode.LongShort : SharedPositionMode.OneWay));
+        }
+
+        SetPositionModeOptions IPositionModeRestClient.SetPositionModeOptions { get; } = new SetPositionModeOptions(true, true, true);
+        async Task<ExchangeWebResult<SharedPositionModeResult>> IPositionModeRestClient.SetPositionModeAsync(SetPositionModeRequest request, ExchangeParameters? exchangeParameters, CancellationToken ct)
+        {
+            var validationError = ((IPositionModeRestClient)this).SetPositionModeOptions.ValidateRequest(Exchange, request, exchangeParameters, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<SharedPositionModeResult>(Exchange, validationError);
+
+            var result = await Account.SetPositionModeAsync(request.Symbol!.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset)), request.Mode == SharedPositionMode.LongShort ? PositionMode.DualPositionMode : PositionMode.SinglePositionMode, ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<SharedPositionModeResult>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, new SharedPositionModeResult(request.Mode));
+        }
         #endregion
     }
 }

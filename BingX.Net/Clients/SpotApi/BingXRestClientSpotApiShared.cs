@@ -3,6 +3,7 @@ using BingX.Net.Interfaces.Clients.SpotApi;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.SharedApis.Enums;
 using CryptoExchange.Net.SharedApis.Interfaces;
+using CryptoExchange.Net.SharedApis.Interfaces.Rest.Futures;
 using CryptoExchange.Net.SharedApis.Interfaces.Rest.Spot;
 using CryptoExchange.Net.SharedApis.Models;
 using CryptoExchange.Net.SharedApis.Models.FilterOptions;
@@ -45,17 +46,17 @@ namespace BingX.Net.Clients.SpotApi
             if (pageToken is DateTimeToken dateTimeToken)
                 fromTimestamp = dateTimeToken.LastTime;
 
-            var startTime = request.Filter?.StartTime;
-            var endTime = request.Filter?.EndTime?.AddSeconds(-1);
+            var startTime = request.StartTime;
+            var endTime = request.EndTime?.AddSeconds(-1);
             var apiLimit = 1000;
 
             // API returns the newest data first if the timespan is bigger than the api limit of 1000 results
             // So we need to request the first 1000 from the start time, then the 1000 after that etc
-            if (request.Filter?.StartTime != null)
+            if (request.StartTime != null)
             {
                 // Not paginated, check if the data will fit
                 var seconds = apiLimit * (int)request.Interval;
-                var maxEndTime = (fromTimestamp ?? request.Filter.StartTime).Value.AddSeconds(seconds - 1);
+                var maxEndTime = (fromTimestamp ?? request.StartTime).Value.AddSeconds(seconds - 1);
                 if (maxEndTime < endTime)
                     endTime = maxEndTime;
             }
@@ -64,9 +65,9 @@ namespace BingX.Net.Clients.SpotApi
             var result = await ExchangeData.GetKlinesAsync(
                 request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset, request.ApiType)),
                 interval,
-                fromTimestamp ?? request.Filter?.StartTime,
+                fromTimestamp ?? request.StartTime,
                 endTime,
-                limit: request.Filter?.Limit ?? apiLimit,
+                limit: request.Limit ?? apiLimit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -74,10 +75,10 @@ namespace BingX.Net.Clients.SpotApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (request.Filter?.StartTime != null && result.Data.Any())
+            if (request.StartTime != null && result.Data.Any())
             {
                 var maxOpenTime = result.Data.Max(x => x.OpenTime);
-                if (maxOpenTime < request.Filter.EndTime!.Value.AddSeconds(-(int)request.Interval))
+                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
                     nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
             }
 
@@ -300,7 +301,7 @@ namespace BingX.Net.Clients.SpotApi
 
             // Determine page token
             int page = 1;
-            int pageSize = request.Filter?.Limit ?? 500;
+            int pageSize = request.Limit ?? 500;
             if (pageToken is PageToken token)
             {
                 page = token.Page;
@@ -309,8 +310,8 @@ namespace BingX.Net.Clients.SpotApi
 
             // Get data
             var orders = await Trading.GetOrdersAsync(request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset, request.ApiType)),
-                startTime: request.Filter?.StartTime,
-                endTime: request.Filter?.EndTime,
+                startTime: request.StartTime,
+                endTime: request.EndTime,
                 page: page,
                 pageSize: pageSize).ConfigureAwait(false);
             if (!orders)
@@ -384,16 +385,16 @@ namespace BingX.Net.Clients.SpotApi
             // Get data
             var orders = await Trading.GetUserTradesAsync(
                 request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset, request.ApiType)),
-                startTime: request.Filter?.StartTime,
-                endTime: request.Filter?.EndTime,
-                limit: request.Filter?.Limit ?? 500,
+                startTime: request.StartTime,
+                endTime: request.EndTime,
+                limit: request.Limit ?? 500,
                 fromId: fromId).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, default);
 
             // Get next token
             FromIdToken? nextToken = null;
-            if (orders.Data.Count() == (request.Filter?.Limit ?? 500))
+            if (orders.Data.Count() == (request.Limit ?? 500))
                 nextToken = new FromIdToken(orders.Data.Max(o => o.Id).ToString());
 
             return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedUserTrade(
@@ -562,9 +563,9 @@ namespace BingX.Net.Clients.SpotApi
 
             // Get data
             var result = await Account.GetDepositHistoryAsync(request.Asset,
-                startTime: request.Filter?.StartTime,
-                endTime: request.Filter?.EndTime,
-                limit: request.Filter?.Limit ?? 100,
+                startTime: request.StartTime,
+                endTime: request.EndTime,
+                limit: request.Limit ?? 100,
                 offset: offset,
                 ct: ct).ConfigureAwait(false);
             if (!result)
@@ -572,7 +573,7 @@ namespace BingX.Net.Clients.SpotApi
 
             // Determine next token
             OffsetToken? nextToken = null;
-            if (result.Data.Count() == (request.Filter?.Limit ?? 100))
+            if (result.Data.Count() == (request.Limit ?? 100))
                 nextToken = new OffsetToken((offset ?? 0) + result.Data.Count());
 
             return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedDeposit(x.Asset, x.Quantity, x.Status == DepositStatus.Completed, x.InsertTime)
@@ -622,9 +623,9 @@ namespace BingX.Net.Clients.SpotApi
             // Get data
             var withdrawals = await Account.GetWithdrawalHistoryAsync(
                 request.Asset,
-                startTime: request.Filter?.StartTime,
-                endTime: request.Filter?.EndTime,
-                limit: request.Filter?.Limit ?? 100,
+                startTime: request.StartTime,
+                endTime: request.EndTime,
+                limit: request.Limit ?? 100,
                 offset: offset,
                 ct: ct).ConfigureAwait(false);
             if (!withdrawals)
@@ -632,7 +633,7 @@ namespace BingX.Net.Clients.SpotApi
 
             // Determine next token
             OffsetToken nextToken;
-            if (withdrawals.Data.Count() == (request.Filter?.Limit ?? 100))
+            if (withdrawals.Data.Count() == (request.Limit ?? 100))
                 nextToken = new OffsetToken((offset ?? 0) + withdrawals.Data.Count());
 
             return withdrawals.AsExchangeResult(Exchange, withdrawals.Data.Select(x => new SharedWithdrawal(x.Asset, x.Address, x.Quantity, x.Status == WithdrawalStatus.Completed, x.ApplyTime)
