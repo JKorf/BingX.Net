@@ -17,13 +17,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BingX.Net.Clients.SpotApi
+namespace BingX.Net.Clients.PerpetualFuturesApi
 {
-    internal partial class BingXSocketClientSpotApi : IBingXSocketClientSpotApiShared
+    internal partial class BingXSocketClientPerpetualFuturesApi : IBingXSocketClientPerpetualFuturesApiShared
     {
         public string Exchange => BingXExchange.ExchangeName;
 
-        public ApiType[] SupportedApiTypes { get; } = new[] { ApiType.Spot };
+        public ApiType[] SupportedApiTypes { get; } = new[] { ApiType.PerpetualLinear };
 
         #region Ticker client
         SubscriptionOptions<SubscribeTickerRequest> ITickerSocketClient.SubscribeTickerOptions { get; } = new SubscriptionOptions<SubscribeTickerRequest>(false);
@@ -51,7 +51,7 @@ namespace BingX.Net.Clients.SpotApi
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var symbol = request.Symbol.GetSymbol((baseAsset, quoteAsset) => FormatSymbol(baseAsset, quoteAsset, request.ApiType));
-            var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.AsExchangeEvent<IEnumerable<SharedTrade>>(Exchange, new[] { new SharedTrade(update.Data.Price, update.Data.Quantity, update.Data.TradeTime) })), ct).ConfigureAwait(false);
+            var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.AsExchangeEvent<IEnumerable<SharedTrade>>(Exchange, update.Data.Select(x => new SharedTrade(x.Price, x.Quantity, x.TradeTime)))), ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
         }
@@ -91,8 +91,8 @@ namespace BingX.Net.Clients.SpotApi
 
             var listenKey = exchangeParameters.GetValue<string>(Exchange, "ListenKey");
 
-            var result = await SubscribeToBalanceUpdatesAsync(listenKey,
-                update => handler(update.AsExchangeEvent(Exchange, update.Data.EventData.Balances.Select(x => new SharedBalance(x.Asset, x.Total - x.Locked, x.Total)))),
+            var result = await SubscribeToUserDataUpdatesAsync(listenKey,
+                onAccountUpdate: update => handler(update.AsExchangeEvent(Exchange, update.Data.Update.Balances.Select(x => new SharedBalance(x.Asset, x.Balance, x.Balance)))),
                 ct: ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
@@ -100,41 +100,41 @@ namespace BingX.Net.Clients.SpotApi
 
         #endregion
 
-        #region Spot Order client
-        SubscriptionOptions ISpotOrderSocketClient.SubscribeSpotOrderOptions { get; } = new SubscriptionOptions("SubscribeSpotOrderRequest", false)
+        #region Futures Order client
+        SubscriptionOptions IFuturesOrderSocketClient.SubscribeFuturesOrderOptions { get; } = new SubscriptionOptions("SubscribeSpotOrderRequest", false)
         {
             RequiredExchangeParameters = new List<ParameterDescription>
             {
                 new ParameterDescription("ListenKey", typeof(string), "The listenkey for starting the user stream", "123123123")
             }
         };
-        async Task<ExchangeResult<UpdateSubscription>> ISpotOrderSocketClient.SubscribeToSpotOrderUpdatesAsync(Action<ExchangeEvent<IEnumerable<SharedSpotOrder>>> handler, ExchangeParameters? exchangeParameters, CancellationToken ct)
+        async Task<ExchangeResult<UpdateSubscription>> IFuturesOrderSocketClient.SubscribeToFuturesOrderUpdatesAsync(ApiType apiType, Action<ExchangeEvent<IEnumerable<SharedFuturesOrder>>> handler, ExchangeParameters? exchangeParameters, CancellationToken ct)
         {
-            var validationError = ((ISpotOrderSocketClient)this).SubscribeSpotOrderOptions.ValidateRequest(Exchange, exchangeParameters, ApiType.Spot, SupportedApiTypes);
+            var validationError = ((IFuturesOrderSocketClient)this).SubscribeFuturesOrderOptions.ValidateRequest(Exchange, exchangeParameters, apiType, SupportedApiTypes);
             if (validationError != null)
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var listenKey = exchangeParameters.GetValue<string>(Exchange, "ListenKey");
-            var result = await SubscribeToOrderUpdatesAsync(listenKey,
-                update => handler(update.AsExchangeEvent<IEnumerable<SharedSpotOrder>>(Exchange, new[] {
-                    new SharedSpotOrder(
+            var result = await SubscribeToUserDataUpdatesAsync(listenKey,
+                onOrderUpdate: update => handler(update.AsExchangeEvent<IEnumerable<SharedFuturesOrder>>(Exchange, new[] {
+                    new SharedFuturesOrder(
                         update.Data.Symbol,
                         update.Data.OrderId.ToString(),
-                        update.Data.Type == Enums.OrderType.Limit ? SharedOrderType.Limit : update.Data.Type == Enums.OrderType.Market ? SharedOrderType.Market : SharedOrderType.Other,
+                        update.Data.Type == Enums.FuturesOrderType.Limit ? SharedOrderType.Limit : update.Data.Type == Enums.FuturesOrderType.Market ? SharedOrderType.Market : SharedOrderType.Other,
                         update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
                         update.Data.Status == Enums.OrderStatus.Canceled ? SharedOrderStatus.Canceled : (update.Data.Status == Enums.OrderStatus.New || update.Data.Status == Enums.OrderStatus.PartiallyFilled) ? SharedOrderStatus.Open : SharedOrderStatus.Filled,
-                        update.Data.CreateTime)
+                        update.Data.UpdateTime)
                     {
                         ClientOrderId = update.Data.ClientOrderId,
                         Price = update.Data.Price,
                         Quantity = update.Data.Quantity,
                         QuantityFilled = update.Data.QuantityFilled,
-                        QuoteQuantity = update.Data.QuoteOrderQuantity,
                         QuoteQuantityFilled = update.Data.VolumeFilled,
                         Fee = update.Data.Fee,
+                        AveragePrice = update.Data.AveragePrice,
+                        PositionSide = update.Data.PositionSide == Enums.PositionSide.Long ? SharedPositionSide.Long : update.Data.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : null,
                         FeeAsset = update.Data.FeeAsset,
-                        UpdateTime = update.Data.UpdateTime,
-                        LastTrade = update.Data.LastFillQuantity > 0 ? null : new SharedUserTrade(update.Data.Symbol, update.Data.OrderId.ToString(), update.Data.TradeId.ToString(), update.Data.LastFillQuantity!.Value, update.Data.LastFillPrice!.Value, update.Data.UpdateTime!.Value)
+                        UpdateTime = update.Data.UpdateTime
                     }
                 })),
                 ct: ct).ConfigureAwait(false);
