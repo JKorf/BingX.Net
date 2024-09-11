@@ -142,6 +142,10 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.10.0 - 11 Sep 2024
+    * Fixed request signing for requests with special characters
+    * Added SpotApi Oco endpoints
+
 * Version 1.9.2 - 28 Aug 2024
     * Updated CryptoExchange.Net to version 7.11.2, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/7.11.2
     * Fixed Boolean parameter serialization on PerpetualFuturesApi.Trading order endpoints
