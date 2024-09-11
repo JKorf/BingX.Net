@@ -1,0 +1,36 @@
+GET
+/openApi/spot/v1/oco/openOrderList
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": [
+    {
+      "transactionTime": 1724656554890,
+      "orderId": "1827968197060460545",
+      "clientOrderId": "",
+      "symbol": "BTC-USDT",
+      "orderType": "ocoTps",
+      "side": "BUY",
+      "triggerPrice": 87000,
+      "price": 88000,
+      "quantity": 0.001,
+      "orderListId": "1827968196914479104",
+      "status": "NEW"
+    },
+    {
+      "transactionTime": 1724656554890,
+      "orderId": "1827968197060460544",
+      "clientOrderId": "",
+      "symbol": "BTC-USDT",
+      "orderType": "ocoLimit",
+      "side": "BUY",
+      "triggerPrice": 0,
+      "price": 48000,
+      "quantity": 0.001,
+      "orderListId": "1827968196914479104",
+      "status": "PENDING"
+    }
+  ]
+}

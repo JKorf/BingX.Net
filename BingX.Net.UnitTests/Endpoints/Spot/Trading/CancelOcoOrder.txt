@@ -1,0 +1,12 @@
+POST
+/openApi/spot/v1/oco/cancel
+true
+{
+  "code": 0,
+  "msg": "",
+  "debugMsg": "",
+  "data": {
+    "orderId": "1827980248763858944",
+    "clientOrderId": "123456789"
+  }
+}

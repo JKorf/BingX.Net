@@ -12,6 +12,7 @@ using CryptoExchange.Net.CommonObjects;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System.Data.Common;
 using CryptoExchange.Net.RateLimiting.Guards;
+using System.Drawing;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -242,5 +243,88 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         #endregion
+
+        #region Place Oco Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXOcoOrder>>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("symbol", symbol);
+            parameters.AddEnum("side", side);
+            parameters.Add("quantity", quantity);
+            parameters.Add("limitPrice", limitPrice);
+            parameters.Add("orderPrice", orderPrice);
+            parameters.Add("triggerPrice", triggerPrice);
+            parameters.AddOptional("listClientOrderId", clientOrderId);
+            parameters.AddOptional("aboveClientOrderId", aboveClientOrderId);
+            parameters.AddOptional("belowClientOrderId", belowClientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/oco/order", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXOcoOrder>>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Cancel Oco Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXOrderId>> CancelOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("orderId", orderId);
+            parameters.AddOptional("clientOrderId", clientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/oco/cancel", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var result = await _baseClient.SendAsync<BingXOrderId>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Oco Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("orderListId", orderListId);
+            parameters.AddOptional("clientOrderId", clientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/oco/orderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXOcoOrder>>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Open Oco Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("pageIndex", page);
+            parameters.Add("pageSize", pageSize);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/oco/openOrderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXOcoOrder>>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Closed Oco Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("pageIndex", page);
+            parameters.Add("pageSize", pageSize);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/oco/historyOrderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXOcoOrder>>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
     }
 }

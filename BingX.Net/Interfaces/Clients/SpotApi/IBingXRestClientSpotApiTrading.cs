@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System;
+using System.Drawing;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {
@@ -131,5 +132,58 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<IEnumerable<BingXUserTrade>>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? fromId = null, int? limit = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Place a new OCO order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20OCO%20Order" /></para>
+        /// </summary>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
+        /// <param name="side">Order side</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="limitPrice">Limit order price</param>
+        /// <param name="orderPrice">The limit order price set after a stop-limit order is triggered</param>
+        /// <param name="triggerPrice">The trigger price of the stop limit order</param>
+        /// <param name="clientOrderId">Client order id</param>
+        /// <param name="aboveClientOrderId">Client order id for the limit order</param>
+        /// <param name="belowClientOrderId">Client order id for the stop limit order</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default);
+        
+        /// <summary>
+        /// Cancel an OCO order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20OCO%20Order" /></para>
+        /// </summary>
+        /// <param name="orderId">The order id. Either this or `clientOrderId` should be provided</param>
+        /// <param name="clientOrderId">The client order id. Either this or `orderId` should be provided</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXOrderId>> CancelOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get a specific OCO order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20an%20OCO%20Order%20List" /></para>
+        /// </summary>
+        /// <param name="orderListId">The order list id. Either this or `clientOrderId` should be provided</param>
+        /// <param name="clientOrderId">The client order id. Either this or `orderListId` should be provided</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get open OCO orders
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20All%20Open%20OCO%20Orders" /></para>
+        /// </summary>
+        /// <param name="page">Page</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get closed OCO orders
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20All%20Open%20OCO%20Orders" /></para>
+        /// </summary>
+        /// <param name="page">Page</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
+
     }
 }
