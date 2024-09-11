@@ -260,7 +260,10 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("aboveClientOrderId", aboveClientOrderId);
             parameters.AddOptional("belowClientOrderId", belowClientOrderId);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/oco/order", BingXExchange.RateLimiter.RestAccount1, 1, true);
-            var result = await _baseClient.SendAsync<IEnumerable<BingXOcoOrder>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXOcoOrder>>(request, parameters, ct, additionalHeaders: new Dictionary<string, string>
+                 {
+                     { "X-SOURCE-KEY", _brokerId }
+                 }).ConfigureAwait(false);
             return result;
         }
 
