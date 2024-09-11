@@ -6,6 +6,7 @@ using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Testing;
 using System.Collections.Generic;
 using BingX.Net.Objects.Models;
+using System.Drawing;
 
 namespace BingX.Net.UnitTests
 {
@@ -78,6 +79,10 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.SpotApi.Trading.GetOpenOrdersAsync("ETHUSDT"), "GetOpenOrders", nestedJsonProperty: "data.orders");
             await tester.ValidateAsync(client => client.SpotApi.Trading.GetOrdersAsync("ETHUSDT"), "GetOrders", nestedJsonProperty: "data.orders");
             await tester.ValidateAsync(client => client.SpotApi.Trading.GetUserTradesAsync("ETHUSDT"), "GetUserTrades", nestedJsonProperty: "data.fills");
+            await tester.ValidateAsync(client => client.SpotApi.Trading.PlaceOcoOrderAsync("123", Enums.OrderSide.Buy, 0.1m, 0.1m, 0.1m, 0.1m), "PlaceOcoOrder", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.SpotApi.Trading.CancelOcoOrderAsync("123"), "CancelOcoOrder", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.SpotApi.Trading.GetOcoOrderAsync("123"), "GetOcoOrder", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.SpotApi.Trading.GetOpenOcoOrdersAsync(123, 123), "GetOpenOcoOrders", nestedJsonProperty: "data");
         }
 
         [Test]

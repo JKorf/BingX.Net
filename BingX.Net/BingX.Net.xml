@@ -577,6 +577,21 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOcoOrderAsync(System.String,BingX.Net.Enums.OrderSide,System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOpenOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetClosedOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi">
             <summary>
             Client providing access to the BingX spot websocket Api
@@ -975,6 +990,21 @@
         <member name="F:BingX.Net.Enums.MarginMode.Cross">
             <summary>
             Cross margin mode
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.OcoOrderType">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OcoOrderType.OcoLimit">
+            <summary>
+            Oco limit order
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.OcoOrderType.OcoStopLimit">
+            <summary>
+            Oco stop limit order
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.OrderSide">
@@ -2442,6 +2472,58 @@
             <param name="limit">Max amount of results</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceOcoOrderAsync(System.String,BingX.Net.Enums.OrderSide,System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place a new OCO order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20OCO%20Order" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="side">Order side</param>
+            <param name="quantity">Quantity</param>
+            <param name="limitPrice">Limit order price</param>
+            <param name="orderPrice">The limit order price set after a stop-limit order is triggered</param>
+            <param name="triggerPrice">The trigger price of the stop limit order</param>
+            <param name="clientOrderId">Client order id</param>
+            <param name="aboveClientOrderId">Client order id for the limit order</param>
+            <param name="belowClientOrderId">Client order id for the stop limit order</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Cancel an OCO order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20OCO%20Order" /></para>
+            </summary>
+            <param name="orderId">The order id. Either this or `clientOrderId` should be provided</param>
+            <param name="clientOrderId">The client order id. Either this or `orderId` should be provided</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get a specific OCO order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20an%20OCO%20Order%20List" /></para>
+            </summary>
+            <param name="orderListId">The order list id. Either this or `clientOrderId` should be provided</param>
+            <param name="clientOrderId">The client order id. Either this or `orderListId` should be provided</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetOpenOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get open OCO orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20All%20Open%20OCO%20Orders" /></para>
+            </summary>
+            <param name="page">Page</param>
+            <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetClosedOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get closed OCO orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20All%20Open%20OCO%20Orders" /></para>
+            </summary>
+            <param name="page">Page</param>
+            <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi">
             <summary>
@@ -4946,6 +5028,66 @@
             The current mark price
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOcoOrder">
+            <summary>
+            OCO order info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.TransactionTime">
+            <summary>
+            Transaction time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.OrderType">
+            <summary>
+            Order type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.Side">
+            <summary>
+            Side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.TriggerPrice">
+            <summary>
+            Trigger price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.Price">
+            <summary>
+            Order price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.OrderListId">
+            <summary>
+            Order list id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOcoOrder.Status">
+            <summary>
+            Order status
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXOpenInterest">
             <summary>
             Open interest info
@@ -5159,6 +5301,21 @@
         <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.FeeAsset">
             <summary>
             The fee asset
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderId.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderId.ClientOrderId">
+            <summary>
+            Client order id
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXOrderUpdate">

@@ -59,7 +59,7 @@ namespace BingX.Net
             if (parameterPosition == HttpMethodParameterPosition.InBody)
                 parameterSignData = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + string.Format(CultureInfo.InvariantCulture, "{0}", o.Value)));
             else
-                parameterSignData = parameters.CreateParamString(true, arraySerialization);
+                parameterSignData = parameters.CreateParamString(false, arraySerialization);
 
             parameters.Add("signature", SignHMACSHA256(parameterSignData, SignOutputType.Hex));
         }
