@@ -199,10 +199,10 @@ namespace BingX.Net.Clients.SpotApi
                 SharedTimeInForce.ImmediateOrCancel,
             },
             new SharedQuantitySupport(
-                SharedQuantityType.Both,
-                SharedQuantityType.Both,
-                SharedQuantityType.QuoteAssetQuantity,
-                SharedQuantityType.BaseAssetQuantity));
+                SharedQuantityType.BaseAndQuoteAsset,
+                SharedQuantityType.BaseAndQuoteAsset,
+                SharedQuantityType.QuoteAsset,
+                SharedQuantityType.BaseAsset));
 
         async Task<ExchangeWebResult<SharedId>> ISpotOrderRestClient.PlaceSpotOrderAsync(PlaceSpotOrderRequest request, ExchangeParameters? exchangeParameters, CancellationToken ct)
         {
