@@ -52,7 +52,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var symbol = request.Symbol.GetSymbol(FormatSymbol);
-            var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.AsExchangeEvent<IEnumerable<SharedTrade>>(Exchange, update.Data.Select(x => new SharedTrade(x.Price, x.Quantity, x.TradeTime)))), ct).ConfigureAwait(false);
+            var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.AsExchangeEvent<IEnumerable<SharedTrade>>(Exchange, update.Data.Select(x => new SharedTrade(x.Quantity, x.Price, x.TradeTime)).ToArray())), ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
         }
@@ -91,7 +91,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
-                onAccountUpdate: update => handler(update.AsExchangeEvent(Exchange, update.Data.Update.Balances.Select(x => new SharedBalance(x.Asset, x.Balance, x.Balance)))),
+                onAccountUpdate: update => handler(update.AsExchangeEvent<IEnumerable<SharedBalance>>(Exchange, update.Data.Update.Balances.Select(x => new SharedBalance(x.Asset, x.BalanceExIsolatedMargin, x.Balance)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
@@ -102,7 +102,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Futures Order client
         SubscriptionOptions<SubscribeFuturesOrderRequest> IFuturesOrderSocketClient.SubscribeFuturesOrderOptions { get; } = new SubscriptionOptions<SubscribeFuturesOrderRequest>(false)
         {
-            RequiredExchangeParameters = new List<ParameterDescription>
+            RequiredOptionalParameters = new List<ParameterDescription>
             {
                 new ParameterDescription(nameof(SubscribeFuturesOrderRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
             }
@@ -128,8 +128,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         Quantity = update.Data.Quantity,
                         QuantityFilled = update.Data.QuantityFilled,
                         QuoteQuantityFilled = update.Data.VolumeFilled,
-                        Fee = update.Data.Fee,
-                        AveragePrice = update.Data.AveragePrice,
+                        Fee = update.Data.Fee == null ? null :Math.Abs(update.Data.Fee.Value),
+                        AveragePrice = update.Data.AveragePrice == 0 ? null : update.Data.AveragePrice,
                         PositionSide = update.Data.PositionSide == Enums.PositionSide.Long ? SharedPositionSide.Long : update.Data.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : null,
                         FeeAsset = update.Data.FeeAsset,
                         UpdateTime = update.Data.UpdateTime
@@ -147,7 +147,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         {
             RequiredOptionalParameters = new List<ParameterDescription>
             {
-                new ParameterDescription("ListenKey", typeof(string), "The listenkey for starting the user stream", "123123123")
+                new ParameterDescription(nameof(SubscribePositionRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
             }
         };
         async Task<ExchangeResult<UpdateSubscription>> IPositionSocketClient.SubscribeToPositionUpdatesAsync(SubscribePositionRequest request, Action<ExchangeEvent<IEnumerable<SharedPosition>>> handler, CancellationToken ct)
@@ -157,12 +157,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
-                onAccountUpdate: update => handler(update.AsExchangeEvent(Exchange, update.Data.Update.Positions.Select(x => new SharedPosition(x.Symbol, x.Size, update.Data.EventTime)
+                onAccountUpdate: update => handler(update.AsExchangeEvent<IEnumerable<SharedPosition>>(Exchange, update.Data.Update.Positions.Select(x => new SharedPosition(x.Symbol, x.Size, update.Data.EventTime)
                 {
                     AverageEntryPrice = x.EntryPrice,
                     PositionSide = x.Side == Enums.TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
                     UnrealizedPnl = x.UnrealizedPnl
-                }))),
+                }).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);

@@ -7,8 +7,10 @@ namespace BingX.Net.Objects.Models
 {
     internal record BingXFuturesUserTradeDetailsWrapper
     {
-        [JsonPropertyName("fill_orders")]
+        [JsonPropertyName("fill_history_orders")]
         public IEnumerable<BingXFuturesUserTradeDetails> Trades { get; set; } = Array.Empty<BingXFuturesUserTradeDetails>();
+        //[JsonInclude, JsonPropertyName("fill_history_orders")]
+        //internal IEnumerable<BingXFuturesUserTradeDetails> TradeHistory { set => Trades = value; }
     }
 
     /// <summary>

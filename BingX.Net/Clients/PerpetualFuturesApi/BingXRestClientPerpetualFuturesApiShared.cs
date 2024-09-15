@@ -28,7 +28,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #region Klines client
 
-        GetKlinesOptions IKlineRestClient.GetKlinesOptions { get; } = new GetKlinesOptions(SharedPaginationType.Ascending, false)
+        GetKlinesOptions IKlineRestClient.GetKlinesOptions { get; } = new GetKlinesOptions(SharedPaginationType.Descending, false)
         {
             MaxRequestDataPoints = 1000
         };
@@ -43,47 +43,43 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (validationError != null)
                 return new ExchangeWebResult<IEnumerable<SharedKline>>(Exchange, validationError);
 
-            // Determine page token
-            DateTime? fromTimestamp = null;
+            // Determine pagination
+            // Data is normally returned oldest first, so to do newest first pagination we have to do some calc
+            DateTime endTime = request.EndTime ?? RoundDown(DateTime.UtcNow, TimeSpan.FromSeconds((int)interval));
+            DateTime? startTime = request.StartTime;
             if (pageToken is DateTimeToken dateTimeToken)
-                fromTimestamp = dateTimeToken.LastTime;
+                endTime = dateTimeToken.LastTime;
 
-            var startTime = request.StartTime;
-            var endTime = request.EndTime;
-            var apiLimit = 1000;
-
-            // API returns the newest data first if the timespan is bigger than the api limit of 1000 results
-            // So we need to request the first 1000 from the start time, then the 1000 after that etc
-            if (request.StartTime != null)
+            var limit = request.Limit ?? 1440;
+            if (startTime == null || startTime < endTime)
             {
-                // Not paginated, check if the data will fit
-                var seconds = apiLimit * (int)request.Interval;
-                var maxEndTime = (fromTimestamp ?? request.StartTime).Value.AddSeconds(seconds);
-                if (maxEndTime < endTime)
-                    endTime = maxEndTime;
+                var offset = (int)interval * limit;
+                startTime = endTime.AddSeconds(-offset);
             }
+
+            if (startTime < request.StartTime)
+                startTime = request.StartTime;
 
             var result = await ExchangeData.GetKlinesAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
                 interval,
-                fromTimestamp ?? request.StartTime,
+                startTime,
                 endTime,
-                limit: request.Limit ?? apiLimit,
+                limit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedKline>>(Exchange, default);
 
-            // Get next token
             DateTimeToken? nextToken = null;
-            if (request.StartTime != null && result.Data.Any())
+            if (result.Data.Count() == limit)
             {
-                var maxOpenTime = result.Data.Max(x => x.Timestamp);
-                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
-                    nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
+                var minOpenTime = result.Data.Min(x => x.Timestamp);
+                if (request.StartTime == null || minOpenTime > request.StartTime.Value)
+                    nextToken = new DateTimeToken(minOpenTime.AddSeconds(-(int)interval));
             }
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedKline(x.Timestamp, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume)), nextToken);
+            return result.AsExchangeResult<IEnumerable<SharedKline>>(Exchange, result.Data.Select(x => new SharedKline(x.Timestamp, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume)).ToArray(), nextToken);
         }
 
         #endregion
@@ -101,13 +97,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedFuturesSymbol>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(s => new SharedFuturesSymbol(SharedSymbolType.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
+            return result.AsExchangeResult<IEnumerable<SharedFuturesSymbol>>(Exchange, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(s => new SharedFuturesSymbol(SharedSymbolType.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
+                MinNotionalValue = s.MinOrderValue,
                 PriceDecimals = s.PricePrecision,
                 QuantityDecimals = s.QuantityPrecision,
-                ContractSize = s.ContractSize
-            }));
+                ContractSize = 1
+            }).ToArray());
         }
 
         #endregion
@@ -170,7 +167,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     FundingRate = markPrice.LastFundingRate,
                     NextFundingTime = markPrice.NextFundingTime
                 };
-            }));
+            }).ToArray());
         }
 
         #endregion
@@ -191,7 +188,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedTrade>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedTrade(x.Quantity, x.Price, x.Timestamp)));
+            return result.AsExchangeResult<IEnumerable<SharedTrade>>(Exchange, result.Data.Select(x => new SharedTrade(x.Quantity, x.Price, x.Timestamp)).ToArray());
         }
 
         #endregion
@@ -214,46 +211,24 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             });
         }
 
-        SetLeverageOptions ILeverageRestClient.SetLeverageOptions { get; } = new SetLeverageOptions(true);
+        SetLeverageOptions ILeverageRestClient.SetLeverageOptions { get; } = new SetLeverageOptions(false);
         async Task<ExchangeWebResult<SharedLeverage>> ILeverageRestClient.SetLeverageAsync(SetLeverageRequest request, CancellationToken ct)
         {
             var validationError = ((ILeverageRestClient)this).SetLeverageOptions.ValidateRequest(Exchange, request, request.Symbol.ApiType, SupportedApiTypes);
             if (validationError != null)
                 return new ExchangeWebResult<SharedLeverage>(Exchange, validationError);
 
-            if (request.Side == null)
+            var result = await Account.SetLeverageAsync(symbol: request.Symbol.GetSymbol(FormatSymbol),
+                request.Side == null ? PositionSide.Both : request.Side == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
+                (int)request.Leverage,
+                ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<SharedLeverage>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, new SharedLeverage(result.Data.Leverage)
             {
-                var resultLong = await Account.SetLeverageAsync(symbol: request.Symbol.GetSymbol(FormatSymbol),
-                    PositionSide.Long,
-                    (int)request.Leverage,
-                    ct: ct).ConfigureAwait(false);
-                if (!resultLong)
-                    return resultLong.AsExchangeResult<SharedLeverage>(Exchange, default);
-
-                var resultShort = await Account.SetLeverageAsync(symbol: request.Symbol.GetSymbol(FormatSymbol),
-                    PositionSide.Short,
-                    (int)request.Leverage,
-                    ct: ct).ConfigureAwait(false);
-                if (!resultShort)
-                    return resultShort.AsExchangeResult<SharedLeverage>(Exchange, default);
-
-                return resultShort.AsExchangeResult(Exchange, new SharedLeverage(resultShort.Data.Leverage));
-            }
-            else
-            {
-                var result = await Account.SetLeverageAsync(symbol: request.Symbol.GetSymbol(FormatSymbol),
-                    request.Side == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
-                    (int)request.Leverage,
-                    ct: ct).ConfigureAwait(false);
-                if (!result)
-                    return result.AsExchangeResult<SharedLeverage>(Exchange, default);
-
-                return result.AsExchangeResult(Exchange, new SharedLeverage(result.Data.Leverage)
-                {
-                    Side = request.Side
-                });
-            }
-
+                Side = request.Side
+            });
         }
         #endregion
 
@@ -281,7 +256,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         GetKlinesOptions IIndexPriceKlineRestClient.GetIndexPriceKlinesOptions { get; } = new GetKlinesOptions(SharedPaginationType.Descending, false)
         {
-            MaxRequestDataPoints = 1000
+            MaxRequestDataPoints = 1440
         };
 
         async Task<ExchangeWebResult<IEnumerable<SharedMarkKline>>> IIndexPriceKlineRestClient.GetIndexPriceKlinesAsync(GetKlinesRequest request, INextPageToken? pageToken, CancellationToken ct)
@@ -294,17 +269,29 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (validationError != null)
                 return new ExchangeWebResult<IEnumerable<SharedMarkKline>>(Exchange, validationError);
 
-            // Determine page token
-            DateTime? fromTimestamp = null;
+            // Determine pagination
+            // Data is normally returned oldest first, so to do newest first pagination we have to do some calc
+            DateTime endTime = request.EndTime ?? RoundDown(DateTime.UtcNow, TimeSpan.FromSeconds((int)interval));
+            DateTime? startTime = request.StartTime;
             if (pageToken is DateTimeToken dateTimeToken)
-                fromTimestamp = dateTimeToken.LastTime;
+                endTime = dateTimeToken.LastTime;
+
+            var limit = request.Limit ?? 1440;
+            if (startTime == null || startTime < endTime)
+            {
+                var offset = (int)interval * limit;
+                startTime = endTime.AddSeconds(-offset);
+            }
+
+            if (startTime < request.StartTime)
+                startTime = request.StartTime;
 
             var result = await ExchangeData.GetMarkPriceKlinesAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
                 interval,
-                fromTimestamp ?? request.StartTime,
-                request.EndTime,
-                request.Limit ?? 1000,
+                startTime,
+                endTime,
+                limit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -312,14 +299,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (request.StartTime != null && result.Data.Any())
+            if (result.Data.Count() == limit)
             {
-                var maxOpenTime = result.Data.Max(x => x.OpenTime);
-                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
-                    nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
+                var minOpenTime = result.Data.Min(x => x.CloseTime);
+                if (request.StartTime == null || minOpenTime.AddSeconds(-(int)interval) > request.StartTime.Value)
+                    nextToken = new DateTimeToken(minOpenTime.AddSeconds(-(int)interval));
             }
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedMarkKline(x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice)), nextToken);
+            return result.AsExchangeResult<IEnumerable<SharedMarkKline>>(Exchange, result.Data.Select(x => new SharedMarkKline(x.CloseTime.AddSeconds(-(int)interval), x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice)).ToArray(), nextToken);
         }
 
         #endregion
@@ -328,7 +315,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         GetKlinesOptions IMarkPriceKlineRestClient.GetMarkPriceKlinesOptions { get; } = new GetKlinesOptions(SharedPaginationType.Ascending, false)
         {
-            MaxRequestDataPoints = 1000
+            MaxRequestDataPoints = 1440
         };
 
         async Task<ExchangeWebResult<IEnumerable<SharedMarkKline>>> IMarkPriceKlineRestClient.GetMarkPriceKlinesAsync(GetKlinesRequest request, INextPageToken? pageToken, CancellationToken ct)
@@ -341,17 +328,29 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (validationError != null)
                 return new ExchangeWebResult<IEnumerable<SharedMarkKline>>(Exchange, validationError);
 
-            // Determine page token
-            DateTime? fromTimestamp = null;
+            // Determine pagination
+            // Data is normally returned oldest first, so to do newest first pagination we have to do some calc
+            DateTime endTime = request.EndTime ?? RoundDown(DateTime.UtcNow, TimeSpan.FromSeconds((int)interval));
+            DateTime? startTime = request.StartTime;
             if (pageToken is DateTimeToken dateTimeToken)
-                fromTimestamp = dateTimeToken.LastTime;
+                endTime = dateTimeToken.LastTime;
+
+            var limit = request.Limit ?? 1440;
+            if (startTime == null || startTime < endTime)
+            {
+                var offset = (int)interval * limit;
+                startTime = endTime.AddSeconds(-offset);
+            }
+
+            if (startTime < request.StartTime)
+                startTime = request.StartTime;
 
             var result = await ExchangeData.GetMarkPriceKlinesAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
                 interval,
-                fromTimestamp ?? request.StartTime,
-                request.EndTime,
-                request.Limit ?? 1000,
+                startTime,
+                endTime,
+                limit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
@@ -359,14 +358,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (request.StartTime != null && result.Data.Any())
+            if (result.Data.Count() == limit)
             {
-                var maxOpenTime = result.Data.Max(x => x.OpenTime);
-                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
-                    nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
+                var minOpenTime = result.Data.Min(x => x.CloseTime);
+                if (request.StartTime == null || minOpenTime.AddSeconds(-(int)interval) > request.StartTime.Value)
+                    nextToken = new DateTimeToken(minOpenTime.AddSeconds(-(int)interval));
             }
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedMarkKline(x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice)), nextToken);
+            return result.AsExchangeResult<IEnumerable<SharedMarkKline>>(Exchange, result.Data.Select(x => new SharedMarkKline(x.CloseTime.AddSeconds(-(int)interval), x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice)).ToArray(), nextToken);
         }
 
         #endregion
@@ -402,22 +401,23 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (pageToken is DateTimeToken token)
                 fromTime = token.LastTime;
 
+            var limit = request.Limit ?? 1000;
             // Get data
             var result = await ExchangeData.GetFundingRateHistoryAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
-                startTime: fromTime ?? request.StartTime,
-                endTime: request.EndTime,
-                limit: 1000,
+                startTime: request.StartTime,
+                endTime: fromTime ?? request.EndTime,
+                limit: limit,
                 ct: ct).ConfigureAwait(false);
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedFundingRate>>(Exchange, default);
 
             DateTimeToken? nextToken = null;
-            if (result.Data.Count() == 1000)
-                nextToken = new DateTimeToken(result.Data.Max(x => x.FundingTime));
+            if (result.Data.Count() == limit)
+                nextToken = new DateTimeToken(result.Data.Min(x => x.FundingTime).AddSeconds(-1));
 
             // Return
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedFundingRate(x.FundingRate, x.FundingTime)), nextToken);
+            return result.AsExchangeResult<IEnumerable<SharedFundingRate>>(Exchange, result.Data.Reverse().Select(x => new SharedFundingRate(x.FundingRate, x.FundingTime)).ToArray(), nextToken);
         }
         #endregion
 
@@ -456,7 +456,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 positionSide: request.PositionSide == null ? PositionSide.Both : request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
                 reduceOnly: request.ReduceOnly,
                 timeInForce: GetTimeInForce(request.TimeInForce),
-                clientOrderId: request.ClientOrderId).ConfigureAwait(false);
+                clientOrderId: request.ClientOrderId,
+                ct: ct).ConfigureAwait(false);
 
             if (!result)
                 return result.AsExchangeResult<SharedId>(Exchange, default);
@@ -474,7 +475,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!long.TryParse(request.OrderId, out var orderId))
                 return new ExchangeWebResult<SharedFuturesOrder>(Exchange, new ArgumentError("Invalid order id"));
 
-            var order = await Trading.GetOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId).ConfigureAwait(false);
+            var order = await Trading.GetOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId, ct: ct).ConfigureAwait(false);
             if (!order)
                 return order.AsExchangeResult<SharedFuturesOrder>(Exchange, default);
 
@@ -487,8 +488,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 order.Data.CreateTime)
             {
                 ClientOrderId = order.Data.ClientOrderId,
-                AveragePrice = order.Data.AveragePrice,
+                AveragePrice = order.Data.AveragePrice == 0 ? null : order.Data.AveragePrice,
                 Price = order.Data.Price,
+                //Leverage = order.Data.Leverage,
                 Quantity = order.Data.Quantity,
                 QuantityFilled = order.Data.QuantityFilled,
                 QuoteQuantityFilled = order.Data.ValueFilled,
@@ -507,11 +509,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new ExchangeWebResult<IEnumerable<SharedFuturesOrder>>(Exchange, validationError);
 
             var symbol = request.Symbol?.GetSymbol(FormatSymbol);
-            var orders = await Trading.GetOpenOrdersAsync(symbol).ConfigureAwait(false);
+            var orders = await Trading.GetOpenOrdersAsync(symbol, ct: ct).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedFuturesOrder>>(Exchange, default);
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedFuturesOrder(
+            return orders.AsExchangeResult<IEnumerable<SharedFuturesOrder>>(Exchange, orders.Data.Select(x => new SharedFuturesOrder(
                 x.Symbol,
                 x.OrderId.ToString(),
                 ParseOrderType(x.Type),
@@ -520,7 +522,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 x.CreateTime)
             {
                 ClientOrderId = x.ClientOrderId,
-                AveragePrice = x.AveragePrice,
+                AveragePrice = x.AveragePrice == 0 ? null : x.AveragePrice,
                 Price = x.Price,
                 Quantity = x.Quantity,
                 QuantityFilled = x.QuantityFilled,
@@ -529,7 +531,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 UpdateTime = x.UpdateTime,
                 PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = x.ReduceOnly
-            }));
+            }).ToArray());
         }
 
         PaginatedEndpointOptions<GetClosedOrdersRequest> IFuturesOrderRestClient.GetClosedFuturesOrdersOptions { get; } = new PaginatedEndpointOptions<GetClosedOrdersRequest>(SharedPaginationType.Descending, true);
@@ -548,7 +550,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var orders = await Trading.GetClosedOrdersAsync(request.Symbol.GetSymbol(FormatSymbol),
                 startTime: fromTimestamp ?? request.StartTime,
                 endTime: request.EndTime,
-                limit: request.Limit ?? 1000).ConfigureAwait(false);
+                limit: request.Limit ?? 1000,
+                ct: ct).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedFuturesOrder>>(Exchange, default);
 
@@ -557,7 +560,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (orders.Data.Count() == (request.Limit ?? 1000))
                 nextToken = new DateTimeToken(orders.Data.Max(o => o.CreateTime));
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedFuturesOrder(
+            return orders.AsExchangeResult<IEnumerable<SharedFuturesOrder>>(Exchange, orders.Data.Select(x => new SharedFuturesOrder(
                 x.Symbol,
                 x.OrderId.ToString(),
                 ParseOrderType(x.Type),
@@ -575,7 +578,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 UpdateTime = x.UpdateTime,
                 PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = x.ReduceOnly
-            }), nextToken);
+            }).ToArray(), nextToken);
         }
 
         EndpointOptions<GetOrderTradesRequest> IFuturesOrderRestClient.GetFuturesOrderTradesOptions { get; } = new EndpointOptions<GetOrderTradesRequest>(true);
@@ -588,11 +591,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!long.TryParse(request.OrderId, out var orderId))
                 return new ExchangeWebResult<IEnumerable<SharedUserTrade>>(Exchange, new ArgumentError("Invalid order id"));
 
-            var orders = await Trading.GetUserTradesAsync(request.Symbol.GetSymbol(FormatSymbol), orderId: orderId).ConfigureAwait(false);
+            var orders = await Trading.GetUserTradesAsync(request.Symbol.GetSymbol(FormatSymbol), orderId: orderId, ct: ct).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, default);
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedUserTrade(
+            return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, orders.Data.Select(x => new SharedUserTrade(
                 x.Symbol,
                 x.OrderId.ToString(),
                 x.TradeId,
@@ -602,9 +605,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 Price = x.Price,
                 Quantity = x.Quantity,
-                Fee = x.Fee,
+                Fee = Math.Abs(x.Fee),
                 Role = x.Role == Role.Maker ? SharedRole.Maker : SharedRole.Taker
-            }));
+            }).ToArray());
         }
 
         PaginatedEndpointOptions<GetUserTradesRequest> IFuturesOrderRestClient.GetFuturesUserTradesOptions { get; } = new PaginatedEndpointOptions<GetUserTradesRequest>(SharedPaginationType.Descending, true);
@@ -624,7 +627,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 startTime: request.StartTime,
                 endTime: request.EndTime,
                 limit: request.Limit ?? 500,
-                fromId: fromId
+                fromId: fromId,
+                ct: ct
                 ).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, default);
@@ -634,7 +638,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (orders.Data.Count() == (request.Limit ?? 500))
                 nextToken = new FromIdToken(orders.Data.Max(o => o.TradeId).ToString());
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedUserTrade(
+            return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, orders.Data.Select(x => new SharedUserTrade(
                 x.Symbol,
                 x.OrderId.ToString(),
                 x.TradeId.ToString(),
@@ -644,10 +648,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 Price = x.Price,
                 Quantity = x.Quantity,
-                Fee = x.Fee,
+                Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 Role = x.Role == Role.Maker ? SharedRole.Maker : SharedRole.Taker
-            }), nextToken);
+            }).ToArray(), nextToken);
         }
 
         EndpointOptions<CancelOrderRequest> IFuturesOrderRestClient.CancelFuturesOrderOptions { get; } = new EndpointOptions<CancelOrderRequest>(true);
@@ -660,7 +664,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!long.TryParse(request.OrderId, out var orderId))
                 return new ExchangeWebResult<SharedId>(Exchange, new ArgumentError("Invalid order id"));
 
-            var order = await Trading.CancelOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId).ConfigureAwait(false);
+            var order = await Trading.CancelOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId, ct: ct).ConfigureAwait(false);
             if (!order)
                 return order.AsExchangeResult<SharedId>(Exchange, default);
 
@@ -685,7 +689,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 Leverage = x.Leverage,
                 AverageEntryPrice = x.AveragePrice,
                 PositionSide = x.Side == TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long
-            }).ToList());
+            }).ToArray());
         }
 
         EndpointOptions<ClosePositionRequest> IFuturesOrderRestClient.ClosePositionOptions { get; } = new EndpointOptions<ClosePositionRequest>(true);
@@ -695,7 +699,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (validationError != null)
                 return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
-            var positions = await Trading.GetPositionsAsync(request.Symbol.GetSymbol(FormatSymbol)).ConfigureAwait(false);
+            var positions = await Trading.GetPositionsAsync(request.Symbol.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
             if (!positions)
                 return positions.AsExchangeResult<SharedId>(Exchange, default);
 
@@ -764,7 +768,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedBalance>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedBalance(x.Asset, x.Balance, x.Equity)));
+            return result.AsExchangeResult<IEnumerable<SharedBalance>>(Exchange, result.Data.Select(x => new SharedBalance(x.Asset, x.Balance, x.Equity)).ToArray());
         }
 
         #endregion
@@ -818,13 +822,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 pageSize = token.PageSize;
             }
 
+#warning call doesn't seem to work?
             // Get data
             var orders = await Trading.GetPositionHistoryAsync(
                 symbol: request.Symbol!.GetSymbol(FormatSymbol),
                 startTime: request.StartTime,
                 endTime: request.EndTime,
                 page: page,
-                pageSize: pageSize
+                pageSize: pageSize,
+                ct: ct
                 ).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedPositionHistory>>(Exchange, default);
@@ -834,7 +840,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (orders.Data.Count() == pageSize)
                 nextToken = new PageToken(page + 1, pageSize);
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedPositionHistory(
+            return orders.AsExchangeResult<IEnumerable<SharedPositionHistory>>(Exchange, orders.Data.Select(x => new SharedPositionHistory(
                 x.Symbol,
                 x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 x.AveragePrice,
@@ -845,8 +851,60 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             {
                 Leverage = x.Leverage,
                 PositionId = x.PositionId
-            }), nextToken);
+            }).ToArray(), nextToken);
         }
         #endregion
+
+        #region Listen Key client
+
+        EndpointOptions<StartListenKeyRequest> IListenKeyRestClient.StartOptions { get; } = new EndpointOptions<StartListenKeyRequest>(true);
+        async Task<ExchangeWebResult<string>> IListenKeyRestClient.StartListenKeyAsync(StartListenKeyRequest request, CancellationToken ct)
+        {
+            var validationError = ((IListenKeyRestClient)this).StartOptions.ValidateRequest(Exchange, request, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<string>(Exchange, validationError);
+
+            // Get data
+            var result = await Account.StartUserStreamAsync(ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<string>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, result.Data);
+        }
+        EndpointOptions<KeepAliveListenKeyRequest> IListenKeyRestClient.KeepAliveOptions { get; } = new EndpointOptions<KeepAliveListenKeyRequest>(true);
+        async Task<ExchangeWebResult<string>> IListenKeyRestClient.KeepAliveListenKeyAsync(KeepAliveListenKeyRequest request, CancellationToken ct)
+        {
+            var validationError = ((IListenKeyRestClient)this).KeepAliveOptions.ValidateRequest(Exchange, request, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<string>(Exchange, validationError);
+
+            // Get data
+            var result = await Account.KeepAliveUserStreamAsync(request.ListenKey, ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<string>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, request.ListenKey);
+        }
+
+        EndpointOptions<StopListenKeyRequest> IListenKeyRestClient.StopOptions { get; } = new EndpointOptions<StopListenKeyRequest>(true);
+        async Task<ExchangeWebResult<string>> IListenKeyRestClient.StopListenKeyAsync(StopListenKeyRequest request, CancellationToken ct)
+        {
+            var validationError = ((IListenKeyRestClient)this).StopOptions.ValidateRequest(Exchange, request, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<string>(Exchange, validationError);
+
+            // Get data
+            var result = await Account.StopUserStreamAsync(request.ListenKey, ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<string>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, request.ListenKey);
+        }
+        #endregion
+
+        private DateTime RoundDown(DateTime dt, TimeSpan d)
+        {
+            return new DateTime(dt.Ticks - (dt.Ticks % d.Ticks), dt.Kind);
+        }
     }
 }

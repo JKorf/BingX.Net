@@ -12,6 +12,7 @@ using CryptoExchange.Net.SharedApis.ResponseModels;
 using CryptoExchange.Net.SharedApis.SubscribeModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -34,7 +35,7 @@ namespace BingX.Net.Clients.SpotApi
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var symbol = request.Symbol.GetSymbol(FormatSymbol);
-            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.AsExchangeEvent(Exchange, new SharedSpotTicker(update.Data.Symbol, update.Data.HighPrice, update.Data.LastPrice, update.Data.LowPrice, update.Data.Volume, decimal.Parse(update.Data.PriceChangePercentage.Substring(0, update.Data.PriceChangePercentage.Length - 1))))), ct).ConfigureAwait(false);
+            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.AsExchangeEvent(Exchange, new SharedSpotTicker(update.Data.Symbol, update.Data.HighPrice, update.Data.LastPrice, update.Data.LowPrice, update.Data.Volume, decimal.Parse(update.Data.PriceChangePercentage.Substring(0, update.Data.PriceChangePercentage.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture)))), ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
         }
@@ -78,7 +79,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Balance client
         SubscriptionOptions<SubscribeBalancesRequest> IBalanceSocketClient.SubscribeBalanceOptions { get; } = new SubscriptionOptions<SubscribeBalancesRequest>(false)
         {
-            RequiredExchangeParameters = new List<ParameterDescription>
+            RequiredOptionalParameters = new List<ParameterDescription>
             {
                 new ParameterDescription(nameof(SubscribeBalancesRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
             }
@@ -90,7 +91,7 @@ namespace BingX.Net.Clients.SpotApi
                 return new ExchangeResult<UpdateSubscription>(Exchange, validationError);
 
             var result = await SubscribeToBalanceUpdatesAsync(request.ListenKey!,
-                update => handler(update.AsExchangeEvent(Exchange, update.Data.EventData.Balances.Select(x => new SharedBalance(x.Asset, x.Total - x.Locked, x.Total)))),
+                update => handler(update.AsExchangeEvent<IEnumerable<SharedBalance>>(Exchange, update.Data.EventData.Balances.Select(x => new SharedBalance(x.Asset, x.Total, x.Total + x.Locked)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
@@ -101,7 +102,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Spot Order client
         SubscriptionOptions<SubscribeSpotOrderRequest> ISpotOrderSocketClient.SubscribeSpotOrderOptions { get; } = new SubscriptionOptions<SubscribeSpotOrderRequest>(false)
         {
-            RequiredExchangeParameters = new List<ParameterDescription>
+            RequiredOptionalParameters = new List<ParameterDescription>
             {
                 new ParameterDescription(nameof(SubscribeSpotOrderRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
             }
@@ -119,7 +120,7 @@ namespace BingX.Net.Clients.SpotApi
                         update.Data.OrderId.ToString(),
                         update.Data.Type == Enums.OrderType.Limit ? SharedOrderType.Limit : update.Data.Type == Enums.OrderType.Market ? SharedOrderType.Market : SharedOrderType.Other,
                         update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
-                        update.Data.Status == Enums.OrderStatus.Canceled ? SharedOrderStatus.Canceled : (update.Data.Status == Enums.OrderStatus.New || update.Data.Status == Enums.OrderStatus.PartiallyFilled) ? SharedOrderStatus.Open : SharedOrderStatus.Filled,
+                        update.Data.Status == Enums.OrderStatus.Canceled ? SharedOrderStatus.Canceled : (update.Data.Status == Enums.OrderStatus.New || update.Data.Status == Enums.OrderStatus.Pending || update.Data.Status == Enums.OrderStatus.PartiallyFilled) ? SharedOrderStatus.Open : SharedOrderStatus.Filled,
                         update.Data.CreateTime)
                     {
                         ClientOrderId = update.Data.ClientOrderId,
@@ -128,10 +129,10 @@ namespace BingX.Net.Clients.SpotApi
                         QuantityFilled = update.Data.QuantityFilled,
                         QuoteQuantity = update.Data.QuoteOrderQuantity,
                         QuoteQuantityFilled = update.Data.VolumeFilled,
-                        Fee = update.Data.Fee,
+                        Fee = update.Data.Fee.HasValue ? Math.Abs(update.Data.Fee.Value) : null,
                         FeeAsset = update.Data.FeeAsset,
                         UpdateTime = update.Data.UpdateTime,
-                        LastTrade = update.Data.LastFillQuantity > 0 ? null : new SharedUserTrade(update.Data.Symbol, update.Data.OrderId.ToString(), update.Data.TradeId.ToString(), update.Data.LastFillQuantity!.Value, update.Data.LastFillPrice!.Value, update.Data.UpdateTime!.Value)
+                        LastTrade = update.Data.LastFillQuantity > 0 ? new SharedUserTrade(update.Data.Symbol, update.Data.OrderId.ToString(), update.Data.TradeId.ToString(), update.Data.LastFillQuantity!.Value, update.Data.LastFillPrice!.Value, update.Data.UpdateTime!.Value) : null
                     }
                 })),
                 ct: ct).ConfigureAwait(false);

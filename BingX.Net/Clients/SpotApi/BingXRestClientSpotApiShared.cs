@@ -12,6 +12,7 @@ using CryptoExchange.Net.SharedApis.RequestModels;
 using CryptoExchange.Net.SharedApis.ResponseModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -41,49 +42,45 @@ namespace BingX.Net.Clients.SpotApi
             if (validationError != null)
                 return new ExchangeWebResult<IEnumerable<SharedKline>>(Exchange, validationError);
 
-            // Determine page token
-            DateTime? fromTimestamp = null;
+            // Determine pagination
+            // Data is normally returned oldest first, so to do newest first pagination we have to do some calc
+            DateTime endTime = request.EndTime ?? DateTime.UtcNow;
+            DateTime? startTime = request.StartTime;
             if (pageToken is DateTimeToken dateTimeToken)
-                fromTimestamp = dateTimeToken.LastTime;
+                endTime = dateTimeToken.LastTime;
 
-            var startTime = request.StartTime;
-            var endTime = request.EndTime?.AddSeconds(-1);
-            var apiLimit = 1000;
-
-            // API returns the newest data first if the timespan is bigger than the api limit of 1000 results
-            // So we need to request the first 1000 from the start time, then the 1000 after that etc
-            if (request.StartTime != null)
+            var limit = request.Limit ?? 1000;
+            if (startTime == null || startTime < endTime)
             {
-                // Not paginated, check if the data will fit
-                var seconds = apiLimit * (int)request.Interval;
-                var maxEndTime = (fromTimestamp ?? request.StartTime).Value.AddSeconds(seconds - 1);
-                if (maxEndTime < endTime)
-                    endTime = maxEndTime;
+                var offset = (int)interval * limit;
+                startTime = endTime.AddSeconds(-offset);
             }
+
+            if (startTime < request.StartTime)
+                startTime = request.StartTime;
 
             // Get data
             var result = await ExchangeData.GetKlinesAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
                 interval,
-                fromTimestamp ?? request.StartTime,
+                startTime,
                 endTime,
-                limit: request.Limit ?? apiLimit,
+                limit,
                 ct: ct
                 ).ConfigureAwait(false);
             if (!result)
-                return result.AsExchangeResult<IEnumerable<SharedKline>>(Exchange, default);
+                return new ExchangeWebResult<IEnumerable<SharedKline>>(Exchange, result.As<IEnumerable<SharedKline>>(default));
 
             // Get next token
             DateTimeToken? nextToken = null;
-            if (request.StartTime != null && result.Data.Any())
+            if (result.Data.Count() == limit)
             {
-                var maxOpenTime = result.Data.Max(x => x.OpenTime);
-                if (maxOpenTime < request.EndTime!.Value.AddSeconds(-(int)request.Interval))
-                    nextToken = new DateTimeToken(maxOpenTime.AddSeconds((int)interval));
+                var minOpenTime = result.Data.Min(x => x.OpenTime);
+                if (request.StartTime == null || minOpenTime > request.StartTime.Value)
+                    nextToken = new DateTimeToken(minOpenTime.AddSeconds(-(int)interval));
             }
 
-            // Reverse as data is returned in desc order instead of standard asc
-            return result.AsExchangeResult(Exchange, result.Data.Reverse().Select(x => new SharedKline(x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume)), nextToken);
+            return result.AsExchangeResult<IEnumerable<SharedKline>>(Exchange, result.Data.Select(x => new SharedKline(x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume)).ToArray(), nextToken);
         }
 
         #endregion
@@ -101,13 +98,14 @@ namespace BingX.Net.Clients.SpotApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedSpotSymbol>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(s => new SharedSpotSymbol(s.Name.Split(new[] { '-' })[0], s.Name.Split(new[] { '-' })[1], s.Name, s.Status == SymbolStatus.Online)
+            return result.AsExchangeResult<IEnumerable<SharedSpotSymbol>>(Exchange, result.Data.Select(s => new SharedSpotSymbol(s.Name.Split(new[] { '-' })[0], s.Name.Split(new[] { '-' })[1], s.Name, s.Status == SymbolStatus.Online)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
+                MinNotionalValue = s.MinNotional,
                 MaxTradeQuantity = s.MaxOrderQuantity,
                 QuantityStep = s.StepSize,
                 PriceStep = s.TickSize
-            }));
+            }).ToArray());
         }
 
         #endregion
@@ -126,7 +124,7 @@ namespace BingX.Net.Clients.SpotApi
                 return result.AsExchangeResult<SharedSpotTicker>(Exchange, default);
 
             var ticker = result.Data.Single();
-            return result.AsExchangeResult(Exchange, new SharedSpotTicker(ticker.Symbol, ticker.LastPrice, ticker.HighPrice, ticker.LowPrice, ticker.Volume, decimal.Parse(ticker.PriceChangePercent.Substring(0, ticker.PriceChangePercent.Length - 1))));
+            return result.AsExchangeResult(Exchange, new SharedSpotTicker(ticker.Symbol, ticker.LastPrice, ticker.HighPrice, ticker.LowPrice, ticker.Volume, decimal.Parse(ticker.PriceChangePercent.Substring(0, ticker.PriceChangePercent.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture)));
         }
 
         EndpointOptions<GetTickersRequest> ISpotTickerRestClient.GetSpotTickersOptions { get; } = new EndpointOptions<GetTickersRequest>(false);
@@ -140,7 +138,7 @@ namespace BingX.Net.Clients.SpotApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedSpotTicker>>(Exchange, default);
 
-            return result.AsExchangeResult<IEnumerable<SharedSpotTicker>>(Exchange, result.Data.Select(x => new SharedSpotTicker(x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, decimal.Parse(x.PriceChangePercent.Substring(0, x.PriceChangePercent.Length - 1)))));
+            return result.AsExchangeResult<IEnumerable<SharedSpotTicker>>(Exchange, result.Data.Select(x => new SharedSpotTicker(x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, decimal.Parse(x.PriceChangePercent.Substring(0, x.PriceChangePercent.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture))).ToArray());
         }
 
         #endregion
@@ -161,7 +159,7 @@ namespace BingX.Net.Clients.SpotApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedTrade>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedTrade(x.Quantity, x.Price, x.Timestamp)));
+            return result.AsExchangeResult<IEnumerable<SharedTrade>>(Exchange, result.Data.Select(x => new SharedTrade(x.Quantity, x.Price, x.Timestamp)).ToArray());
         }
 
         #endregion
@@ -179,7 +177,7 @@ namespace BingX.Net.Clients.SpotApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedBalance>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedBalance(x.Asset, x.Free, x.Total)));
+            return result.AsExchangeResult<IEnumerable<SharedBalance>>(Exchange, result.Data.Select(x => new SharedBalance(x.Asset, x.Free, x.Total)).ToArray());
         }
 
         #endregion
@@ -218,7 +216,8 @@ namespace BingX.Net.Clients.SpotApi
                 quoteQuantity: request.QuoteQuantity,
                 price: request.Price,
                 timeInForce: GetTimeInForce(request.OrderType, request.TimeInForce),
-                clientOrderId: request.ClientOrderId).ConfigureAwait(false);
+                clientOrderId: request.ClientOrderId,
+                ct: ct).ConfigureAwait(false);
 
             if (!result)
                 return result.AsExchangeResult<SharedId>(Exchange, default);
@@ -236,7 +235,7 @@ namespace BingX.Net.Clients.SpotApi
             if (!long.TryParse(request.OrderId, out var orderId))
                 return new ExchangeWebResult<SharedSpotOrder>(Exchange, new ArgumentError("Invalid order id"));
 
-            var order = await Trading.GetOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId).ConfigureAwait(false);
+            var order = await Trading.GetOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId, ct: ct).ConfigureAwait(false);
             if (!order)
                 return order.AsExchangeResult<SharedSpotOrder>(Exchange, default);
 
@@ -254,7 +253,7 @@ namespace BingX.Net.Clients.SpotApi
                 QuantityFilled = order.Data.QuantityFilled,
                 QuoteQuantity = order.Data.QuoteQuantity,
                 QuoteQuantityFilled = order.Data.ValueFilled,
-                Fee = order.Data.Fee,
+                Fee = Math.Abs(order.Data.Fee),
                 FeeAsset = order.Data.FeeAsset,
                 UpdateTime = order.Data.UpdateTime,
             });
@@ -268,11 +267,11 @@ namespace BingX.Net.Clients.SpotApi
                 return new ExchangeWebResult<IEnumerable<SharedSpotOrder>>(Exchange, validationError);
 
             var symbol = request.Symbol?.GetSymbol(FormatSymbol);
-            var orders = await Trading.GetOpenOrdersAsync(symbol).ConfigureAwait(false);
+            var orders = await Trading.GetOpenOrdersAsync(symbol, ct: ct).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedSpotOrder>>(Exchange, default);
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedSpotOrder(
+            return orders.AsExchangeResult<IEnumerable<SharedSpotOrder>>(Exchange, orders.Data.Select(x => new SharedSpotOrder(
                 x.Symbol,
                 x.OrderId.ToString(),
                 ParseOrderType(x.Type, null),
@@ -286,13 +285,13 @@ namespace BingX.Net.Clients.SpotApi
                 QuantityFilled = x.QuantityFilled,
                 QuoteQuantity = x.QuoteQuantity,
                 QuoteQuantityFilled = x.ValueFilled,
-                Fee = x.Fee,
+                Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
-            }));
+            }).ToArray());
         }
 
-        PaginatedEndpointOptions<GetClosedOrdersRequest> ISpotOrderRestClient.GetClosedSpotOrdersOptions { get; } = new PaginatedEndpointOptions<GetClosedOrdersRequest>(SharedPaginationType.Ascending, true);
+        PaginatedEndpointOptions<GetClosedOrdersRequest> ISpotOrderRestClient.GetClosedSpotOrdersOptions { get; } = new PaginatedEndpointOptions<GetClosedOrdersRequest>(SharedPaginationType.Descending, true);
         async Task<ExchangeWebResult<IEnumerable<SharedSpotOrder>>> ISpotOrderRestClient.GetClosedSpotOrdersAsync(GetClosedOrdersRequest request, INextPageToken? pageToken, CancellationToken ct)
         {
             var validationError = ((ISpotOrderRestClient)this).GetClosedSpotOrdersOptions.ValidateRequest(Exchange, request, request.Symbol.ApiType, SupportedApiTypes);
@@ -301,7 +300,7 @@ namespace BingX.Net.Clients.SpotApi
 
             // Determine page token
             int page = 1;
-            int pageSize = request.Limit ?? 500;
+            int pageSize = request.Limit ?? 100;
             if (pageToken is PageToken token)
             {
                 page = token.Page;
@@ -313,7 +312,8 @@ namespace BingX.Net.Clients.SpotApi
                 startTime: request.StartTime,
                 endTime: request.EndTime,
                 page: page,
-                pageSize: pageSize).ConfigureAwait(false);
+                pageSize: pageSize,
+                ct: ct).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedSpotOrder>>(Exchange, default);
 
@@ -322,7 +322,7 @@ namespace BingX.Net.Clients.SpotApi
             if (orders.Data.Count() == pageSize)
                 nextToken = new PageToken(page + 1, pageSize);
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedSpotOrder(
+            return orders.AsExchangeResult<IEnumerable<SharedSpotOrder>>(Exchange, orders.Data.Select(x => new SharedSpotOrder(
                 x.Symbol,
                 x.OrderId.ToString(),
                 ParseOrderType(x.Type, null),
@@ -336,10 +336,10 @@ namespace BingX.Net.Clients.SpotApi
                 QuantityFilled = x.QuantityFilled,
                 QuoteQuantity = x.QuoteQuantity,
                 QuoteQuantityFilled = x.ValueFilled,
-                Fee = x.Fee,
+                Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
-            }), nextToken);
+            }).ToArray(), nextToken);
         }
 
         EndpointOptions<GetOrderTradesRequest> ISpotOrderRestClient.GetSpotOrderTradesOptions { get; } = new EndpointOptions<GetOrderTradesRequest>(true);
@@ -352,11 +352,11 @@ namespace BingX.Net.Clients.SpotApi
             if (!long.TryParse(request.OrderId, out var orderId))
                 return new ExchangeWebResult<IEnumerable<SharedUserTrade>>(Exchange, new ArgumentError("Invalid order id"));
 
-            var orders = await Trading.GetUserTradesAsync(request.Symbol.GetSymbol(FormatSymbol), orderId: orderId).ConfigureAwait(false);
+            var orders = await Trading.GetUserTradesAsync(request.Symbol.GetSymbol(FormatSymbol), orderId: orderId, ct: ct).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, default);
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedUserTrade(
+            return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, orders.Data.Select(x => new SharedUserTrade(
                 x.Symbol,
                 x.OrderId.ToString(),
                 x.Id.ToString(),
@@ -365,9 +365,9 @@ namespace BingX.Net.Clients.SpotApi
                 x.Timestamp)
             {
                 Role = x.IsMaker ? SharedRole.Maker : SharedRole.Taker,
-                Fee = x.Fee,
+                Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
-            }));
+            }).ToArray());
         }
 
         PaginatedEndpointOptions<GetUserTradesRequest> ISpotOrderRestClient.GetSpotUserTradesOptions { get; } = new PaginatedEndpointOptions<GetUserTradesRequest>(SharedPaginationType.Ascending, true);
@@ -385,19 +385,20 @@ namespace BingX.Net.Clients.SpotApi
             // Get data
             var orders = await Trading.GetUserTradesAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
-                startTime: request.StartTime,
-                endTime: request.EndTime,
+                startTime: fromId != null ? null: request.StartTime ?? DateTime.UtcNow.AddDays(-7),
+                endTime: fromId != null ? null : request.EndTime ?? DateTime.UtcNow,
                 limit: request.Limit ?? 500,
-                fromId: fromId).ConfigureAwait(false);
+                fromId: fromId,
+                ct: ct).ConfigureAwait(false);
             if (!orders)
                 return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, default);
 
             // Get next token
             FromIdToken? nextToken = null;
             if (orders.Data.Count() == (request.Limit ?? 500))
-                nextToken = new FromIdToken(orders.Data.Max(o => o.Id).ToString());
+                nextToken = new FromIdToken(orders.Data.Max(o => o.Id + 1).ToString());
 
-            return orders.AsExchangeResult(Exchange, orders.Data.Select(x => new SharedUserTrade(
+            return orders.AsExchangeResult<IEnumerable<SharedUserTrade>>(Exchange, orders.Data.Select(x => new SharedUserTrade(
                 x.Symbol,
                 x.OrderId.ToString(),
                 x.Id.ToString(),
@@ -406,9 +407,9 @@ namespace BingX.Net.Clients.SpotApi
                 x.Timestamp)
             {
                 Role = x.IsMaker ? SharedRole.Maker : SharedRole.Taker,
-                Fee = x.Fee,
+                Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
-            }), nextToken);
+            }).ToArray(), nextToken);
         }
 
         EndpointOptions<CancelOrderRequest> ISpotOrderRestClient.CancelSpotOrderOptions { get; } = new EndpointOptions<CancelOrderRequest>(true);
@@ -421,7 +422,7 @@ namespace BingX.Net.Clients.SpotApi
             if (!long.TryParse(request.OrderId, out var orderId))
                 return new ExchangeWebResult<SharedId>(Exchange, new ArgumentError("Invalid order id"));
 
-            var order = await Trading.CancelOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId).ConfigureAwait(false);
+            var order = await Trading.CancelOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId, ct: ct).ConfigureAwait(false);
             if (!order)
                 return order.AsExchangeResult<SharedId>(Exchange, default);
 
@@ -508,7 +509,7 @@ namespace BingX.Net.Clients.SpotApi
             if (!result)
                 return result.AsExchangeResult<IEnumerable<SharedAsset>>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedAsset(x.Asset)
+            return result.AsExchangeResult<IEnumerable<SharedAsset>>(Exchange, result.Data.Select(x => new SharedAsset(x.Asset)
             {
                 FullName = x.Name,
                 Networks = x.Networks.Select(x => new SharedAssetNetwork(x.Network)
@@ -520,7 +521,7 @@ namespace BingX.Net.Clients.SpotApi
                     WithdrawEnabled = x.WithdrawEnabled,
                     WithdrawFee = x.WithdrawFee
                 })
-            }));
+            }).ToArray());
         }
 
         #endregion
@@ -534,7 +535,7 @@ namespace BingX.Net.Clients.SpotApi
             if (validationError != null)
                 return new ExchangeWebResult<IEnumerable<SharedDepositAddress>>(Exchange, validationError);
 
-            var depositAddresses = await Account.GetDepositAddressAsync(request.Asset).ConfigureAwait(false);
+            var depositAddresses = await Account.GetDepositAddressAsync(request.Asset, ct: ct).ConfigureAwait(false);
             if (!depositAddresses)
                 return depositAddresses.AsExchangeResult<IEnumerable<SharedDepositAddress>>(Exchange, default);
 
@@ -542,11 +543,11 @@ namespace BingX.Net.Clients.SpotApi
             if (request.Network != null)
                 result = result.Where(r => r.Network == request.Network);
 
-            return depositAddresses.AsExchangeResult(Exchange, result.Select(x => new SharedDepositAddress(x.Asset, x.Address)
+            return depositAddresses.AsExchangeResult<IEnumerable<SharedDepositAddress>>(Exchange, result.Select(x => new SharedDepositAddress(x.Asset, x.Address)
             {
                 Network = x.Network
             }
-            ));
+            ).ToArray());
         }
 
         GetDepositsOptions IDepositRestClient.GetDepositsOptions { get; } = new GetDepositsOptions(SharedPaginationType.Descending, true);
@@ -576,13 +577,13 @@ namespace BingX.Net.Clients.SpotApi
             if (result.Data.Count() == (request.Limit ?? 100))
                 nextToken = new OffsetToken((offset ?? 0) + result.Data.Count());
 
-            return result.AsExchangeResult(Exchange, result.Data.Select(x => new SharedDeposit(x.Asset, x.Quantity, x.Status == DepositStatus.Completed, x.InsertTime)
+            return result.AsExchangeResult<IEnumerable<SharedDeposit>>(Exchange, result.Data.Select(x => new SharedDeposit(x.Asset, x.Quantity, x.Status == DepositStatus.Completed, x.InsertTime)
             {
                 Confirmations = x.ConfirmedTimes.Contains("/") ? int.Parse(x.ConfirmedTimes.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries)[0]) : null,
                 Tag = x.AddressTag,
                 TransactionId = x.TransactionId,
-                Network = x.Network
-            }), nextToken);
+                Network = x.Network,
+            }).ToArray(), nextToken);
         }
 
         #endregion
@@ -632,18 +633,19 @@ namespace BingX.Net.Clients.SpotApi
                 return withdrawals.AsExchangeResult<IEnumerable<SharedWithdrawal>>(Exchange, default);
 
             // Determine next token
-            OffsetToken nextToken;
+            OffsetToken? nextToken = null;
             if (withdrawals.Data.Count() == (request.Limit ?? 100))
                 nextToken = new OffsetToken((offset ?? 0) + withdrawals.Data.Count());
 
-            return withdrawals.AsExchangeResult(Exchange, withdrawals.Data.Select(x => new SharedWithdrawal(x.Asset, x.Address, x.Quantity, x.Status == WithdrawalStatus.Completed, x.ApplyTime)
+            return withdrawals.AsExchangeResult<IEnumerable<SharedWithdrawal>>(Exchange, withdrawals.Data.Select(x => new SharedWithdrawal(x.Asset, x.Address, x.Quantity, x.Status == WithdrawalStatus.Completed, x.ApplyTime)
             {
+                Id = x.Id,
                 Confirmations = x.Confirmations,
                 Network = x.Network,
                 Tag = x.AddressTag,
                 TransactionId = x.TransactionId,
                 Fee = x.Fee
-            }));
+            }).ToArray(), nextToken);
         }
 
         #endregion
@@ -673,6 +675,53 @@ namespace BingX.Net.Clients.SpotApi
             return withdrawal.AsExchangeResult(Exchange, new SharedId(withdrawal.Data.Id));
         }
 
+        #endregion
+
+        #region Listen Key client
+
+        EndpointOptions<StartListenKeyRequest> IListenKeyRestClient.StartOptions { get; } = new EndpointOptions<StartListenKeyRequest>(true);
+        async Task<ExchangeWebResult<string>> IListenKeyRestClient.StartListenKeyAsync(StartListenKeyRequest request, CancellationToken ct)
+        {
+            var validationError = ((IListenKeyRestClient)this).StartOptions.ValidateRequest(Exchange, request, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<string>(Exchange, validationError);
+
+            // Get data
+            var result = await Account.StartUserStreamAsync(ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<string>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, result.Data);
+        }
+        EndpointOptions<KeepAliveListenKeyRequest> IListenKeyRestClient.KeepAliveOptions { get; } = new EndpointOptions<KeepAliveListenKeyRequest>(true);
+        async Task<ExchangeWebResult<string>> IListenKeyRestClient.KeepAliveListenKeyAsync(KeepAliveListenKeyRequest request, CancellationToken ct)
+        {
+            var validationError = ((IListenKeyRestClient)this).KeepAliveOptions.ValidateRequest(Exchange, request, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<string>(Exchange, validationError);
+
+            // Get data
+            var result = await Account.KeepAliveUserStreamAsync(request.ListenKey, ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<string>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, request.ListenKey);
+        }
+
+        EndpointOptions<StopListenKeyRequest> IListenKeyRestClient.StopOptions { get; } = new EndpointOptions<StopListenKeyRequest>(true);
+        async Task<ExchangeWebResult<string>> IListenKeyRestClient.StopListenKeyAsync(StopListenKeyRequest request, CancellationToken ct)
+        {
+            var validationError = ((IListenKeyRestClient)this).StopOptions.ValidateRequest(Exchange, request, request.ApiType, SupportedApiTypes);
+            if (validationError != null)
+                return new ExchangeWebResult<string>(Exchange, validationError);
+
+            // Get data
+            var result = await Account.StopUserStreamAsync(request.ListenKey, ct: ct).ConfigureAwait(false);
+            if (!result)
+                return result.AsExchangeResult<string>(Exchange, default);
+
+            return result.AsExchangeResult(Exchange, request.ListenKey);
+        }
         #endregion
     }
 }

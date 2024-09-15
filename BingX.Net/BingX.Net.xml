@@ -1894,7 +1894,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetPositionHistoryAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get position close history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Position%20History" /></para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="positionId">Filter by position id</param>

@@ -297,7 +297,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get position close history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Position%20History" /></para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="positionId">Filter by position id</param>
