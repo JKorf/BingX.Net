@@ -25,6 +25,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     {
         public string Exchange => BingXExchange.ExchangeName;
         public ApiType[] SupportedApiTypes => new[] { ApiType.PerpetualLinear };
+        public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
+        public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
 
         #region Klines client
 

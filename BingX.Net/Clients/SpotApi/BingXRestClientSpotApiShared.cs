@@ -24,6 +24,8 @@ namespace BingX.Net.Clients.SpotApi
     {
         public string Exchange => BingXExchange.ExchangeName;
         public ApiType[] SupportedApiTypes => new[] { ApiType.Spot };
+        public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
+        public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
 
         #region Kline client
 
@@ -202,7 +204,7 @@ namespace BingX.Net.Clients.SpotApi
                 SharedQuantityType.QuoteAsset,
                 SharedQuantityType.BaseAsset));
 
-        SharedFeeDeductionType ISpotOrderRestClient.SpotFeeDeductionType => SharedFeeDeductionType.DeductFromTrade;
+        SharedFeeDeductionType ISpotOrderRestClient.SpotFeeDeductionType => SharedFeeDeductionType.DeductFromOutput;
         SharedFeeAssetType ISpotOrderRestClient.SpotFeeAssetType => SharedFeeAssetType.OutputAsset;
 
         async Task<ExchangeWebResult<SharedId>> ISpotOrderRestClient.PlaceSpotOrderAsync(PlaceSpotOrderRequest request, CancellationToken ct)
