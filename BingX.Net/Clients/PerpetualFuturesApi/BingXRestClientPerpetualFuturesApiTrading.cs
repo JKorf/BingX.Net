@@ -479,7 +479,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
-            parameters.AddOptional("symbol", symbol);
+            parameters.Add("symbol", symbol);
             parameters.AddOptional("positionId", positionId);
             parameters.AddOptionalMillisecondsString("startTs", startTime);
             parameters.AddOptionalMillisecondsString("endTs", endTime);

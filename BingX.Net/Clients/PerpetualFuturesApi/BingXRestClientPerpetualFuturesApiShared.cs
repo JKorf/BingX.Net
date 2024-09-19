@@ -791,7 +791,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result)
                 return result.AsExchangeResult<SharedPositionModeResult>(Exchange, default);
 
-            return result.AsExchangeResult(Exchange, new SharedPositionModeResult(result.Data.PositionMode == PositionMode.DualPositionMode ? SharedPositionMode.LongShort : SharedPositionMode.OneWay));
+            return result.AsExchangeResult(Exchange, new SharedPositionModeResult(result.Data.PositionMode == PositionMode.DualPositionMode ? SharedPositionMode.HedgeMode : SharedPositionMode.OneWay));
         }
 
         SetPositionModeOptions IPositionModeRestClient.SetPositionModeOptions { get; } = new SetPositionModeOptions(true, true, true);
@@ -801,7 +801,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (validationError != null)
                 return new ExchangeWebResult<SharedPositionModeResult>(Exchange, validationError);
 
-            var result = await Account.SetPositionModeAsync(request.Symbol!.GetSymbol(FormatSymbol), request.Mode == SharedPositionMode.LongShort ? PositionMode.DualPositionMode : PositionMode.SinglePositionMode, ct: ct).ConfigureAwait(false);
+            var result = await Account.SetPositionModeAsync(request.Symbol!.GetSymbol(FormatSymbol), request.Mode == SharedPositionMode.HedgeMode ? PositionMode.DualPositionMode : PositionMode.SinglePositionMode, ct: ct).ConfigureAwait(false);
             if (!result)
                 return result.AsExchangeResult<SharedPositionModeResult>(Exchange, default);
 
@@ -819,8 +819,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new ExchangeWebResult<IEnumerable<SharedPositionHistory>>(Exchange, validationError);
 
             // Determine page token
-            int page = 1;
-            int pageSize = request.Limit ?? 1000;
+            int page = 0;
+            int pageSize = request.Limit ?? 20;
             if (pageToken is PageToken token)
             {
                 page = token.Page;
@@ -831,8 +831,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             // Get data
             var orders = await Trading.GetPositionHistoryAsync(
                 symbol: request.Symbol!.GetSymbol(FormatSymbol),
-                startTime: request.StartTime,
-                endTime: request.EndTime,
+                startTime: DateTime.UtcNow.AddDays(-7),//request.StartTime,
+                endTime: DateTime.UtcNow,// request.EndTime,
                 page: page,
                 pageSize: pageSize,
                 ct: ct
