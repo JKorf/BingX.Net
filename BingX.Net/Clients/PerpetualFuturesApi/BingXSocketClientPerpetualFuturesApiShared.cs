@@ -24,7 +24,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     {
         public string Exchange => BingXExchange.ExchangeName;
 
-        public ApiType[] SupportedApiTypes { get; } = new[] { ApiType.PerpetualLinear };
+        public TradingMode[] SupportedApiTypes { get; } = new[] { TradingMode.PerpetualLinear };
         public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
         public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
 
