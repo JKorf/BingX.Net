@@ -1374,6 +1374,11 @@
             Endpoints related to orders and trades
             </summary>
         </member>
+        <member name="P:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi.SharedClient">
+            <summary>
+            Get the shared rest requests client
+            </summary>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount">
             <summary>
             BingX futures account endpoints. Account endpoints include balance info, withdraw/deposit info and requesting and account settings
@@ -1909,6 +1914,11 @@
             BingX futures streams
             </summary>
         </member>
+        <member name="P:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SharedClient">
+            <summary>
+            Get the shared socket subscription client
+            </summary>
+        </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesTradeUpdate}}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to live trade updates
@@ -2025,6 +2035,16 @@
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientPerpetualFuturesApiShared">
+            <summary>
+            Shared interface for Perpetual futures rest API usage
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientPerpetualFuturesApiShared">
+            <summary>
+            Shared interface for Perpetual futures socket API usage
+            </summary>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi">
             <summary>
             BingX Spot API endpoints
@@ -2050,6 +2070,11 @@
             Get the ISpotClient for this client. This is a common interface which allows for some basic operations without knowing any details of the exchange.
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi.SharedClient">
+            <summary>
+            Get the shared rest requests client
+            </summary>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount">
             <summary>
@@ -2348,6 +2373,11 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiShared">
+            <summary>
+            Shared interface for Spot rest API usage
+            </summary>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading">
             <summary>
             BingX Spot trading endpoints, placing and managing orders.
@@ -2530,6 +2560,11 @@
             BingX spot streams
             </summary>
         </member>
+        <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SharedClient">
+            <summary>
+            Get the shared socket subscription client
+            </summary>
+        </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to live trade updates
@@ -2611,6 +2646,11 @@
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApiShared">
+            <summary>
+            Shared interface for Spot socket API usage
+            </summary>
         </member>
         <member name="T:BingX.Net.Interfaces.IBingXOrderBookFactory">
             <summary>

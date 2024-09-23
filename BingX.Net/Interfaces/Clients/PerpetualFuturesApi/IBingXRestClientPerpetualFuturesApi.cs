@@ -25,6 +25,9 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         public IBingXRestClientPerpetualFuturesApiTrading Trading { get; }
 
+        /// <summary>
+        /// Get the shared rest requests client
+        /// </summary>
         public IBingXRestClientPerpetualFuturesApiShared SharedClient { get; }
 
     }

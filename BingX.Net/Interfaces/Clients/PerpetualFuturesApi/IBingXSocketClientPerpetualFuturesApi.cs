@@ -16,6 +16,9 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
     /// </summary>
     public interface IBingXSocketClientPerpetualFuturesApi : ISocketApiClient, IDisposable
     {
+        /// <summary>
+        /// Get the shared socket subscription client
+        /// </summary>
         IBingXSocketClientPerpetualFuturesApiShared SharedClient { get; }
 
         /// <summary>

@@ -432,7 +432,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         SharedFeeDeductionType IFuturesOrderRestClient.FuturesFeeDeductionType => SharedFeeDeductionType.AddToCost;
         SharedFeeAssetType IFuturesOrderRestClient.FuturesFeeAssetType => SharedFeeAssetType.QuoteAsset;
 
-        IEnumerable<SharedOrderType> IFuturesOrderRestClient.FuturesSupportedOrderType { get; } = new[] { SharedOrderType.Limit, SharedOrderType.Market };
+        IEnumerable<SharedOrderType> IFuturesOrderRestClient.FuturesSupportedOrderTypes { get; } = new[] { SharedOrderType.Limit, SharedOrderType.Market };
         IEnumerable<SharedTimeInForce> IFuturesOrderRestClient.FuturesSupportedTimeInForce { get; } = new[] { SharedTimeInForce.GoodTillCanceled, SharedTimeInForce.ImmediateOrCancel, SharedTimeInForce.FillOrKill };
         SharedQuantitySupport IFuturesOrderRestClient.FuturesSupportedOrderQuantity { get; } = new SharedQuantitySupport(
                 SharedQuantityType.BaseAsset,
@@ -448,9 +448,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 request,
                 request.Symbol.TradingMode,
                 SupportedTradingModes,
-                ((ISpotOrderRestClient)this).SpotSupportedOrderTypes,
-                ((ISpotOrderRestClient)this).SpotSupportedTimeInForce,
-                ((ISpotOrderRestClient)this).SpotSupportedOrderQuantity);
+                ((IFuturesOrderRestClient)this).FuturesSupportedOrderTypes,
+                ((IFuturesOrderRestClient)this).FuturesSupportedTimeInForce,
+                ((IFuturesOrderRestClient)this).FuturesSupportedOrderQuantity);
             if (validationError != null)
                 return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
@@ -497,8 +497,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 ClientOrderId = order.Data.ClientOrderId,
                 AveragePrice = order.Data.AveragePrice == 0 ? null : order.Data.AveragePrice,
                 OrderPrice = order.Data.Price,
-#warning check
-                //Leverage = order.Data.Leverage,
+                Leverage = order.Data.Leverage?.EndsWith("X") == true ? decimal.Parse(order.Data.Leverage.Substring(0, order.Data.Leverage.Length - 1)) : null,
                 Quantity = order.Data.Quantity,
                 QuantityFilled = order.Data.QuantityFilled,
                 QuoteQuantityFilled = order.Data.ValueFilled,
@@ -535,6 +534,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 Quantity = x.Quantity,
                 QuantityFilled = x.QuantityFilled,
                 QuoteQuantityFilled = x.ValueFilled,
+                Leverage = x.Leverage?.EndsWith("X") == true ? decimal.Parse(x.Leverage.Substring(0, x.Leverage.Length - 1)) : null,
                 TimeInForce = ParseTimeInForce(x.TimeInForce),
                 UpdateTime = x.UpdateTime,
                 PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
@@ -582,6 +582,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 Quantity = x.Quantity,
                 QuantityFilled = x.QuantityFilled,
                 QuoteQuantityFilled = x.ValueFilled,
+                Leverage = x.Leverage?.EndsWith("X") == true ? decimal.Parse(x.Leverage.Substring(0, x.Leverage.Length - 1)) : null,
                 TimeInForce = ParseTimeInForce(x.TimeInForce),
                 UpdateTime = x.UpdateTime,
                 PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
@@ -838,12 +839,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 pageSize = token.PageSize;
             }
 
-#warning call doesn't seem to work?
             // Get data
             var orders = await Trading.GetPositionHistoryAsync(
                 symbol: request.Symbol!.GetSymbol(FormatSymbol),
-                startTime: DateTime.UtcNow.AddDays(-7),//request.StartTime,
-                endTime: DateTime.UtcNow,// request.EndTime,
+                startTime: request.StartTime,
+                endTime: request.EndTime,
                 page: page,
                 pageSize: pageSize,
                 ct: ct
