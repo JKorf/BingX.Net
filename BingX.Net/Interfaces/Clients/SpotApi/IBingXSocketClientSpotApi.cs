@@ -6,7 +6,6 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects.Sockets;
 using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
-using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {

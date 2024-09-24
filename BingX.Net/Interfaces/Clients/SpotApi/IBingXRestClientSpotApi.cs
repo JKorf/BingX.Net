@@ -1,6 +1,5 @@
 ﻿using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Interfaces.CommonClients;
-using CryptoExchange.Net.SharedApis.Interfaces;
 using System;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi

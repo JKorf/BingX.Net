@@ -14,7 +14,6 @@ using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.MessageParsing;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
-using CryptoExchange.Net.SharedApis.Interfaces;
 using BingX.Net.Interfaces.Clients.SpotApi;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi

@@ -19,7 +19,6 @@ using CryptoExchange.Net.Converters.MessageParsing;
 using System.Linq;
 using System.Globalization;
 using BingX.Net.Enums;
-using CryptoExchange.Net.SharedApis.Interfaces;
 
 namespace BingX.Net.Clients.SpotApi
 {
