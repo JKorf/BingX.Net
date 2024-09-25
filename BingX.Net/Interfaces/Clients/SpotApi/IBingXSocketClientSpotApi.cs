@@ -15,7 +15,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     public interface IBingXSocketClientSpotApi : ISocketApiClient, IDisposable
     {
         /// <summary>
-        /// Get the shared socket subscription client
+        /// Get the shared socket subscription client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
         /// </summary>
         IBingXSocketClientSpotApiShared SharedClient { get; }
 
