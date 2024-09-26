@@ -158,7 +158,7 @@
         <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.ExchangeName">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.Objects.TradingMode,System.Nullable{System.DateTime})">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateSerializer">
@@ -345,7 +345,7 @@
             ctor
             </summary>
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.Objects.TradingMode,System.Nullable{System.DateTime})">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
@@ -424,7 +424,7 @@
             Event triggered when an order is canceled via this client. Note that this does not trigger when using CancelAllOrdersAsync. Only available for Spot orders
             </summary>
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.Objects.TradingMode,System.Nullable{System.DateTime})">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CreateSerializer">
@@ -605,7 +605,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.Objects.TradingMode,System.Nullable{System.DateTime})">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateSerializer">

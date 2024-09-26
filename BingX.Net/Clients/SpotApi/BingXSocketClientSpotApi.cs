@@ -19,6 +19,7 @@ using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Enums;
 using System.Runtime.InteropServices.ComTypes;
+using CryptoExchange.Net.SharedApis;
 
 namespace BingX.Net.Clients.SpotApi
 {

@@ -22,6 +22,7 @@ using System.IO;
 using System.Runtime.InteropServices.ComTypes;
 using System.Linq;
 using BingX.Net.Interfaces.Clients.SpotApi;
+using CryptoExchange.Net.SharedApis;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
