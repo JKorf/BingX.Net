@@ -66,6 +66,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().SpotApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().SpotApi.SharedClient);
+            services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().PerpetualFuturesApi.SharedClient);
+            services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().PerpetualFuturesApi.SharedClient);
 
             if (socketClientLifeTime == null)
                 services.AddSingleton<IBingXSocketClient, BingXSocketClient>();
