@@ -35,7 +35,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Place Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, TimeInForce? timeInForce = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -48,6 +48,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("quoteOrderQty", quoteQuantity);
             parameters.AddOptional("stopPrice", stopPrice);
             parameters.AddOptional("newClientOrderId", clientOrderId);
+            parameters.AddOptionalEnum("timeInForce", timeInForce);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/order", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -224,7 +225,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXUserTrade>>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? fromId = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXUserTrade>>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);

@@ -6,7 +6,6 @@ using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects.Sockets;
 using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
-using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {
@@ -15,6 +14,11 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     /// </summary>
     public interface IBingXSocketClientSpotApi : ISocketApiClient, IDisposable
     {
+        /// <summary>
+        /// Get the shared socket subscription client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
+        /// </summary>
+        IBingXSocketClientSpotApiShared SharedClient { get; }
+
         /// <summary>
         /// Subscribe to live trade updates
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscription%20transaction%20by%20transaction" /></para>

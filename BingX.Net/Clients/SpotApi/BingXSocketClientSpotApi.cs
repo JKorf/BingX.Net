@@ -19,13 +19,14 @@ using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Enums;
 using System.Runtime.InteropServices.ComTypes;
+using CryptoExchange.Net.SharedApis;
 
 namespace BingX.Net.Clients.SpotApi
 {
     /// <summary>
     /// Client providing access to the BingX spot websocket Api
     /// </summary>
-    internal class BingXSocketClientSpotApi : SocketApiClient, IBingXSocketClientSpotApi
+    internal partial class BingXSocketClientSpotApi : SocketApiClient, IBingXSocketClientSpotApi
     {
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
@@ -53,7 +54,9 @@ namespace BingX.Net.Clients.SpotApi
             => new BingXAuthenticationProvider(credentials);
 
         /// <inheritdoc />
-        public override string FormatSymbol(string baseAsset, string quoteAsset) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+        public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+
+        public IBingXSocketClientSpotApiShared SharedClient => this;
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
@@ -90,7 +93,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
-            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, stream, "24hTicker" + symbol, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
+            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
 

@@ -14,11 +14,13 @@ using CryptoExchange.Net.Converters.SystemTextJson;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.MessageParsing;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
+using BingX.Net.Interfaces.Clients.SpotApi;
+using CryptoExchange.Net.SharedApis;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     /// <inheritdoc cref="IBingXRestClientPerpetualFuturesApi" />
-    internal class BingXRestClientPerpetualFuturesApi : RestApiClient, IBingXRestClientPerpetualFuturesApi
+    internal partial class BingXRestClientPerpetualFuturesApi : RestApiClient, IBingXRestClientPerpetualFuturesApi
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Perpetual Futures Api");
@@ -53,7 +55,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         /// <inheritdoc />
-        public override string FormatSymbol(string baseAsset, string quoteAsset) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+        public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+        public IBingXRestClientPerpetualFuturesApiShared SharedClient => this;
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();

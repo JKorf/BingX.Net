@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using BingX.Net.Enums;
+using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
@@ -15,6 +16,10 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
     /// </summary>
     public interface IBingXSocketClientPerpetualFuturesApi : ISocketApiClient, IDisposable
     {
+        /// <summary>
+        /// Get the shared socket subscription client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
+        /// </summary>
+        IBingXSocketClientPerpetualFuturesApiShared SharedClient { get; }
 
         /// <summary>
         /// Subscribe to live trade updates

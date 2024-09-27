@@ -21,13 +21,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.ComTypes;
 using System.Linq;
+using BingX.Net.Interfaces.Clients.SpotApi;
+using CryptoExchange.Net.SharedApis;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     /// <summary>
     /// Client providing access to the BingX futures websocket Api
     /// </summary>
-    internal class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
+    internal partial class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
     {
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
@@ -48,7 +50,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         /// <inheritdoc />
-        public override string FormatSymbol(string baseAsset, string quoteAsset) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+        public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null) => baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
 
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
@@ -58,6 +60,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
         /// <inheritdoc />
         protected override IByteMessageAccessor CreateAccessor() => new SystemTextJsonByteMessageAccessor();
+
+        public IBingXSocketClientPerpetualFuturesApiShared SharedClient => this;
 
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<IEnumerable<BingXFuturesTradeUpdate>>> onMessage, CancellationToken ct = default)

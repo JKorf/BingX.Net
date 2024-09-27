@@ -254,6 +254,20 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default);
 
         /// <summary>
+        /// Get user trade history
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /></para>
+        /// </summary>
+        /// <param name="symbol">The symbol</param>
+        /// <param name="orderId">Filter by order id</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="fromId">Return results after this id</param>
+        /// <param name="limit">Max number of results</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns></returns>
+        Task<WebCallResult<IEnumerable<BingXFuturesUserTradeDetails>>> GetUserTradesAsync(string symbol, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
+
+        /// <summary>
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20After" /></para>
         /// </summary>
@@ -283,7 +297,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get position close history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Position%20History" /></para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="positionId">Filter by position id</param>

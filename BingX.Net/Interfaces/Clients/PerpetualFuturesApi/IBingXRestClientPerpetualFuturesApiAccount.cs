@@ -88,7 +88,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<WebCallResult> SetMarginModeAsync(string symbol, MarginMode marginMode, CancellationToken ct = default);
 
         /// <summary>
-        /// Get the current leverage setrings for a symbol
+        /// Get the current leverage settings for a symbol
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /></para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>

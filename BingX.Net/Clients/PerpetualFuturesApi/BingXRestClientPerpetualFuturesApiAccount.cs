@@ -78,6 +78,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<string>> StartUserStreamAsync(CancellationToken ct = default)
         {
+            if (_baseClient.AuthenticationProvider == null)
+                return new WebCallResult<string>(new NoApiCredentialsError());
+
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/user/auth/userDataStream", BingXExchange.RateLimiter.RestAccount1, 1, false,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendRawAsync<BingXListenKey>(request, null, ct).ConfigureAwait(false);
@@ -91,6 +94,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default)
         {
+            if (_baseClient.AuthenticationProvider == null)
+                return new WebCallResult(new NoApiCredentialsError());
+
             var parameters = new ParameterCollection
             {
                 { "listenKey", listenKey }
@@ -107,6 +113,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult> StopUserStreamAsync(string listenKey, CancellationToken ct = default)
         {
+            if (_baseClient.AuthenticationProvider == null)
+                return new WebCallResult(new NoApiCredentialsError());
+
             var parameters = new ParameterCollection
             {
                 { "listenKey", listenKey }

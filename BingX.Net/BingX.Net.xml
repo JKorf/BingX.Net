@@ -158,7 +158,7 @@
         <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.ExchangeName">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.FormatSymbol(System.String,System.String)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateSerializer">
@@ -320,6 +320,9 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -342,7 +345,7 @@
             ctor
             </summary>
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.FormatSymbol(System.String,System.String)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
@@ -421,7 +424,7 @@
             Event triggered when an order is canceled via this client. Note that this does not trigger when using CancelAllOrdersAsync. Only available for Spot orders
             </summary>
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.FormatSymbol(System.String,System.String)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CreateSerializer">
@@ -544,7 +547,7 @@
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Nullable{BingX.Net.Enums.TimeInForce},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceMultipleOrdersAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
@@ -571,7 +574,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOcoOrderAsync(System.String,BingX.Net.Enums.OrderSide,System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.String,System.String,System.String,System.Threading.CancellationToken)">
@@ -602,7 +605,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.FormatSymbol(System.String,System.String)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateSerializer">
@@ -1124,6 +1127,21 @@
             Both
             </summary>
         </member>
+        <member name="T:BingX.Net.Enums.Role">
+            <summary>
+            Role
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.Role.Maker">
+            <summary>
+            Maker
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.Role.Taker">
+            <summary>
+            Taker
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.SymbolStatus">
             <summary>
             Status of a symbol
@@ -1356,6 +1374,11 @@
             Endpoints related to orders and trades
             </summary>
         </member>
+        <member name="P:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi.SharedClient">
+            <summary>
+            Get the shared rest requests client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
+            </summary>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount">
             <summary>
             BingX futures account endpoints. Account endpoints include balance info, withdraw/deposit info and requesting and account settings
@@ -1437,7 +1460,7 @@
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetLeverageAsync(System.String,System.Threading.CancellationToken)">
             <summary>
-            Get the current leverage setrings for a symbol
+            Get the current leverage settings for a symbol
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /></para>
             </summary>
             <param name="symbol">Symbol, for example `ETH-USDT`</param>
@@ -1831,6 +1854,20 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get user trade history
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /></para>
+            </summary>
+            <param name="symbol">The symbol</param>
+            <param name="orderId">Filter by order id</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="fromId">Return results after this id</param>
+            <param name="limit">Max number of results</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
@@ -1862,7 +1899,7 @@
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetPositionHistoryAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get position close history
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Position%20History" /></para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="positionId">Filter by position id</param>
@@ -1875,6 +1912,11 @@
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi">
             <summary>
             BingX futures streams
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SharedClient">
+            <summary>
+            Get the shared socket subscription client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
             </summary>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesTradeUpdate}}},System.Threading.CancellationToken)">
@@ -1993,6 +2035,16 @@
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientPerpetualFuturesApiShared">
+            <summary>
+            Shared interface for Perpetual futures rest API usage
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientPerpetualFuturesApiShared">
+            <summary>
+            Shared interface for Perpetual futures socket API usage
+            </summary>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi">
             <summary>
             BingX Spot API endpoints
@@ -2015,9 +2067,13 @@
         </member>
         <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi.CommonSpotClient">
             <summary>
-            Get the ISpotClient for this client. This is a common interface which allows for some basic operations without knowing any details of the exchange.
+            DEPRECATED; use <see cref="T:CryptoExchange.Net.SharedApis.ISharedClient" /> instead for common/shared functionality. See <see href="https://jkorf.github.io/CryptoExchange.Net/docs/index.html#shared" /> for more info.
             </summary>
-            <returns></returns>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi.SharedClient">
+            <summary>
+            Get the shared rest requests client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
+            </summary>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount">
             <summary>
@@ -2316,12 +2372,17 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiShared">
+            <summary>
+            Shared interface for Spot rest API usage
+            </summary>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading">
             <summary>
             BingX Spot trading endpoints, placing and managing orders.
             </summary>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Nullable{BingX.Net.Enums.TimeInForce},System.Threading.CancellationToken)">
             <summary>
             Place a new order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20order" /></para>
@@ -2334,6 +2395,7 @@
             <param name="quoteQuantity">Order quantity in quote asset</param>
             <param name="stopPrice">Stop price</param>
             <param name="clientOrderId">Client order id</param>
+            <param name="timeInForce">Time in force</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -2424,7 +2486,7 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
             Get user trade history
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details" /></para>
@@ -2495,6 +2557,11 @@
         <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi">
             <summary>
             BingX spot streams
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SharedClient">
+            <summary>
+            Get the shared socket subscription client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
             </summary>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
@@ -2578,6 +2645,11 @@
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApiShared">
+            <summary>
+            Shared interface for Spot socket API usage
+            </summary>
         </member>
         <member name="T:BingX.Net.Interfaces.IBingXOrderBookFactory">
             <summary>
@@ -3152,7 +3224,7 @@
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXContract.Status">
             <summary>
-            0: Online, 1:Offline. Different unknown values have been observed. 
+            1: Online, 25:Suspended. Different unknown values have been observed. 
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXContract.ApiCanOpen">
@@ -4508,6 +4580,71 @@
         <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTrade.PositionSide">
             <summary>
             Position side
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails">
+            <summary>
+            User trade info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.TradeId">
+            <summary>
+            Trade id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Price">
+            <summary>
+            Trade price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Fee">
+            <summary>
+            Fee paid
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.FeeAsset">
+            <summary>
+            Fee asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Timestamp">
+            <summary>
+            Trade time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Side">
+            <summary>
+            Trade side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesUserTradeDetails.Role">
+            <summary>
+            Trade role
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXId">
