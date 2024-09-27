@@ -142,6 +142,17 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.11.0 - 27 Sep 2024
+    * Updated CryptoExchange.Net to version 8.0.0, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/8.0.0
+    * Added Shared client interfaces implementation for Spot and Perpetual Futures Rest and Socket clients
+    * Added check for api credentials in rest user stream operations
+    * Added PerpetualFuturesApi.Trading.GetUserTradesAsync endpoint
+    * Added timeInForce parameter to SpotApi.Trading.PlaceOrderAsync endpoint
+    * Updated fromId parameter on SpotApi.Trading.GetuserTradesAsync from int? to long?
+    * Updated KlineInterval Enum values to match number of seconds
+    * Updated Sourcelink package version
+    * Marked ISpotClient references as deprecated
+
 * Version 1.10.0 - 11 Sep 2024
     * Fixed request signing for requests with special characters
     * Added SpotApi Oco endpoints
