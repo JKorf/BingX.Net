@@ -111,5 +111,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("rp")]
         public decimal? ProfitAndLoss { get; set; }
+        /// <summary>
+        /// Reduce only
+        /// </summary>
+        [JsonPropertyName("ro")]
+        public bool? ReduceOnly { get; set; }
     }
 }

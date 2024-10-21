@@ -4117,6 +4117,11 @@
             Profit and loss of the transaction
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderUpdate.ReduceOnly">
+            <summary>
+            Reduce only
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest">
             <summary>
             Futures place order request for bulk placement

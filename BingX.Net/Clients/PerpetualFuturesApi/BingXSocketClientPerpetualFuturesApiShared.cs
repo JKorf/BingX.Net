@@ -124,7 +124,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         AveragePrice = update.Data.AveragePrice == 0 ? null : update.Data.AveragePrice,
                         PositionSide = update.Data.PositionSide == Enums.PositionSide.Long ? SharedPositionSide.Long : update.Data.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : null,
                         FeeAsset = update.Data.FeeAsset,
-                        UpdateTime = update.Data.UpdateTime
+                        UpdateTime = update.Data.UpdateTime,
+                        ReduceOnly = update.Data.ReduceOnly
                     }
                 })),
                 ct: ct).ConfigureAwait(false);
