@@ -11,6 +11,11 @@ namespace BingX.Net.Objects.Models
     public record BingXPositionMarginInfo
     {
         /// <summary>
+        /// Tier
+        /// </summary>
+        [JsonPropertyName("tier")]
+        public string Tier { get; set; } = string.Empty;
+        /// <summary>
         /// Symbol
         /// </summary>
         [JsonPropertyName("symbol")]

@@ -5707,6 +5707,11 @@
             Position and maintanance margin ratio info
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.Tier">
+            <summary>
+            Tier
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.Symbol">
             <summary>
             Symbol
