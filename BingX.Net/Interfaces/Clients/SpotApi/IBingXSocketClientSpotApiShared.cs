@@ -10,7 +10,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         ITradeSocketClient,
         IBookTickerSocketClient,
         IBalanceSocketClient,
-        ISpotOrderSocketClient
+        ISpotOrderSocketClient,
+        IKlineSocketClient
     {
     }
 }
