@@ -1,4 +1,5 @@
-﻿using BingX.Net.Interfaces;
+﻿using BingX.Net.Clients;
+using BingX.Net.Interfaces;
 using BingX.Net.Interfaces.Clients;
 using CryptoExchange.Net.SharedApis;
 using CryptoExchange.Net.Trackers.Klines;
@@ -12,7 +13,14 @@ namespace BingX.Net
     /// <inheritdoc />
     public class BingXTrackerFactory : IBingXTrackerFactory
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider? _serviceProvider;
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public BingXTrackerFactory()
+        {
+        }
 
         /// <summary>
         /// ctor
@@ -26,23 +34,26 @@ namespace BingX.Net
         /// <inheritdoc />
         public IKlineTracker CreateKlineTracker(SharedSymbol symbol, SharedKlineInterval interval, int? limit = null, TimeSpan? period = null)
         {
-            IKlineRestClient restClient;
-            IKlineSocketClient socketClient;
+            var restClient = _serviceProvider?.GetRequiredService<IBingXRestClient>() ?? new BingXRestClient();
+            var socketClient = _serviceProvider?.GetRequiredService<IBingXSocketClient>() ?? new BingXSocketClient();
+
+            IKlineRestClient sharedRestClient;
+            IKlineSocketClient sharedSocketClient;
             if (symbol.TradingMode == TradingMode.Spot)
             {
-                restClient = _serviceProvider.GetRequiredService<IBingXRestClient>().SpotApi.SharedClient;
-                socketClient = _serviceProvider.GetRequiredService<IBingXSocketClient>().SpotApi.SharedClient;
+                sharedRestClient = restClient.SpotApi.SharedClient;
+                sharedSocketClient = socketClient.SpotApi.SharedClient;
             }
             else
             {
-                restClient = _serviceProvider.GetRequiredService<IBingXRestClient>().PerpetualFuturesApi.SharedClient;
-                socketClient = _serviceProvider.GetRequiredService<IBingXSocketClient>().PerpetualFuturesApi.SharedClient;
+                sharedRestClient = restClient.PerpetualFuturesApi.SharedClient;
+                sharedSocketClient = socketClient.PerpetualFuturesApi.SharedClient;
             }
 
             return new KlineTracker(
-                _serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
-                restClient,
-                socketClient,
+                _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
+                sharedRestClient,
+                sharedSocketClient,
                 symbol,
                 interval,
                 limit,
@@ -53,21 +64,25 @@ namespace BingX.Net
         /// <inheritdoc />
         public ITradeTracker CreateTradeTracker(SharedSymbol symbol, int? limit = null, TimeSpan? period = null)
         {
-            IRecentTradeRestClient restClient;
-            ITradeSocketClient socketClient;
+            var restClient = _serviceProvider?.GetRequiredService<IBingXRestClient>() ?? new BingXRestClient();
+            var socketClient = _serviceProvider?.GetRequiredService<IBingXSocketClient>() ?? new BingXSocketClient();
+
+            IRecentTradeRestClient sharedRestClient;
+            ITradeSocketClient sharedSocketClient;
             if (symbol.TradingMode == TradingMode.Spot) {
-                restClient = _serviceProvider.GetRequiredService<IBingXRestClient>().SpotApi.SharedClient;
-                socketClient = _serviceProvider.GetRequiredService<IBingXSocketClient>().SpotApi.SharedClient;
+                sharedRestClient = restClient.SpotApi.SharedClient;
+                sharedSocketClient = socketClient.SpotApi.SharedClient;
             }
             else {
-                restClient = _serviceProvider.GetRequiredService<IBingXRestClient>().PerpetualFuturesApi.SharedClient;
-                socketClient = _serviceProvider.GetRequiredService<IBingXSocketClient>().PerpetualFuturesApi.SharedClient;
+                sharedRestClient = restClient.PerpetualFuturesApi.SharedClient;
+                sharedSocketClient = socketClient.PerpetualFuturesApi.SharedClient;
             }
 
             return new TradeTracker(
-                _serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
-                restClient,
-                socketClient,
+                _serviceProvider?.GetRequiredService<ILoggerFactory>().CreateLogger(restClient.Exchange),
+                sharedRestClient,
+                null,
+                sharedSocketClient,
                 symbol,
                 limit,
                 period
