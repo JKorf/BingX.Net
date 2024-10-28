@@ -144,6 +144,14 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.12.0 - 28 Oct 2024
+    * Updated CryptoExchange.Net to version 8.1.0, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/8.1.0
+    * Moved FormatSymbol to BingXExchange class
+    * Added support Side setting on SharedTrade model
+    * Added BingXTrackerFactory for creating trackers
+    * Added overload to Create method on BingXOrderBookFactory support SharedSymbol parameter
+    * Added Shared websocket kline subscription implementation for futures and spot APIs
+
 * Version 1.11.2 - 21 Oct 2024
     * Added Tier property to restClient.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync response model
     * Added ReduceOnly property to socketClient.PerpetualFuturesApi.SubscribeToUserDataUpdatesAsync order update model
