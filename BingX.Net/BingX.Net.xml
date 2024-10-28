@@ -87,6 +87,11 @@
         <member name="T:BingX.Net.BingXTrackerFactory">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.BingXTrackerFactory.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
         <member name="M:BingX.Net.BingXTrackerFactory.#ctor(System.IServiceProvider)">
             <summary>
             ctor

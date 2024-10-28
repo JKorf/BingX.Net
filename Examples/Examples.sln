@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Examples.Api", "BingX
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Examples.Console", "BingX.Examples.Console\BingX.Examples.Console.csproj", "{FD4F95C8-D9B7-4F81-9245-4CE667DFD421}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Net", "..\BingX.Net\BingX.Net.csproj", "{90651429-48DD-454F-BEAA-14058E43877A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Examples.OrderBook", "BingX.Examples.OrderBook\BingX.Examples.OrderBook.csproj", "{33D58C29-15EB-48E2-A6E9-FC9FD84B43E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Examples.Tracker", "BingX.Examples.Tracker\BingX.Examples.Tracker.csproj", "{0051E490-FA97-4B88-BB14-30AAF17DAAA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{FD4F95C8-D9B7-4F81-9245-4CE667DFD421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4F95C8-D9B7-4F81-9245-4CE667DFD421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4F95C8-D9B7-4F81-9245-4CE667DFD421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90651429-48DD-454F-BEAA-14058E43877A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90651429-48DD-454F-BEAA-14058E43877A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90651429-48DD-454F-BEAA-14058E43877A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90651429-48DD-454F-BEAA-14058E43877A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D58C29-15EB-48E2-A6E9-FC9FD84B43E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D58C29-15EB-48E2-A6E9-FC9FD84B43E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D58C29-15EB-48E2-A6E9-FC9FD84B43E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33D58C29-15EB-48E2-A6E9-FC9FD84B43E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0051E490-FA97-4B88-BB14-30AAF17DAAA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0051E490-FA97-4B88-BB14-30AAF17DAAA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0051E490-FA97-4B88-BB14-30AAF17DAAA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0051E490-FA97-4B88-BB14-30AAF17DAAA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
