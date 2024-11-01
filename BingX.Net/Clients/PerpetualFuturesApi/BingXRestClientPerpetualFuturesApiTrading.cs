@@ -349,10 +349,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Liquidation Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
+            parameters.AddOptional("currency", settleAsset);
             parameters.AddOptionalEnum("autoCloseType", closeType);
             parameters.AddOptionalMilliseconds("startTime", startTime);
             parameters.AddOptionalMilliseconds("endTime", endTime);
@@ -369,10 +370,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Closed Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
+            parameters.AddOptional("currency", settleAsset);
             parameters.AddOptional("orderId", orderId);
             parameters.AddOptionalMilliseconds("startTime", startTime);
             parameters.AddOptionalMilliseconds("endTime", endTime);
@@ -389,10 +391,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("orderId", orderId);
+            parameters.AddOptional("currency", settleAsset);
             parameters.AddOptionalMilliseconds("startTs", startTime);
             parameters.AddOptionalMilliseconds("endTs", endTime);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/trade/allFillOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
@@ -407,12 +410,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTradeDetails>>> GetUserTradesAsync(string symbol, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTradeDetails>>> GetUserTradesAsync(string symbol, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("symbol", symbol);
             parameters.AddOptional("orderId", orderId);
             parameters.AddOptional("lastFillId", fromId);
+            parameters.AddOptional("currency", settleAsset);
             parameters.AddOptional("pageSize", limit);
             parameters.AddOptionalMilliseconds("startTs", startTime);
             parameters.AddOptionalMilliseconds("endTs", endTime);
@@ -476,11 +480,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Position History
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("symbol", symbol);
             parameters.AddOptional("positionId", positionId);
+            parameters.AddOptional("currency", settleAsset);
             parameters.AddOptionalMillisecondsString("startTs", startTime);
             parameters.AddOptionalMillisecondsString("endTs", endTime);
             parameters.AddOptional("pageIndex", page);

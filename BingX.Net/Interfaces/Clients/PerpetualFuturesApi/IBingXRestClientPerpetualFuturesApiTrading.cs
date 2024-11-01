@@ -221,37 +221,40 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20Force%20Orders" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="settleAsset">Filter by settlement asset, USDC or USDT</param>
         /// <param name="closeType">Filter by close type</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="limit">Max results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed orders
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order%20history" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="settleAsset">Filter by settlement asset, USDC or USDT</param>
         /// <param name="orderId">Filter by order id</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="limit">Max results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get user trade history
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20orders" /></para>
         /// </summary>
         /// <param name="orderId">Filter by order id</param>
+        /// <param name="settleAsset">Filter by settlement asset, USDC or USDT</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get user trade history
@@ -259,13 +262,14 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="symbol">The symbol</param>
         /// <param name="orderId">Filter by order id</param>
+        /// <param name="settleAsset">Filter by settlement asset, USDC or USDT</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="fromId">Return results after this id</param>
         /// <param name="limit">Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesUserTradeDetails>>> GetUserTradesAsync(string symbol, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXFuturesUserTradeDetails>>> GetUserTradesAsync(string symbol, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
@@ -301,11 +305,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="positionId">Filter by position id</param>
+        /// <param name="settleAsset">Filter by settlement asset, USDC or USDT</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="page">Page number</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
     }
 }
