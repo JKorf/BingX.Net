@@ -1,0 +1,21 @@
+GET
+/openApi/swap/v1/positionMargin/history
+true
+{
+  "code": 0,
+  "msg": "",
+  "timestamp": 1702731661854,
+  "data": {
+    "records": [
+      {
+        "symbol": "BTC-USDT",
+        "positionId": "1847596444958068736",
+        "changeReason": "OpenPosition",
+        "marginChange": "7586.46841066",
+        "marginAfterChange": "7586.46841066",
+        "time": 1729336294000
+      }
+    ],
+    "total": 4
+  }
+}

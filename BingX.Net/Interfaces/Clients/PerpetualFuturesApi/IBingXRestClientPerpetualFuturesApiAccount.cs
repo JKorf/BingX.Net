@@ -137,5 +137,19 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(string symbol, PositionMode positionMode, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get history of margin changes
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Isolated%20Margin%20Change%20History" /></para>
+        /// </summary>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="positionId">Filter by positionId</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="page">Page</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXMarginHistory>> GetIsolatedMarginChangeHistoryAsync(string? symbol = null, string? positionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+
     }
 }

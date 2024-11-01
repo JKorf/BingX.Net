@@ -257,6 +257,9 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.SetPositionModeAsync(System.String,BingX.Net.Enums.PositionMode,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetIsolatedMarginChangeHistoryAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData">
             <inheritdoc />
         </member>
@@ -1538,6 +1541,19 @@
             <param name="positionMode">Position mode</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetIsolatedMarginChangeHistoryAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get history of margin changes
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Isolated%20Margin%20Change%20History" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+            <param name="positionId">Filter by positionId</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="page">Page</param>
+            <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData">
             <summary>
@@ -5112,6 +5128,56 @@
         <member name="P:BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate.ListenKey">
             <summary>
             The listen key
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXMarginHistory">
+            <summary>
+            Margin change info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistory.Records">
+            <summary>
+            Records
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistory.Total">
+            <summary>
+            Total amount of records
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXMarginHistoryEntry">
+            <summary>
+            Margin change info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistoryEntry.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistoryEntry.PositionId">
+            <summary>
+            Position id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistoryEntry.ChangeReason">
+            <summary>
+            Change reason
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistoryEntry.MarginChange">
+            <summary>
+            Margin change
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistoryEntry.MarginAfterChange">
+            <summary>
+            Margin after change
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginHistoryEntry.Timestamp">
+            <summary>
+            Time of change
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXMarginMode">

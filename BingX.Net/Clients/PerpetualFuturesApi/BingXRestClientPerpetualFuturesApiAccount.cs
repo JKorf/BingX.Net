@@ -249,5 +249,24 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
+        #region Get Isolated Margin Change History
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXMarginHistory>> GetIsolatedMarginChangeHistoryAsync(string? symbol = null, string? positionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            parameters.AddOptional("positionId", positionId);
+            parameters.AddOptionalMilliseconds("startTime", startTime);
+            parameters.AddOptionalMilliseconds("endTime", endTime);
+            parameters.AddOptional("pageIndex", page);
+            parameters.AddOptional("pageSize", pageSize);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/positionMargin/history", BingXExchange.RateLimiter.RestAccount1, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+            var result = await _baseClient.SendAsync<BingXMarginHistory>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
     }
 }
