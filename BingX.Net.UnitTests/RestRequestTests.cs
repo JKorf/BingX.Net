@@ -107,7 +107,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.AdjustIsolatedMarginAsync("ETHUDST", 1, Enums.AdjustDirection.Decrease, Enums.PositionSide.Long), "AdjustIsolatedMargin");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetPositionModeAsync("ETHUDST"), "GetPositionMode");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.SetPositionModeAsync("ETHUDST", Enums.PositionMode.SinglePositionMode), "SetPositionMode");
-            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetIsolatedMarginChangeHistoryAsync(), "GetIsolatedMarginChangeHistory", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetIsolatedMarginChangeHistoryAsync("123"), "GetIsolatedMarginChangeHistory", nestedJsonProperty: "data");
         }
 
         [Test]
