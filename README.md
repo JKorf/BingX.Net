@@ -144,6 +144,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.14.0 - 06 Nov 2024
+    * Updated CryptoExchange.Net to version 8.2.0, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/8.2.0
+
 * Version 1.13.0 - 04 Nov 2024
     * Added restClient.PerpetualFuturesApi.Account.GetIsolatedMarginChangeHistoryAsync endpoint
     * Added settleAsset parameter to FuturesApi.Trading endpoints
