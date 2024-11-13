@@ -104,6 +104,21 @@
         <member name="M:BingX.Net.BingXTrackerFactory.CreateTradeTracker(CryptoExchange.Net.SharedApis.SharedSymbol,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
             <inheritdoc />
         </member>
+        <member name="T:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi">
+            <inheritdoc cref="T:BingX.Net.Interfaces.Clients.Apis.IBingXRestClientSubAccountApi" />
+        </member>
+        <member name="M:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi.GetApiKeyPermissionsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi.GetServerTimestampAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi.GetTimeSyncInfo">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi.GetTimeOffset">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.BingXRestClient">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.IBingXRestClient" />
         </member>
@@ -111,6 +126,9 @@
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Clients.BingXRestClient.PerpetualFuturesApi">
+            <inheritdoc />
+        </member>
+        <member name="P:BingX.Net.Clients.BingXRestClient.SubAccountApi">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXRestClient.#ctor(System.Action{BingX.Net.Objects.Options.BingXRestOptions})">
@@ -134,6 +152,35 @@
             <param name="optionsDelegate">Option configuration delegate</param>
         </member>
         <member name="M:BingX.Net.Clients.BingXRestClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.BingXRestClientApi">
+            <summary>
+            BingX rest client base
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Clients.BingXRestClientApi.ExchangeName">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.CreateSerializer">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.CreateAccessor">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.TryParseError(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.GetSymbolName(System.String,System.String)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.BingXSocketClient">
@@ -183,27 +230,6 @@
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.Trading">
-            <inheritdoc />
-        </member>
-        <member name="P:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.ExchangeName">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateSerializer">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateAccessor">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.TryParseError(CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.GetServerTimestampAsync">
@@ -444,9 +470,6 @@
         <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.Trading">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.ExchangeName">
-            <inheritdoc />
-        </member>
         <member name="E:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.OnOrderPlaced">
             <summary>
             Event triggered when an order is placed via this client. Only available for Spot orders
@@ -456,21 +479,6 @@
             <summary>
             Event triggered when an order is canceled via this client. Note that this does not trigger when using CancelAllOrdersAsync. Only available for Spot orders
             </summary>
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CreateSerializer">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CreateAccessor">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.TryParseError(CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
             <inheritdoc />
@@ -482,12 +490,6 @@
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CommonSpotClient">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetSymbolName(System.String,System.String)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount">
@@ -1345,6 +1347,18 @@
             Extension methods specific to using the BingX API
             </summary>
         </member>
+        <member name="T:BingX.Net.Interfaces.Clients.Apis.IBingXRestClientSubAccountApi">
+            <summary>
+            BingX sub account API endpoints
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.Apis.IBingXRestClientSubAccountApi.GetApiKeyPermissionsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get the permissions of the API key
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20user%20API%20Key%20permissions" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.IBingXRestClient">
             <summary>
             Client for accessing the BingX Rest API. 
@@ -1358,6 +1372,11 @@
         <member name="P:BingX.Net.Interfaces.Clients.IBingXRestClient.PerpetualFuturesApi">
             <summary>
             Perpetual Futures API endpoints
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Interfaces.Clients.IBingXRestClient.SubAccountApi">
+            <summary>
+            Sub account API endpoints
             </summary>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.IBingXRestClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
@@ -4848,6 +4867,31 @@
         <member name="P:BingX.Net.Objects.Models.BingXIsolatedMarginResult.Direction">
             <summary>
             Direction
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXKeyPermissions">
+            <summary>
+            Api key permissions
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKeyPermissions.ApiKey">
+            <summary>
+            Api key
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKeyPermissions.Permissions">
+            <summary>
+            Permissions
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKeyPermissions.IpAddresses">
+            <summary>
+            Ip addresses
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXKeyPermissions.Note">
+            <summary>
+            Note
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXKline">

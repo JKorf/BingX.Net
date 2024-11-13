@@ -24,13 +24,11 @@ using CryptoExchange.Net.SharedApis;
 namespace BingX.Net.Clients.SpotApi
 {
     /// <inheritdoc cref="IBingXRestClientSpotApi" />
-    internal partial class BingXRestClientSpotApi : RestApiClient, IBingXRestClientSpotApi, ISpotClient
+    internal partial class BingXRestClientSpotApi : BingXRestClientApi, IBingXRestClientSpotApi, ISpotClient
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Spot Api");
         #endregion
-
-        internal new BingXRestOptions ClientOptions => (BingXRestOptions)base.ClientOptions;
 
         #region Api clients
         /// <inheritdoc />
@@ -39,8 +37,6 @@ namespace BingX.Net.Clients.SpotApi
         public IBingXRestClientSpotApiExchangeData ExchangeData { get; }
         /// <inheritdoc />
         public IBingXRestClientSpotApiTrading Trading { get; }
-        /// <inheritdoc />
-        public string ExchangeName => "BingX";
         #endregion
 
         /// <summary>
@@ -54,73 +50,13 @@ namespace BingX.Net.Clients.SpotApi
 
         #region constructor/destructor
         internal BingXRestClientSpotApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options)
-            : base(logger, httpClient, options.Environment.RestClientAddress, options, options.SpotOptions)
+            : base(logger, httpClient, options, options.SpotOptions)
         {
             Account = new BingXRestClientSpotApiAccount(this);
             ExchangeData = new BingXRestClientSpotApiExchangeData(logger, this);
             Trading = new BingXRestClientSpotApiTrading(logger, this);
-
-            ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;
-            RequestBodyFormat = RequestBodyFormat.FormData;
         }
         #endregion
-
-        /// <inheritdoc />
-        public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null)
-                => BingXExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverTime);
-
-        /// <inheritdoc />
-        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
-        /// <inheritdoc />
-        protected override IStreamMessageAccessor CreateAccessor() => new SystemTextJsonStreamMessageAccessor();
-
-        /// <inheritdoc />
-        protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
-            => new BingXAuthenticationProvider(credentials);
-
-        internal Uri GetUri(string path) => new Uri(BaseAddress.AppendPath(path));
-
-        internal Task<WebCallResult> SendAsync(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)
-            => SendToAddressAsync(BaseAddress, definition, parameters, cancellationToken, weight);
-
-        internal async Task<WebCallResult> SendToAddressAsync(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)
-        {
-            return await base.SendAsync(baseAddress, definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
-        }
-
-        internal Task<WebCallResult<T>> SendAsync<T>(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null, Dictionary<string, string>? additionalHeaders = null) where T : class
-            => SendToAddressAsync<T>(BaseAddress, definition, parameters, cancellationToken, weight, additionalHeaders);
-
-        internal async Task<WebCallResult<T>> SendToAddressAsync<T>(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null, Dictionary<string, string>? additionalHeaders = null) where T : class
-        {
-            var result = await base.SendAsync<BingXResult<T>>(baseAddress, definition, parameters, cancellationToken, additionalHeaders, weight).ConfigureAwait(false);
-            if (!result.Success)
-                return result.As<T>(null);
-
-            if (result.Data.Code != 0)
-                return result.AsError<T>(new ServerError(result.Data.Code, result.Data.Message!));
-
-            return result.As<T>(result.Data.Data);
-        }
-
-        internal Task<WebCallResult<T>> SendRawAsync<T>(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null) where T : class
-            => SendRawToAddressAsync<T>(BaseAddress, definition, parameters, cancellationToken, weight);
-
-        internal async Task<WebCallResult<T>> SendRawToAddressAsync<T>(string baseAddress, RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null) where T : class
-        {
-            return await base.SendAsync<T>(baseAddress, definition, parameters, cancellationToken, null, weight).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
-        protected override ServerError? TryParseError(IMessageAccessor accessor)
-        {
-            var code = accessor.GetValue<int>(MessagePath.Get().Property("code"));
-            if (code == 0)
-                return null;
-
-            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
-            return new ServerError(code, msg!);
-        }
 
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
@@ -137,16 +73,6 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public ISpotClient CommonSpotClient => this;
         public IBingXRestClientSpotApiShared SharedClient => this;
-
-        /// <inheritdoc />
-        protected override void WriteParamBody(IRequest request, IDictionary<string, object> parameters, string contentType)
-        {
-            var stringData = parameters.CreateParamString(false, ArraySerialization);
-            request.SetContent(stringData, contentType);
-        }
-
-        /// <inheritdoc />
-        public string GetSymbolName(string baseAsset, string quoteAsset) => baseAsset + "-" + quoteAsset;
 
         internal void InvokeOrderPlaced(OrderId id)
         {

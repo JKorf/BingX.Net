@@ -9,6 +9,8 @@ using BingX.Net.Clients.SpotApi;
 using CryptoExchange.Net.Clients;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using BingX.Net.Clients.PerpetualFuturesApi;
+using BingX.Net.Interfaces.Clients.Apis;
+using BingX.Net.Clients.Apis;
 
 namespace BingX.Net.Clients
 {
@@ -21,6 +23,8 @@ namespace BingX.Net.Clients
         public IBingXRestClientSpotApi SpotApi { get; }
         /// <inheritdoc />
         public IBingXRestClientPerpetualFuturesApi PerpetualFuturesApi { get; }
+        /// <inheritdoc />
+        public IBingXRestClientSubAccountApi SubAccountApi { get; }
 
         #endregion
 
@@ -49,6 +53,7 @@ namespace BingX.Net.Clients
 
             SpotApi = AddApiClient(new BingXRestClientSpotApi(_logger, httpClient, options));
             PerpetualFuturesApi = AddApiClient(new BingXRestClientPerpetualFuturesApi(_logger, httpClient, options));
+            SubAccountApi = AddApiClient(new BingXRestClientSubAccountApi(this, _logger, httpClient, options));
         }
 
         #endregion
