@@ -123,20 +123,18 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get current position mode
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXPositionMode>> GetPositionModeAsync(string symbol, CancellationToken ct = default);
+        Task<WebCallResult<BingXPositionMode>> GetPositionModeAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Set position mode
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /></para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="positionMode">Position mode</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(string symbol, PositionMode positionMode, CancellationToken ct = default);
+        Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(PositionMode positionMode, CancellationToken ct = default);
 
         /// <summary>
         /// Get history of margin changes

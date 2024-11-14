@@ -218,15 +218,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Position Mode
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXPositionMode>> GetPositionModeAsync(string symbol, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXPositionMode>> GetPositionModeAsync(CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
-            {
-                { "symbol", symbol }
-            };
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/positionSide/dual", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            return await _baseClient.SendAsync<BingXPositionMode>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXPositionMode>(request, null, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -234,12 +230,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Set Position Mode
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(string symbol, PositionMode positionMode, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(PositionMode positionMode, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
-            {
-                { "symbol", symbol }
-            };
+            var parameters = new ParameterCollection();
             parameters.AddEnum("dualSidePosition", positionMode);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/positionSide/dual", BingXExchange.RateLimiter.RestAccount1, 1, true,

@@ -277,10 +277,10 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.AdjustIsolatedMarginAsync(System.String,System.Decimal,BingX.Net.Enums.AdjustDirection,BingX.Net.Enums.PositionSide,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetPositionModeAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetPositionModeAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.SetPositionModeAsync(System.String,BingX.Net.Enums.PositionMode,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.SetPositionModeAsync(BingX.Net.Enums.PositionMode,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetIsolatedMarginChangeHistoryAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
@@ -1542,21 +1542,19 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetPositionModeAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetPositionModeAsync(System.Threading.CancellationToken)">
             <summary>
             Get current position mode
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /></para>
             </summary>
-            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.SetPositionModeAsync(System.String,BingX.Net.Enums.PositionMode,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.SetPositionModeAsync(BingX.Net.Enums.PositionMode,System.Threading.CancellationToken)">
             <summary>
             Set position mode
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /></para>
             </summary>
-            <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="positionMode">Position mode</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
