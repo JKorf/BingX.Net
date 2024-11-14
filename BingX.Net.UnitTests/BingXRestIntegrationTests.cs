@@ -90,7 +90,7 @@ namespace BingX.Net.UnitTests
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetMarginModeAsync("ETH-USDT", default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetLeverageAsync("ETH-USDT", default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetPositionModeAsync("ETH-USDT", default), true);
+            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetPositionModeAsync(default), true);
         }
 
         [Test]
