@@ -24,6 +24,16 @@
             Socket Swap API address
             </summary>
         </member>
+        <member name="M:BingX.Net.BingXEnvironment.#ctor">
+            <summary>
+            ctor for DI, use <see cref="M:BingX.Net.BingXEnvironment.CreateCustom(System.String,System.String,System.String,System.String)"/> for creating a custom environment
+            </summary>
+        </member>
+        <member name="M:BingX.Net.BingXEnvironment.GetEnvironmentByName(System.String)">
+            <summary>
+            Get the BingX environment by name
+            </summary>
+        </member>
         <member name="P:BingX.Net.BingXEnvironment.Live">
             <summary>
             Live environment
@@ -137,11 +147,11 @@
             </summary>
             <param name="optionsDelegate">Option configuration delegate</param>
         </member>
-        <member name="M:BingX.Net.Clients.BingXRestClient.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Logging.ILoggerFactory,System.Action{BingX.Net.Objects.Options.BingXRestOptions})">
+        <member name="M:BingX.Net.Clients.BingXRestClient.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Options.IOptions{BingX.Net.Objects.Options.BingXRestOptions})">
             <summary>
             Create a new instance of the BingXRestClient using provided options
             </summary>
-            <param name="optionsDelegate">Option configuration delegate</param>
+            <param name="options">Option configuration</param>
             <param name="loggerFactory">The logger factory</param>
             <param name="httpClient">Http client for this client</param>
         </member>
@@ -192,24 +202,18 @@
         <member name="P:BingX.Net.Clients.BingXSocketClient.PerpetualFuturesApi">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.BingXSocketClient.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
-            <summary>
-            Create a new instance of BingXSocketClient
-            </summary>
-            <param name="loggerFactory">The logger factory</param>
-        </member>
         <member name="M:BingX.Net.Clients.BingXSocketClient.#ctor(System.Action{BingX.Net.Objects.Options.BingXSocketOptions})">
             <summary>
             Create a new instance of BingXSocketClient
             </summary>
             <param name="optionsDelegate">Option configuration delegate</param>
         </member>
-        <member name="M:BingX.Net.Clients.BingXSocketClient.#ctor(System.Action{BingX.Net.Objects.Options.BingXSocketOptions},Microsoft.Extensions.Logging.ILoggerFactory)">
+        <member name="M:BingX.Net.Clients.BingXSocketClient.#ctor(Microsoft.Extensions.Options.IOptions{BingX.Net.Objects.Options.BingXSocketOptions},Microsoft.Extensions.Logging.ILoggerFactory)">
             <summary>
             Create a new instance of BingXSocketClient
             </summary>
             <param name="loggerFactory">The logger factory</param>
-            <param name="optionsDelegate">Option configuration delegate</param>
+            <param name="options">Option configuration</param>
         </member>
         <member name="M:BingX.Net.Clients.BingXSocketClient.SetDefaultOptions(System.Action{BingX.Net.Objects.Options.BingXSocketOptions})">
             <summary>
@@ -6487,6 +6491,36 @@
             Client order id
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Options.BingXOptions">
+            <summary>
+            BingX services options
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Options.BingXOptions.Rest">
+            <summary>
+            Rest client options
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Options.BingXOptions.Socket">
+            <summary>
+            Socket client options
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Options.BingXOptions.Environment">
+            <summary>
+            Trade environment. Contains info about URL's to use to connect to the API. Use `BingXEnvironment` to swap environment, for example `Environment = BingXEnvironment.Live`
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Options.BingXOptions.ApiCredentials">
+            <summary>
+            The api credentials used for signing requests.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Options.BingXOptions.SocketClientLifeTime">
+            <summary>
+            The DI service lifetime for the IBingXSocketClient
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Options.BingXOrderBookOptions">
             <summary>
             Options for the BingX SymbolOrderBook
@@ -6517,6 +6551,11 @@
             Default options for new clients
             </summary>
         </member>
+        <member name="M:BingX.Net.Objects.Options.BingXRestOptions.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Options.BingXRestOptions.ReceiveWindow">
             <summary>
             The receive window
@@ -6545,6 +6584,11 @@
         <member name="P:BingX.Net.Objects.Options.BingXSocketOptions.Default">
             <summary>
             Default options for new clients
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Objects.Options.BingXSocketOptions.#ctor">
+            <summary>
+            ctor
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Options.BingXSocketOptions.SpotOptions">
@@ -6749,14 +6793,20 @@
             Extensions for DI
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXRestOptions},System.Action{BingX.Net.Objects.Options.BingXSocketOptions},System.Nullable{Microsoft.Extensions.DependencyInjection.ServiceLifetime})">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Add the IBingXClient and IBingXSocketClient to the sevice collection so they can be injected
+            Add services such as the IBingXRestClient and IBingXSocketClient. Configures the services based on the provided configuration.
             </summary>
             <param name="services">The service collection</param>
-            <param name="defaultRestOptionsDelegate">Set default options for the rest client</param>
-            <param name="defaultSocketOptionsDelegate">Set default options for the socket client</param>
-            <param name="socketClientLifeTime">The lifetime of the IBingXSocketClient for the service collection. Defaults to Singleton.</param>
+            <param name="configuration">The configuration(section) containing the options</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXOptions})">
+            <summary>
+            Add services such as the IBingXRestClient and IBingXSocketClient. Services will be configured based on the provided options.
+            </summary>
+            <param name="services">The service collection</param>
+            <param name="optionsDelegate">Set options for the BingX services</param>
             <returns></returns>
         </member>
     </members>

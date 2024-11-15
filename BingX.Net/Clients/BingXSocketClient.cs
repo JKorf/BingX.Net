@@ -8,6 +8,7 @@ using BingX.Net.Objects.Options;
 using CryptoExchange.Net.Clients;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using BingX.Net.Clients.PerpetualFuturesApi;
+using Microsoft.Extensions.Options;
 
 namespace BingX.Net.Clients
 {
@@ -28,19 +29,13 @@ namespace BingX.Net.Clients
         #endregion
 
         #region constructor/destructor
-        /// <summary>
-        /// Create a new instance of BingXSocketClient
-        /// </summary>
-        /// <param name="loggerFactory">The logger factory</param>
-        public BingXSocketClient(ILoggerFactory? loggerFactory = null) : this((x) => { }, loggerFactory)
-        {
-        }
 
         /// <summary>
         /// Create a new instance of BingXSocketClient
         /// </summary>
         /// <param name="optionsDelegate">Option configuration delegate</param>
-        public BingXSocketClient(Action<BingXSocketOptions> optionsDelegate) : this(optionsDelegate, null)
+        public BingXSocketClient(Action<BingXSocketOptions>? optionsDelegate = null)
+            : this(Options.Create(ApplyOptionsDelegate(optionsDelegate)), null)
         {
         }
 
@@ -48,15 +43,13 @@ namespace BingX.Net.Clients
         /// Create a new instance of BingXSocketClient
         /// </summary>
         /// <param name="loggerFactory">The logger factory</param>
-        /// <param name="optionsDelegate">Option configuration delegate</param>
-        public BingXSocketClient(Action<BingXSocketOptions>? optionsDelegate, ILoggerFactory? loggerFactory = null) : base(loggerFactory, "BingX")
+        /// <param name="options">Option configuration</param>
+        public BingXSocketClient(IOptions<BingXSocketOptions> options, ILoggerFactory? loggerFactory = null) : base(loggerFactory, "BingX")
         {
-            var options = BingXSocketOptions.Default.Copy();
-            optionsDelegate?.Invoke(options);
-            Initialize(options);
+            Initialize(options.Value);
 
-            SpotApi = AddApiClient(new BingXSocketClientSpotApi(_logger, options));
-            PerpetualFuturesApi = AddApiClient(new BingXSocketClientPerpetualFuturesApi(_logger, options));
+            SpotApi = AddApiClient(new BingXSocketClientSpotApi(_logger, options.Value));
+            PerpetualFuturesApi = AddApiClient(new BingXSocketClientPerpetualFuturesApi(_logger, options.Value));
         }
         #endregion
 
@@ -66,9 +59,7 @@ namespace BingX.Net.Clients
         /// <param name="optionsDelegate">Option configuration delegate</param>
         public static void SetDefaultOptions(Action<BingXSocketOptions> optionsDelegate)
         {
-            var options = BingXSocketOptions.Default.Copy();
-            optionsDelegate(options);
-            BingXSocketOptions.Default = options;
+            BingXSocketOptions.Default = ApplyOptionsDelegate(optionsDelegate);
         }
 
         /// <inheritdoc />

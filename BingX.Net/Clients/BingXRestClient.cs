@@ -11,6 +11,7 @@ using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using BingX.Net.Clients.PerpetualFuturesApi;
 using BingX.Net.Interfaces.Clients.Apis;
 using BingX.Net.Clients.Apis;
+using Microsoft.Extensions.Options;
 
 namespace BingX.Net.Clients
 {
@@ -34,26 +35,24 @@ namespace BingX.Net.Clients
         /// Create a new instance of the BingXRestClient using provided options
         /// </summary>
         /// <param name="optionsDelegate">Option configuration delegate</param>
-        public BingXRestClient(Action<BingXRestOptions>? optionsDelegate = null) : this(null, null, optionsDelegate)
+        public BingXRestClient(Action<BingXRestOptions>? optionsDelegate = null)
+            : this(null, null, Options.Create(ApplyOptionsDelegate(optionsDelegate)))
         {
         }
 
         /// <summary>
         /// Create a new instance of the BingXRestClient using provided options
         /// </summary>
-        /// <param name="optionsDelegate">Option configuration delegate</param>
+        /// <param name="options">Option configuration</param>
         /// <param name="loggerFactory">The logger factory</param>
         /// <param name="httpClient">Http client for this client</param>
-        public BingXRestClient(HttpClient? httpClient, ILoggerFactory? loggerFactory, Action<BingXRestOptions>? optionsDelegate = null) : base(loggerFactory, "BingX")
+        public BingXRestClient(HttpClient? httpClient, ILoggerFactory? loggerFactory, IOptions<BingXRestOptions> options) : base(loggerFactory, "BingX")
         {
-            var options = BingXRestOptions.Default.Copy();
-            if (optionsDelegate != null)
-                optionsDelegate(options);
-            Initialize(options);
+            Initialize(options.Value);
 
-            SpotApi = AddApiClient(new BingXRestClientSpotApi(_logger, httpClient, options));
-            PerpetualFuturesApi = AddApiClient(new BingXRestClientPerpetualFuturesApi(_logger, httpClient, options));
-            SubAccountApi = AddApiClient(new BingXRestClientSubAccountApi(this, _logger, httpClient, options));
+            SpotApi = AddApiClient(new BingXRestClientSpotApi(_logger, httpClient, options.Value));
+            PerpetualFuturesApi = AddApiClient(new BingXRestClientPerpetualFuturesApi(_logger, httpClient, options.Value));
+            SubAccountApi = AddApiClient(new BingXRestClientSubAccountApi(this, _logger, httpClient, options.Value));
         }
 
         #endregion
@@ -64,9 +63,7 @@ namespace BingX.Net.Clients
         /// <param name="optionsDelegate">Option configuration delegate</param>
         public static void SetDefaultOptions(Action<BingXRestOptions> optionsDelegate)
         {
-            var options = BingXRestOptions.Default.Copy();
-            optionsDelegate(options);
-            BingXRestOptions.Default = options;
+            BingXRestOptions.Default = ApplyOptionsDelegate(optionsDelegate);
         }
 
         /// <inheritdoc />
