@@ -145,6 +145,10 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.15.1 - 15 Nov 2024
+    * Fixed available balance response on shared futures implementation
+    * Removed symbol parameters from GetPositionModeAsync and SetPositionModeAsync endpoints
+
 * Version 1.15.0 - 13 Nov 2024
     * Added initial SubAccount API implementation
 
