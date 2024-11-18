@@ -83,6 +83,21 @@ namespace Microsoft.Extensions.DependencyInjection
             return AddBingXCore(services, options.SocketClientLifeTime);
         }
 
+        /// <summary>
+        /// DEPRECATED; use <see cref="AddBingX(IServiceCollection, Action{BingXOptions}?)" /> instead
+        /// </summary>
+        public static IServiceCollection AddBingX(
+            this IServiceCollection services,
+            Action<BingXRestOptions> restDelegate,
+            Action<BingXSocketOptions>? socketDelegate = null,
+            ServiceLifetime? socketClientLifeTime = null)
+        {
+            services.Configure<BingXRestOptions>((x) => { restDelegate?.Invoke(x); });
+            services.Configure<BingXSocketOptions>((x) => { socketDelegate?.Invoke(x); });
+
+            return AddBingXCore(services, socketClientLifeTime);
+        }
+
         private static IServiceCollection AddBingXCore(
             this IServiceCollection services,
             ServiceLifetime? socketClientLifeTime = null)

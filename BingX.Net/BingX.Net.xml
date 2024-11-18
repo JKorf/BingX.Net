@@ -6809,5 +6809,10 @@
             <param name="optionsDelegate">Set options for the BingX services</param>
             <returns></returns>
         </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXRestOptions},System.Action{BingX.Net.Objects.Options.BingXSocketOptions},System.Nullable{Microsoft.Extensions.DependencyInjection.ServiceLifetime})">
+            <summary>
+            DEPRECATED; use <see cref="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddBingX(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{BingX.Net.Objects.Options.BingXOptions})" /> instead
+            </summary>
+        </member>
     </members>
 </doc>
