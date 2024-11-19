@@ -59,6 +59,16 @@
             Exchange name
             </summary>
         </member>
+        <member name="P:BingX.Net.BingXExchange.DisplayName">
+            <summary>
+            Exchange name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.BingXExchange.ImageUrl">
+            <summary>
+            Url to exchange image
+            </summary>
+        </member>
         <member name="P:BingX.Net.BingXExchange.Url">
             <summary>
             Url to the main website
