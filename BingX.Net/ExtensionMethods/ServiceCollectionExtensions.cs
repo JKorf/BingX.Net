@@ -10,6 +10,9 @@ using BingX.Net.Objects.Options;
 using BingX.Net.SymbolOrderBooks;
 using CryptoExchange.Net;
 using BingX.Net;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -19,46 +22,112 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Add the IBingXClient and IBingXSocketClient to the sevice collection so they can be injected
+        /// Add services such as the IBingXRestClient and IBingXSocketClient. Configures the services based on the provided configuration.
         /// </summary>
         /// <param name="services">The service collection</param>
-        /// <param name="defaultRestOptionsDelegate">Set default options for the rest client</param>
-        /// <param name="defaultSocketOptionsDelegate">Set default options for the socket client</param>
-        /// <param name="socketClientLifeTime">The lifetime of the IBingXSocketClient for the service collection. Defaults to Singleton.</param>
+        /// <param name="configuration">The configuration(section) containing the options</param>
         /// <returns></returns>
         public static IServiceCollection AddBingX(
             this IServiceCollection services,
-            Action<BingXRestOptions>? defaultRestOptionsDelegate = null,
-            Action<BingXSocketOptions>? defaultSocketOptionsDelegate = null,
+            IConfiguration configuration)
+        {
+            var options = new BingXOptions();
+            // Reset environment so we know if theyre overriden
+            options.Rest.Environment = null!;
+            options.Socket.Environment = null!;
+            configuration.Bind(options);
+
+            if (options.Rest == null || options.Socket == null)
+                throw new ArgumentException("Options null");
+
+            var restEnvName = options.Rest.Environment?.Name ?? options.Environment?.Name ?? BingXEnvironment.Live.Name;
+            var socketEnvName = options.Socket.Environment?.Name ?? options.Environment?.Name ?? BingXEnvironment.Live.Name;
+            options.Rest.Environment = BingXEnvironment.GetEnvironmentByName(restEnvName) ?? options.Rest.Environment!;
+            options.Rest.ApiCredentials = options.Rest.ApiCredentials ?? options.ApiCredentials;
+            options.Socket.Environment = BingXEnvironment.GetEnvironmentByName(socketEnvName) ?? options.Socket.Environment!;
+            options.Socket.ApiCredentials = options.Socket.ApiCredentials ?? options.ApiCredentials;
+
+
+            services.AddSingleton(x => Options.Options.Create(options.Rest));
+            services.AddSingleton(x => Options.Options.Create(options.Socket));
+
+            return AddBingXCore(services, options.SocketClientLifeTime);
+        }
+
+        /// <summary>
+        /// Add services such as the IBingXRestClient and IBingXSocketClient. Services will be configured based on the provided options.
+        /// </summary>
+        /// <param name="services">The service collection</param>
+        /// <param name="optionsDelegate">Set options for the BingX services</param>
+        /// <returns></returns>
+        public static IServiceCollection AddBingX(
+            this IServiceCollection services,
+            Action<BingXOptions>? optionsDelegate = null)
+        {
+            var options = new BingXOptions();
+            // Reset environment so we know if theyre overriden
+            options.Rest.Environment = null!;
+            options.Socket.Environment = null!;
+            optionsDelegate?.Invoke(options);
+            if (options.Rest == null || options.Socket == null)
+                throw new ArgumentException("Options null");
+
+            options.Rest.Environment = options.Rest.Environment ?? options.Environment ?? BingXEnvironment.Live;
+            options.Rest.ApiCredentials = options.Rest.ApiCredentials ?? options.ApiCredentials;
+            options.Socket.Environment = options.Socket.Environment ?? options.Environment ?? BingXEnvironment.Live;
+            options.Socket.ApiCredentials = options.Socket.ApiCredentials ?? options.ApiCredentials;
+
+            services.AddSingleton(x => Options.Options.Create(options.Rest));
+            services.AddSingleton(x => Options.Options.Create(options.Socket));
+
+            return AddBingXCore(services, options.SocketClientLifeTime);
+        }
+
+        /// <summary>
+        /// DEPRECATED; use <see cref="AddBingX(IServiceCollection, Action{BingXOptions}?)" /> instead
+        /// </summary>
+        public static IServiceCollection AddBingX(
+            this IServiceCollection services,
+            Action<BingXRestOptions> restDelegate,
+            Action<BingXSocketOptions>? socketDelegate = null,
             ServiceLifetime? socketClientLifeTime = null)
         {
-            var restOptions = BingXRestOptions.Default.Copy();
+            services.Configure<BingXRestOptions>((x) => { restDelegate?.Invoke(x); });
+            services.Configure<BingXSocketOptions>((x) => { socketDelegate?.Invoke(x); });
 
-            if (defaultRestOptionsDelegate != null)
-            {
-                defaultRestOptionsDelegate(restOptions);
-                BingXRestClient.SetDefaultOptions(defaultRestOptionsDelegate);
-            }
+            return AddBingXCore(services, socketClientLifeTime);
+        }
 
-            if (defaultSocketOptionsDelegate != null)
-                BingXSocketClient.SetDefaultOptions(defaultSocketOptionsDelegate);
-
-            services.AddHttpClient<IBingXRestClient, BingXRestClient>(options =>
+        private static IServiceCollection AddBingXCore(
+            this IServiceCollection services,
+            ServiceLifetime? socketClientLifeTime = null)
+        {
+            services.AddHttpClient<IBingXRestClient, BingXRestClient>((client, serviceProvider) =>
             {
-                options.Timeout = restOptions.RequestTimeout;
-            }).ConfigurePrimaryHttpMessageHandler(() =>
-            {
+                var options = serviceProvider.GetRequiredService<IOptions<BingXRestOptions>>().Value;
+                client.Timeout = options.RequestTimeout;
+                return new BingXRestClient(client, serviceProvider.GetRequiredService<ILoggerFactory>(), serviceProvider.GetRequiredService<IOptions<BingXRestOptions>>());
+            }).ConfigurePrimaryHttpMessageHandler((serviceProvider) => {
                 var handler = new HttpClientHandler();
-                if (restOptions.Proxy != null)
+                try
+                {
+                    handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                }
+                catch (PlatformNotSupportedException)
+                { }
+
+                var options = serviceProvider.GetRequiredService<IOptions<BingXRestOptions>>().Value;
+                if (options.Proxy != null)
                 {
                     handler.Proxy = new WebProxy
                     {
-                        Address = new Uri($"{restOptions.Proxy.Host}:{restOptions.Proxy.Port}"),
-                        Credentials = restOptions.Proxy.Password == null ? null : new NetworkCredential(restOptions.Proxy.Login, restOptions.Proxy.Password)
+                        Address = new Uri($"{options.Proxy.Host}:{options.Proxy.Port}"),
+                        Credentials = options.Proxy.Password == null ? null : new NetworkCredential(options.Proxy.Login, options.Proxy.Password)
                     };
                 }
                 return handler;
             });
+            services.Add(new ServiceDescriptor(typeof(IBingXSocketClient), x => { return new BingXSocketClient(x.GetRequiredService<IOptions<BingXSocketOptions>>(), x.GetRequiredService<ILoggerFactory>()); }, socketClientLifeTime ?? ServiceLifetime.Singleton));
 
             services.AddTransient<ICryptoRestClient, CryptoRestClient>();
             services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
@@ -71,10 +140,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().PerpetualFuturesApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().PerpetualFuturesApi.SharedClient);
 
-            if (socketClientLifeTime == null)
-                services.AddSingleton<IBingXSocketClient, BingXSocketClient>();
-            else
-                services.Add(new ServiceDescriptor(typeof(IBingXSocketClient), typeof(BingXSocketClient), socketClientLifeTime.Value));
             return services;
         }
     }

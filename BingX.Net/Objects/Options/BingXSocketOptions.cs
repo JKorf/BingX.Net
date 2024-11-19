@@ -17,6 +17,14 @@ namespace BingX.Net.Objects.Options
         };
 
         /// <summary>
+        /// ctor
+        /// </summary>
+        public BingXSocketOptions()
+        {
+            Default?.Set(this);
+        }
+
+        /// <summary>
         /// Options for the Spot API
         /// </summary>
         public SocketApiOptions SpotOptions { get; private set; } = new SocketApiOptions()
@@ -28,12 +36,13 @@ namespace BingX.Net.Objects.Options
         /// </summary>
         public SocketApiOptions FuturesOptions { get; private set; } = new SocketApiOptions();
 
-        internal BingXSocketOptions Copy()
+        internal BingXSocketOptions Set(BingXSocketOptions targetOptions)
         {
-            var options = Copy<BingXSocketOptions>();
-            options.SpotOptions = SpotOptions.Copy<SocketApiOptions>();
-            options.FuturesOptions = FuturesOptions.Copy<SocketApiOptions>();
-            return options;
+            targetOptions = base.Set<BingXSocketOptions>(targetOptions);
+            targetOptions.SpotOptions = SpotOptions.Set(targetOptions.SpotOptions);
+            targetOptions.SpotOptions = SpotOptions.Set(targetOptions.SpotOptions);
+            targetOptions.FuturesOptions = FuturesOptions.Set(targetOptions.FuturesOptions);
+            return targetOptions;
         }
     }
 }

@@ -2,6 +2,7 @@
 using BingX.Net.Clients;
 using CryptoExchange.Net.Testing;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
@@ -25,11 +26,11 @@ namespace BingX.Net.UnitTests
             var sec = Environment.GetEnvironmentVariable("APISECRET");
 
             Authenticated = key != null && sec != null;
-            return new BingXRestClient(null, loggerFactory, opts =>
+            return new BingXRestClient(null, loggerFactory, Options.Create(new Objects.Options.BingXRestOptions
             {
-                opts.OutputOriginalData = true;
-                opts.ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec) : null;
-            });
+                OutputOriginalData = true,
+                ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec) : null
+            }));
         }
 
         [Test]

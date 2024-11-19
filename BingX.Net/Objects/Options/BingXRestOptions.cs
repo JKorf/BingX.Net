@@ -18,6 +18,14 @@ namespace BingX.Net.Objects.Options
         };
 
         /// <summary>
+        /// ctor
+        /// </summary>
+        public BingXRestOptions()
+        {
+            Default?.Set(this);
+        }
+
+        /// <summary>
         /// The receive window
         /// </summary>
         public TimeSpan? ReceiveWindow { get; set; }
@@ -39,14 +47,14 @@ namespace BingX.Net.Objects.Options
         /// </summary>
         public RestApiOptions FuturesOptions { get; private set; } = new RestApiOptions();
 
-        internal BingXRestOptions Copy()
+        internal BingXRestOptions Set(BingXRestOptions targetOptions)
         {
-            var options = Copy<BingXRestOptions>();
-            options.ReceiveWindow = ReceiveWindow;
-            options.BrokerId = BrokerId;
-            options.SpotOptions = SpotOptions.Copy<RestApiOptions>();
-            options.FuturesOptions = FuturesOptions.Copy<RestApiOptions>();
-            return options;
+            targetOptions = base.Set<BingXRestOptions>(targetOptions);
+            targetOptions.ReceiveWindow = ReceiveWindow;
+            targetOptions.BrokerId = BrokerId;
+            targetOptions.SpotOptions = SpotOptions.Set(targetOptions.SpotOptions);
+            targetOptions.FuturesOptions = FuturesOptions.Set(targetOptions.FuturesOptions);
+            return targetOptions;
         }
     }
 }
