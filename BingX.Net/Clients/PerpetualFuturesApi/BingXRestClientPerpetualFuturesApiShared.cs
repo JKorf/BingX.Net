@@ -183,7 +183,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             return result.AsExchangeResult<IEnumerable<SharedTrade>>(Exchange, request.Symbol.TradingMode, result.Data.Reverse().Select(x => new SharedTrade(x.Quantity, x.Price, x.Timestamp)
             {
-                Side = x.BuyerIsMaker ? SharedOrderSide.Buy : SharedOrderSide.Sell
+                Side = x.BuyerIsMaker ? SharedOrderSide.Sell : SharedOrderSide.Buy,
             }).ToArray());
         }
 
