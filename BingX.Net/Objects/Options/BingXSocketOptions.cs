@@ -34,7 +34,10 @@ namespace BingX.Net.Objects.Options
         /// <summary>
         /// Options for the Futures API
         /// </summary>
-        public SocketApiOptions FuturesOptions { get; private set; } = new SocketApiOptions();
+        public SocketApiOptions FuturesOptions { get; private set; } = new SocketApiOptions()
+        {
+            MaxSocketConnections = 60
+        };
 
         internal BingXSocketOptions Set(BingXSocketOptions targetOptions)
         {
