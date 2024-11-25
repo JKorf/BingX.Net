@@ -145,6 +145,22 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.17.0 - 25 Nov 2024
+    * Added restClient.PerpetualFuturesApi.Account.ApplyForVSTAssetsAsync
+    * Added restClient.PerpetualFuturesApi.Account.SetMultiAssetModeAsync
+    * Added restClient.PerpetualFuturesApi.Account.GetMultiAssetModeAsync
+    * Added restClient.PerpetualFuturesApi.Account.GetMultiAssetRulesAsync
+    * Added restClient.PerpetualFuturesApi.Account.GetMultiAssetsMarginAsync
+    * Added restClient.PerpetualFuturesApi.Trading.GetOrdersAsync
+    * Added restClient.PerpetualFuturesApi.Trading.PlaceTwapOrderAsync
+    * Added restClient.PerpetualFuturesApi.Trading.GetOpenTwapOrdersAsync
+    * Added restClient.PerpetualFuturesApi.Trading.GetTwapOrderAsync
+    * Added restClient.PerpetualFuturesApi.Trading.GetClosedTwapOrdersAsync
+    * Added restClient.PerpetualFuturesApi.Trading.CancelTwapOrderAsync
+    * Added Demo BingXEnvironment
+    * Added websocket connection limit perpetual futures
+    * Fixed inverted order side for Shared trades
+
 * Version 1.16.0 - 19 Nov 2024
     * Updated CryptoExchange.Net to version 8.3.0, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/8.3.0
     * Added support for loading client settings from IConfiguration
