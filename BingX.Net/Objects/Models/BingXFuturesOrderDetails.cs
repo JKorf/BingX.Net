@@ -173,10 +173,20 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("triggerOrderId")]
         public long? TriggerOrderId { get; set; }
         /// <summary>
-        /// Is post onlyorder
+        /// Is post only order
         /// </summary>
         [JsonPropertyName("postOnly")]
         public bool? PostOnly { get; set; }
+        /// <summary>
+        /// Is part of a Time Weight Average Price Order
+        /// </summary>
+        [JsonPropertyName("isTwap")]
+        public bool IsTwap { get; set; }
+        /// <summary>
+        /// The main order id if this order is part of a Twap order
+        /// </summary>
+        [JsonPropertyName("mainOrderId")]
+        public string? MainOrderId { get; set; }
     }
 
     /// <summary>

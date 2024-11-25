@@ -27,5 +27,15 @@
             SocketClientSpotAddress = "wss://open-api-ws.bingx.com",
             SocketClientSwapAddress = "wss://open-api-swap.bingx.com"
         };
+
+        /// <summary>
+        /// The addresses to connect to the demo trading BingX.com API. Note that this only applies to trading VST
+        /// </summary>
+        public static BingXApiAddresses Demo = new BingXApiAddresses
+        {
+            RestClientAddress = "https://open-api-vst.bingx.com",
+            SocketClientSpotAddress = "wss://open-api-ws.bingx.com",
+            SocketClientSwapAddress = "wss://vst-open-api-ws.bingx.com"
+        };
     }
 }

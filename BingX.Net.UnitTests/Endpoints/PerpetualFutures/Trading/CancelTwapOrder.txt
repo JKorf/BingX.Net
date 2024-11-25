@@ -1,0 +1,25 @@
+POST
+/openApi/swap/v1/twap/cancelOrder
+true
+{
+  "code": 0,
+  "msg": "",
+  "timestamp": 1702731661854,
+  "data": {
+    "symbol": "BNB-USDT",
+    "side": "BUY",
+    "positionSide": "LONG",
+    "priceType": "constant",
+    "priceVariance": "2000",
+    "triggerPrice": "68000",
+    "interval": 8,
+    "amountPerOrder": "0.111",
+    "totalAmount": "0.511",
+    "orderStatus": "Running",
+    "executedQty": "0.1",
+    "duration": 800,
+    "maxDuration": 9000,
+    "createdTime": 1702731661854,
+    "updateTime": 1702731661854
+  }
+}

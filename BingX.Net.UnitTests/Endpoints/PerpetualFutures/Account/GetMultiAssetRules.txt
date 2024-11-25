@@ -1,0 +1,65 @@
+GET
+/openApi/swap/v1/trade/multiAssetsRules
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "marginAssets": "USDT",
+      "ltv": "99.99%",
+      "collateralValueRatio": "99.99%",
+      "maxTransfer": "",
+      "indexPrice": "1.0006981800"
+    },
+    {
+      "marginAssets": "USDC",
+      "ltv": "99.99%",
+      "collateralValueRatio": "99.99%",
+      "maxTransfer": "",
+      "indexPrice": "0.9998772499"
+    },
+    {
+      "marginAssets": "TRX",
+      "ltv": "85.00%",
+      "collateralValueRatio": "95.00%",
+      "maxTransfer": "300000",
+      "indexPrice": "0.1778813333"
+    },
+    {
+      "marginAssets": "DOGE",
+      "ltv": "95.00%",
+      "collateralValueRatio": "95.00%",
+      "maxTransfer": "300000",
+      "indexPrice": "0.3891840533"
+    },
+    {
+      "marginAssets": "BNB",
+      "ltv": "90.00%",
+      "collateralValueRatio": "95.00%",
+      "maxTransfer": "160",
+      "indexPrice": "622.9584792100"
+    },
+    {
+      "marginAssets": "DOT",
+      "ltv": "90.00%",
+      "collateralValueRatio": "95.00%",
+      "maxTransfer": "12000",
+      "indexPrice": "5.0431331628"
+    },
+    {
+      "marginAssets": "BTC",
+      "ltv": "95.00%",
+      "collateralValueRatio": "95.00%",
+      "maxTransfer": "10",
+      "indexPrice": "90230.3058075903"
+    },
+    {
+      "marginAssets": "ETH",
+      "ltv": "95.00%",
+      "collateralValueRatio": "95.00%",
+      "maxTransfer": "100",
+      "indexPrice": "3214.4279682820"
+    }
+  ]
+}

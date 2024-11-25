@@ -65,6 +65,15 @@ namespace BingX.Net
                                      BingXApiAddresses.Default.SocketClientSwapAddress);
 
         /// <summary>
+        /// Demo environment. Note that this only applies to trading VST
+        /// </summary>
+        public static BingXEnvironment Demo { get; }
+            = new BingXEnvironment("demo",
+                                     BingXApiAddresses.Demo.RestClientAddress,
+                                     BingXApiAddresses.Demo.SocketClientSpotAddress,
+                                     BingXApiAddresses.Demo.SocketClientSwapAddress);
+
+        /// <summary>
         /// Create a custom environment
         /// </summary>
         /// <param name="name"></param>

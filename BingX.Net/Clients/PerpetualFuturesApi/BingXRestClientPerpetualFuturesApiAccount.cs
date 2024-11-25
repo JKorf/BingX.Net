@@ -261,5 +261,72 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
+        #region Apply For VST Assets
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXAmount>> ApplyForVSTAssetsAsync(CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/getVst", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXAmount>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Set Multi Asset Mode
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXMultiAssetMode>> SetMultiAssetModeAsync(MultiAssetMode assetMode, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddEnum("assetMode", assetMode);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/assetMode", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXMultiAssetMode>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Multi Asset Mode
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXMultiAssetMode>> GetMultiAssetModeAsync(CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/assetMode", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXMultiAssetMode>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Multi Asset Rules
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXMultiAssetRules>>> GetMultiAssetRulesAsync(CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/multiAssetsRules", BingXExchange.RateLimiter.RestMarket, 1, true);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXMultiAssetRules>>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Multi Assets Margin
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXMarginAsset>>> GetMultiAssetsMarginAsync(CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/user/marginAssets", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<IEnumerable<BingXMarginAsset>>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
     }
 }

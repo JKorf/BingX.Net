@@ -1,0 +1,10 @@
+POST
+/openApi/swap/v1/trade/assetMode
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "assetMode": "multiAssetsMode"
+  }
+}

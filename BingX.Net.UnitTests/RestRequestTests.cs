@@ -7,6 +7,8 @@ using CryptoExchange.Net.Testing;
 using System.Collections.Generic;
 using BingX.Net.Objects.Models;
 using System.Drawing;
+using BingX.Net.Enums;
+using System;
 
 namespace BingX.Net.UnitTests
 {
@@ -108,6 +110,11 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetPositionModeAsync(), "GetPositionMode");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.SetPositionModeAsync(Enums.PositionMode.SinglePositionMode), "SetPositionMode");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetIsolatedMarginChangeHistoryAsync("123"), "GetIsolatedMarginChangeHistory", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.SetMultiAssetModeAsync(Enums.MultiAssetMode.SingleAssetMode), "SetMultiAssetMode", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetMultiAssetModeAsync(), "GetMultiAssetMode", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetMultiAssetRulesAsync(), "GetMultiAssetRules", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetMultiAssetsMarginAsync(), "GetMultiAssetsMargin", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.ApplyForVSTAssetsAsync(), "ApplyForVSTAssets", nestedJsonProperty: "data");
         }
 
         [Test]
@@ -159,6 +166,11 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.ClosePositionAsync("123"), "ClosePosition");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("123"), "GetPositionAndMarginInfo");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ETH-USDT"), "GetPositionHistory", nestedJsonProperty: "data.positionHistory");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.PlaceTwapOrderAsync("123", OrderSide.Sell, PositionSide.Long, PriceType.Constant, 123, 0.1m, 123, 0.1m, 0.1m), "PlaceTwapOrder", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetClosedTwapOrdersAsync("123", 123, 123, DateTime.UtcNow, DateTime.UtcNow), "GetClosedTwapOrders", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetTwapOrderAsync(123), "GetTwapOrder", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.CancelTwapOrderAsync(123), "CancelTwapOrder", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetOrdersAsync("123", 123), "GetOrders", nestedJsonProperty: "data.orders", ignoreProperties: new List<string> { "workingType", "advanceAttr", "positionID", "takeProfitEntrustPrice", "stopLossEntrustPrice", "orderType" });
         }
 
 

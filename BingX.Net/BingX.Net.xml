@@ -39,6 +39,11 @@
             Live environment
             </summary>
         </member>
+        <member name="P:BingX.Net.BingXEnvironment.Demo">
+            <summary>
+            Demo environment. Note that this only applies to trading VST
+            </summary>
+        </member>
         <member name="M:BingX.Net.BingXEnvironment.CreateCustom(System.String,System.String,System.String,System.String)">
             <summary>
             Create a custom environment
@@ -300,6 +305,21 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetIsolatedMarginChangeHistoryAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.ApplyForVSTAssetsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.SetMultiAssetModeAsync(BingX.Net.Enums.MultiAssetMode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetMultiAssetModeAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetMultiAssetRulesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount.GetMultiAssetsMarginAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData">
             <inheritdoc />
         </member>
@@ -402,10 +422,28 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.ClosePositionAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetPositionAndMarginInfoAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetPositionHistoryAsync(System.String,System.Nullable{System.Int64},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceTwapOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.PositionSide,BingX.Net.Enums.PriceType,System.Decimal,System.Decimal,System.Int32,System.Decimal,System.Decimal,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOpenTwapOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetClosedTwapOrdersAsync(System.String,System.Int32,System.Int32,System.DateTime,System.DateTime,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetTwapOrderAsync(System.Int64,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelTwapOrderAsync(System.Int64,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi">
@@ -784,6 +822,21 @@
         <member name="F:BingX.Net.Enums.ApiKeyPermission.InternalTransferOfSubaccounts">
             <summary>
             Internal transfer of sub accounts
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.MultiAssetMode">
+            <summary>
+            Multi asset mode
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.MultiAssetMode.SingleAssetMode">
+            <summary>
+            Single asset mode
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.MultiAssetMode.MultiAssetMode">
+            <summary>
+            Multi asset mode
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.AutoCloseType">
@@ -1176,6 +1229,21 @@
             Both
             </summary>
         </member>
+        <member name="T:BingX.Net.Enums.PriceType">
+            <summary>
+            Price type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.PriceType.Constant">
+            <summary>
+            Constant
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.PriceType.Percentage">
+            <summary>
+            Percentage
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.Role">
             <summary>
             Role
@@ -1334,6 +1402,61 @@
         <member name="F:BingX.Net.Enums.TriggerType.IndexPrice">
             <summary>
             Index price
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.TwapOrderStatus">
+            <summary>
+            Twap order status
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.New">
+            <summary>
+            New
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.Running">
+            <summary>
+            Executing
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.Canceling">
+            <summary>
+            Canceling
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.Filled">
+            <summary>
+            Fully filled
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.PartiallyFilled">
+            <summary>
+            Partially filled
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.Pending">
+            <summary>
+            Pending
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.PartiallyFilledAndResidueFailed">
+            <summary>
+            Partially filled, remaining order failed
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.PartiallyFilledAndResidueCancelled">
+            <summary>
+            Partially filled, remaining cancellation
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.Cancelled">
+            <summary>
+            Canceled
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TwapOrderStatus.Failed">
+            <summary>
+            Order failed
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.WithdrawalStatus">
@@ -1584,6 +1707,42 @@
             <param name="endTime">Filter by end time</param>
             <param name="page">Page</param>
             <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.ApplyForVSTAssetsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Apply for receiving VST assets. Only available on the VST environment
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Apply%20VST" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.SetMultiAssetModeAsync(BingX.Net.Enums.MultiAssetMode,System.Threading.CancellationToken)">
+            <summary>
+            Set multi asset mode
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Multi-Assets%20Mode" /></para>
+            </summary>
+            <param name="assetMode">Multi asset mode</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetMultiAssetModeAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get current multi asset mode
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Mode" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetMultiAssetRulesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get multi asset mode rules
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Rules" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiAccount.GetMultiAssetsMarginAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get multi assets margin
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Margin" /></para>
+            </summary>
             <param name="ct">Cancellation token</param>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData">
@@ -1968,6 +2127,18 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get all orders, max 7 days ago
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#All%20Orders" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+            <param name="orderId">Filter by order id</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="limit">Max number of results</param>
+            <param name="ct">Cancellation token</param>
+        </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetPositionAndMarginInfoAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Get position and margin info
@@ -1989,6 +2160,58 @@
             <param name="endTime">Filter by end time</param>
             <param name="page">Page number</param>
             <param name="pageSize">Page size</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceTwapOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.PositionSide,BingX.Net.Enums.PriceType,System.Decimal,System.Decimal,System.Int32,System.Decimal,System.Decimal,System.Threading.CancellationToken)">
+            <summary>
+            Place a new time weighted average price order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20TWAP%20Order" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="orderSide">Order side</param>
+            <param name="positionSide">Position side</param>
+            <param name="priceType">Price type</param>
+            <param name="priceVariance">When type is constant, it represents the price difference (unit is USDT), when type is percentage, it represents the slippage ratio (unit is %)</param>
+            <param name="triggerPrice">Trigger price</param>
+            <param name="interval">After the strategic order is split, the time interval for order placing is between 5-120s.</param>
+            <param name="orderQuantity">Maximum quantity for a single order</param>
+            <param name="totalQuantity">Total quantity to trade</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOpenTwapOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get open Twap orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Entrusted%20Order" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetClosedTwapOrdersAsync(System.String,System.Int32,System.Int32,System.DateTime,System.DateTime,System.Threading.CancellationToken)">
+            <summary>
+            Get closed Twap orders
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Historical%20Orders" /></para>
+            </summary>
+            <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+            <param name="page">Page</param>
+            <param name="pageSize">Page size</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetTwapOrderAsync(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Get a Twap order by id
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Historical%20Orders" /></para>
+            </summary>
+            <param name="orderId">Order id</param>
+            <param name="ct">Cancellation token</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelTwapOrderAsync(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Cancel Twap order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20TWAP%20Order" /></para>
+            </summary>
+            <param name="orderId">Main order id</param>
             <param name="ct">Cancellation token</param>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi">
@@ -2819,6 +3042,21 @@
         <member name="F:BingX.Net.Objects.BingXApiAddresses.Default">
             <summary>
             The default addresses to connect to the BingX.com API
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Objects.BingXApiAddresses.Demo">
+            <summary>
+            The addresses to connect to the demo trading BingX.com API. Note that this only applies to trading VST
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXAmount">
+            <summary>
+            Amount
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXAmount.Quantity">
+            <summary>
+            Quantity
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXApiKey">
@@ -4093,7 +4331,17 @@
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.PostOnly">
             <summary>
-            Is post onlyorder
+            Is post only order
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.IsTwap">
+            <summary>
+            Is part of a Time Weight Average Price Order
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.MainOrderId">
+            <summary>
+            The main order id if this order is part of a Twap order
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXStopOrder">
@@ -5186,6 +5434,31 @@
             The listen key
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXMarginAsset">
+            <summary>
+            Margin asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginAsset.Asset">
+            <summary>
+            Asset
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginAsset.TotalQuantity">
+            <summary>
+            Total quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginAsset.AvailableTransfer">
+            <summary>
+            Available transfer
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMarginAsset.LatestMortgageQuantity">
+            <summary>
+            Latest mortgage quantity
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXMarginHistory">
             <summary>
             Margin change info
@@ -5259,6 +5532,46 @@
         <member name="P:BingX.Net.Objects.Models.BingXMarkPriceUpdate.MarkPrice">
             <summary>
             The current mark price
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXMultiAssetMode">
+            <summary>
+            Multi asset mode
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMultiAssetMode.AssetMode">
+            <summary>
+            Asset mode
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXMultiAssetRules">
+            <summary>
+            Multi asset mode rules
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMultiAssetRules.MarginAssets">
+            <summary>
+            Margin assets
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMultiAssetRules.Ltv">
+            <summary>
+            Loan to value ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMultiAssetRules.CollateralValueRatio">
+            <summary>
+            Collateral value ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMultiAssetRules.MaxTransfer">
+            <summary>
+            Max transfer
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXMultiAssetRules.IndexPrice">
+            <summary>
+            Index price
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXOcoOrder">
@@ -6344,6 +6657,116 @@
         <member name="P:BingX.Net.Objects.Models.BingXTransfer.Timestamp">
             <summary>
             Timestamp
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTwapOrderId">
+            <summary>
+            Twap order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrderId.MainOrderId">
+            <summary>
+            Main order id
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTwapOrders">
+            <summary>
+            Twap order list
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrders.List">
+            <summary>
+            List
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrders.Total">
+            <summary>
+            Total orders
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTwapOrder">
+            <summary>
+            Twap order info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.MainOrderId">
+            <summary>
+            Main order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.Side">
+            <summary>
+            Side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.PositionSide">
+            <summary>
+            Position side
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.PriceType">
+            <summary>
+            Price type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.PriceVariance">
+            <summary>
+            Price variance
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.TriggerPrice">
+            <summary>
+            Trigger price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.Interval">
+            <summary>
+            Interval
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.QuantityPerOrder">
+            <summary>
+            Quantity per order
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.TotalQuantity">
+            <summary>
+            Total quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.OrderStatus">
+            <summary>
+            Order status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.ExecutedQuantity">
+            <summary>
+            Executed quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.Duration">
+            <summary>
+            Execution time, in seconds
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.MaxDuration">
+            <summary>
+            Maximum execution time execution time in seconds
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.CreateTime">
+            <summary>
+            Creation time
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTwapOrder.UpdateTime">
+            <summary>
+            Update time
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXUserId">

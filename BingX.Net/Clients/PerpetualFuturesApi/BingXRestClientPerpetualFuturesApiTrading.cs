@@ -406,7 +406,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
-
         #region Get User Trades
 
         /// <inheritdoc />
@@ -461,6 +460,24 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
+        #region Get Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddOptional("symbol", symbol);
+            parameters.AddOptionalString("orderId", orderId);
+            parameters.AddOptionalMillisecondsString("startTime", startTime);
+            parameters.AddOptionalMillisecondsString("endTime", endTime);
+            parameters.Add("limit", limit ?? 500);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/fullOrder", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXFuturesOrdersDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
+            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+        }
+
+        #endregion
+
         #region Get Position And MarginInfo
 
         /// <inheritdoc />
@@ -494,6 +511,91 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXPositionHistoryWrapper>(request, parameters, ct).ConfigureAwait(false);
             return result.As<IEnumerable<BingXPositionHistory>>(result.Data?.History);
+        }
+
+        #endregion
+
+        #region Place Twap Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXTwapOrderId>> PlaceTwapOrderAsync(string symbol, OrderSide orderSide, PositionSide positionSide, PriceType priceType, decimal priceVariance, decimal triggerPrice, int interval, decimal orderQuantity, decimal totalQuantity, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("symbol", symbol);
+            parameters.AddEnum("side", orderSide);
+            parameters.AddEnum("positionSide", positionSide);
+            parameters.AddEnum("priceType", priceType);
+            parameters.AddEnum("priceVariance", priceVariance);
+            parameters.AddString("triggerPrice", triggerPrice);
+            parameters.Add("interval", interval);
+            parameters.AddString("amountPerOrder", orderQuantity);
+            parameters.AddString("totalAmount", totalQuantity);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/twap/order", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXTwapOrderId>(request, parameters, ct, additionalHeaders: new Dictionary<string, string>
+                 {
+                     { "X-SOURCE-KEY", _brokerId }
+                 }).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Twap Open Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXTwapOrders>> GetOpenTwapOrdersAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("symbol", symbol);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/twap/openOrders", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXTwapOrders>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Closed Twap Orders
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXTwapOrders>> GetClosedTwapOrdersAsync(string symbol, int page, int pageSize, DateTime startTime, DateTime endTime, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("symbol", symbol);
+            parameters.Add("pageIndex", page);
+            parameters.Add("pageSize", pageSize);
+            parameters.AddMillisecondsString("startTime", startTime);
+            parameters.AddMillisecondsString("endTime", endTime);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/twap/historyOrders", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXTwapOrders>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Get Twap Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXTwapOrder>> GetTwapOrderAsync(long orderId, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddString("mainOrderId", orderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/twap/orderDetail", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXTwapOrder>(request, parameters, ct).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Cancel Twap Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXTwapOrder>> CancelTwapOrderAsync(long orderId, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.AddString("mainOrderId", orderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/twap/cancelOrder", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var result = await _baseClient.SendAsync<BingXTwapOrder>(request, parameters, ct).ConfigureAwait(false);
+            return result;
         }
 
         #endregion

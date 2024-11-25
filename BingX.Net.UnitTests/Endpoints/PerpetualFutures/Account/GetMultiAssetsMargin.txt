@@ -1,0 +1,33 @@
+GET
+/openApi/swap/v1/user/marginAssets
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "currency": "USDC",
+      "totalAmount": "0.00000000",
+      "availableTransfer": "0.00000000",
+      "latestMortgageAmount": "0.00000000"
+    },
+    {
+      "currency": "USDT",
+      "totalAmount": "6.89886320",
+      "availableTransfer": "6.89886320",
+      "latestMortgageAmount": "6.89886320"
+    },
+    {
+      "currency": "BTC",
+      "totalAmount": "6.89886320",
+      "availableTransfer": "6.89886320",
+      "latestMortgageAmount": "6.89886320"
+    },
+    {
+      "currency": "ETH",
+      "totalAmount": "6.89886320",
+      "availableTransfer": "6.89886320",
+      "latestMortgageAmount": "6.89886320"
+    }
+  ]
+}

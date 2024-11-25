@@ -1,0 +1,11 @@
+POST
+/openApi/swap/v1/trade/getVst
+true
+{
+  "code": 0,
+  "msg": "",
+  "timestamp": 1730863321895,
+  "data": {
+    "amount": 20000
+  }
+}

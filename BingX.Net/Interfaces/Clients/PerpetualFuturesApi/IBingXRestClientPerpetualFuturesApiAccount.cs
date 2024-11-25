@@ -149,5 +149,41 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXMarginHistory>> GetIsolatedMarginChangeHistoryAsync(string positionId, string? symbol = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
+        /// <summary>
+        /// Apply for receiving VST assets. Only available on the VST environment
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Apply%20VST" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXAmount>> ApplyForVSTAssetsAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Set multi asset mode
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Multi-Assets%20Mode" /></para>
+        /// </summary>
+        /// <param name="assetMode">Multi asset mode</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXMultiAssetMode>> SetMultiAssetModeAsync(MultiAssetMode assetMode, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get current multi asset mode
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Mode" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXMultiAssetMode>> GetMultiAssetModeAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Get multi asset mode rules
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Rules" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<BingXMultiAssetRules>>> GetMultiAssetRulesAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Get multi assets margin
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Margin" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<BingXMarginAsset>>> GetMultiAssetsMarginAsync(CancellationToken ct = default);
+
     }
 }

@@ -1,0 +1,11 @@
+POST
+/openApi/swap/v1/twap/order
+true
+{
+  "code": 0,
+  "msg": "",
+  "timestamp": 1702731661854,
+  "data": {
+    "mainOrderId": "123"
+  }
+}

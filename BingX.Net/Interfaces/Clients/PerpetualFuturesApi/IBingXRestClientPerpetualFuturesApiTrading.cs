@@ -291,6 +291,18 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<WebCallResult<BingXClosePositionResult>> ClosePositionAsync(string positionId, CancellationToken ct = default);
 
         /// <summary>
+        /// Get all orders, max 7 days ago
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#All%20Orders" /></para>
+        /// </summary>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="orderId">Filter by order id</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="limit">Max number of results</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+
+        /// <summary>
         /// Get position and margin info
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Position%20and%20Maintenance%20Margin%20Ratio" /></para>
         /// </summary>
@@ -312,5 +324,58 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="pageSize">Page size</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+
+        /// <summary>
+        /// Place a new time weighted average price order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20TWAP%20Order" /></para>
+        /// </summary>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
+        /// <param name="orderSide">Order side</param>
+        /// <param name="positionSide">Position side</param>
+        /// <param name="priceType">Price type</param>
+        /// <param name="priceVariance">When type is constant, it represents the price difference (unit is USDT), when type is percentage, it represents the slippage ratio (unit is %)</param>
+        /// <param name="triggerPrice">Trigger price</param>
+        /// <param name="interval">After the strategic order is split, the time interval for order placing is between 5-120s.</param>
+        /// <param name="orderQuantity">Maximum quantity for a single order</param>
+        /// <param name="totalQuantity">Total quantity to trade</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXTwapOrderId>> PlaceTwapOrderAsync(string symbol, OrderSide orderSide, PositionSide positionSide, PriceType priceType, decimal priceVariance, decimal triggerPrice, int interval, decimal orderQuantity, decimal totalQuantity, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get open Twap orders
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Entrusted%20Order" /></para>
+        /// </summary>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXTwapOrders>> GetOpenTwapOrdersAsync(string symbol, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get closed Twap orders
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Historical%20Orders" /></para>
+        /// </summary>
+        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="page">Page</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="startTime">Filter by start time</param>
+        /// <param name="endTime">Filter by end time</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXTwapOrders>> GetClosedTwapOrdersAsync(string symbol, int page, int pageSize, DateTime startTime, DateTime endTime, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get a Twap order by id
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Historical%20Orders" /></para>
+        /// </summary>
+        /// <param name="orderId">Order id</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXTwapOrder>> GetTwapOrderAsync(long orderId, CancellationToken ct = default);
+
+        /// <summary>
+        /// Cancel Twap order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20TWAP%20Order" /></para>
+        /// </summary>
+        /// <param name="orderId">Main order id</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXTwapOrder>> CancelTwapOrderAsync(long orderId, CancellationToken ct = default);
+
     }
 }
