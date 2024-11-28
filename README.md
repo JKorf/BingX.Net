@@ -145,6 +145,12 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.18.0 - 28 Nov 2024
+    * Updated CryptoExchange.Net to version 8.4.0, see https://github.com/JKorf/CryptoExchange.Net/releases/tag/8.4.0
+    * Added GetFeesAsync Shared REST client implementations
+    * Updated BingXOptions to LibraryOptions implementation
+    * Updated test and analyzer package versions
+
 * Version 1.17.0 - 25 Nov 2024
     * Added restClient.PerpetualFuturesApi.Account.ApplyForVSTAssetsAsync
     * Added restClient.PerpetualFuturesApi.Account.SetMultiAssetModeAsync
