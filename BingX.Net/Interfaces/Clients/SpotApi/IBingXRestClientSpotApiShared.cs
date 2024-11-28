@@ -18,7 +18,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         //ITradeHistoryRestClient
         IWithdrawalRestClient,
         IWithdrawRestClient,
-        IListenKeyRestClient
+        IListenKeyRestClient,
+        IFeeRestClient
     {
     }
 }

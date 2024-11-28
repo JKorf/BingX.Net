@@ -6929,31 +6929,6 @@
             BingX services options
             </summary>
         </member>
-        <member name="P:BingX.Net.Objects.Options.BingXOptions.Rest">
-            <summary>
-            Rest client options
-            </summary>
-        </member>
-        <member name="P:BingX.Net.Objects.Options.BingXOptions.Socket">
-            <summary>
-            Socket client options
-            </summary>
-        </member>
-        <member name="P:BingX.Net.Objects.Options.BingXOptions.Environment">
-            <summary>
-            Trade environment. Contains info about URL's to use to connect to the API. Use `BingXEnvironment` to swap environment, for example `Environment = BingXEnvironment.Live`
-            </summary>
-        </member>
-        <member name="P:BingX.Net.Objects.Options.BingXOptions.ApiCredentials">
-            <summary>
-            The api credentials used for signing requests.
-            </summary>
-        </member>
-        <member name="P:BingX.Net.Objects.Options.BingXOptions.SocketClientLifeTime">
-            <summary>
-            The DI service lifetime for the IBingXSocketClient
-            </summary>
-        </member>
         <member name="T:BingX.Net.Objects.Options.BingXOrderBookOptions">
             <summary>
             Options for the BingX SymbolOrderBook
