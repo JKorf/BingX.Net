@@ -25,13 +25,8 @@ namespace BingX.Net.SymbolOrderBooks
         {
             _serviceProvider = serviceProvider;
 
-            Spot = new OrderBookFactory<BingXOrderBookOptions>(
-                CreateSpot,
-                (sharedSymbol, options) => CreateSpot(BingXExchange.FormatSymbol(sharedSymbol.BaseAsset, sharedSymbol.QuoteAsset, sharedSymbol.TradingMode, sharedSymbol.DeliverTime), options));
-
-            PerpetualFutures = new OrderBookFactory<BingXOrderBookOptions>(
-                CreatePerpetualFutures,
-                (sharedSymbol, options) => CreatePerpetualFutures(BingXExchange.FormatSymbol(sharedSymbol.BaseAsset, sharedSymbol.QuoteAsset, sharedSymbol.TradingMode, sharedSymbol.DeliverTime), options));
+            Spot = new OrderBookFactory<BingXOrderBookOptions>(CreateSpot, Create);
+            PerpetualFutures = new OrderBookFactory<BingXOrderBookOptions>(CreatePerpetualFutures, Create);
         }
 
         /// <inheritdoc />
@@ -42,7 +37,7 @@ namespace BingX.Net.SymbolOrderBooks
         /// <inheritdoc />
         public ISymbolOrderBook Create(SharedSymbol symbol, Action<BingXOrderBookOptions>? options = null)
         {
-            var symbolName = BingXExchange.FormatSymbol(symbol.BaseAsset, symbol.QuoteAsset, symbol.TradingMode, symbol.DeliverTime);
+            var symbolName = symbol.GetSymbol(BingXExchange.FormatSymbol);
             if (symbol.TradingMode == TradingMode.Spot)
                 return CreateSpot(symbolName, options);
 
