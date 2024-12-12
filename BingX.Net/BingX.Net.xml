@@ -398,10 +398,10 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelMultipleOrderAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelAllOrderAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.CancelAllOrderAsync(System.String,System.Nullable{BingX.Net.Enums.OrderType},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOpenOrdersAsync(System.String,System.Nullable{BingX.Net.Enums.OrderType},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetLiquidationOrdersAsync(System.String,System.Nullable{BingX.Net.Enums.AutoCloseType},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
@@ -2035,21 +2035,23 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelAllOrderAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.CancelAllOrderAsync(System.String,System.Nullable{BingX.Net.Enums.OrderType},System.Threading.CancellationToken)">
             <summary>
             Cancel all open orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Orders" /></para>
             </summary>
             <param name="symbol">Only cancel orders for this symbol</param>
+            <param name="orderType">Only cancel orders of this type</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOpenOrdersAsync(System.String,System.Nullable{BingX.Net.Enums.OrderType},System.Threading.CancellationToken)">
             <summary>
             Get all open orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Open%20Orders" /></para>
             </summary>
             <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+            <param name="orderType">Filter by type of order</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>

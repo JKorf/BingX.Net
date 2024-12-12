@@ -319,10 +319,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Cancel All Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXCancelAllResult>> CancelAllOrderAsync(string? symbol = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXCancelAllResult>> CancelAllOrderAsync(
+            string? symbol = null,
+            OrderType? orderType = null, 
+            CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
+            parameters.AddOptionalEnum("type", orderType);
+
             var request = _definitions.GetOrCreate(HttpMethod.Delete, "/openApi/swap/v2/trade/allOpenOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXCancelAllResult>(request, parameters, ct).ConfigureAwait(false);
@@ -333,10 +338,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Open Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(
+            string? symbol = null,
+            OrderType? orderType = null,
+            CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
+            parameters.AddOptionalEnum("type", orderType);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/trade/openOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));

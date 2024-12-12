@@ -203,18 +203,20 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Orders" /></para>
         /// </summary>
         /// <param name="symbol">Only cancel orders for this symbol</param>
+        /// <param name="orderType">Only cancel orders of this type</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXCancelAllResult>> CancelAllOrderAsync(string? symbol = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXCancelAllResult>> CancelAllOrderAsync(string? symbol = null, OrderType? orderType = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get all open orders
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Open%20Orders" /></para>
         /// </summary>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="orderType">Filter by type of order</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, OrderType? orderType = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get liquidation order history

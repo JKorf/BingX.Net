@@ -119,7 +119,7 @@ namespace BingX.Net.UnitTests
         public async Task TestPerpetualFuturesTrading()
         {
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionsAsync(default, default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetOpenOrdersAsync(default, default), true);
+            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetOpenOrdersAsync(default, default, default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetClosedOrdersAsync(default, default, default, default, default, default, default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetLiquidationOrdersAsync(default, default, default, default, default, default, default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default, default), true);
