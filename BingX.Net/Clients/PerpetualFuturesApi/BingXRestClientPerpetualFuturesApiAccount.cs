@@ -49,7 +49,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/user/income", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            var result = await _baseClient.SendAsync<IEnumerable<BingXIncome>>(request, null, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<IEnumerable<BingXIncome>>(request, parameters, ct).ConfigureAwait(false);
             if (result && result.Data == null)
             {
                 // No items returns null; return empty array instead
