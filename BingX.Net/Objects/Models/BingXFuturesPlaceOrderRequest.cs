@@ -1,4 +1,5 @@
 ﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
@@ -16,17 +17,17 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Order type
         /// </summary>
-        [JsonPropertyName("type")]
+        [JsonPropertyName("type"), JsonConverter(typeof(EnumConverter))]
         public FuturesOrderType OrderType { get; set; }
         /// <summary>
         /// Order side
         /// </summary>
-        [JsonPropertyName("side")]
+        [JsonPropertyName("side"), JsonConverter(typeof(EnumConverter))]
         public OrderSide Side { get; set; }
         /// <summary>
         /// Position side
         /// </summary>
-        [JsonPropertyName("positionSide")]
+        [JsonPropertyName("positionSide"), JsonConverter(typeof(EnumConverter))]
         public PositionSide PositionSide { get; set; }
         /// <summary>
         /// Reduce only
@@ -61,13 +62,13 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Trigger type
         /// </summary>
-        [JsonPropertyName("workingType"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("workingType"), JsonConverter(typeof(EnumConverter)), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
         /// Time in force
         /// </summary>
-        [JsonPropertyName("timeInForce"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public TriggerType? TimeInForce { get; set; }
+        [JsonPropertyName("timeInForce"), JsonConverter(typeof(EnumConverter)), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public TimeInForce? TimeInForce { get; set; }
         /// <summary>
         /// Close position
         /// </summary>
@@ -115,7 +116,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Order type
         /// </summary>
-        [JsonPropertyName("type")]
+        [JsonPropertyName("type"), JsonConverter(typeof(EnumConverter))]
         public TakeProfitStopLossMode Type { get; set; }
         /// <summary>
         /// Stop price
@@ -130,7 +131,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Trigger type
         /// </summary>
-        [JsonPropertyName("workingType"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonPropertyName("workingType"), JsonConverter(typeof(EnumConverter)), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
         /// Stop guarenteed
