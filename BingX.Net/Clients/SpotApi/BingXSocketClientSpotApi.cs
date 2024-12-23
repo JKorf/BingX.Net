@@ -117,6 +117,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default)
         {
+            listenKey.ValidateNotNull(nameof(listenKey));
+
             var stream = "spot.executionReport";
             var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, stream, stream, x => onMessage(x.WithStreamId(stream).WithSymbol(x.Data.Symbol)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
@@ -125,6 +127,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(string listenKey, Action<DataEvent<BingXBalanceUpdate>> onMessage, CancellationToken ct = default)
         {
+            listenKey.ValidateNotNull(nameof(listenKey));
+
             var subscription = new BingXBalanceSubscription(_logger, onMessage);
             return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
         }

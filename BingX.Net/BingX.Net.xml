@@ -170,6 +170,9 @@
             <param name="loggerFactory">The logger factory</param>
             <param name="httpClient">Http client for this client</param>
         </member>
+        <member name="M:BingX.Net.Clients.BingXRestClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.BingXRestClient.SetDefaultOptions(System.Action{BingX.Net.Objects.Options.BingXRestOptions})">
             <summary>
             Set the default options to be used when creating new clients
@@ -229,6 +232,9 @@
             </summary>
             <param name="loggerFactory">The logger factory</param>
             <param name="options">Option configuration</param>
+        </member>
+        <member name="M:BingX.Net.Clients.BingXSocketClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
+            <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXSocketClient.SetDefaultOptions(System.Action{BingX.Net.Objects.Options.BingXSocketOptions})">
             <summary>
@@ -1516,6 +1522,12 @@
             Sub account API endpoints
             </summary>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.IBingXRestClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
+            <summary>
+            Update specific options
+            </summary>
+            <param name="options">Options to update. Only specific options are changable after the client has been created</param>
+        </member>
         <member name="M:BingX.Net.Interfaces.Clients.IBingXRestClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
             <summary>
             Set the API credentials for this client. All Api clients in this client will use the new credentials, regardless of earlier set options.
@@ -1536,6 +1548,12 @@
             <summary>
             Perpetual Futures streams
             </summary>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.IBingXSocketClient.SetOptions(CryptoExchange.Net.Objects.Options.UpdateOptions)">
+            <summary>
+            Update specific options
+            </summary>
+            <param name="options">Options to update. Only specific options are changable after the client has been created</param>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.IBingXSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
             <summary>

@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using System.Threading;
 using CryptoExchange.Net.Objects;
 using BingX.Net.Objects.Models;
+using CryptoExchange.Net.Interfaces;
 
 namespace BingX.Net.Interfaces.Clients.Apis
 {
     /// <summary>
     /// BingX sub account API endpoints
     /// </summary>
-    public interface IBingXRestClientSubAccountApi
+    public interface IBingXRestClientSubAccountApi: IRestApiClient, IDisposable
     {
         /// <summary>
         /// Get the permissions of the API key

@@ -159,8 +159,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             Action<DataEvent<BingXListenKeyExpiredUpdate>>? onListenKeyExpiredUpdate = null,
             CancellationToken ct = default)
         {
+            listenKey.ValidateNotNull(nameof(listenKey));
+
             var subscription = new BingXUserDataSubscription(_logger, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
+        }
+
+        protected override WebSocketParameters GetWebSocketParameters(string address)
+        {
+            var parameters = base.GetWebSocketParameters(address);
+            parameters.Timeout = address.Contains("?listenKey=") ? TimeSpan.FromSeconds(10) : parameters.Timeout;
+            return parameters;
         }
 
         /// <inheritdoc />

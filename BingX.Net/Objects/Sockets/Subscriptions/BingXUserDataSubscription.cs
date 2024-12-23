@@ -13,6 +13,8 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
     internal class BingXUserDataSubscription : Subscription
     {
         private static readonly MessagePath _ePath = MessagePath.Get().Property("e");
+        private static readonly MessagePath _acPath = MessagePath.Get().Property("ac");
+        private static readonly MessagePath _aPath = MessagePath.Get().Property("a");
 
         /// <inheritdoc />
         public override HashSet<string> ListenerIdentifiers { get; set; }
@@ -26,8 +28,15 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public override Type? GetMessageType(IMessageAccessor message)
         {
             var identifier = message.GetValue<string>(_ePath);
-            if (string.Equals(identifier, "ACCOUNT_CONFIG_UPDATE", StringComparison.Ordinal))
-                return typeof(BingXConfigUpdate);
+            if (string.Equals(identifier, "SNAPSHOT", StringComparison.Ordinal))
+            {
+                if (message.GetNodeType(_acPath) != null)
+                    return typeof(BingXConfigUpdate);
+                if (message.GetNodeType(_aPath) != null)
+                    return typeof(BingXFuturesAccountUpdate);
+            }
+            if (string.Equals(identifier, "ACCOUNT_CONFIG_UPDATE", StringComparison.Ordinal))            
+                return typeof(BingXConfigUpdate);            
             if (string.Equals(identifier, "ACCOUNT_UPDATE", StringComparison.Ordinal))
                 return typeof(BingXFuturesAccountUpdate);
             if (string.Equals(identifier, "ORDER_TRADE_UPDATE", StringComparison.Ordinal))
@@ -62,7 +71,8 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                 "listenKeyExpired",
                 "ACCOUNT_CONFIG_UPDATE",
                 "ACCOUNT_UPDATE",
-                "ORDER_TRADE_UPDATE"
+                "ORDER_TRADE_UPDATE",
+                "SNAPSHOT"
             };
         }
 
@@ -77,11 +87,11 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
             if (message.Data is BingXConfigUpdate configUpdate)
             {
-                _configHandler?.Invoke(message.As(configUpdate, configUpdate.Event, configUpdate.Configuration.Symbol, SocketUpdateType.Update));
+                _configHandler?.Invoke(message.As(configUpdate, configUpdate.Event, configUpdate.Configuration.Symbol, configUpdate.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot :SocketUpdateType.Update));
             }
             else if (message.Data is BingXFuturesAccountUpdate accountUpdate)
             {
-                _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Event, null, SocketUpdateType.Update));
+                _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Event, null, accountUpdate.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
             }
             else if (message.Data is BingXFuturesOrderUpdateWrapper orderUpdate)
             {

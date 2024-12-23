@@ -12,6 +12,7 @@ using BingX.Net.Clients.PerpetualFuturesApi;
 using BingX.Net.Interfaces.Clients.Apis;
 using BingX.Net.Clients.Apis;
 using Microsoft.Extensions.Options;
+using CryptoExchange.Net.Objects.Options;
 
 namespace BingX.Net.Clients
 {
@@ -57,6 +58,14 @@ namespace BingX.Net.Clients
 
         #endregion
 
+        /// <inheritdoc />
+        public void SetOptions(UpdateOptions options)
+        {
+            PerpetualFuturesApi.SetOptions(options);
+            SpotApi.SetOptions(options);
+            SubAccountApi.SetOptions(options);
+        }
+
         /// <summary>
         /// Set the default options to be used when creating new clients
         /// </summary>
@@ -71,6 +80,7 @@ namespace BingX.Net.Clients
         {
             SpotApi.SetApiCredentials(credentials);
             PerpetualFuturesApi.SetApiCredentials(credentials);
+            SubAccountApi.SetApiCredentials(credentials);
         }
     }
 }

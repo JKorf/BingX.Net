@@ -1,4 +1,5 @@
 ﻿using CryptoExchange.Net.Objects.Options;
+using System;
 
 namespace BingX.Net.Objects.Options
 {
@@ -13,7 +14,7 @@ namespace BingX.Net.Objects.Options
         public static BingXSocketOptions Default { get; set; } = new BingXSocketOptions()
         {
             Environment = BingXEnvironment.Live,
-            SocketSubscriptionsCombineTarget = 10
+            SocketSubscriptionsCombineTarget = 10,
         };
 
         /// <summary>
@@ -29,6 +30,7 @@ namespace BingX.Net.Objects.Options
         /// </summary>
         public SocketApiOptions SpotOptions { get; private set; } = new SocketApiOptions()
         {
+            SocketNoDataTimeout = TimeSpan.FromSeconds(40) // Ping message is sent every 30 seconds
         };
 
         /// <summary>
