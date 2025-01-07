@@ -90,7 +90,7 @@ namespace BingX.Net.Clients
         }
 
         /// <inheritdoc />
-        protected override ServerError? TryParseError(IMessageAccessor accessor)
+        protected override Error? TryParseError(IEnumerable<KeyValuePair<string, IEnumerable<string>>> responseHeaders, IMessageAccessor accessor)
         {
             var code = accessor.GetValue<int>(MessagePath.Get().Property("code"));
             if (code == 0)
