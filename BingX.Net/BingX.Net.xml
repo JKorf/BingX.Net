@@ -3214,6 +3214,11 @@
             Deposit precision
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXNetwork.ContractAddress">
+            <summary>
+            Contract address
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXBalance">
             <summary>
             Balance info
