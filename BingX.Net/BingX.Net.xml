@@ -5874,6 +5874,11 @@
             The fee asset
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.AveragePrice">
+            <summary>
+            Average fill price
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXOrderId">
             <summary>
             Order id

@@ -250,6 +250,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(order.Data.Fee),
                 FeeAsset = order.Data.FeeAsset,
                 UpdateTime = order.Data.UpdateTime,
+                AveragePrice = order.Data.AveragePrice
             });
         }
 
@@ -282,6 +283,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
+                AveragePrice = x.AveragePrice
             }).ToArray());
         }
 
@@ -333,6 +335,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
+                AveragePrice = x.AveragePrice
             }).ToArray(), nextToken);
         }
 

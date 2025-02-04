@@ -96,5 +96,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("feeAsset")]
         public string? FeeAsset { get; set; } = string.Empty;
+        /// <summary>
+        /// Average fill price
+        /// </summary>
+        [JsonPropertyName("avgPrice")]
+        public decimal? AveragePrice { get; set; }
     }
 }
