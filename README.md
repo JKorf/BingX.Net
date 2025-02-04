@@ -147,6 +147,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.19.2 - 04 Feb 2025
+    * Added AveragePrice to SpotApi order details model and shared implementat…
+
 * Version 1.19.1 - 07 Jan 2025
     * Updated CryptoExchange.Net version
     * Added Type property to BingXExchange class
