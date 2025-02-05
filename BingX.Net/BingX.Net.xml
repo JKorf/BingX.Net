@@ -6019,6 +6019,11 @@
             Order type
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.TimeInForce">
+            <summary>
+            Time in force
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXPlaceOrderRequest.StopPrice">
             <summary>
             Stop price

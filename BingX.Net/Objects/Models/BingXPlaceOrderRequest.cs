@@ -1,4 +1,5 @@
 ﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.JsonNet;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
@@ -23,6 +24,11 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("type")]
         public OrderType Type { get; set; }
+        /// <summary>
+        /// Time in force
+        /// </summary>
+        [JsonPropertyName("timeInForce"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public TimeInForce? TimeInForce { get; set; }
         /// <summary>
         /// Stop price
         /// </summary>
