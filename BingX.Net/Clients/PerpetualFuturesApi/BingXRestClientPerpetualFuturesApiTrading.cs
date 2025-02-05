@@ -173,7 +173,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddOptional("quantity", quantity);
             parameter.AddOptional("price", price);
             parameter.AddOptional("stopPrice", stopPrice);
-            parameter.AddOptional("newClientOrderId", clientOrderId);
+            parameter.AddOptional("clientOrderId", clientOrderId);
             parameter.AddOptional("priceRate", priceRate);
             parameter.AddOptionalEnum("timeInForce", timeInForce);
             parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
