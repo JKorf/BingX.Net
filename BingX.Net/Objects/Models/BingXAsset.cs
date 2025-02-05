@@ -96,5 +96,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("depositPrecision")]
         public int DepositPrecision { get; set; }
+        /// <summary>
+        /// Contract address
+        /// </summary>
+        [JsonPropertyName("contractAddress")]
+        public string ContractAddress { get; set; } = string.Empty;
     }
 }
