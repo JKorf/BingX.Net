@@ -13,6 +13,7 @@ using CryptoExchange.Net.Converters.SystemTextJson;
 using System.Data.Common;
 using CryptoExchange.Net.RateLimiting.Guards;
 using System.Drawing;
+using System.Linq;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -111,7 +112,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Cancel Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXOrder>>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default)
         {
             var parameter = new ParameterCollection()
             {
@@ -122,8 +123,8 @@ namespace BingX.Net.Clients.SpotApi
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/cancelOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            var result = await _baseClient.SendAsync<BingXOrderWrapper>(request, parameter, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXOrder>>(result.Data?.Orders);
+            var result = await _baseClient.SendAsync<BingXCancelsResult>(request, parameter, ct).ConfigureAwait(false);
+            return result;
         }
 
         #endregion

@@ -3439,6 +3439,21 @@
             Error message
             </summary>
         </member>
+        <member name="T:BingX.Net.Objects.Models.BingXCancelsResult">
+            <summary>
+            Cancel result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXCancelsResult.Orders">
+            <summary>
+            Successfully canceled orders
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXCancelsResult.Fails">
+            <summary>
+            Failed to cancel orders
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXClosePositionResult">
             <summary>
             Close position result
@@ -5882,6 +5897,21 @@
         <member name="P:BingX.Net.Objects.Models.BingXOrderDetails.AveragePrice">
             <summary>
             Average fill price
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXOrderError">
+            <summary>
+            Error result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderError.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXOrderError.Error">
+            <summary>
+            Error
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXOrderId">

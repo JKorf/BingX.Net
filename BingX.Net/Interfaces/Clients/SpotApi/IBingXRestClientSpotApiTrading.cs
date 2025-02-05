@@ -61,7 +61,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="clientOrderIds">The client order ids to cancel</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXOrder>>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all active orders on a symbol
