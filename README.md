@@ -147,6 +147,13 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.20.0 - 05 Feb 2025
+    * Updated CryptoExchange.Net to version 8.7.3, see https://github.com/JKorf/CryptoExchange.Net/releases/
+    * Added missing TimeInForce parameter for restClient.SpotApi.Trading.PlaceMultipleOrderAsync
+    * Added ContractAddress property to BingXAsset model
+    * Updated restClient.SpotApi.Trading.CancelOrdersAsync response model so failed cancellations can also be returned
+    * Fixed clientOrderId parameter for restClient.PerpetualFuturesApi.Trading.PlaceOrderAsync endpoint
+
 * Version 1.19.2 - 04 Feb 2025
     * Added AveragePrice to SpotApi order details model and shared implementat…
 
