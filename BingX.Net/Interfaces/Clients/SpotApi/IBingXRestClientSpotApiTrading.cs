@@ -59,9 +59,10 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="orderIds">The order ids to cancel</param>
         /// <param name="clientOrderIds">The client order ids to cancel</param>
+        /// <param name="processPartialSuccess">When true the server will handle partially successful requests. When false the full request fails if any of the order cancellations fail.</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, bool? processPartialSuccess = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all active orders on a symbol

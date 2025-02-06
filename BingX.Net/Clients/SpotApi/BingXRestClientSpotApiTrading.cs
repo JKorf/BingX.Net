@@ -112,12 +112,13 @@ namespace BingX.Net.Clients.SpotApi
         #region Cancel Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, bool? processPartialSuccess = null, CancellationToken ct = default)
         {
             var parameter = new ParameterCollection()
             {
                 { "symbol", symbol }
             };
+            parameter.AddOptional("process", processPartialSuccess == null ? null : processPartialSuccess == true ? 1 : 0);
             parameter.AddOptional("orderIds", orderIds == null? null: string.Join(",", orderIds));
             parameter.AddOptional("clientOrderIDs", clientOrderIds == null ? null : string.Join(",", clientOrderIds));
 

@@ -654,7 +654,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelAllOrdersAsync(System.String,System.Threading.CancellationToken)">
@@ -2750,7 +2750,7 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
             <summary>
             Cancel multiple active orders
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20multiple%20orders" /></para>
@@ -2758,6 +2758,7 @@
             <param name="symbol">Symbol, for example `ETH-USDT`</param>
             <param name="orderIds">The order ids to cancel</param>
             <param name="clientOrderIds">The client order ids to cancel</param>
+            <param name="processPartialSuccess">When true the server will handle partially successful requests. When false the full request fails if any of the order cancellations fail.</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
