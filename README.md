@@ -147,6 +147,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.20.1 - 06 Feb 2025
+    * Added processPartialSuccess parameter to restClient.SpotApi.Trading.CancelOrdersAsync endpoint
+
 * Version 1.20.0 - 05 Feb 2025
     * Updated CryptoExchange.Net to version 8.7.3, see https://github.com/JKorf/CryptoExchange.Net/releases/
     * Added missing TimeInForce parameter for restClient.SpotApi.Trading.PlaceMultipleOrderAsync
