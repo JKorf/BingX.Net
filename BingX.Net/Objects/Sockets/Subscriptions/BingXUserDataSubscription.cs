@@ -87,19 +87,19 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
             if (message.Data is BingXConfigUpdate configUpdate)
             {
-                _configHandler?.Invoke(message.As(configUpdate, configUpdate.Event, configUpdate.Configuration.Symbol, configUpdate.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot :SocketUpdateType.Update));
+                _configHandler?.Invoke(message.As(configUpdate, configUpdate.Event, configUpdate.Configuration.Symbol, configUpdate.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot :SocketUpdateType.Update).WithDataTimestamp(configUpdate.EventTime));
             }
             else if (message.Data is BingXFuturesAccountUpdate accountUpdate)
             {
-                _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Event, null, accountUpdate.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update));
+                _accountHandler?.Invoke(message.As(accountUpdate, accountUpdate.Event, null, accountUpdate.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update).WithDataTimestamp(accountUpdate.EventTime));
             }
             else if (message.Data is BingXFuturesOrderUpdateWrapper orderUpdate)
             {
-                _orderHandler?.Invoke(message.As(orderUpdate.Data, orderUpdate.Event, orderUpdate.Data.Symbol, SocketUpdateType.Update));
+                _orderHandler?.Invoke(message.As(orderUpdate.Data, orderUpdate.Event, orderUpdate.Data.Symbol, SocketUpdateType.Update).WithDataTimestamp(orderUpdate.EventTime));
             }
             else if (message.Data is BingXListenKeyExpiredUpdate listenKeyUpdate)
             {
-                _listenkeyHandler?.Invoke(message.As(listenKeyUpdate!, listenKeyUpdate.Event, null, SocketUpdateType.Update));
+                _listenkeyHandler?.Invoke(message.As(listenKeyUpdate!, listenKeyUpdate.Event, null, SocketUpdateType.Update).WithDataTimestamp(listenKeyUpdate.EventTime));
             }
 
             return new CallResult(null);

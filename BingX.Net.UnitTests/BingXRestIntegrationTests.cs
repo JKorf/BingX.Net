@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace BingX.Net.UnitTests
 {
     [NonParallelizable]
-    internal class BingXRestIntegrationTests : RestIntergrationTest<BingXRestClient>
+    internal class BingXRestIntegrationTests : RestIntegrationTest<BingXRestClient>
     {
         public override bool Run { get; set; }
 
