@@ -101,5 +101,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("closePosition")]
         public bool? ClosePosition { get; set; }
+        /// <summary>
+        /// Order status
+        /// </summary>
+        [JsonPropertyName("status")]
+        public OrderStatus Status { get; set; }
     }
 }
