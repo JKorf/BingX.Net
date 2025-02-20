@@ -142,6 +142,8 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("activationPrice")]
         public decimal? TriggerPrice { get; set; }
+        [JsonInclude, JsonPropertyName("actPrice")]
+        internal decimal? TriggerPriceInt { get => TriggerPrice; set => TriggerPrice = value; }
         /// <summary>
         /// Trailing stop rate
         /// </summary>
