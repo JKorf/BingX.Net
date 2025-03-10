@@ -19,7 +19,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public override CallResult HandleMessage(SocketConnection connection, DataEvent<BingXPing> message)
         {
             connection.Send(ExchangeHelpers.NextId(), new BingXPong { Pong = message.Data.Ping, Timestamp = message.Data.Timestamp }, 1);
-            return new CallResult(null);
+            return CallResult.SuccessResult;
         }
     }
 }

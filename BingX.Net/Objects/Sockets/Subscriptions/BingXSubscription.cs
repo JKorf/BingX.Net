@@ -71,7 +71,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }
 
             _handler.Invoke(message.As(update.Data!, update.DataType, update.Symbol, SocketUpdateType.Update));
-            return new CallResult(null);
+            return CallResult.SuccessResult;
         }
     }
 }

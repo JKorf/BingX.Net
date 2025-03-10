@@ -18,7 +18,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Type
         /// </summary>
-        [JsonPropertyName("incomeType"), JsonConverter(typeof(EnumConverter))]
+        [JsonPropertyName("incomeType")]
         public IncomeType IncomeType { get; set; }
         /// <summary>
         /// Income

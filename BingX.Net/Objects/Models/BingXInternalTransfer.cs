@@ -52,7 +52,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Status
         /// </summary>
-        [JsonPropertyName("status"), JsonConverter(typeof(EnumConverter))]
+        [JsonPropertyName("status")]
         public InternalTransferStatus Status { get; set; }
     }
 }
