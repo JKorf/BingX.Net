@@ -1,4 +1,6 @@
-﻿using CryptoExchange.Net.Converters;
+using BingX.Net.Converters;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Text.Json.Serialization;
@@ -8,7 +10,8 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Kline (candlestick) info
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter))]
+    [JsonConverter(typeof(ArrayConverter<BingXKline, BingXSourceGenerationContext>))]
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXKline
     {
         /// <summary>

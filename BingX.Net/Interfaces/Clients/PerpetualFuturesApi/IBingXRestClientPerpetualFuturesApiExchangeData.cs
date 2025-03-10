@@ -1,4 +1,4 @@
-﻿using BingX.Net.Enums;
+using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Objects;
 using System;
@@ -28,7 +28,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="symbol">Filter by symbol name, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXContract>>> GetContractsAsync(string? symbol = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXContract[]>> GetContractsAsync(string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get order book for a symbol
@@ -48,7 +48,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">Number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesTrade>>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesTrade[]>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get list of trades
@@ -59,7 +59,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">Number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesTrade>>> GetTradeHistoryAsync(string symbol, long? fromId = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesTrade[]>> GetTradeHistoryAsync(string symbol, long? fromId = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get the current funding rate for a symbol
@@ -76,7 +76,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFundingRate>>> GetFundingRatesAsync(CancellationToken ct = default);
+        Task<WebCallResult<BingXFundingRate[]>> GetFundingRatesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get funding rate history
@@ -88,7 +88,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFundingRateHistory>>> GetFundingRateHistoryAsync(string symbol, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXFundingRateHistory[]>> GetFundingRateHistoryAsync(string symbol, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get kline history
@@ -101,7 +101,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesKline>>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get open interest
@@ -127,7 +127,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesTicker>>> GetTickersAsync(CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesTicker[]>> GetTickersAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get the best ask and bid info
@@ -149,7 +149,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesMarkPriceKline>>> GetMarkPriceKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesMarkPriceKline[]>> GetMarkPriceKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get the last trade price for a symbol
@@ -166,6 +166,6 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXLastTradePrice>>> GetLastTradePricesAsync(CancellationToken ct = default);
+        Task<WebCallResult<BingXLastTradePrice[]>> GetLastTradePricesAsync(CancellationToken ct = default);
     }
 }

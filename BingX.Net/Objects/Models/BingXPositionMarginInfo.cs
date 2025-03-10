@@ -1,4 +1,6 @@
-﻿using System;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -6,8 +8,9 @@ using System.Text.Json.Serialization;
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
-    /// Position and maintanance margin ratio info
+    /// Position and maintenance margin ratio info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXPositionMarginInfo
     {
         /// <summary>

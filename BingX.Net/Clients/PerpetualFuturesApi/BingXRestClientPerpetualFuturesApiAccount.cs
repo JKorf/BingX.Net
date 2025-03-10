@@ -1,4 +1,4 @@
-﻿using BingX.Net.Enums;
+using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using BingX.Net.Objects.Internal;
 using BingX.Net.Objects.Models;
@@ -26,11 +26,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Balances
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesBalance>>> GetBalancesAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesBalance[]>> GetBalancesAsync(CancellationToken ct = default)
         {
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v3/user/balance", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            return await _baseClient.SendAsync<IEnumerable<BingXFuturesBalance>>(request, null, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFuturesBalance[]>(request, null, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -38,7 +38,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Incomes
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXIncome>>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
@@ -49,11 +49,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/user/income", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            var result = await _baseClient.SendAsync<IEnumerable<BingXIncome>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<BingXIncome[]>(request, parameters, ct).ConfigureAwait(false);
             if (result && result.Data == null)
             {
                 // No items returns null; return empty array instead
-                return result.As<IEnumerable<BingXIncome>>(Array.Empty<BingXIncome>());
+                return result.As<BingXIncome[]>(Array.Empty<BingXIncome>());
             }
             return result;
         }
@@ -305,11 +305,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Multi Asset Rules
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXMultiAssetRules>>> GetMultiAssetRulesAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<BingXMultiAssetRules[]>> GetMultiAssetRulesAsync(CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/multiAssetsRules", BingXExchange.RateLimiter.RestMarket, 1, true);
-            var result = await _baseClient.SendAsync<IEnumerable<BingXMultiAssetRules>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<BingXMultiAssetRules[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 
@@ -318,11 +318,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Multi Assets Margin
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXMarginAsset>>> GetMultiAssetsMarginAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<BingXMarginAsset[]>> GetMultiAssetsMarginAsync(CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/user/marginAssets", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
-            var result = await _baseClient.SendAsync<IEnumerable<BingXMarginAsset>>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<BingXMarginAsset[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
 

@@ -1,4 +1,5 @@
-﻿using BingX.Net.Enums;
+using BingX.Net.Enums;
+using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Transfers
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXInternalTransfers
     {
         /// <summary>
@@ -20,7 +22,7 @@ namespace BingX.Net.Objects.Models
         /// Transfer list
         /// </summary>
         [JsonPropertyName("data")]
-        public IEnumerable<BingXInternalTransfer> Transfers { get; set; } = Array.Empty<BingXInternalTransfer>();
+        public BingXInternalTransfer[] Transfers { get; set; } = Array.Empty<BingXInternalTransfer>();
         
     }
 

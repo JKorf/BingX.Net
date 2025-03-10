@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using CryptoExchange.Net.Converters.SystemTextJson;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Sockets
 {
+    [SerializationModel]
     internal class BingXSocketResponse
     {
         [JsonPropertyName("id")]

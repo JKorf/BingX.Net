@@ -207,7 +207,7 @@
         <member name="M:BingX.Net.Clients.BingXRestClientApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.BingXRestClientApi.TryParseError(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Collections.Generic.IEnumerable{System.String}}},CryptoExchange.Net.Interfaces.IMessageAccessor)">
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.TryParseError(System.Collections.Generic.KeyValuePair{System.String,System.String[]}[],CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXRestClientApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
@@ -479,7 +479,7 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateAccessor">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesTradeUpdate}}},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesTradeUpdate[]}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync(System.String,System.Int32,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
@@ -488,10 +488,10 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync(System.Int32,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesKlineUpdate}}},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesKlineUpdate[]}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesKlineUpdate}}},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesKlineUpdate[]}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToTickerUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesTickerUpdate}},System.Threading.CancellationToken)">
@@ -533,16 +533,6 @@
         <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.Trading">
             <inheritdoc />
         </member>
-        <member name="E:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.OnOrderPlaced">
-            <summary>
-            Event triggered when an order is placed via this client. Only available for Spot orders
-            </summary>
-        </member>
-        <member name="E:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.OnOrderCanceled">
-            <summary>
-            Event triggered when an order is canceled via this client. Note that this does not trigger when using CancelAllOrdersAsync. Only available for Spot orders
-            </summary>
-        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
@@ -552,7 +542,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetTimeOffset">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.CommonSpotClient">
+        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.SharedClient">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount">
@@ -744,6 +734,2285 @@
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Boolean">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableBoolean">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Decimal">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableDecimal">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.AdjustDirection">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.ApiKeyPermission">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.ApiKeyPermissionArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.DepositStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.FuturesOrderType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.IncomeType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.InternalTransferStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.MarginMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.MultiAssetMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.OcoOrderType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableOcoOrderType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.OrderSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableOrderSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.OrderStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableOrderStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.OrderType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.PositionMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.PositionSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullablePositionSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.PriceType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Role">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableRole">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.SymbolStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TakeProfitStopLossMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableTakeProfitStopLossMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TimeInForce">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableTimeInForce">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TradeSide">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TransferType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TriggerType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableTriggerType">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TwapOrderStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.WithdrawalStatus">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXListenKey">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXListenKeyArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPing">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPingArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPong">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPongArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXListenKeyArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXListenKey">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXServerTimeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXServerTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXAmountArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXAmount">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXApiKeyWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXApiKeyWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXAssetArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXAsset">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXBalanceWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXBalanceWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXBookTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXBookTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXCancelAfterResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXCancelAfterResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXCancelAllResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXCancelAllResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXCancelsResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXCancelsResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXClosePositionResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXClosePositionResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXClosePositionsResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXClosePositionsResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXContractArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXContract">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXDepositArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXDeposit">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXDepositAddressesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXDepositAddresses">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFundingRateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFundingRate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFundingRateHistoryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFundingRateHistory">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesBalanceArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesBalance">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesBookTickerWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesBookTickerWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesKline">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesMarkPriceKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesMarkPriceKline">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrderBookArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrderDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrderDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrdersDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrdersDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrdersWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrdersWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrderWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesOrderWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesTradingFeesWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesTradingFeesWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesUserTradeDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesUserTradeDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesUserTradeWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXFuturesUserTradeWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXIncomeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXIncome">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXInternalTransfersArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXInternalTransfers">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXIsolatedMarginResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXIsolatedMarginResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXKeyPermissionsArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXKeyPermissions">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXKline">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLastTradePriceArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLastTradePrice">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLastTradeWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLastTradeWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLeverageArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLeverage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLeverageResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXLeverageResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMarginAssetArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMarginAsset">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMarginHistoryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMarginHistory">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMarginModeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMarginMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMultiAssetModeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMultiAssetMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMultiAssetRulesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXMultiAssetRules">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOcoOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOcoOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOpenInterestArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOpenInterest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderBookArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderDetailsArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderDetails">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderErrorArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderError">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXOrderWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPositionArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPosition">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPositionHistoryWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPositionHistoryWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPositionMarginInfoArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPositionMarginInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPositionModeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXPositionMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXSymbolsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXSymbolsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTradingFeesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTradingFees">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTransactionResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTransactionResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTransfersArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTransfers">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTwapOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTwapOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTwapOrderIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTwapOrderId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTwapOrdersArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTwapOrders">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXUserIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXUserId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXUserTradeWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXUserTradeWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXWithdrawalArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXWithdrawal">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXWithdrawResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXWithdrawResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXServerTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXServerTimeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXBookTickerUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXBookTickerUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesKlineUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesKlineUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesTickerUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesTickerUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXKlineUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXKlineUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXMarkPriceUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXMarkPriceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXOrderUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXPriceUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXPriceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXTickerUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXTickerUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXAmount">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXAmountArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXApiKey">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXApiKeyArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXApiKeyWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXApiKeyWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXAsset">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXAssetArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXAssetConfig">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalance">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceItem">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceItemArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceItems">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceItemsArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBalanceWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBookTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBookTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBookTickerUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXBookTickerUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXCancelAfterResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXCancelAfterResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXCancelAllResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXCancelAllResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXCancelsResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXCancelsResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXClosePositionResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXClosePositionResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXClosePositionsResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXClosePositionsResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXConfigUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXConfigUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXContract">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXContractArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXDeposit">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXDepositArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXDepositAddress">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXDepositAddressArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXDepositAddresses">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXDepositAddressesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFailedCancel">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFailedCancelArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFundingRate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFundingRateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFundingRateHistory">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFundingRateHistoryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesAccountChange">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesAccountUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesAccountUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesBalance">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesBalanceArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesBalanceChange">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesBalanceChangeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesBookTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesBookTickerWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesBookTickerWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesKline">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesKlineUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesKlineUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesMarkPriceKline">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesMarkPriceKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderBookArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderDetails">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderDetailsArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrdersDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrdersDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrdersWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrdersWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderUpdateWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderUpdateWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesOrderWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesPlaceOrderRequest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesPlaceOrderRequestArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesPositionChange">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesPositionChangeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTickerUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTickerUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTradingFees">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTradingFeesWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesTradingFeesWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTradeDetails">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTradeDetailsArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTradeDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTradeDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTradeWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesUserTradeWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXIncome">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXIncomeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXInternalTransfer">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXInternalTransferArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXInternalTransfers">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXInternalTransfersArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXIsolatedMarginResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXIsolatedMarginResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXKeyPermissions">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXKeyPermissionsArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXKline">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXKlineArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXKlineUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXKlineUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXKlineUpdateData">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLastTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLastTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLastTradePrice">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLastTradePriceArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLastTradeWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLastTradeWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLeverage">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLeverageArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLeverageResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXLeverageResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXListenKeyExpiredUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXListenKeyExpiredUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginAsset">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginAssetArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginHistory">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginHistoryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginHistoryEntry">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginHistoryEntryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarginModeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarkPriceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMarkPriceUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMultiAssetMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMultiAssetModeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMultiAssetRules">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXMultiAssetRulesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXNetwork">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXNetworkArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOcoOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOcoOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOpenInterest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOpenInterestArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderBookArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderBookEntry">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderBookEntryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderDetails">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderDetailsArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderDetailsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderDetailsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderError">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderErrorArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXOrderWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPlaceOrderRequest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPosition">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionHistory">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionHistoryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionHistoryWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionHistoryWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionMarginInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionMarginInfoArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionMode">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPositionModeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPriceUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXPriceUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSocketUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSocketUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXStopOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXStopOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSymbol">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSymbolArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSymbolsWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSymbolsWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTicker">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTickerArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTickerUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTickerUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradeUpdateArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradingFees">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradingFeesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransactionResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransactionResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransfer">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransferArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransfers">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransfersArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTwapOrder">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTwapOrderArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTwapOrderId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTwapOrderIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTwapOrders">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTwapOrdersArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUserId">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUserIdArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUserTrade">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUserTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUserTradeWrapper">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUserTradeWrapperArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXWithdrawal">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXWithdrawalArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXWithdrawResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXWithdrawResultArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSocketRequest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSocketRequestArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSocketResponse">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXSocketResponseArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.IEnumerableBingXFuturesPlaceOrderRequest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.IEnumerableBingXPlaceOrderRequest">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.DateTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableDateTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.DateTimeOffset">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Int32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableInt32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Int64">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.NullableInt64">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Int64Array">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.StringArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Converters.BingXSourceGenerationContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:BingX.Net.Converters.BingXSourceGenerationContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BingX.Net.Converters.BingXSourceGenerationContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
         </member>
         <member name="T:BingX.Net.Enums.AccountIdentifierType">
             <summary>
@@ -2249,7 +4518,7 @@
             Get the shared socket subscription client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
             </summary>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesTradeUpdate}}},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesTradeUpdate[]}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to live trade updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20the%20Latest%20Trade%20Detail" /></para>
@@ -2282,7 +4551,7 @@
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesKlineUpdate}}},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesKlineUpdate[]}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to kline/candlestick updates
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /></para>
@@ -2293,7 +4562,7 @@
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesKlineUpdate}}},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToKlineUpdatesAsync(BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesKlineUpdate[]}},System.Threading.CancellationToken)">
             <summary>
             Subscribe to kline/candlestick updates for all symbols
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /></para>
@@ -2393,11 +4662,6 @@
         <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi.Trading">
             <summary>
             Endpoints related to orders and trades
-            </summary>
-        </member>
-        <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi.CommonSpotClient">
-            <summary>
-            DEPRECATED; use <see cref="T:CryptoExchange.Net.SharedApis.ISharedClient" /> instead for common/shared functionality. See <see href="https://jkorf.github.io/CryptoExchange.Net/docs/index.html#shared" /> for more info.
             </summary>
         </member>
         <member name="P:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi.SharedClient">
@@ -4662,7 +6926,7 @@
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXStopOrderRequest.StopGuaranteed">
             <summary>
-            Stop guarenteed
+            Stop guarantied
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesTicker">
@@ -6287,7 +8551,7 @@
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXPositionMarginInfo">
             <summary>
-            Position and maintanance margin ratio info
+            Position and maintenance margin ratio info
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXPositionMarginInfo.Tier">

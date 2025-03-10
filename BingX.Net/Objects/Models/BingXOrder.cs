@@ -1,19 +1,23 @@
-﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXOrderWrapper
     {
         [JsonPropertyName("orders")]
-        public IEnumerable<BingXOrder> Orders { get; set; } = Array.Empty<BingXOrder>();
+        public BingXOrder[] Orders { get; set; } = Array.Empty<BingXOrder>();
     }
 
     /// <summary>
     /// Order info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXOrder
     {
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using BingX.Net.Enums;
+using BingX.Net.Enums;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System.Text.Json.Serialization;
 
@@ -7,6 +7,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Futures place order request for bulk placement
     /// </summary>
+    [SerializationModel]
     public record BingXFuturesPlaceOrderRequest
     {
         /// <summary>
@@ -116,7 +117,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Order type
         /// </summary>
-        [JsonPropertyName("type"), JsonConverter(typeof(EnumConverter))]
+        [JsonPropertyName("type")]
         public TakeProfitStopLossMode Type { get; set; }
         /// <summary>
         /// Stop price
@@ -134,7 +135,7 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("workingType"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
-        /// Stop guarenteed
+        /// Stop guarantied
         /// </summary>
         [JsonPropertyName("stopGuaranteed"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool? StopGuaranteed { get; set; }

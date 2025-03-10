@@ -1,10 +1,13 @@
-﻿using CryptoExchange.Net.Attributes;
+using System.Text.Json.Serialization;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Attributes;
 
 namespace BingX.Net.Enums
 {
     /// <summary>
     /// Direction to adjust in
     /// </summary>
+    [JsonConverter(typeof(EnumConverter<AdjustDirection>))]
     public enum AdjustDirection
     {
         /// <summary>

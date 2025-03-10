@@ -1,9 +1,11 @@
-﻿using System;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Text.Json.Serialization;
 using BingX.Net.Enums;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel]
     internal record BingXFuturesOrderUpdateWrapper : BingXSocketUpdate
     {
         [JsonPropertyName("o")]
@@ -13,6 +15,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Order update
     /// </summary>
+    [SerializationModel]
     public record BingXFuturesOrderUpdate
     {
         /// <summary>

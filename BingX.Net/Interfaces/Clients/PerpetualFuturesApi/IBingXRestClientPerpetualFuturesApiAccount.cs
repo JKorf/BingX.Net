@@ -1,4 +1,4 @@
-﻿using BingX.Net.Enums;
+using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Objects;
 using System;
@@ -19,7 +19,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXFuturesBalance>>> GetBalancesAsync(CancellationToken ct = default);
+        Task<WebCallResult<BingXFuturesBalance[]>> GetBalancesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get income history
@@ -32,7 +32,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">Max results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXIncome>>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get trading fee rates
@@ -176,14 +176,14 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Rules" /></para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<BingXMultiAssetRules>>> GetMultiAssetRulesAsync(CancellationToken ct = default);
+        Task<WebCallResult<BingXMultiAssetRules[]>> GetMultiAssetRulesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get multi assets margin
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Margin" /></para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<BingXMarginAsset>>> GetMultiAssetsMarginAsync(CancellationToken ct = default);
+        Task<WebCallResult<BingXMarginAsset[]>> GetMultiAssetsMarginAsync(CancellationToken ct = default);
 
     }
 }

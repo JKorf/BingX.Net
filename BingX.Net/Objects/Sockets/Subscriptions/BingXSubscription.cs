@@ -64,7 +64,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
             var update = (BingXUpdate<T>)message.Data;
 
-            if (update is BingXUpdate<IEnumerable<BingXFuturesKlineUpdate>> klineUpdates)
+            if (update is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
             {
                 foreach (var klineUpdate in klineUpdates.Data!)
                     klineUpdate.Symbol = update.Symbol!;

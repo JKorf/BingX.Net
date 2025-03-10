@@ -1,10 +1,12 @@
-﻿using System.Text.Json.Serialization;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
     /// Listenkey has expired
     /// </summary>
+    [SerializationModel]
     public record BingXListenKeyExpiredUpdate : BingXSocketUpdate
     {
         /// <summary>

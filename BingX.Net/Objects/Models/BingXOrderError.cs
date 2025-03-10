@@ -1,4 +1,6 @@
-﻿using System;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -8,6 +10,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Error result
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXOrderError
     {
         /// <summary>

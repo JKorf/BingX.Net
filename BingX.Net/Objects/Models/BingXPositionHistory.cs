@@ -1,15 +1,18 @@
-﻿using System;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 using BingX.Net.Enums;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXPositionHistoryWrapper
     {
         [JsonPropertyName("positionHistory")]
-        public IEnumerable<BingXPositionHistory> History { get; set; } = Array.Empty<BingXPositionHistory>();
+        public BingXPositionHistory[] History { get; set; } = Array.Empty<BingXPositionHistory>();
     }
 
     /// <summary>

@@ -1,12 +1,15 @@
-﻿using System;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Text.Json.Serialization;
 using BingX.Net.Enums;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
     /// Withdrawal info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXWithdrawal
     {
         /// <summary>

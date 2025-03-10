@@ -1,4 +1,6 @@
-﻿using CryptoExchange.Net.Converters;
+using BingX.Net.Converters;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Interfaces;
 using System;
@@ -10,6 +12,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Order book info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXOrderBook
     {
         /// <summary>
@@ -21,12 +24,12 @@ namespace BingX.Net.Objects.Models
         /// List of bids
         /// </summary>
         [JsonPropertyName("bids")]
-        public IEnumerable<BingXOrderBookEntry> Bids { get; set; } = Array.Empty<BingXOrderBookEntry>();
+        public BingXOrderBookEntry[] Bids { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
         /// List of asks
         /// </summary>
         [JsonPropertyName("asks")]
-        public IEnumerable<BingXOrderBookEntry> Asks { get; set; } = Array.Empty<BingXOrderBookEntry>();
+        public BingXOrderBookEntry[] Asks { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
         /// Timestamp of the data
         /// </summary>
@@ -43,7 +46,8 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Order book entry
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter))]
+    [JsonConverter(typeof(ArrayConverter<BingXOrderBookEntry, BingXSourceGenerationContext>))]
+    [SerializationModel]
     public record BingXOrderBookEntry : ISymbolOrderBookEntry
     {
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CryptoExchange.Net.Objects;
@@ -41,12 +41,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Contracts
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXContract>>> GetContractsAsync(string? symbol = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXContract[]>> GetContractsAsync(string? symbol = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/contracts", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXContract>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXContract[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Recent Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesTrade>>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesTrade[]>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -78,7 +78,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameters.AddOptional("limit", limit);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/trades", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXFuturesTrade>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFuturesTrade[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -86,7 +86,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Trade History
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesTrade>>> GetTradeHistoryAsync(string symbol, long? fromId = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesTrade[]>> GetTradeHistoryAsync(string symbol, long? fromId = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -96,7 +96,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptional("fromId", fromId);
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/market/historicalTrades", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXFuturesTrade>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFuturesTrade[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -120,10 +120,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Funding Rates
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFundingRate>>> GetFundingRatesAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFundingRate[]>> GetFundingRatesAsync(CancellationToken ct = default)
         {
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/premiumIndex", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXFundingRate>>(request, null, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFundingRate[]>(request, null, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -131,7 +131,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Funding Rate History
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFundingRateHistory>>> GetFundingRateHistoryAsync(string symbol, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFundingRateHistory[]>> GetFundingRateHistoryAsync(string symbol, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -142,7 +142,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptional("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/fundingRate", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXFundingRateHistory>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFundingRateHistory[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -150,7 +150,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Klines
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesKline>>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -162,7 +162,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptional("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v3/quote/klines", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXFuturesKline>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFuturesKline[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -170,7 +170,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Mark Price Klines
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesMarkPriceKline>>> GetMarkPriceKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesMarkPriceKline[]>> GetMarkPriceKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -183,7 +183,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/market/markPriceKlines", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXFuturesMarkPriceKline>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFuturesMarkPriceKline[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -221,10 +221,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Tickers
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesTicker>>> GetTickersAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesTicker[]>> GetTickersAsync(CancellationToken ct = default)
         {
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/ticker", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXFuturesTicker>>(request, null, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXFuturesTicker[]>(request, null, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -263,12 +263,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Last Trade Prices
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXLastTradePrice>>> GetLastTradePricesAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<BingXLastTradePrice[]>> GetLastTradePricesAsync(CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/ticker/price", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<IEnumerable<BingXLastTradePrice>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXLastTradePrice[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion

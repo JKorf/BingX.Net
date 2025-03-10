@@ -1,4 +1,6 @@
-﻿using System;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -8,13 +10,14 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Margin change info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXMarginHistory
     {
         /// <summary>
         /// Records
         /// </summary>
         [JsonPropertyName("records")]
-        public IEnumerable<BingXMarginHistoryEntry> Records { get; set; } = Array.Empty<BingXMarginHistoryEntry>();
+        public BingXMarginHistoryEntry[] Records { get; set; } = Array.Empty<BingXMarginHistoryEntry>();
         /// <summary>
         /// Total amount of records
         /// </summary>

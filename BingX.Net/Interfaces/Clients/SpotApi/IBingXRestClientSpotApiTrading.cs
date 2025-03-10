@@ -1,4 +1,4 @@
-﻿using BingX.Net.Objects.Models;
+using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
 using CryptoExchange.Net.Objects;
 using System.Threading.Tasks;
@@ -39,7 +39,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="sync">When false (default): Parallel order processing, all orders need to target the same symbol. true: sequential order processing, orders can target different symbols</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXOrder>>> PlaceMultipleOrdersAsync(IEnumerable<BingXPlaceOrderRequest> orders, bool? sync = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXOrder[]>> PlaceMultipleOrdersAsync(IEnumerable<BingXPlaceOrderRequest> orders, bool? sync = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel an active order
@@ -71,7 +71,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXOrder>>> CancelAllOrdersAsync(string symbol, CancellationToken ct = default);
+        Task<WebCallResult<BingXOrder[]>> CancelAllOrdersAsync(string symbol, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
@@ -101,7 +101,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXOrderDetails>>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXOrderDetails[]>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get order history
@@ -117,7 +117,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="pageSize">Page size</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXOrderDetails>>> GetOrdersAsync(string? symbol = null, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get user trade history
@@ -133,7 +133,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXUserTrade>>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXUserTrade[]>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
 		
         /// <summary>
         /// Place a new OCO order
@@ -149,7 +149,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="aboveClientOrderId">Client order id for the limit order</param>
         /// <param name="belowClientOrderId">Client order id for the stop limit order</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXOcoOrder[]>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default);
         
         /// <summary>
         /// Cancel an OCO order
@@ -167,7 +167,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="orderListId">The order list id. Either this or `clientOrderId` should be provided</param>
         /// <param name="clientOrderId">The client order id. Either this or `orderListId` should be provided</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get open OCO orders
@@ -176,7 +176,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="page">Page</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
+        Task<WebCallResult<BingXOcoOrder[]>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed OCO orders
@@ -185,6 +185,6 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="page">Page</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<IEnumerable<BingXOcoOrder>>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
+        Task<WebCallResult<BingXOcoOrder[]>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
     }
 }

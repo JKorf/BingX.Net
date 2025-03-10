@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Internal
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal class BingXServerTime
     {
         [JsonPropertyName("serverTime"), JsonConverter(typeof(DateTimeConverter))]

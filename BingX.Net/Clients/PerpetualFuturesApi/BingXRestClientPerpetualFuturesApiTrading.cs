@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using System.Threading.Tasks;
 using CryptoExchange.Net.Objects;
@@ -33,14 +33,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Positions
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXPosition>>> GetPositionsAsync(string? symbol = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXPosition[]>> GetPositionsAsync(string? symbol = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/user/positions", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            return await _baseClient.SendAsync<IEnumerable<BingXPosition>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXPosition[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -84,7 +84,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameter.AddEnum("side", side);
             parameter.AddEnum("type", type);
-            parameter.AddOptionalEnum("positionSide", positionSide);
+            parameter.AddEnum("positionSide", positionSide);
             parameter.AddOptional("reduceOnly", reduceOnly?.ToString().ToLowerInvariant());
             parameter.AddOptional("quantity", quantity);
             parameter.AddOptional("price", price);
@@ -99,23 +99,23 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (stopLossType != null)
             {
                 var stopLossParams = new ParameterCollection();
-                stopLossParams.AddEnum("type", stopLossType);
+                stopLossParams.AddEnum("type", stopLossType.Value);
                 stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
                 stopLossParams.AddOptional("price", stopLossPrice);
                 stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
                 stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
+                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(stopLossParams));
             }
 
             if (takeProfitType != null)
             {
                 var takeProfitParams = new ParameterCollection();
-                takeProfitParams.AddEnum("type", takeProfitType);
+                takeProfitParams.AddEnum("type", takeProfitType.Value);
                 takeProfitParams.AddOptional("stopPrice", takeProfitStopPrice);
                 takeProfitParams.AddOptional("price", takeProfitPrice);
                 takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
                 takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer().Serialize(takeProfitParams));
+                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(takeProfitParams));
             }
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/order/test", BingXExchange.RateLimiter.RestAccount1, 1, true,
@@ -168,7 +168,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             parameter.AddEnum("side", side);
             parameter.AddEnum("type", type);
-            parameter.AddOptionalEnum("positionSide", positionSide);
+            parameter.AddEnum("positionSide", positionSide);
             parameter.AddOptional("reduceOnly", reduceOnly?.ToString().ToLowerInvariant());
             parameter.AddOptional("quantity", quantity);
             parameter.AddOptional("price", price);
@@ -183,23 +183,23 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (stopLossType != null)
             {
                 var stopLossParams = new ParameterCollection();
-                stopLossParams.AddEnum("type", stopLossType);
+                stopLossParams.AddEnum("type", stopLossType.Value);
                 stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
                 stopLossParams.AddOptional("price", stopLossPrice);
                 stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
                 stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer().Serialize(stopLossParams));
+                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(stopLossParams));
             }
 
             if (takeProfitType != null)
             {
                 var takeProfitParams = new ParameterCollection();
-                takeProfitParams.AddEnum("type", takeProfitType);
+                takeProfitParams.AddEnum("type", takeProfitType.Value);
                 takeProfitParams.AddOptional("stopPrice", takeProfitStopPrice);
                 takeProfitParams.AddOptional("price", takeProfitPrice);
                 takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
                 takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer().Serialize(takeProfitParams));
+                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(takeProfitParams));
             }
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/order", BingXExchange.RateLimiter.RestAccount2, 1, true,
@@ -216,7 +216,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Place Multiple Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrder>>> PlaceMultipleOrderAsync(
+        public async Task<WebCallResult<BingXFuturesOrder[]>> PlaceMultipleOrderAsync(
             IEnumerable<BingXFuturesPlaceOrderRequest> orders,
             bool? sync = null,
             CancellationToken ct = default)
@@ -224,14 +224,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             foreach(var order in orders)
             {
                 if (order.StopLoss != null)
-                    order.StopLossStr = new SystemTextJsonMessageSerializer().Serialize(order.StopLoss);
+                    order.StopLossStr = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(order.StopLoss);
 
                 if (order.TakeProfit != null)
-                    order.TakeProfitStr = new SystemTextJsonMessageSerializer().Serialize(order.TakeProfit);
+                    order.TakeProfitStr = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(order.TakeProfit);
             }
             var parameter = new ParameterCollection()
             {
-                { "batchOrders", new SystemTextJsonMessageSerializer().Serialize(orders) }
+                { "batchOrders", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(orders) }
             };
             parameter.AddOptional("sync", sync);
 
@@ -241,7 +241,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                  {
                      { "X-SOURCE-KEY", _brokerId }
                  }).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXFuturesOrder>>(result.Data?.Orders);
+            return result.As<BingXFuturesOrder[]>(result.Data?.Orders);
         }
 
         #endregion
@@ -338,7 +338,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Open Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOpenOrdersAsync(
+        public async Task<WebCallResult<BingXFuturesOrderDetails[]>> GetOpenOrdersAsync(
             string? symbol = null,
             OrderType? orderType = null,
             CancellationToken ct = default)
@@ -350,7 +350,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/trade/openOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXFuturesOrdersDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+            return result.As<BingXFuturesOrderDetails[]>(result.Data?.Orders);
         }
 
         #endregion
@@ -358,7 +358,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Liquidation Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesOrderDetails[]>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
@@ -371,7 +371,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/trade/forceOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXFuturesOrdersDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+            return result.As<BingXFuturesOrderDetails[]>(result.Data?.Orders);
         }
 
         #endregion
@@ -379,7 +379,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Closed Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesOrderDetails[]>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
@@ -392,7 +392,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/trade/allOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXFuturesOrdersDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+            return result.As<BingXFuturesOrderDetails[]>(result.Data?.Orders);
         }
 
         #endregion
@@ -400,7 +400,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTrade>>> GetUserTradesAsync(long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesUserTrade[]>> GetUserTradesAsync(long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("orderId", orderId);
@@ -410,7 +410,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/trade/allFillOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXFuturesUserTradeWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXFuturesUserTrade>>(result.Data?.Trades);
+            return result.As<BingXFuturesUserTrade[]>(result.Data?.Trades);
         }
 
         #endregion
@@ -418,7 +418,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesUserTradeDetails>>> GetUserTradesAsync(string symbol, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesUserTradeDetails[]>> GetUserTradesAsync(string symbol, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("symbol", symbol);
@@ -431,7 +431,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/fillHistory", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXFuturesUserTradeDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXFuturesUserTradeDetails>>(result.Data?.Trades);
+            return result.As<BingXFuturesUserTradeDetails[]>(result.Data?.Trades);
         }
 
         #endregion
@@ -472,7 +472,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXFuturesOrderDetails>>> GetOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXFuturesOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("symbol", symbol);
@@ -482,7 +482,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.Add("limit", limit ?? 500);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/fullOrder", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<BingXFuturesOrdersDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXFuturesOrderDetails>>(result.Data?.Orders);
+            return result.As<BingXFuturesOrderDetails[]>(result.Data?.Orders);
         }
 
         #endregion
@@ -490,7 +490,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Position And MarginInfo
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXPositionMarginInfo>>> GetPositionAndMarginInfoAsync(string symbol, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXPositionMarginInfo[]>> GetPositionAndMarginInfoAsync(string symbol, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
@@ -498,7 +498,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             };
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/maintMarginRatio", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            return await _baseClient.SendAsync<IEnumerable<BingXPositionMarginInfo>>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXPositionMarginInfo[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -506,7 +506,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Position History
 
         /// <inheritdoc />
-        public async Task<WebCallResult<IEnumerable<BingXPositionHistory>>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXPositionHistory[]>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.Add("symbol", symbol);
@@ -519,7 +519,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/positionHistory", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXPositionHistoryWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<IEnumerable<BingXPositionHistory>>(result.Data?.History);
+            return result.As<BingXPositionHistory[]>(result.Data?.History);
         }
 
         #endregion
@@ -534,7 +534,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddEnum("side", orderSide);
             parameters.AddEnum("positionSide", positionSide);
             parameters.AddEnum("priceType", priceType);
-            parameters.AddEnum("priceVariance", priceVariance);
+            parameters.AddString("priceVariance", priceVariance);
             parameters.AddString("triggerPrice", triggerPrice);
             parameters.Add("interval", interval);
             parameters.AddString("amountPerOrder", orderQuantity);

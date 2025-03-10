@@ -1,10 +1,12 @@
-﻿using CryptoExchange.Net.Objects;
+﻿using BingX.Net.Converters;
+using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.RateLimiting;
 using CryptoExchange.Net.RateLimiting.Guards;
 using CryptoExchange.Net.RateLimiting.Interfaces;
 using CryptoExchange.Net.SharedApis;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net
 {
@@ -44,6 +46,8 @@ namespace BingX.Net
         /// Type of exchange
         /// </summary>
         public static ExchangeType Type { get; } = ExchangeType.CEX;
+
+        internal static JsonSerializerContext SerializerContext = new BingXSourceGenerationContext();
 
         /// <summary>
         /// Format a base and quote asset to a BingX recognized symbol 

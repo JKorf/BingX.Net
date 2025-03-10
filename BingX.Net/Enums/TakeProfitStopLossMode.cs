@@ -1,10 +1,13 @@
-﻿using CryptoExchange.Net.Attributes;
+using System.Text.Json.Serialization;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Attributes;
 
 namespace BingX.Net.Enums
 {
     /// <summary>
     /// Take Profit / Stop Loss mode
     /// </summary>
+    [JsonConverter(typeof(EnumConverter<TakeProfitStopLossMode>))]
     public enum TakeProfitStopLossMode
     {
         /// <summary>

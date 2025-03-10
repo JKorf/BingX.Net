@@ -1,10 +1,13 @@
-﻿using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
     /// Leverage info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXLeverage
     {
         /// <summary>
