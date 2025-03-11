@@ -22,7 +22,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         IPositionModeRestClient,
         IPositionHistoryRestClient,
         IListenKeyRestClient,
-        IFeeRestClient
+        IFeeRestClient,
+        IFuturesOrderClientIdClient
     {
     }
 }

@@ -19,7 +19,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         IWithdrawalRestClient,
         IWithdrawRestClient,
         IListenKeyRestClient,
-        IFeeRestClient
+        IFeeRestClient,
+        ISpotOrderClientIdClient
     {
     }
 }
