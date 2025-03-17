@@ -644,7 +644,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             // Get next token
             FromIdToken? nextToken = null;
             if (orders.Data.Count() == (request.Limit ?? 500))
-                nextToken = new FromIdToken(orders.Data.Max(o => o.TradeId).ToString());
+                nextToken = new FromIdToken(orders.Data.Max(o => o.TradeId)!.ToString());
 
             return orders.AsExchangeResult<SharedUserTrade[]>(Exchange, request.Symbol.TradingMode,orders.Data.Select(x => new SharedUserTrade(
                 ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), 

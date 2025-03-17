@@ -108,9 +108,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         {
             var stream = "all@kline_" + EnumConverter.GetString(interval);
             var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, stream, stream, x => onMessage(
-                x.WithStreamId(stream)
-#warning chek
-                .WithDataTimestamp(x.Data.Max(x => x.Timestamp))), false);
+                x.WithStreamId(stream)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
