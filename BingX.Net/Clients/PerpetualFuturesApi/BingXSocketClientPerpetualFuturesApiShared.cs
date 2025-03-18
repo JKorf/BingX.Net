@@ -149,9 +149,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     {
                         ClientOrderId = update.Data.ClientOrderId,
                         OrderPrice = update.Data.Price,
-                        Quantity = update.Data.Quantity,
-                        QuantityFilled = update.Data.QuantityFilled,
-                        QuoteQuantityFilled = update.Data.VolumeFilled,
+                        OrderQuantity = new SharedOrderQuantity(update.Data.Quantity, null, update.Data.Quantity),
+                        QuantityFilled = new SharedOrderQuantity(update.Data.QuantityFilled, update.Data.VolumeFilled, update.Data.QuantityFilled),
                         Fee = update.Data.Fee == null ? null :Math.Abs(update.Data.Fee.Value),
                         AveragePrice = update.Data.AveragePrice == 0 ? null : update.Data.AveragePrice,
                         PositionSide = update.Data.PositionSide == Enums.PositionSide.Long ? SharedPositionSide.Long : update.Data.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : null,
