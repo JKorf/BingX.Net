@@ -1,5 +1,6 @@
 ﻿using BingX.Net;
 using BingX.Net.Clients;
+using BingX.Net.SymbolOrderBooks;
 using CryptoExchange.Net.Testing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -125,6 +126,13 @@ namespace BingX.Net.UnitTests
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default, default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("ETH-USDT", default), true);
             await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, default, default, default, default, default), true);
+        }
+
+        [Test]
+        public async Task TestOrderBooks()
+        {
+            await TestOrderBook(new BingXSpotSymbolOrderBook("ETH-USDT"));
+            await TestOrderBook(new BingXPerpetualFuturesSymbolOrderBook("ETH-USDT"));
         }
     }
 }
