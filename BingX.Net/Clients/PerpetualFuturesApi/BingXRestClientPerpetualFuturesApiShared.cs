@@ -1,6 +1,7 @@
 using BingX.Net;
 using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
+using BingX.Net.Objects.Models;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.SharedApis;
@@ -985,6 +986,164 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return result.AsExchangeResult(Exchange, TradingMode.Spot, new SharedFee(result.Data.MakerFeeRate * 100, result.Data.TakerFeeRate * 100));
         }
         #endregion
+
+        // Only allow for takeprofit/stoploss
+//        #region Trigger Order Client
+//        PlaceFuturesTriggerOrderOptions IFuturesTriggerOrderRestClient.PlaceFuturesTriggerOrderOptions { get; } = new PlaceFuturesTriggerOrderOptions(false)
+//        {
+//            RequiredOptionalParameters = new List<ParameterDescription>
+//            {
+//                new ParameterDescription(nameof(PlaceFuturesTriggerOrderRequest.PositionMode), typeof(SharedPositionMode), "PositionMode the account is in", SharedPositionMode.OneWay)
+//            }
+//        };
+//#warning check holds
+//        async Task<ExchangeWebResult<SharedId>> IFuturesTriggerOrderRestClient.PlaceFuturesTriggerOrderAsync(PlaceFuturesTriggerOrderRequest request, CancellationToken ct)
+//        {
+//            var side = GetTriggerOrderSide(request);
+//            var validationError = ((IFuturesTriggerOrderRestClient)this).PlaceFuturesTriggerOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes, side == OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell, ((IFuturesOrderRestClient)this).FuturesSupportedOrderQuantity);
+//            if (validationError != null)
+//                return new ExchangeWebResult<SharedId>(Exchange, validationError);
+
+//            var result = await Trading.PlaceOrderAsync(
+//                request.Symbol.GetSymbol(FormatSymbol),
+//                side,
+//                GetTriggerOrderType(request, side),
+//                request.PositionMode == SharedPositionMode.OneWay ? PositionSide.Both : request.PositionSide == SharedPositionSide.Long ?  PositionSide.Long : PositionSide.Short,
+//                quantity: request.Quantity?.QuantityInBaseAsset ?? request.Quantity?.QuantityInContracts,
+//                reduceOnly: request.PositionMode == SharedPositionMode.OneWay ? null : request.OrderDirection == SharedTriggerOrderDirection.Exit,
+//                timeInForce: request.OrderPrice == null ? TimeInForce.ImmediateOrCancel : TimeInForce.GoodTillCanceled,
+//                price: request.OrderPrice,
+//                stopPrice: request.TriggerPrice,
+//                workingType: GetTriggerType(request),
+//                clientOrderId: request.ClientOrderId,
+//                ct: ct).ConfigureAwait(false);
+//            if (!result)
+//                return result.AsExchangeResult<SharedId>(Exchange, null, default);
+
+//            // Return
+//            return result.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedId(result.Data.OrderId.ToString()));
+//        }
+
+//        private FuturesOrderType GetTriggerOrderType(PlaceFuturesTriggerOrderRequest request, OrderSide side)
+//        {
+//            if (request.PriceDirection == SharedTriggerPriceDirection.PriceAbove)
+//            {
+//                if (side == OrderSide.Buy)
+//                    return request.OrderPrice == null ? FuturesOrderType.StopMarket : FuturesOrderType.StopLimit;
+
+//                return request.OrderPrice == null ? FuturesOrderType.TakeProfitMarket : FuturesOrderType.TakeProfitLimit;
+//            }
+//            else
+//            {
+//                if (side == OrderSide.Buy)
+//                    return request.OrderPrice == null ? FuturesOrderType.TakeProfitMarket : FuturesOrderType.TakeProfitLimit;
+
+//                return request.OrderPrice == null ? FuturesOrderType.StopMarket : FuturesOrderType.StopLimit;
+//            }
+//        }
+
+//        private TriggerType? GetTriggerType(PlaceFuturesTriggerOrderRequest request)
+//        {
+//            if (request.TriggerPriceType == null)
+//                return null;
+
+//            if (request.TriggerPriceType == SharedTriggerPriceType.LastPrice)
+//                return TriggerType.LastPrice;
+
+//            if (request.TriggerPriceType == SharedTriggerPriceType.IndexPrice)
+//                return TriggerType.IndexPrice;
+
+//            return TriggerType.MarkPrice;
+//        }
+
+//        private OrderSide GetTriggerOrderSide(PlaceFuturesTriggerOrderRequest request)
+//        {
+//            if (request.PositionSide == SharedPositionSide.Long)
+//                return request.OrderDirection == SharedTriggerOrderDirection.Enter ? OrderSide.Buy : OrderSide.Sell;
+
+//            return request.OrderDirection == SharedTriggerOrderDirection.Enter ? OrderSide.Sell : OrderSide.Buy;
+//        }
+
+//        EndpointOptions<GetOrderRequest> IFuturesTriggerOrderRestClient.GetFuturesTriggerOrderOptions { get; } = new EndpointOptions<GetOrderRequest>(true);
+//        async Task<ExchangeWebResult<SharedFuturesTriggerOrder>> IFuturesTriggerOrderRestClient.GetFuturesTriggerOrderAsync(GetOrderRequest request, CancellationToken ct)
+//        {
+//            var validationError = ((IFuturesTriggerOrderRestClient)this).GetFuturesTriggerOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+//            if (validationError != null)
+//                return new ExchangeWebResult<SharedFuturesTriggerOrder>(Exchange, validationError);
+
+//            if (!long.TryParse(request.OrderId, out var id))
+//                throw new ArgumentException($"Invalid order id");
+
+//            var result = await Trading.GetOrderAsync(
+//                request.Symbol.GetSymbol(FormatSymbol),
+//                id,
+//                ct: ct).ConfigureAwait(false);
+//            if (!result)
+//                return result.AsExchangeResult<SharedFuturesTriggerOrder>(Exchange, null, default);
+
+//            // Return
+//            return result.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedFuturesTriggerOrder(
+//                ExchangeSymbolCache.ParseSymbol(_topicId, result.Data.Symbol),
+//                result.Data.Symbol,
+//                result.Data.OrderId.ToString(),
+//                result.Data.Type == FuturesOrderType.StopLimit ? SharedOrderType.Limit : SharedOrderType.Market,
+//                GetOrderDirection(result.Data),
+//                ParseTriggerStatus(result.Data),
+//                result.Data.StopPrice ?? 0,
+//                result.Data.PositionSide == PositionSide.Both ? null : result.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
+//                result.Data.CreateTime
+//                )
+//            {
+//                OrderPrice = result.Data.Price,
+//                OrderQuantity = new SharedOrderQuantity(contractQuantity: result.Data.Quantity),
+//                QuantityFilled = new SharedOrderQuantity(quoteAssetQuantity: result.Data.ValueFilled, contractQuantity: result.Data.QuantityFilled),
+//                Fee = Math.Abs(result.Data.Fee ?? 0),
+//                UpdateTime = result.Data.UpdateTime,
+//                AveragePrice = result.Data.AveragePrice,
+//                PlacedOrderId = result.Data.OrderId.ToString()
+//            });
+//        }
+
+//        private SharedTriggerOrderDirection? GetOrderDirection(BingXFuturesOrderDetails data)
+//        {
+//            if (data.PositionSide == PositionSide.Both)
+//                return null;
+
+//            if (data.PositionSide == PositionSide.Long)
+//                return data.Side == OrderSide.Buy ? SharedTriggerOrderDirection.Enter : SharedTriggerOrderDirection.Exit;
+
+//            return data.Side == OrderSide.Buy ? SharedTriggerOrderDirection.Exit : SharedTriggerOrderDirection.Enter;
+//        }
+
+//        private SharedTriggerOrderStatus ParseTriggerStatus(BingXFuturesOrderDetails data)
+//        {
+//            if (data.Status == OrderStatus.Filled)
+//                return SharedTriggerOrderStatus.Filled;
+
+//            if (data.Status == OrderStatus.Canceled || data.Status == OrderStatus.Failed)
+//                return SharedTriggerOrderStatus.CanceledOrRejected;
+
+//            return SharedTriggerOrderStatus.Active;
+//        }
+
+//        EndpointOptions<CancelOrderRequest> IFuturesTriggerOrderRestClient.CancelFuturesTriggerOrderOptions { get; } = new EndpointOptions<CancelOrderRequest>(true);
+//        async Task<ExchangeWebResult<SharedId>> IFuturesTriggerOrderRestClient.CancelFuturesTriggerOrderAsync(CancelOrderRequest request, CancellationToken ct)
+//        {
+//            var validationError = ((IFuturesTriggerOrderRestClient)this).CancelFuturesTriggerOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+//            if (validationError != null)
+//                return new ExchangeWebResult<SharedId>(Exchange, validationError);
+
+//            if (!long.TryParse(request.OrderId, out var orderId))
+//                return new ExchangeWebResult<SharedId>(Exchange, new ArgumentError("Invalid order id"));
+
+//            var order = await Trading.CancelOrderAsync(request.Symbol.GetSymbol(FormatSymbol), orderId, ct: ct).ConfigureAwait(false);
+//            if (!order)
+//                return order.AsExchangeResult<SharedId>(Exchange, null, default);
+
+//            return order.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedId(order.Data.OrderId.ToString()));
+//        }
+
+//        #endregion
 
         private DateTime RoundDown(DateTime dt, TimeSpan d)
         {

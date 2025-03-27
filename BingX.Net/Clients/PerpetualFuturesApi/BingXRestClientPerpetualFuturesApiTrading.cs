@@ -160,6 +160,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             decimal? triggerPrice = null,
             bool? stopGuaranteed = null,
             string? clientOrderId = null,
+            TriggerType? workingType = null,
             CancellationToken ct = default)
         {
             var parameter = new ParameterCollection()
@@ -179,6 +180,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
             parameter.AddOptional("activationPrice", triggerPrice);
             parameter.AddOptional("stopGuaranteed", stopGuaranteed);
+            parameter.AddOptionalEnum("workingType", workingType);
 
             if (stopLossType != null)
             {

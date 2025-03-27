@@ -38,7 +38,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Stop price
         /// </summary>
-        [JsonPropertyName("stopPrice")]
+        [JsonPropertyName("StopPrice")] // Actually is with uppercase
         public decimal? StopPrice { get; set; }
         /// <summary>
         /// Order quantity

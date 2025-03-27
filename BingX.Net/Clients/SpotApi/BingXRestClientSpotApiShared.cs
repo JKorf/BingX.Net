@@ -1,5 +1,6 @@
 using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
+using BingX.Net.Objects.Models;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.SharedApis;
@@ -797,25 +798,24 @@ namespace BingX.Net.Clients.SpotApi
         }
         #endregion
 
-#warning check
         #region Trigger Order Client
-        //EndpointOptions<GetFeeRequest> IFeeRestClient.GetFeeOptions { get; } = new EndpointOptions<GetFeeRequest>(true);
-
+        PlaceSpotTriggerOrderOptions ISpotTriggerOrderRestClient.PlaceSpotTriggerOrderOptions { get; } = new PlaceSpotTriggerOrderOptions(true);
         async Task<ExchangeWebResult<SharedId>> ISpotTriggerOrderRestClient.PlaceSpotTriggerOrderAsync(PlaceSpotTriggerOrderRequest request, CancellationToken ct)
         {
-            //var validationError = ((ITriggerOrderRestClient)this).GetFeeOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
-            //if (validationError != null)
-            //    return new ExchangeWebResult<SharedFee>(Exchange, validationError);
+            var validationError = ((ISpotTriggerOrderRestClient)this).PlaceSpotTriggerOrderOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            if (validationError != null)
+                return new ExchangeWebResult<SharedId>(Exchange, validationError);
 
-            var (type, side) = GetTriggerOrderParameters(request.OrderPrice, request.OrderDirection);
             var result = await Trading.PlaceOrderAsync(
                 request.Symbol.GetSymbol(FormatSymbol),
-                side,
-                type,
-                quantity: request.Quantity?.QuantityInBaseAsset ?? request.Quantity?.QuantityInContracts,
+                request.OrderSide == SharedOrderSide.Buy ? OrderSide.Buy: OrderSide.Sell,
+                request.OrderPrice == null ? OrderType.StopMarket : OrderType.StopLimit,
+                quantity: request.Quantity.QuantityInBaseAsset,
+                quoteQuantity: request.Quantity.QuantityInQuoteAsset,
                 timeInForce: request.OrderPrice == null ? TimeInForce.ImmediateOrCancel : TimeInForce.GoodTillCanceled,
                 price: request.OrderPrice,
                 stopPrice: request.TriggerPrice,
+                clientOrderId: request.ClientOrderId,
                 ct: ct).ConfigureAwait(false);
             if (!result)
                 return result.AsExchangeResult<SharedId>(Exchange, null, default);
@@ -849,19 +849,32 @@ namespace BingX.Net.Clients.SpotApi
                 result.Data.OrderId.ToString(),
                 orderType,
                 orderDirection,
-                ParseOrderStatus(result.Data.Status),
+                ParseTriggerStatus(result.Data),
                 result.Data.StopPrice ?? 0,
                 result.Data.CreateTime
                 )
             {
+                PlacedOrderId = result.Data.OrderId.ToString(),
                 OrderPrice = result.Data.Price,
                 OrderQuantity = new SharedOrderQuantity(result.Data.Quantity, result.Data.QuoteQuantity, null),
                 QuantityFilled = new SharedOrderQuantity(result.Data.QuantityFilled, result.Data.ValueFilled, null),
                 Fee = Math.Abs(result.Data.Fee),
                 FeeAsset = result.Data.FeeAsset,
                 UpdateTime = result.Data.UpdateTime,
-                AveragePrice = result.Data.AveragePrice
+                AveragePrice = result.Data.AveragePrice == 0 ? null : result.Data.AveragePrice,
+                ClientOrderId = result.Data.ClientOrderId
             });
+        }
+
+        private SharedTriggerOrderStatus ParseTriggerStatus(BingXOrderDetails data)
+        {
+            if (data.Status == OrderStatus.Filled)
+                return SharedTriggerOrderStatus.Filled;
+
+            if (data.Status == OrderStatus.Canceled || data.Status == OrderStatus.Failed)
+                return SharedTriggerOrderStatus.CanceledOrRejected;
+
+            return SharedTriggerOrderStatus.Active;
         }
 
         EndpointOptions<CancelOrderRequest> ISpotTriggerOrderRestClient.CancelSpotTriggerOrderOptions { get; } = new EndpointOptions<CancelOrderRequest>(true);
@@ -879,16 +892,6 @@ namespace BingX.Net.Clients.SpotApi
                 return order.AsExchangeResult<SharedId>(Exchange, null, default);
 
             return order.AsExchangeResult(Exchange, TradingMode.Spot, new SharedId(order.Data.OrderId.ToString()));
-        }
-
-
-        private (OrderType, OrderSide) GetTriggerOrderParameters(decimal? orderPrice, SharedTriggerOrderDirection direction)
-        {
-            if (direction == SharedTriggerOrderDirection.Enter)
-                return (orderPrice == null ? OrderType.StopMarket : OrderType.StopLimit, OrderSide.Buy);
-            else
-                // PriceBelow + Exit
-                return (orderPrice == null ? OrderType.StopMarket : OrderType.StopLimit, OrderSide.Sell);
         }
 
         private (SharedOrderType, SharedTriggerOrderDirection) ParseTriggerDirections(OrderType orderType, OrderSide side)
