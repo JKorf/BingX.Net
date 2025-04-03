@@ -2955,11 +2955,6 @@
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
         </member>
-        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.DateTimeOffset">
-            <summary>
-            Defines the source generated JSON serialization contract metadata for a given type.
-            </summary>
-        </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Int32">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.

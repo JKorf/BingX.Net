@@ -10,6 +10,6 @@ namespace BingX.Net.Objects.Internal
         [JsonPropertyName("pong")]
         public string Pong { get; set; } = string.Empty;
         [JsonPropertyName("time")]
-        public DateTimeOffset Timestamp { get; set; }
+        public string Timestamp { get; set; } = string.Empty;
     }
 }

@@ -1,3 +1,4 @@
+using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
@@ -136,7 +137,7 @@ namespace BingX.Net.Clients.SpotApi
                         ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
                         update.Data.Symbol,
                         update.Data.OrderId.ToString(),
-                        update.Data.Type == Enums.OrderType.Limit ? SharedOrderType.Limit : update.Data.Type == Enums.OrderType.Market ? SharedOrderType.Market : SharedOrderType.Other,
+                        ParseOrderType(update.Data.Type),
                         update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
                         update.Data.Status == Enums.OrderStatus.Canceled ? SharedOrderStatus.Canceled : (update.Data.Status == Enums.OrderStatus.New || update.Data.Status == Enums.OrderStatus.Pending || update.Data.Status == Enums.OrderStatus.PartiallyFilled) ? SharedOrderStatus.Open : SharedOrderStatus.Filled,
                         update.Data.CreateTime)
@@ -148,12 +149,24 @@ namespace BingX.Net.Clients.SpotApi
                         Fee = update.Data.Fee.HasValue ? Math.Abs(update.Data.Fee.Value) : null,
                         FeeAsset = update.Data.FeeAsset,
                         UpdateTime = update.Data.UpdateTime,
+                        IsTriggerOrder = update.Data.Type == OrderType.StopLimit || update.Data.Type == OrderType.StopMarket || update.Data.Type == OrderType.TriggerLimit || update.Data.Type == OrderType.TriggerMarket,
                         LastTrade = update.Data.LastFillQuantity > 0 ? new SharedUserTrade(ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol), update.Data.Symbol, update.Data.OrderId.ToString(), update.Data.TradeId.ToString(), update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell, update.Data.LastFillQuantity!.Value, update.Data.LastFillPrice!.Value, update.Data.UpdateTime!.Value) : null
                     }
                 })),
                 ct: ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
+        }
+
+        private SharedOrderType ParseOrderType(OrderType type)
+        {
+            if (type == OrderType.Market || type == OrderType.StopMarket)
+                return SharedOrderType.Market;
+
+            if (type == OrderType.Limit || type == OrderType.StopLimit)
+                return SharedOrderType.Limit;
+
+            return SharedOrderType.Other;
         }
 
         #endregion

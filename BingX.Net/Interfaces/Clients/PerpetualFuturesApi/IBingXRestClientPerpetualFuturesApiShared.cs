@@ -24,7 +24,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         IListenKeyRestClient,
         IFeeRestClient,
         IFuturesOrderClientIdClient,
-        IFuturesTpSlRestClient
+        IFuturesTpSlRestClient,
+        IBookTickerRestClient
     {
     }
 }

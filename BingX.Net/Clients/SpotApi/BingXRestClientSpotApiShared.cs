@@ -140,6 +140,30 @@ namespace BingX.Net.Clients.SpotApi
 
         #endregion
 
+        #region Book Ticker client
+
+        EndpointOptions<GetBookTickerRequest> IBookTickerRestClient.GetBookTickerOptions { get; } = new EndpointOptions<GetBookTickerRequest>(false);
+        async Task<ExchangeWebResult<SharedBookTicker>> IBookTickerRestClient.GetBookTickerAsync(GetBookTickerRequest request, CancellationToken ct)
+        {
+            var validationError = ((IBookTickerRestClient)this).GetBookTickerOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            if (validationError != null)
+                return new ExchangeWebResult<SharedBookTicker>(Exchange, validationError);
+
+            var resultTicker = await ExchangeData.GetBookPriceAsync(request.Symbol.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
+            if (!resultTicker)
+                return resultTicker.AsExchangeResult<SharedBookTicker>(Exchange, null, default);
+
+            return resultTicker.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedBookTicker(
+                ExchangeSymbolCache.ParseSymbol(_topicId, resultTicker.Data.Symbol),
+                resultTicker.Data.Symbol,
+                resultTicker.Data.BestAskPrice,
+                resultTicker.Data.BestAskQuantity,
+                resultTicker.Data.BestBidPrice,
+                resultTicker.Data.BestBidQuantity));
+        }
+
+        #endregion
+
         #region Recent Trade client
         GetRecentTradesOptions IRecentTradeRestClient.GetRecentTradesOptions { get; } = new GetRecentTradesOptions(1000, false);
 
@@ -258,7 +282,9 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(order.Data.Fee),
                 FeeAsset = order.Data.FeeAsset,
                 UpdateTime = order.Data.UpdateTime,
-                AveragePrice = order.Data.AveragePrice
+                AveragePrice = order.Data.AveragePrice,
+                TriggerPrice = order.Data.StopPrice,
+                IsTriggerOrder = order.Data.StopPrice != null
             });
         }
 
@@ -290,7 +316,9 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
-                AveragePrice = x.AveragePrice
+                AveragePrice = x.AveragePrice,
+                TriggerPrice = x.StopPrice,
+                IsTriggerOrder = x.StopPrice != null
             }).ToArray());
         }
 
@@ -341,7 +369,9 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
-                AveragePrice = x.AveragePrice
+                AveragePrice = x.AveragePrice,
+                TriggerPrice = x.StopPrice,
+                IsTriggerOrder = x.StopPrice != null
             }).ToArray(), nextToken);
         }
 
@@ -501,7 +531,9 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(order.Data.Fee),
                 FeeAsset = order.Data.FeeAsset,
                 UpdateTime = order.Data.UpdateTime,
-                AveragePrice = order.Data.AveragePrice
+                AveragePrice = order.Data.AveragePrice,
+                TriggerPrice = order.Data.StopPrice,
+                IsTriggerOrder = order.Data.StopPrice != null
             });
         }
 

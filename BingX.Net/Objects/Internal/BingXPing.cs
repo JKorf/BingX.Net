@@ -9,7 +9,7 @@ namespace BingX.Net.Objects.Internal
     {
         [JsonPropertyName("ping")]
         public string Ping { get; set; } = string.Empty;
-        //[JsonPropertyName("time")]
-        public DateTimeOffset Timestamp { get; set; }
+        [JsonPropertyName("time")]
+        public string Timestamp { get; set; } = string.Empty;
     }
 }

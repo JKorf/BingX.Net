@@ -46,6 +46,8 @@ namespace BingX.Net.Clients.SpotApi
             base(logger, options.Environment.SocketClientSpotAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXPingSubscription(_logger));
+
+            KeepAliveTimeout = TimeSpan.Zero;
         }
         #endregion 
 

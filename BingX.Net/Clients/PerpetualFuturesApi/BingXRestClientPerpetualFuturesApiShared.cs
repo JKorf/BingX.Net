@@ -172,6 +172,30 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #endregion
 
+        #region Book Ticker client
+
+        EndpointOptions<GetBookTickerRequest> IBookTickerRestClient.GetBookTickerOptions { get; } = new EndpointOptions<GetBookTickerRequest>(false);
+        async Task<ExchangeWebResult<SharedBookTicker>> IBookTickerRestClient.GetBookTickerAsync(GetBookTickerRequest request, CancellationToken ct)
+        {
+            var validationError = ((IBookTickerRestClient)this).GetBookTickerOptions.ValidateRequest(Exchange, request, request.Symbol.TradingMode, SupportedTradingModes);
+            if (validationError != null)
+                return new ExchangeWebResult<SharedBookTicker>(Exchange, validationError);
+
+            var resultTicker = await ExchangeData.GetBookTickerAsync(request.Symbol.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
+            if (!resultTicker)
+                return resultTicker.AsExchangeResult<SharedBookTicker>(Exchange, null, default);
+
+            return resultTicker.AsExchangeResult(Exchange, request.Symbol.TradingMode, new SharedBookTicker(
+                ExchangeSymbolCache.ParseSymbol(_topicId, resultTicker.Data.Symbol),
+                resultTicker.Data.Symbol,
+                resultTicker.Data.BestAskPrice,
+                resultTicker.Data.BestAskQuantity,
+                resultTicker.Data.BestBidPrice,
+                resultTicker.Data.BestBidQuantity));
+        }
+
+        #endregion
+
         #region Recent Trade client
 
         GetRecentTradesOptions IRecentTradeRestClient.GetRecentTradesOptions { get; } = new GetRecentTradesOptions(1000, false);
@@ -420,8 +444,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         #region Futures Order Client
-
-
+        
         SharedFeeDeductionType IFuturesOrderRestClient.FuturesFeeDeductionType => SharedFeeDeductionType.AddToCost;
         SharedFeeAssetType IFuturesOrderRestClient.FuturesFeeAssetType => SharedFeeAssetType.QuoteAsset;
 
@@ -507,6 +530,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 ReduceOnly = order.Data.ReduceOnly,
                 TakeProfitPrice = order.Data.TakeProfit?.StopPrice,
                 StopLossPrice = order.Data.StopLoss?.StopPrice,
+                TriggerPrice = order.Data.TriggerPrice,
+                IsTriggerOrder = order.Data.TriggerPrice > 0
             });
         }
 
@@ -543,6 +568,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 ReduceOnly = x.ReduceOnly,
                 TakeProfitPrice = x.TakeProfit?.StopPrice,
                 StopLossPrice = x.StopLoss?.StopPrice,
+                TriggerPrice = x.TriggerPrice,
+                IsTriggerOrder = x.TriggerPrice > 0
             }).ToArray());
         }
 
@@ -593,6 +620,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 ReduceOnly = x.ReduceOnly,
                 TakeProfitPrice = x.TakeProfit?.StopPrice,
                 StopLossPrice = x.StopLoss?.StopPrice,
+                TriggerPrice = x.TriggerPrice,
+                IsTriggerOrder = x.TriggerPrice > 0
             }).ToArray(), nextToken);
         }
 
@@ -805,7 +834,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 TimeInForce = ParseTimeInForce(order.Data.TimeInForce),
                 UpdateTime = order.Data.UpdateTime,
                 PositionSide = order.Data.PositionSide == PositionSide.Both ? null : order.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
-                ReduceOnly = order.Data.ReduceOnly
+                ReduceOnly = order.Data.ReduceOnly,
+                TakeProfitPrice = order.Data.TakeProfit?.StopPrice,
+                StopLossPrice = order.Data.StopLoss?.StopPrice,
+                TriggerPrice = order.Data.TriggerPrice,
+                IsTriggerOrder = order.Data.TriggerPrice > 0
             });
         }
 

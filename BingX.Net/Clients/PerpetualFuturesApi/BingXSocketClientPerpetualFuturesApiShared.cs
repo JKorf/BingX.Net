@@ -1,4 +1,5 @@
 using BingX.Net.Interfaces.Clients.SpotApi;
+using BingX.Net.Objects.Models;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;
@@ -142,7 +143,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
                         update.Data.Symbol,
                         update.Data.OrderId.ToString(),
-                        update.Data.Type == Enums.FuturesOrderType.Limit ? SharedOrderType.Limit : update.Data.Type == Enums.FuturesOrderType.Market ? SharedOrderType.Market : SharedOrderType.Other,
+                        ParseOrderType(update.Data),
                         update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
                         update.Data.Status == Enums.OrderStatus.Canceled ? SharedOrderStatus.Canceled : (update.Data.Status == Enums.OrderStatus.New || update.Data.Status == Enums.OrderStatus.PartiallyFilled) ? SharedOrderStatus.Open : SharedOrderStatus.Filled,
                         update.Data.UpdateTime)
@@ -156,12 +157,34 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         PositionSide = update.Data.PositionSide == Enums.PositionSide.Long ? SharedPositionSide.Long : update.Data.PositionSide == Enums.PositionSide.Short ? SharedPositionSide.Short : null,
                         FeeAsset = update.Data.FeeAsset,
                         UpdateTime = update.Data.UpdateTime,
-                        ReduceOnly = update.Data.ReduceOnly
+                        ReduceOnly = update.Data.ReduceOnly,
+                        TriggerPrice = update.Data.TriggerPrice,
+                        IsTriggerOrder = update.Data.TriggerPrice > 0
                     }
                 })),
                 ct: ct).ConfigureAwait(false);
 
             return new ExchangeResult<UpdateSubscription>(Exchange, result);
+        }
+
+        private SharedOrderType ParseOrderType(BingXFuturesOrderUpdate data)
+        {
+            if (data.Type == Enums.FuturesOrderType.Market
+                || data.Type == Enums.FuturesOrderType.StopMarket
+                || data.Type == Enums.FuturesOrderType.TriggerMarket
+                || data.Type == Enums.FuturesOrderType.TakeProfitMarket)
+            {
+                return SharedOrderType.Market;
+            }
+
+            if (data.Type == Enums.FuturesOrderType.Limit
+                || data.Type == Enums.FuturesOrderType.StopLimit
+                || data.Type == Enums.FuturesOrderType.TakeProfitLimit)
+            {
+                return SharedOrderType.Limit;
+            }
+
+            return SharedOrderType.Other;
         }
 
         #endregion
