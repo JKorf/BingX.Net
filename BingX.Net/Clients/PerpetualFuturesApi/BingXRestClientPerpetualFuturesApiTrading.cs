@@ -190,7 +190,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 stopLossParams.AddOptional("price", stopLossPrice);
                 stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
                 stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(stopLossParams));
+                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(stopLossParams);
+                json = json.Replace("\u0022", "\"");
+                parameter.Add("stopLoss", json);
             }
 
             if (takeProfitType != null)
@@ -201,11 +203,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 takeProfitParams.AddOptional("price", takeProfitPrice);
                 takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
                 takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(takeProfitParams));
+                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(takeProfitParams);
+                json = json.Replace("\u0022", "\"");
+                parameter.Add("takeProfit", json);
             }
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/order", BingXExchange.RateLimiter.RestAccount2, 1, true,
-                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), requestBodyFormat: RequestBodyFormat.Json);
             var result = await _baseClient.SendAsync<BingXFuturesOrderWrapper>(request, parameter, ct, additionalHeaders: new Dictionary<string, string>
                  {
                      { "X-SOURCE-KEY", _brokerId }

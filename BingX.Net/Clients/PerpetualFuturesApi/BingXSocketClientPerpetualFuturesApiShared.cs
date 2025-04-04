@@ -159,7 +159,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         UpdateTime = update.Data.UpdateTime,
                         ReduceOnly = update.Data.ReduceOnly,
                         TriggerPrice = update.Data.TriggerPrice,
-                        IsTriggerOrder = update.Data.TriggerPrice > 0
+                        IsTriggerOrder = update.Data.TriggerPrice > 0,
+                        IsCloseOrder = (update.Data.Type == Enums.FuturesOrderType.TakeProfitMarket || update.Data.Type == Enums.FuturesOrderType.TakeProfitLimit || update.Data.Type == Enums.FuturesOrderType.StopLimit || update.Data.Type == Enums.FuturesOrderType.StopMarket)
+                                            && (update.Data.Quantity == null || update.Data.Quantity == 0)
                     }
                 })),
                 ct: ct).ConfigureAwait(false);

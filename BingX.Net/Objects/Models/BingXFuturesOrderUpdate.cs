@@ -98,7 +98,7 @@ namespace BingX.Net.Objects.Models
         /// Trigger type
         /// </summary>
         [JsonPropertyName("wt")]
-        public TriggerType TriggerType { get; set; }
+        public TriggerType? TriggerType { get; set; }
         /// <summary>
         /// Average order price
         /// </summary>

@@ -1,6 +1,7 @@
 using BingX.Net.Objects.Internal;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Sockets;
+using CryptoExchange.Net.Objects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,8 @@ namespace BingX.Net.Converters
     [JsonSerializable(typeof(IEnumerable<BingXPlaceOrderRequest>))]
     [JsonSerializable(typeof(IEnumerable<BingXFuturesPlaceOrderRequest>))]
     [JsonSerializable(typeof(BingXUpdate<BingXOrderBook>))]
+    [JsonSerializable(typeof(ParameterCollection))]
+    [JsonSerializable(typeof(IDictionary<string, object>))]
 
     // End manual defined attributes
 

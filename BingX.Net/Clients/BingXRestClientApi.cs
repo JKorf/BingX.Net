@@ -97,8 +97,16 @@ namespace BingX.Net.Clients
         /// <inheritdoc />
         protected override void WriteParamBody(IRequest request, IDictionary<string, object> parameters, string contentType)
         {
-            var stringData = parameters.CreateParamString(false, ArraySerialization);
-            request.SetContent(stringData, contentType);
+            if (contentType == Constants.JsonContentHeader)
+            {
+                var stringData = CreateSerializer().Serialize(parameters);
+                request.SetContent(stringData, contentType);
+            }
+            else
+            {
+                var stringData = parameters.CreateParamString(false, ArraySerialization);
+                request.SetContent(stringData, contentType);
+            }
         }
 
         /// <inheritdoc />

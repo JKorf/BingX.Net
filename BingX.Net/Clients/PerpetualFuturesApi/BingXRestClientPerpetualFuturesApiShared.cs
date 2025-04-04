@@ -483,10 +483,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 timeInForce: GetTimeInForce(request.TimeInForce),
                 clientOrderId: request.ClientOrderId,
 
-                takeProfitPrice: request.TakeProfitPrice,
-                takeProfitType: TakeProfitStopLossMode.TakeProfitMarket,
-                stopLossPrice: request.StopLossPrice,
-                stopLossType: TakeProfitStopLossMode.StopMarket,
+                takeProfitStopPrice: request.TakeProfitPrice,
+                takeProfitType: request.TakeProfitPrice == null ? null : TakeProfitStopLossMode.TakeProfitMarket,
+                stopLossStopPrice: request.StopLossPrice,
+                stopLossType: request.StopLossPrice == null ? null : TakeProfitStopLossMode.StopMarket,
                 ct: ct).ConfigureAwait(false);
 
             if (!result)
@@ -528,10 +528,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 UpdateTime = order.Data.UpdateTime,
                 PositionSide = order.Data.PositionSide == PositionSide.Both ? null : order.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = order.Data.ReduceOnly,
-                TakeProfitPrice = order.Data.TakeProfit?.StopPrice,
-                StopLossPrice = order.Data.StopLoss?.StopPrice,
-                TriggerPrice = order.Data.TriggerPrice,
-                IsTriggerOrder = order.Data.TriggerPrice > 0
+                TakeProfitPrice = order.Data.TakeProfit?.StopPrice == 0 ? null : order.Data.TakeProfit?.StopPrice,
+                StopLossPrice = order.Data.StopLoss?.StopPrice == 0 ? null : order.Data.StopLoss?.StopPrice,
+                TriggerPrice = order.Data.StopPrice,
+                IsTriggerOrder = order.Data.StopPrice > 0,
+                IsCloseOrder = (order.Data.Type == Enums.FuturesOrderType.TakeProfitMarket || order.Data.Type == Enums.FuturesOrderType.TakeProfitLimit || order.Data.Type == Enums.FuturesOrderType.StopLimit || order.Data.Type == Enums.FuturesOrderType.StopMarket)
+                                            && (order.Data.Quantity == null || order.Data.Quantity == 0)
             });
         }
 
@@ -566,10 +568,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 UpdateTime = x.UpdateTime,
                 PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = x.ReduceOnly,
-                TakeProfitPrice = x.TakeProfit?.StopPrice,
-                StopLossPrice = x.StopLoss?.StopPrice,
-                TriggerPrice = x.TriggerPrice,
-                IsTriggerOrder = x.TriggerPrice > 0
+                TakeProfitPrice = x.TakeProfit?.StopPrice == 0 ? null: x.TakeProfit?.StopPrice,
+                StopLossPrice = x.StopLoss?.StopPrice == 0 ? null : x.StopLoss?.StopPrice,
+                TriggerPrice = x.StopPrice,
+                IsTriggerOrder = x.StopPrice > 0,
+                IsCloseOrder = (x.Type == Enums.FuturesOrderType.TakeProfitMarket || x.Type == Enums.FuturesOrderType.TakeProfitLimit || x.Type == Enums.FuturesOrderType.StopLimit || x.Type == Enums.FuturesOrderType.StopMarket)
+                                            && (x.Quantity == null || x.Quantity == 0)
             }).ToArray());
         }
 
@@ -618,10 +622,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 UpdateTime = x.UpdateTime,
                 PositionSide = x.PositionSide == PositionSide.Both ? null : x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = x.ReduceOnly,
-                TakeProfitPrice = x.TakeProfit?.StopPrice,
-                StopLossPrice = x.StopLoss?.StopPrice,
-                TriggerPrice = x.TriggerPrice,
-                IsTriggerOrder = x.TriggerPrice > 0
+                TakeProfitPrice = x.TakeProfit?.StopPrice == 0 ? null : x.TakeProfit?.StopPrice,
+                StopLossPrice = x.StopLoss?.StopPrice == 0 ? null : x.StopLoss?.StopPrice,
+                TriggerPrice = x.StopPrice,
+                IsTriggerOrder = x.StopPrice > 0,
+                IsCloseOrder = (x.Type == Enums.FuturesOrderType.TakeProfitMarket || x.Type == Enums.FuturesOrderType.TakeProfitLimit || x.Type == Enums.FuturesOrderType.StopLimit || x.Type == Enums.FuturesOrderType.StopMarket)
+                                            && (x.Quantity == null || x.Quantity == 0)
             }).ToArray(), nextToken);
         }
 
@@ -835,10 +841,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 UpdateTime = order.Data.UpdateTime,
                 PositionSide = order.Data.PositionSide == PositionSide.Both ? null : order.Data.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                 ReduceOnly = order.Data.ReduceOnly,
-                TakeProfitPrice = order.Data.TakeProfit?.StopPrice,
-                StopLossPrice = order.Data.StopLoss?.StopPrice,
-                TriggerPrice = order.Data.TriggerPrice,
-                IsTriggerOrder = order.Data.TriggerPrice > 0
+                TakeProfitPrice = order.Data.TakeProfit?.StopPrice == 0 ? null : order.Data.TakeProfit?.StopPrice,
+                StopLossPrice = order.Data.StopLoss?.StopPrice == 0 ? null : order.Data.StopLoss?.StopPrice,
+                TriggerPrice = order.Data.StopPrice,
+                IsTriggerOrder = order.Data.StopPrice > 0,
+                IsCloseOrder = (order.Data.Type == Enums.FuturesOrderType.TakeProfitMarket || order.Data.Type == Enums.FuturesOrderType.TakeProfitLimit || order.Data.Type == Enums.FuturesOrderType.StopLimit || order.Data.Type == Enums.FuturesOrderType.StopMarket)
+                                            && (order.Data.Quantity == null || order.Data.Quantity == 0)
             });
         }
 
@@ -1046,7 +1054,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     request.Symbol.GetSymbol(FormatSymbol),
                     OrderSide.Buy,
                     FuturesOrderType.TakeProfitMarket,
-                    request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
+                    request.PositionMode == SharedPositionMode.OneWay ? PositionSide.Both : request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
                     stopPrice: request.TriggerPrice,
                     //reduceOnly: request.PositionMode == SharedPositionMode.OneWay ? true : null,
                     closePosition: true,
@@ -1058,7 +1066,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     request.Symbol.GetSymbol(FormatSymbol),
                     OrderSide.Sell,
                     FuturesOrderType.StopMarket,
-                    request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
+                    request.PositionMode == SharedPositionMode.OneWay ? PositionSide.Both : request.PositionSide == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
                     stopPrice: request.TriggerPrice,
                     //reduceOnly: request.PositionMode == SharedPositionMode.OneWay ? true : null,
                     closePosition: true,
