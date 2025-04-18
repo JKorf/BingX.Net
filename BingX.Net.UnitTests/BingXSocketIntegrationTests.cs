@@ -13,7 +13,7 @@ namespace BingX.Net.UnitTests
     [NonParallelizable]
     internal class BingXSocketIntegrationTests : SocketIntegrationTest<BingXSocketClient>
     {
-        public override bool Run { get; set; } = true;
+        public override bool Run { get; set; }
 
         public BingXSocketIntegrationTests()
         {
