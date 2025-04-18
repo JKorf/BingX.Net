@@ -104,7 +104,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 stopLossParams.AddOptional("price", stopLossPrice);
                 stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
                 stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(stopLossParams));
+                parameter.Add("stopLoss", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(stopLossParams));
             }
 
             if (takeProfitType != null)
@@ -115,7 +115,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 takeProfitParams.AddOptional("price", takeProfitPrice);
                 takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
                 takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
-                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(takeProfitParams));
+                parameter.Add("takeProfit", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(takeProfitParams));
             }
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/order/test", BingXExchange.RateLimiter.RestAccount1, 1, true,
@@ -190,7 +190,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 stopLossParams.AddOptional("price", stopLossPrice);
                 stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
                 stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
-                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(stopLossParams);
+                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(stopLossParams);
                 json = json.Replace("\u0022", "\"");
                 parameter.Add("stopLoss", json);
             }
@@ -203,7 +203,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 takeProfitParams.AddOptional("price", takeProfitPrice);
                 takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
                 takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
-                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(takeProfitParams);
+                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(takeProfitParams);
                 json = json.Replace("\u0022", "\"");
                 parameter.Add("takeProfit", json);
             }
@@ -230,14 +230,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             foreach(var order in orders)
             {
                 if (order.StopLoss != null)
-                    order.StopLossStr = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(order.StopLoss);
+                    order.StopLossStr = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(order.StopLoss);
 
                 if (order.TakeProfit != null)
-                    order.TakeProfitStr = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(order.TakeProfit);
+                    order.TakeProfitStr = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(order.TakeProfit);
             }
             var parameter = new ParameterCollection()
             {
-                { "batchOrders", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(orders) }
+                { "batchOrders", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(orders) }
             };
             parameter.AddOptional("sync", sync);
 

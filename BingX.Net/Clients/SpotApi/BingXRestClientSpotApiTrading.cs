@@ -66,7 +66,7 @@ namespace BingX.Net.Clients.SpotApi
         {
             var parameters = new ParameterCollection()
             {
-                { "data", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange.SerializerContext)).Serialize(orders) }
+                { "data", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(orders) }
             };
             parameters.AddOptional("sync", sync);
 
