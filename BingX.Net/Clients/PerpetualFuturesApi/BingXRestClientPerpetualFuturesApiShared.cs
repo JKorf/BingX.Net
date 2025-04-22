@@ -1035,7 +1035,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return result.AsExchangeResult<SharedFee>(Exchange, null, default);
 
             // Return
-            return result.AsExchangeResult(Exchange, TradingMode.Spot, new SharedFee(result.Data.MakerFeeRate * 100, result.Data.TakerFeeRate * 100));
+            return result.AsExchangeResult(Exchange, SupportedTradingModes, new SharedFee(result.Data.MakerFeeRate * 100, result.Data.TakerFeeRate * 100));
         }
         #endregion
 
@@ -1077,7 +1077,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return result.AsExchangeResult<SharedId>(Exchange, null, default);
 
             // Return
-            return result.AsExchangeResult(Exchange, TradingMode.Spot, new SharedId(result.Data.OrderId.ToString()));
+            return result.AsExchangeResult(Exchange, SupportedTradingModes, new SharedId(result.Data.OrderId.ToString()));
         }
 
         EndpointOptions<CancelTpSlRequest> IFuturesTpSlRestClient.CancelFuturesTpSlOptions { get; } = new EndpointOptions<CancelTpSlRequest>(true);
