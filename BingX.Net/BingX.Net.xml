@@ -34,6 +34,12 @@
             Get the BingX environment by name
             </summary>
         </member>
+        <member name="P:BingX.Net.BingXEnvironment.All">
+            <summary>
+            Available environment names
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:BingX.Net.BingXEnvironment.Live">
             <summary>
             Live environment
