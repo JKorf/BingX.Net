@@ -628,6 +628,9 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetHistoricalKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetTickersAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -4933,6 +4936,19 @@
             <summary>
             Get kline/candlestick data
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Kline/Candlestick%20Data" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
+            <param name="interval">Kline interval</param>
+            <param name="startTime">Filter by start time</param>
+            <param name="endTime">Filter by end time</param>
+            <param name="limit">Max amount of results</param>
+            <param name="ct">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiExchangeData.GetHistoricalKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            Get kline/candlestick data
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Historical%20K-line" /></para>
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="interval">Kline interval</param>
