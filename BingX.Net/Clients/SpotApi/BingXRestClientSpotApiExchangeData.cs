@@ -127,6 +127,22 @@ namespace BingX.Net.Clients.SpotApi
             return await _baseClient.SendAsync<IEnumerable<BingXKline>>(request, parameters, ct).ConfigureAwait(false);
         }
 
+        /// <inheritdoc />
+        public async Task<WebCallResult<IEnumerable<BingXKline>>> GetHistoricalKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection
+            {
+                { "symbol", symbol },
+                { "interval", EnumConverter.GetString(interval) }
+            };
+            parameters.AddOptionalMilliseconds("startTime", startTime);
+            parameters.AddOptionalMilliseconds("endTime", endTime);
+            parameters.AddOptional("limit", limit);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/market/his/v1/kline", BingXExchange.RateLimiter.RestMarket, 1, false);
+            return await _baseClient.SendAsync<IEnumerable<BingXKline>>(request, parameters, ct).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Get Tickers
