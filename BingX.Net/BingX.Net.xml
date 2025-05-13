@@ -3078,6 +3078,11 @@
             Perpetual account
             </summary>
         </member>
+        <member name="F:BingX.Net.Enums.AccountType.Spot">
+            <summary>
+            Spot account
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.AdjustDirection">
             <summary>
             Direction to adjust in
