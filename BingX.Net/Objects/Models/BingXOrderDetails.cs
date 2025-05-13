@@ -1,19 +1,23 @@
-﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXOrderDetailsWrapper
     {
         [JsonPropertyName("orders")]
-        public IEnumerable<BingXOrderDetails> Orders { get; set; } = Array.Empty<BingXOrderDetails>();
+        public BingXOrderDetails[] Orders { get; set; } = Array.Empty<BingXOrderDetails>();
     }
 
     /// <summary>
     /// Order info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXOrderDetails
     {
         /// <summary>
@@ -34,7 +38,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Stop price
         /// </summary>
-        [JsonPropertyName("stopPrice")]
+        [JsonPropertyName("StopPrice")] // Actually is with uppercase
         public decimal? StopPrice { get; set; }
         /// <summary>
         /// Order quantity

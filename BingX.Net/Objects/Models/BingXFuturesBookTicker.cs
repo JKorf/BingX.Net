@@ -1,7 +1,10 @@
-﻿using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXFuturesBookTickerWrapper
     {
         [JsonPropertyName("book_ticker")]

@@ -1,14 +1,17 @@
-﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXFuturesUserTradeWrapper
     {
         [JsonPropertyName("fill_orders")]
-        public IEnumerable<BingXFuturesUserTrade> Trades { get; set; } = Array.Empty<BingXFuturesUserTrade>();
+        public BingXFuturesUserTrade[] Trades { get; set; } = Array.Empty<BingXFuturesUserTrade>();
     }
 
     /// <summary>

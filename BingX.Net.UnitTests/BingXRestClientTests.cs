@@ -1,20 +1,14 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Diagnostics;
 using BingX.Net.Clients;
-using NUnit.Framework.Legacy;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
 using System.Net.Http;
 using System.Collections.Generic;
-using CryptoExchange.Net.Converters.JsonNet;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CryptoExchange.Net.Objects;
 using BingX.Net.Interfaces.Clients;
+using CryptoExchange.Net.Converters.SystemTextJson;
 
 namespace BingX.Net.UnitTests
 {
@@ -42,7 +36,7 @@ namespace BingX.Net.UnitTests
                     { "recvWindow", 0 },
                     { "subAccountString", "abc12345" },
                 },
-                DateTimeConverter.ParseFromLong(1696751141337),
+                DateTimeConverter.ParseFromDouble(1696751141337),
                 true,
                 false);
         }

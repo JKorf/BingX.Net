@@ -1,4 +1,6 @@
-﻿using System;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -7,6 +9,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Asset info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXAsset
     {
         /// <summary>
@@ -23,12 +26,13 @@ namespace BingX.Net.Objects.Models
         /// Networks
         /// </summary>
         [JsonPropertyName("networkList")]
-        public IEnumerable<BingXNetwork> Networks { get; set; } = Array.Empty<BingXNetwork>();
+        public BingXNetwork[] Networks { get; set; } = Array.Empty<BingXNetwork>();
     }
 
     /// <summary>
     /// Network info
     /// </summary>
+    [SerializationModel]
     public record BingXNetwork
     {
         /// <summary>

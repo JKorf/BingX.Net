@@ -1,15 +1,18 @@
-﻿using System;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXLastTradeWrapper
     {
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         [JsonPropertyName("trades")]
-        public IEnumerable<BingXLastTrade> Trades { get; set; } = Array.Empty<BingXLastTrade>();
+        public BingXLastTrade[] Trades { get; set; } = Array.Empty<BingXLastTrade>();
     }
 
     /// <summary>

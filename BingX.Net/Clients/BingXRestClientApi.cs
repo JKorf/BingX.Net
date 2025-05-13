@@ -7,18 +7,12 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net.CommonObjects;
-using CryptoExchange.Net.Interfaces.CommonClients;
-using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Converters.MessageParsing;
-using System.Linq;
-using System.Globalization;
-using BingX.Net.Enums;
 using CryptoExchange.Net.SharedApis;
 using CryptoExchange.Net.Objects.Options;
 
@@ -50,9 +44,9 @@ namespace BingX.Net.Clients
                 => BingXExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverTime);
 
         /// <inheritdoc />
-        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
+        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
         /// <inheritdoc />
-        protected override IStreamMessageAccessor CreateAccessor() => new SystemTextJsonStreamMessageAccessor();
+        protected override IStreamMessageAccessor CreateAccessor() => new SystemTextJsonStreamMessageAccessor(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
@@ -90,7 +84,7 @@ namespace BingX.Net.Clients
         }
 
         /// <inheritdoc />
-        protected override Error? TryParseError(IEnumerable<KeyValuePair<string, IEnumerable<string>>> responseHeaders, IMessageAccessor accessor)
+        protected override Error? TryParseError(KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor)
         {
             var code = accessor.GetValue<int>(MessagePath.Get().Property("code"));
             if (code == 0)
@@ -103,8 +97,16 @@ namespace BingX.Net.Clients
         /// <inheritdoc />
         protected override void WriteParamBody(IRequest request, IDictionary<string, object> parameters, string contentType)
         {
-            var stringData = parameters.CreateParamString(false, ArraySerialization);
-            request.SetContent(stringData, contentType);
+            if (contentType == Constants.JsonContentHeader)
+            {
+                var stringData = CreateSerializer().Serialize(parameters);
+                request.SetContent(stringData, contentType);
+            }
+            else
+            {
+                var stringData = parameters.CreateParamString(false, ArraySerialization);
+                request.SetContent(stringData, contentType);
+            }
         }
 
         /// <inheritdoc />

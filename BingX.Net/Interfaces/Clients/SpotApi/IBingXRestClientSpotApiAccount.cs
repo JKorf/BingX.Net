@@ -1,4 +1,4 @@
-﻿using BingX.Net.Objects.Models;
+using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
 using CryptoExchange.Net.Objects;
 using System;
@@ -19,7 +19,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXBalance>>> GetBalancesAsync(CancellationToken ct = default);
+        Task<WebCallResult<BingXBalance[]>> GetBalancesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get deposit history
@@ -33,7 +33,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXDeposit>>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get withdrawal history
@@ -49,7 +49,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXWithdrawal>>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get asset info
@@ -58,7 +58,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="asset">Filter by asset name, for example `ETH`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXAsset>>> GetAssetsAsync(string? asset = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXAsset[]>> GetAssetsAsync(string? asset = null, CancellationToken ct = default);
 
         /// <summary>
         /// Withdraw funds
@@ -191,6 +191,6 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="apiKey">Filter by API key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<BingXApiKey>>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXApiKey[]>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default);
     }
 }

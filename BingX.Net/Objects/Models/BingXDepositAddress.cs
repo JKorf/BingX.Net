@@ -1,4 +1,6 @@
-﻿using System;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -7,6 +9,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Deposit addresses
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXDepositAddresses
     {
         /// <summary>
@@ -18,7 +21,7 @@ namespace BingX.Net.Objects.Models
         /// Results
         /// </summary>
         [JsonPropertyName("data")]
-        public IEnumerable<BingXDepositAddress> Data { get; set; } = Array.Empty<BingXDepositAddress>();
+        public BingXDepositAddress[] Data { get; set; } = Array.Empty<BingXDepositAddress>();
     }
 
     /// <summary>

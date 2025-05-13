@@ -1,5 +1,5 @@
-﻿using BingX.Net.Enums;
-using CryptoExchange.Net.Converters.JsonNet;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Enums;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models

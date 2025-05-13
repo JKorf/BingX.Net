@@ -32,7 +32,7 @@ namespace Microsoft.Extensions.DependencyInjection
             IConfiguration configuration)
         {
             var options = new BingXOptions();
-            // Reset environment so we know if theyre overriden
+            // Reset environment so we know if they're overridden
             options.Rest.Environment = null!;
             options.Socket.Environment = null!;
             configuration.Bind(options);
@@ -65,7 +65,7 @@ namespace Microsoft.Extensions.DependencyInjection
             Action<BingXOptions>? optionsDelegate = null)
         {
             var options = new BingXOptions();
-            // Reset environment so we know if theyre overriden
+            // Reset environment so we know if they're overridden
             options.Rest.Environment = null!;
             options.Socket.Environment = null!;
             optionsDelegate?.Invoke(options);
@@ -81,21 +81,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton(x => Options.Options.Create(options.Socket));
 
             return AddBingXCore(services, options.SocketClientLifeTime);
-        }
-
-        /// <summary>
-        /// DEPRECATED; use <see cref="AddBingX(IServiceCollection, Action{BingXOptions}?)" /> instead
-        /// </summary>
-        public static IServiceCollection AddBingX(
-            this IServiceCollection services,
-            Action<BingXRestOptions> restDelegate,
-            Action<BingXSocketOptions>? socketDelegate = null,
-            ServiceLifetime? socketClientLifeTime = null)
-        {
-            services.Configure<BingXRestOptions>((x) => { restDelegate?.Invoke(x); });
-            services.Configure<BingXSocketOptions>((x) => { socketDelegate?.Invoke(x); });
-
-            return AddBingXCore(services, socketClientLifeTime);
         }
 
         private static IServiceCollection AddBingXCore(
@@ -134,7 +119,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
             services.AddTransient<IBingXOrderBookFactory, BingXOrderBookFactory>();
             services.AddTransient<IBingXTrackerFactory, BingXTrackerFactory>();
-            services.AddTransient(x => x.GetRequiredService<IBingXRestClient>().SpotApi.CommonSpotClient);
 
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().SpotApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().SpotApi.SharedClient);

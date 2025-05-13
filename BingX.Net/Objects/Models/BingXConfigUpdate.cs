@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System.Text.Json.Serialization;
 using BingX.Net.Enums;
 
 namespace BingX.Net.Objects.Models
@@ -6,6 +7,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Account configuration change update
     /// </summary>
+    [SerializationModel]
     public record BingXConfigUpdate : BingXSocketUpdate
     {
         /// <summary>

@@ -102,7 +102,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                 _listenkeyHandler?.Invoke(message.As(listenKeyUpdate!, listenKeyUpdate.Event, null, SocketUpdateType.Update).WithDataTimestamp(listenKeyUpdate.EventTime));
             }
 
-            return new CallResult(null);
+            return CallResult.SuccessResult;
         }
     }
 }

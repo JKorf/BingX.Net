@@ -1,10 +1,13 @@
-﻿using CryptoExchange.Net.Attributes;
+using System.Text.Json.Serialization;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Attributes;
 
 namespace BingX.Net.Enums
 {
     /// <summary>
     /// Account type
     /// </summary>
+    [JsonConverter(typeof(EnumConverter<AccountType>))]
     public enum AccountType
     {
         /// <summary>
@@ -21,6 +24,11 @@ namespace BingX.Net.Enums
         /// Perpetual account
         /// </summary>
         [Map("3")]
-        Perpetual
+        Perpetual,
+        /// <summary>
+        /// Spot account
+        /// </summary>
+        [Map("15")]
+        Spot
     }
 }

@@ -1,15 +1,18 @@
-﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
     /// OCO order info
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXOcoOrder
     {
         /// <summary>

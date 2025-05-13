@@ -1,4 +1,4 @@
-﻿using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using BingX.Net.Objects.Options;
@@ -58,17 +58,17 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             => new BingXAuthenticationProvider(credentials);
 
         /// <inheritdoc />
-        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer();
+        protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
         /// <inheritdoc />
-        protected override IByteMessageAccessor CreateAccessor() => new SystemTextJsonByteMessageAccessor();
+        protected override IByteMessageAccessor CreateAccessor() => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
         public IBingXSocketClientPerpetualFuturesApiShared SharedClient => this;
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<IEnumerable<BingXFuturesTradeUpdate>>> onMessage, CancellationToken ct = default)
+        public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTradeUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@trade";
-            var subscription = new BingXSubscription<IEnumerable<BingXFuturesTradeUpdate>>(_logger, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXFuturesTradeUpdate[]>(_logger, stream, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.First().Symbol)
                 .WithDataTimestamp(x.Data.Max(x => x.TradeTime))), false);
@@ -104,21 +104,19 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(KlineInterval interval, Action<DataEvent<IEnumerable<BingXFuturesKlineUpdate>>> onMessage, CancellationToken ct = default)
+        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = "all@kline_" + EnumConverter.GetString(interval);
-            var subscription = new BingXSubscription<IEnumerable<BingXFuturesKlineUpdate>>(_logger, stream, stream, x => onMessage(
-                x.WithStreamId(stream)
-#warning chek
-                .WithDataTimestamp(x.Data.Max(x => x.Timestamp))), false);
+            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, stream, stream, x => onMessage(
+                x.WithStreamId(stream)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<IEnumerable<BingXFuturesKlineUpdate>>> onMessage, CancellationToken ct = default)
+        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + EnumConverter.GetString(interval);
-            var subscription = new BingXSubscription<IEnumerable<BingXFuturesKlineUpdate>>(_logger, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, stream, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(symbol)
                 .WithDataTimestamp(x.Data.Max(x => x.Timestamp))), false);

@@ -21,7 +21,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
         {
             connection.Send(ExchangeHelpers.NextId(), "Pong", 1);
-            return new CallResult(null);
+            return CallResult.SuccessResult;
         }
     }
 }

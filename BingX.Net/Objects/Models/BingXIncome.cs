@@ -1,4 +1,5 @@
-﻿using BingX.Net.Enums;
+using BingX.Net.Enums;
+using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Text.Json.Serialization;
@@ -8,6 +9,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Income transaction
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXIncome
     {
         /// <summary>
@@ -18,7 +20,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Type
         /// </summary>
-        [JsonPropertyName("incomeType"), JsonConverter(typeof(EnumConverter))]
+        [JsonPropertyName("incomeType")]
         public IncomeType IncomeType { get; set; }
         /// <summary>
         /// Income

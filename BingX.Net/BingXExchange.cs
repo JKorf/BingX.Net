@@ -1,10 +1,13 @@
-﻿using CryptoExchange.Net.Objects;
+﻿using BingX.Net.Converters;
+using CryptoExchange.Net.Converters;
+using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.RateLimiting;
 using CryptoExchange.Net.RateLimiting.Guards;
 using CryptoExchange.Net.RateLimiting.Interfaces;
 using CryptoExchange.Net.SharedApis;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace BingX.Net
 {
@@ -45,6 +48,8 @@ namespace BingX.Net
         /// </summary>
         public static ExchangeType Type { get; } = ExchangeType.CEX;
 
+        internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<BingXSourceGenerationContext>();
+
         /// <summary>
         /// Format a base and quote asset to a BingX recognized symbol 
         /// </summary>
@@ -74,6 +79,11 @@ namespace BingX.Net
         /// </summary>
         public event Action<RateLimitEvent> RateLimitTriggered;
 
+        /// <summary>
+        /// Event when the rate limit is updated. Note that it's only updated when a request is send, so there are no specific updates when the current usage is decaying.
+        /// </summary>
+        public event Action<RateLimitUpdateEvent> RateLimitUpdated;
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         internal BingXRateLimiters()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -95,8 +105,11 @@ namespace BingX.Net
                                             .AddGuard(new RateLimitGuard(RateLimitGuard.PerEndpoint, new List<IGuardFilter>(), 200, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)); // IP limit of 200 requests per 10 seconds per endpoint
 
             RestMarket.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);
+            RestMarket.RateLimitUpdated += (x) => RateLimitUpdated?.Invoke(x);
             RestAccount1.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);
+            RestAccount1.RateLimitUpdated += (x) => RateLimitUpdated?.Invoke(x);
             RestAccount2.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);
+            RestAccount2.RateLimitUpdated += (x) => RateLimitUpdated?.Invoke(x);
         }
 
 

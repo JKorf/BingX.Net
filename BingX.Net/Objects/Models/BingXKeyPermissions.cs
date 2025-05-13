@@ -1,14 +1,17 @@
-﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
     /// Api key permissions
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXKeyPermissions
     {
         /// <summary>
@@ -20,12 +23,12 @@ namespace BingX.Net.Objects.Models
         /// Permissions
         /// </summary>
         [JsonPropertyName("permissions")]
-        public IEnumerable<ApiKeyPermission> Permissions { get; set; } = Array.Empty<ApiKeyPermission>();
+        public ApiKeyPermission[] Permissions { get; set; } = Array.Empty<ApiKeyPermission>();
         /// <summary>
         /// Ip addresses
         /// </summary>
         [JsonPropertyName("ipAddresses")]
-        public IEnumerable<string> IpAddresses { get; set; } = Array.Empty<string>();
+        public string[] IpAddresses { get; set; } = Array.Empty<string>();
         /// <summary>
         /// Note
         /// </summary>

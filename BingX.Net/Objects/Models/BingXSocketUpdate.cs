@@ -1,4 +1,5 @@
-﻿using System;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
@@ -6,6 +7,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Socket update
     /// </summary>
+    [SerializationModel]
     public record BingXSocketUpdate
     {
         /// <summary>

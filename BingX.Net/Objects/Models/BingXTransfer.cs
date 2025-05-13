@@ -1,13 +1,16 @@
-﻿using BingX.Net.Enums;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
     /// <summary>
     /// Transfers
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXTransfers
     {
         /// <summary>
@@ -19,13 +22,14 @@ namespace BingX.Net.Objects.Models
         /// Transfer list
         /// </summary>
         [JsonPropertyName("rows")]
-        public IEnumerable<BingXTransfer> Transfers { get; set; } = Array.Empty<BingXTransfer>();
+        public BingXTransfer[] Transfers { get; set; } = Array.Empty<BingXTransfer>();
         
     }
 
     /// <summary>
     /// Transfer info
     /// </summary>
+    [SerializationModel]
     public record BingXTransfer
     {
         /// <summary>

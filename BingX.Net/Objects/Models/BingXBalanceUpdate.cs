@@ -1,4 +1,5 @@
-﻿using System;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -7,6 +8,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Balance update
     /// </summary>
+    [SerializationModel]
     public record BingXBalanceUpdate : BingXSocketUpdate
     {
         /// <summary>
@@ -24,13 +26,14 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Balance change event data
     /// </summary>
+    [SerializationModel]
     public record BingXBalanceItems
     {
         /// <summary>
         /// Changed balances
         /// </summary>
         [JsonPropertyName("B")]
-        public IEnumerable<BingXBalanceItem> Balances { get; set; } = Array.Empty<BingXBalanceItem>();
+        public BingXBalanceItem[] Balances { get; set; } = Array.Empty<BingXBalanceItem>();
         /// <summary>
         /// The event that caused the update
         /// </summary>
@@ -41,6 +44,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Balance update item
     /// </summary>
+    [SerializationModel]
     public record BingXBalanceItem
     {
         /// <summary>

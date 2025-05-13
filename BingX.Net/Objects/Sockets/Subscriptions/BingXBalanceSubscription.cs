@@ -60,7 +60,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
             var update = (BingXBalanceUpdate)message.Data;
             _handler.Invoke(message.As(update!, update.Event, null, SocketUpdateType.Update));
-            return new CallResult(null);
+            return CallResult.SuccessResult;
         }
     }
 }

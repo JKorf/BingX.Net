@@ -1,20 +1,24 @@
-﻿using System;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using BingX.Net.Enums;
+using BingX.Net.Objects.Internal;
 
 namespace BingX.Net.Objects.Models
 {
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXFuturesOrderDetailsWrapper
     {
         [JsonPropertyName("order")]
         public BingXFuturesOrderDetails Order { get; set; } = null!;
     }
 
+    [SerializationModel(typeof(BingXResult<>))]
     internal record BingXFuturesOrdersDetailsWrapper
     {
         [JsonPropertyName("orders")]
-        public IEnumerable<BingXFuturesOrderDetails> Orders { get; set; } = null!;
+        public BingXFuturesOrderDetails[] Orders { get; set; } = null!;
     }
 
     /// <summary>
@@ -194,6 +198,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Stop order info
     /// </summary>
+    [SerializationModel]
     public record BingXStopOrder
     {
         /// <summary>

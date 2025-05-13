@@ -50,10 +50,17 @@ namespace BingX.Net
          => name switch
          {
              TradeEnvironmentNames.Live => Live,
+             "demo" => Demo,
              "" => Live,
              null => Live,
              _ => default
          };
+
+        /// <summary>
+        /// Available environment names
+        /// </summary>
+        /// <returns></returns>
+        public static string[] All => [Live.Name, Demo.Name];
 
         /// <summary>
         /// Live environment

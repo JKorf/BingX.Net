@@ -1,4 +1,6 @@
-﻿using System;
+using BingX.Net.Objects.Internal;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
@@ -6,6 +8,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Funding rate history 
     /// </summary>
+    [SerializationModel(typeof(BingXResult<>))]
     public record BingXFundingRateHistory
     {
         /// <summary>
