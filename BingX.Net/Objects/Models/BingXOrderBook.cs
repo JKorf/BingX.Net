@@ -46,7 +46,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Order book entry
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter<BingXOrderBookEntry, BingXSourceGenerationContext>))]
+    [JsonConverter(typeof(ArrayConverter<BingXOrderBookEntry>))]
     [SerializationModel]
     public record BingXOrderBookEntry : ISymbolOrderBookEntry
     {

@@ -10,7 +10,7 @@ namespace BingX.Net.Objects.Models
     /// <summary>
     /// Kline (candlestick) info
     /// </summary>
-    [JsonConverter(typeof(ArrayConverter<BingXKline, BingXSourceGenerationContext>))]
+    [JsonConverter(typeof(ArrayConverter<BingXKline>))]
     [SerializationModel(typeof(BingXResult<>))]
     public record BingXKline
     {
