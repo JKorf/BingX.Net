@@ -24,6 +24,11 @@ namespace BingX.Net.Enums
         /// Perpetual account
         /// </summary>
         [Map("3")]
-        Perpetual
+        Perpetual,
+        /// <summary>
+        /// Spot account
+        /// </summary>
+        [Map("15")]
+        Spot
     }
 }
