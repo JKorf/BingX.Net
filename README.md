@@ -150,6 +150,31 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.0.0 - 13 May 2025
+    * Updated CryptoExchange.Net to version 9.0.0, see https://github.com/JKorf/CryptoExchange.Net/releases/
+    * Added support for Native AOT compilation
+    * Added RateLimitUpdated event
+    * Added SharedSymbol response property to all Shared interfaces response models returning a symbol name
+    * Added IBookTickerRestClient implementation to PerpetualFutures and Spot Shared clients
+    * Added GenerateClientOrderId method to PerpetualFutures and Spot Shared clients
+    * Added takeProfitPrice, StopLossPrice support to PerpetualFutures Shared PlaceOrderAsync
+    * Added TakeProitPrice, StopLossPrice, TriggerPrice, IsTriggerOrder, IsCloseOrder to SharedFuturesOrder response model
+    * Added IFuturesOrderClientIdClient implementation to PerpetualFutures Shared client
+    * Added ISpotOrderClientIdClient implementation to Spot Shared client
+    * Added IFuturesTpSlRestClient implementation to PerpetualFutures Shared client
+    * Added TriggerPrice, IsTriggerOrder to SharedSpotOrder response model
+    * Added ISpotTriggerOrderRestClient implementation to Spot Shared client
+    * Added QuoteVolume to SharedSpotTicker response model
+    * Added OptionalExchangeParameters and Supported properties to EndpointOptions
+    * Added All property to retrieve all available environment on BingXEnvironment
+    * Refactored Shared clients quantity parameters and responses to use SharedQuantity
+    * Updated all IEnumerable response and model types to array response types
+    * Fixed incorrect DataTradeMode on certain Shared interface responses
+    * Removed Newtonsoft.Json dependency
+    * Removed legacy ISpotClient implementation
+    * Removed legacy AddBingX(restOptions, socketOptions) DI overload
+    * Fixed some typos
+
 * Version 2.0.0-beta3 - 01 May 2025
     * Updated CryptoExchange.Net version to 9.0.0-beta5
     * Added property to retrieve all available API environments
