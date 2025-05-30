@@ -261,6 +261,29 @@
         <member name="M:BingX.Net.Clients.BingXSocketClient.SetApiCredentials(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
+        <member name="T:BingX.Net.Clients.BingXUserClientProvider">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXUserClientProvider.#ctor(System.Action{BingX.Net.Objects.Options.BingXOptions})">
+            <summary>
+            ctor
+            </summary>
+            <param name="optionsDelegate">Options to use for created clients</param>
+        </member>
+        <member name="M:BingX.Net.Clients.BingXUserClientProvider.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Options.IOptions{BingX.Net.Objects.Options.BingXRestOptions},Microsoft.Extensions.Options.IOptions{BingX.Net.Objects.Options.BingXSocketOptions})">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Clients.BingXUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXUserClientProvider.GetSocketClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <inheritdoc />
+        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi" />
         </member>
@@ -3868,6 +3891,35 @@
             Set the API credentials for this client. All Api clients in this client will use the new credentials, regardless of earlier set options.
             </summary>
             <param name="credentials">The credentials to set</param>
+        </member>
+        <member name="T:BingX.Net.Interfaces.Clients.IBingXUserClientProvider">
+            <summary>
+            Provider for clients with credentials for specific users
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <summary>
+            Initialize a client for the specified user identifier. This can be used so to initialize a client for a user so ApiCredentials do not need to be passed later.
+            </summary>
+            <param name="userIdentifier">The identifier for the user</param>
+            <param name="credentials">The credentials for the user</param>
+            <param name="environment">The environment to use</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <summary>
+            Get the Rest client for a specific user. In case the client does not exist yet it will be created and the <paramref name="credentials"/> should be provided, unless <see cref="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)" /> has been called prior for this user.
+            </summary>
+            <param name="userIdentifier">The identifier for user</param>
+            <param name="credentials">The credentials for the user. Required the first time a client is requested for this user unless <see cref="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)" /> has been called prior for this user.</param>
+            <param name="environment">The environment to use</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.GetSocketClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <summary>
+            Get the Socket client for a specific user. In case the client does not exist yet it will be created and the <paramref name="credentials"/> should be provided, unless <see cref="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)" /> has been called prior for this user.
+            </summary>
+            <param name="userIdentifier">The identifier for user</param>
+            <param name="credentials">The credentials for the user. Required the first time a client is requested for this user unless <see cref="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)" /> has been called prior for this user.</param>
+            <param name="environment">The environment to use</param>
         </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi">
             <summary>
