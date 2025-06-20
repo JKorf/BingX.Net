@@ -152,6 +152,11 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.1.1 - 20 Jun 2025
+    * Added QuantityFilled to BingXFuturesOrder model
+    * Updated IsCloseOrder logic in Shared Rest Futures order mapping
+    * Updated RealizedPnl property on BingXFuturesBalanceUpdate model to be nullable
+
 * Version 2.1.0 - 02 Jun 2025
     * Updated CryptoExchange.Net to version 9.1.0, see https://github.com/JKorf/CryptoExchange.Net/releases/
     * Added (I)BingXUserClientProvider allowing for easy client management when handling multiple users
