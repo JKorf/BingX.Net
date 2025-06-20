@@ -6565,6 +6565,11 @@
             Order status
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrder.QuantityFilled">
+            <summary>
+            Trigger price
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesOrderBook">
             <summary>
             Order book info

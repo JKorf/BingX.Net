@@ -571,7 +571,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 StopLossPrice = x.StopLoss?.StopPrice == 0 ? null : x.StopLoss?.StopPrice,
                 TriggerPrice = x.StopPrice,
                 IsTriggerOrder = x.StopPrice > 0,
-                IsCloseOrder = order.Data.ClosePosition
+                IsCloseOrder = x.ClosePosition
             }).ToArray());
         }
 
