@@ -110,5 +110,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("status")]
         public OrderStatus Status { get; set; }
+        /// <summary>
+        /// Trigger price
+        /// </summary>
+        [JsonPropertyName("executedQty")]
+        public decimal? QuantityFilled { get; set; }
     }
 }
