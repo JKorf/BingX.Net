@@ -116,6 +116,6 @@ namespace BingX.Net.Objects.Models
         /// Realized profit and loss of positions
         /// </summary>
         [JsonPropertyName("cr")]
-        public decimal RealizedPnl { get; set; }
+        public decimal? RealizedPnl { get; set; }
     }
 }
