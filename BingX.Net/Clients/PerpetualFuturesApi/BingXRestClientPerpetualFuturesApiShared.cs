@@ -532,8 +532,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 StopLossPrice = order.Data.StopLoss?.StopPrice == 0 ? null : order.Data.StopLoss?.StopPrice,
                 TriggerPrice = order.Data.StopPrice,
                 IsTriggerOrder = order.Data.StopPrice > 0,
-                IsCloseOrder = (order.Data.Type == Enums.FuturesOrderType.TakeProfitMarket || order.Data.Type == Enums.FuturesOrderType.TakeProfitLimit || order.Data.Type == Enums.FuturesOrderType.StopLimit || order.Data.Type == Enums.FuturesOrderType.StopMarket)
-                                            && (order.Data.Quantity == null || order.Data.Quantity == 0)
+                IsCloseOrder = order.Data.ClosePosition
             });
         }
 
@@ -572,8 +571,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 StopLossPrice = x.StopLoss?.StopPrice == 0 ? null : x.StopLoss?.StopPrice,
                 TriggerPrice = x.StopPrice,
                 IsTriggerOrder = x.StopPrice > 0,
-                IsCloseOrder = (x.Type == Enums.FuturesOrderType.TakeProfitMarket || x.Type == Enums.FuturesOrderType.TakeProfitLimit || x.Type == Enums.FuturesOrderType.StopLimit || x.Type == Enums.FuturesOrderType.StopMarket)
-                                            && (x.Quantity == null || x.Quantity == 0)
+                IsCloseOrder = order.Data.ClosePosition
             }).ToArray());
         }
 
@@ -626,8 +624,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 StopLossPrice = x.StopLoss?.StopPrice == 0 ? null : x.StopLoss?.StopPrice,
                 TriggerPrice = x.StopPrice,
                 IsTriggerOrder = x.StopPrice > 0,
-                IsCloseOrder = (x.Type == Enums.FuturesOrderType.TakeProfitMarket || x.Type == Enums.FuturesOrderType.TakeProfitLimit || x.Type == Enums.FuturesOrderType.StopLimit || x.Type == Enums.FuturesOrderType.StopMarket)
-                                            && (x.Quantity == null || x.Quantity == 0)
+                IsCloseOrder = x.ClosePosition
             }).ToArray(), nextToken);
         }
 
@@ -845,8 +842,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 StopLossPrice = order.Data.StopLoss?.StopPrice == 0 ? null : order.Data.StopLoss?.StopPrice,
                 TriggerPrice = order.Data.StopPrice,
                 IsTriggerOrder = order.Data.StopPrice > 0,
-                IsCloseOrder = (order.Data.Type == Enums.FuturesOrderType.TakeProfitMarket || order.Data.Type == Enums.FuturesOrderType.TakeProfitLimit || order.Data.Type == Enums.FuturesOrderType.StopLimit || order.Data.Type == Enums.FuturesOrderType.StopMarket)
-                                            && (order.Data.Quantity == null || order.Data.Quantity == 0)
+                IsCloseOrder = order.Data.ClosePosition
             });
         }
 
