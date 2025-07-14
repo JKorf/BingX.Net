@@ -60,7 +60,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
         /// <inheritdoc />
-        protected override IByteMessageAccessor CreateAccessor() => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(BingXExchange._serializerContext));
+        protected override IByteMessageAccessor CreateAccessor(WebSocketMessageType type) => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
         public IBingXSocketClientPerpetualFuturesApiShared SharedClient => this;
 
@@ -212,7 +212,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public override string? GetListenerIdentifier(IMessageAccessor message)
         {
-            if (!message.IsJson && string.Equals(message.GetOriginalString(), "Ping", StringComparison.Ordinal))
+            if (!message.IsValid && string.Equals(message.GetOriginalString(), "Ping", StringComparison.Ordinal))
                 return "Ping";
 
             var id = message.GetValue<string>(_idPath);

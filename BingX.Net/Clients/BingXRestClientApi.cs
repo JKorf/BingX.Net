@@ -23,6 +23,8 @@ namespace BingX.Net.Clients
     /// </summary>
     public abstract class BingXRestClientApi : RestApiClient
     {
+        private IStringMessageSerializer? _serializer;
+
         internal new BingXRestOptions ClientOptions => (BingXRestOptions)base.ClientOptions;
 
         #region Api clients
@@ -99,7 +101,7 @@ namespace BingX.Net.Clients
         {
             if (contentType == Constants.JsonContentHeader)
             {
-                var stringData = CreateSerializer().Serialize(parameters);
+                var stringData = (_serializer ??= (IStringMessageSerializer)CreateSerializer()).Serialize(parameters);
                 request.SetContent(stringData, contentType);
             }
             else

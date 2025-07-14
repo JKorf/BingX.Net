@@ -510,7 +510,7 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateSerializer">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateAccessor">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.CreateAccessor(System.Net.WebSockets.WebSocketMessageType)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesTradeUpdate[]}},System.Threading.CancellationToken)">
@@ -736,7 +736,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateSerializer">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAccessor">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAccessor(System.Net.WebSockets.WebSocketMessageType)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
