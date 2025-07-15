@@ -39,7 +39,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Deposit History
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("coin", asset);
@@ -48,6 +48,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("offset", offset);
             parameters.AddOptional("limit", limit);
+            parameters.AddOptional("txId", transactionId);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/deposit/hisrec", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendRawAsync<BingXDeposit[]>(request, parameters, ct).ConfigureAwait(false);
@@ -58,7 +59,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Withdrawal History
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
             parameters.AddOptional("id", id);
@@ -69,6 +70,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptionalMilliseconds("endTime", endTime);
             parameters.AddOptional("offset", offset);
             parameters.AddOptional("limit", limit);
+            parameters.AddOptional("txId", transactionId);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/withdraw/history", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));

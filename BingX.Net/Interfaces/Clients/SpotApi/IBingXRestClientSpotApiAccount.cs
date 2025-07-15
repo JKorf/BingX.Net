@@ -27,13 +27,14 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// </summary>
         /// <param name="asset">Filter by asset, for example `ETH`</param>
         /// <param name="status">Filter by status</param>
+        /// <param name="transactionId">Filter by transaction id</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="offset">Offset</param>
         /// <param name="limit">Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get withdrawal history
@@ -43,13 +44,14 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="asset">Filter by asset, for example `ETH`</param>
         /// <param name="clientOrderId">Filter by client order id</param>
         /// <param name="status">Filter by status</param>
+        /// <param name="transactionId">Filter by transaction id</param>
         /// <param name="startTime">Filter by start time</param>
         /// <param name="endTime">Filter by end time</param>
         /// <param name="offset">Offset</param>
         /// <param name="limit">Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get asset info
