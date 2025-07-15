@@ -5930,6 +5930,11 @@
             Symbol
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXContract.DisplayName">
+            <summary>
+            Display name
+            </summary>
+        </member>
         <member name="P:BingX.Net.Objects.Models.BingXContract.ContractSize">
             <summary>
             Size of a single contract
@@ -8743,6 +8748,11 @@
         <member name="P:BingX.Net.Objects.Models.BingXSymbol.Name">
             <summary>
             Symbol name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXSymbol.DisplayName">
+            <summary>
+            Display name
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXSymbol.MinOrderQuantity">

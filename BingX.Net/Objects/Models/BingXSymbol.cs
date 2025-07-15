@@ -25,6 +25,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("symbol")]
         public string Name { get; set; } = string.Empty;
         /// <summary>
+        /// Display name
+        /// </summary>
+        [JsonPropertyName("displayName")]
+        public string DisplayName { get; set; } = string.Empty;
+        /// <summary>
         /// Min order quantity
         /// </summary>
         [JsonPropertyName("minQty")]
