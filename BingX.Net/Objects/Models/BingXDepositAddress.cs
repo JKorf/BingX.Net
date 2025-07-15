@@ -1,3 +1,4 @@
+using BingX.Net.Enums;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
@@ -54,5 +55,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("tag")]
         public string? Tag { get; set; }
+        /// <summary>
+        /// Wallet type
+        /// </summary>
+        [JsonPropertyName("walletType")]
+        public AccountType WalletType { get; set; }
     }
 }
