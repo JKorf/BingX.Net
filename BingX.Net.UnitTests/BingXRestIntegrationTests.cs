@@ -50,8 +50,8 @@ namespace BingX.Net.UnitTests
         public async Task TestSpotAccount()
         {
             await RunAndCheckResult(client => client.SpotApi.Account.GetBalancesAsync(default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetWithdrawalHistoryAsync(default, default, default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(client => client.SpotApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(client => client.SpotApi.Account.GetWithdrawalHistoryAsync(default, default, default, default, default, default, default, default, default, default), true);
             await RunAndCheckResult(client => client.SpotApi.Account.GetAssetsAsync(default, default), true);
             await RunAndCheckResult(client => client.SpotApi.Account.GetDepositAddressAsync("ETH", default, default, default), true);
             await RunAndCheckResult(client => client.SpotApi.Account.GetTransfersAsync(Enums.TransferType.FundingToPerpetualFutures, default, default, default, default, default, default), true);
