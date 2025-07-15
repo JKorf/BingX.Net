@@ -23,6 +23,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
+        /// Display name
+        /// </summary>
+        [JsonPropertyName("displayName")]
+        public string DisplayName { get; set; } = string.Empty;
+        /// <summary>
         /// Networks
         /// </summary>
         [JsonPropertyName("networkList")]
