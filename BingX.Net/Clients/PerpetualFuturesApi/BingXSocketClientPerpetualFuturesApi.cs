@@ -45,6 +45,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         internal BingXSocketClientPerpetualFuturesApi(ILogger logger, BingXSocketOptions options) :
             base(logger, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
         {
+            ProcessUnparsableMessages = true;
+
             AddSystemSubscription(new BingXFuturesPingSubscription(_logger));
         }
         #endregion
