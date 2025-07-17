@@ -195,13 +195,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
         }
 
-        protected override WebSocketParameters GetWebSocketParameters(string address)
-        {
-            var parameters = base.GetWebSocketParameters(address);
-            parameters.Timeout = address.Contains("?listenKey=") ? TimeSpan.FromSeconds(10) : parameters.Timeout;
-            return parameters;
-        }
-
         /// <inheritdoc />
         public override ReadOnlyMemory<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlyMemory<byte> data)
         {

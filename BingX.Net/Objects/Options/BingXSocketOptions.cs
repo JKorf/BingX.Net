@@ -38,13 +38,13 @@ namespace BingX.Net.Objects.Options
         /// </summary>
         public SocketApiOptions FuturesOptions { get; private set; } = new SocketApiOptions()
         {
-            MaxSocketConnections = 60
+            MaxSocketConnections = 60,
+            SocketNoDataTimeout = TimeSpan.FromSeconds(40) // Ping message is sent every 30 seconds
         };
 
         internal BingXSocketOptions Set(BingXSocketOptions targetOptions)
         {
             targetOptions = base.Set<BingXSocketOptions>(targetOptions);
-            targetOptions.SpotOptions = SpotOptions.Set(targetOptions.SpotOptions);
             targetOptions.SpotOptions = SpotOptions.Set(targetOptions.SpotOptions);
             targetOptions.FuturesOptions = FuturesOptions.Set(targetOptions.FuturesOptions);
             return targetOptions;
