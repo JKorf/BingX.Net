@@ -170,14 +170,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddEnum("side", side);
             parameter.AddEnum("type", type);
             parameter.AddEnum("positionSide", positionSide);
-            parameter.AddOptional("reduceOnly", reduceOnly?.ToString().ToLowerInvariant());
+            parameter.AddOptional("reduceOnly", reduceOnly);
             parameter.AddOptional("quantity", quantity);
             parameter.AddOptional("price", price);
             parameter.AddOptional("stopPrice", stopPrice);
             parameter.AddOptional("clientOrderId", clientOrderId);
             parameter.AddOptional("priceRate", priceRate);
             parameter.AddOptionalEnum("timeInForce", timeInForce);
-            parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
+            parameter.AddOptional("closePosition", closePosition);
             parameter.AddOptional("activationPrice", triggerPrice);
             parameter.AddOptional("stopGuaranteed", stopGuaranteed);
             parameter.AddOptionalEnum("workingType", workingType);
