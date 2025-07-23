@@ -57,7 +57,7 @@ namespace BingX.Net
 
             string parameterSignData;
             if (parameterPosition == HttpMethodParameterPosition.InBody)
-                parameterSignData = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + (o.Value is bool ? o.Value.ToString().ToLowerInvariant() : string.Format(CultureInfo.InvariantCulture, "{0}", o.Value))));
+                parameterSignData = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + (o.Value is bool ? o.Value?.ToString()!.ToLowerInvariant() : string.Format(CultureInfo.InvariantCulture, "{0}", o.Value))));
             else
                 parameterSignData = parameters.CreateParamString(false, arraySerialization);
 
