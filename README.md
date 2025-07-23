@@ -152,6 +152,11 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.3.0 - 23 Jul 2025
+    * Updated CryptoExchange.Net to version 9.3.0, see https://github.com/JKorf/CryptoExchange.Net/releases/
+    * Updated websocket message matching
+    * Fixed reduceOnly and closePosition parameters for restClient.PerpetualFuturesApi.Trading.PlaceOrderAsync
+
 * Version 2.2.2 - 17 Jul 2025
     * Updated no data check on PerpetualFutures websocket connection from 10 seconds to 40 seconds as the server ping interval has changed from 5 to 30 seconds
 
