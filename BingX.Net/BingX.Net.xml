@@ -9490,12 +9490,6 @@
         <member name="T:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.ListenerIdentifiers">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}})">
             <summary>
             ctor
@@ -9509,16 +9503,10 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetUnsubQuery">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate})">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1">
-            <inheritdoc />
-        </member>
-        <member name="P:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.ListenerIdentifiers">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{`0}},System.Boolean)">
@@ -9537,13 +9525,7 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.GetUnsubQuery">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
-            <inheritdoc />
-        </member>
-        <member name="P:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.ListenerIdentifiers">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.GetMessageType(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Internal.BingXUpdate{`0}})">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesAccountUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesOrderUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}})">
@@ -9562,7 +9544,16 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.GetUnsubQuery">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{System.Object})">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate})">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesAccountUpdate})">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesOrderUpdateWrapper})">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate})">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory">

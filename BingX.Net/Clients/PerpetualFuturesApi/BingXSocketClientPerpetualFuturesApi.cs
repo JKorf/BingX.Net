@@ -35,6 +35,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
         private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");
         private static readonly MessagePath _eventPath = MessagePath.Get().Property("e");
+
+        private static readonly MessagePath _acPath = MessagePath.Get().Property("ac");
+        private static readonly MessagePath _aPath = MessagePath.Get().Property("a");
         #endregion
 
         #region constructor/destructor
@@ -218,7 +221,16 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (dataType != null)
                 return dataType;
 
-            return message.GetValue<string>(_eventPath);
+            var evnt = message.GetValue<string>(_eventPath);
+            if (evnt!.Equals("SNAPSHOT", StringComparison.Ordinal))
+            {
+                if (message.GetNodeType(_acPath) != null)
+                    return evnt + "AC";
+                if (message.GetNodeType(_aPath) != null)
+                    return evnt + "A";
+            }
+
+            return evnt;
         }
 
         /// <inheritdoc />

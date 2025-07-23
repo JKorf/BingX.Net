@@ -13,17 +13,8 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
     /// <inheritdoc />
     internal class BingXBalanceSubscription : Subscription<BingXSocketResponse, BingXSocketResponse>
     {
-        /// <inheritdoc />
-        public override HashSet<string> ListenerIdentifiers { get; set; }
-
         private readonly string _topic;
         private readonly Action<DataEvent<BingXBalanceUpdate>> _handler;
-
-        /// <inheritdoc />
-        public override Type? GetMessageType(IMessageAccessor message)
-        {
-            return typeof(BingXBalanceUpdate);
-        }
 
         /// <summary>
         /// ctor
@@ -34,7 +25,8 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
             _handler = handler;
             _topic = "ACCOUNT_UPDATE";
-            ListenerIdentifiers = new HashSet<string>() { _topic };
+
+            MessageMatcher = MessageMatcher.Create<BingXBalanceUpdate>(_topic, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -56,10 +48,9 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }, false);
 
         /// <inheritdoc />
-        public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXBalanceUpdate> message)
         {
-            var update = (BingXBalanceUpdate)message.Data;
-            _handler.Invoke(message.As(update!, update.Event, null, SocketUpdateType.Update));
+            _handler.Invoke(message.As(message.Data!, message.Data.Event, null, SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

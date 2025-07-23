@@ -14,17 +14,8 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
     /// <inheritdoc />
     internal class BingXSubscription<T> : Subscription<BingXSocketResponse, BingXSocketResponse>
     {
-        /// <inheritdoc />
-        public override HashSet<string> ListenerIdentifiers { get; set; }
-
         private readonly string _topic;
         private readonly Action<DataEvent<T>> _handler;
-
-        /// <inheritdoc />
-        public override Type? GetMessageType(IMessageAccessor message)
-        {
-            return typeof(BingXUpdate<T>);
-        }
 
         /// <summary>
         /// ctor
@@ -38,7 +29,8 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         {
             _handler = handler;
             _topic = dataType;
-            ListenerIdentifiers = new HashSet<string>() { listenId };
+
+            MessageMatcher = MessageMatcher.Create<BingXUpdate<T>>(listenId, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -60,17 +52,15 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }, false);
 
         /// <inheritdoc />
-        public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXUpdate<T>> message)
         {
-            var update = (BingXUpdate<T>)message.Data;
-
-            if (update is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
+            if (message.Data is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
             {
                 foreach (var klineUpdate in klineUpdates.Data!)
-                    klineUpdate.Symbol = update.Symbol!;
+                    klineUpdate.Symbol = message.Data.Symbol!;
             }
 
-            _handler.Invoke(message.As(update.Data!, update.DataType, update.Symbol, SocketUpdateType.Update));
+            _handler.Invoke(message.As(message.Data.Data!, message.Data.DataType, message.Data.Symbol, SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

@@ -8,15 +8,14 @@ using System.Collections.Generic;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
-    internal class BingXPingSubscription : SystemSubscription<BingXPing>
+    internal class BingXPingSubscription : SystemSubscription
     {
-        public override HashSet<string> ListenerIdentifiers { get; set; } = new HashSet<string> { "ping" };
-
         public BingXPingSubscription(ILogger logger) : base(logger, false)
         {
+            MessageMatcher = MessageMatcher.Create<BingXPing>("ping", HandleMessage);
         }
 
-        public override CallResult HandleMessage(SocketConnection connection, DataEvent<BingXPing> message)
+        public CallResult HandleMessage(SocketConnection connection, DataEvent<BingXPing> message)
         {
             connection.Send(ExchangeHelpers.NextId(), new BingXPong { Pong = message.Data.Ping, Timestamp = message.Data.Timestamp }, 1);
             return CallResult.SuccessResult;

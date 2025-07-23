@@ -11,14 +11,12 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     internal class BingXFuturesPingSubscription : SystemSubscription
     {
-        public override HashSet<string> ListenerIdentifiers { get; set; } = new HashSet<string> { "Ping" };
-        public override Type GetMessageType(IMessageAccessor message) => typeof(string);
-
         public BingXFuturesPingSubscription(ILogger logger) : base(logger, false)
         {
+            MessageMatcher = MessageMatcher.Create<string>("Ping", DoHandleMessage);
         }
 
-        public override CallResult DoHandleMessage(SocketConnection connection, DataEvent<object> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<string> message)
         {
             connection.Send(ExchangeHelpers.NextId(), "Pong", 1);
             return CallResult.SuccessResult;
