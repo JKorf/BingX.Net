@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.RateLimiting.Guards;
+using CryptoExchange.Net.Objects.Errors;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -155,7 +156,7 @@ namespace BingX.Net.Clients.SpotApi
                 return result;
 
             if (result.Data == null)
-                return result.AsError<BingXTransactionResult>(new ServerError("Transfer failed"));
+                return result.AsError<BingXTransactionResult>(new ServerError(null, new ErrorInfo(ErrorType.Unknown, "Transfer failed")));
             return result;
         }
 

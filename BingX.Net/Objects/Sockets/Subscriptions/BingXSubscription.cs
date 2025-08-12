@@ -8,25 +8,23 @@ using System.Collections.Generic;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Interfaces;
 using BingX.Net.Objects.Models;
+using CryptoExchange.Net.Clients;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
     internal class BingXSubscription<T> : Subscription<BingXSocketResponse, BingXSocketResponse>
     {
+        private readonly SocketApiClient _client;
         private readonly string _topic;
         private readonly Action<DataEvent<T>> _handler;
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="dataType"></param>
-        /// <param name="listenId"></param>
-        /// <param name="handler"></param>
-        /// <param name="auth"></param>
-        public BingXSubscription(ILogger logger, string dataType, string listenId, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
+        public BingXSubscription(ILogger logger, SocketApiClient client, string dataType, string listenId, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
         {
+            _client = client;
             _handler = handler;
             _topic = dataType;
 
@@ -35,7 +33,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
 
         /// <inheritdoc />
         public override Query? GetSubQuery(SocketConnection connection)
-            => new BingXQuery(new BingXSocketRequest
+            => new BingXQuery(_client, new BingXSocketRequest
             {
                 Id = ExchangeHelpers.NextId().ToString(),
                 RequestType = "sub",
@@ -44,7 +42,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
 
         /// <inheritdoc />
         public override Query? GetUnsubQuery()
-            => new BingXQuery(new BingXSocketRequest
+            => new BingXQuery(_client, new BingXSocketRequest
             {
                 Id = ExchangeHelpers.NextId().ToString(),
                 RequestType = "unsub",

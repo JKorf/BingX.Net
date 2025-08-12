@@ -72,7 +72,7 @@ namespace BingX.Net.Clients
                 return result.As<T>(null);
 
             if (result.Data.Code != 0)
-                return result.AsError<T>(new ServerError(result.Data.Code, result.Data.Message!));
+                return result.AsError<T>(new ServerError(result.Data.Code.ToString(), GetErrorInfo(result.Data.Code, result.Data.Message)));
 
             return result.As<T>(result.Data.Data);
         }
@@ -93,7 +93,7 @@ namespace BingX.Net.Clients
                 return null;
 
             var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
-            return new ServerError(code, msg!);
+            return new ServerError(code.ToString(), GetErrorInfo(code, msg));
         }
 
         /// <inheritdoc />

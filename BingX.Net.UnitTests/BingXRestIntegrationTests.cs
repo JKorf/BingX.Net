@@ -1,6 +1,7 @@
 ﻿using BingX.Net;
 using BingX.Net.Clients;
 using BingX.Net.SymbolOrderBooks;
+using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Testing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -43,7 +44,8 @@ namespace BingX.Net.UnitTests
             var result = await CreateClient().SpotApi.ExchangeData.GetTickersAsync("TST-TST", default);
 
             Assert.That(result.Success, Is.False);
-            Assert.That(result.Error.Code, Is.EqualTo(100204));
+            Assert.That(result.Error.ErrorCode, Is.EqualTo("100204"));
+            Assert.That(result.Error.ErrorType, Is.EqualTo(ErrorType.UnknownSymbol));
         }
 
         [Test]

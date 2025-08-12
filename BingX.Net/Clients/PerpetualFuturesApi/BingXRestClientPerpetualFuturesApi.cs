@@ -1,21 +1,12 @@
-﻿using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Objects;
+﻿using CryptoExchange.Net.Objects;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net;
 using BingX.Net.Objects.Options;
-using CryptoExchange.Net.Clients;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using BingX.Net.Objects.Internal;
-using CryptoExchange.Net.Converters.MessageParsing;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using BingX.Net.Interfaces.Clients.SpotApi;
-using CryptoExchange.Net.SharedApis;
+using CryptoExchange.Net.Objects.Errors;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -24,10 +15,45 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Perpetual Futures Api");
+
+        protected override ErrorCollection ErrorMapping { get; } = new ErrorCollection(
+            [
+                new ErrorInfo(ErrorType.SignatureInvalid, false, "Signature error", "100001"),
+                new ErrorInfo(ErrorType.SignatureInvalid, false, "Invalid API key", "100413"),
+
+                new ErrorInfo(ErrorType.Unauthorized, false, "Insufficient permissions", "100004"),
+                new ErrorInfo(ErrorType.Unauthorized, false, "IP not whitelisted", "100419"),
+
+                new ErrorInfo(ErrorType.TimestampInvalid, false, "Invalid timestamp", "100421"),
+
+                new ErrorInfo(ErrorType.InvalidParameter, false, "Invalid parameter", "80014"),
+                new ErrorInfo(ErrorType.InvalidParameter, false, "Maximum leverage exceeded", "101414"),
+                new ErrorInfo(ErrorType.InvalidParameter, false, "Invalid or missing arguments", "100400"),
+
+                new ErrorInfo(ErrorType.PriceInvalid, false, "Order price should be higher than estimated liquidation price", "101460"),
+                new ErrorInfo(ErrorType.PriceInvalid, false, "Order price not within range", "101211"),
+
+                new ErrorInfo(ErrorType.OrderConfigurationRejected, false, "PostOnly order could not be placed", "101215"),
+
+                new ErrorInfo(ErrorType.InvalidOperation, false, "Order already filled", "80018"),
+
+                new ErrorInfo(ErrorType.UnknownOrder, false, "Order does not exists", "80016"),
+
+                new ErrorInfo(ErrorType.NoPosition, false, "No open position", "80017"),
+
+                new ErrorInfo(ErrorType.BalanceInsufficient, false, "Insufficient margin", "101204"),
+
+                new ErrorInfo(ErrorType.OrderRateLimited, false, "Entrust order limit reached", "80013"),
+
+                new ErrorInfo(ErrorType.RequestRateLimited, false, "Rate limit reached", "100410"),
+
+                new ErrorInfo(ErrorType.SymbolNotTrading, false, "Symbol is not currently trading", "101415"),
+            ]
+        );
         #endregion
 
         #region Api clients
-        /// <inheritdoc />
+            /// <inheritdoc />
         public IBingXRestClientPerpetualFuturesApiAccount Account { get; }
         /// <inheritdoc />
         public IBingXRestClientPerpetualFuturesApiExchangeData ExchangeData { get; }
