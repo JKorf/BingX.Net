@@ -574,7 +574,7 @@ namespace BingX.Net.Clients.SpotApi
 
             var asset = result.Data.SingleOrDefault();
             if (asset == null)
-                return result.AsExchangeError<SharedAsset>(Exchange, new ServerError(null, new ErrorInfo(ErrorType.UnknownAsset, "Asset not found")));
+                return result.AsExchangeError<SharedAsset>(Exchange, new ServerError(new ErrorInfo(ErrorType.UnknownAsset, "Asset not found")));
 
             return result.AsExchangeResult(Exchange, TradingMode.Spot, new SharedAsset(asset.Asset)
             {

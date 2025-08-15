@@ -757,7 +757,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             var position = positions.Data.FirstOrDefault(x => request.PositionSide == null ? x.Size != 0 : x.Side == (request.PositionSide == SharedPositionSide.Short ? TradeSide.Short : TradeSide.Long));
             if (position == null)
-                return positions.AsExchangeError<SharedId>(Exchange, new ServerError(null, new ErrorInfo(ErrorType.NoPosition, "Position not found")));
+                return positions.AsExchangeError<SharedId>(Exchange, new ServerError(new ErrorInfo(ErrorType.NoPosition, "Position not found")));
 
             var result = await Trading.ClosePositionAsync(position.PositionId).ConfigureAwait(false);
             if (!result)

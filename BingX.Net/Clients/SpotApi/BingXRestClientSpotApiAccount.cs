@@ -156,7 +156,7 @@ namespace BingX.Net.Clients.SpotApi
                 return result;
 
             if (result.Data == null)
-                return result.AsError<BingXTransactionResult>(new ServerError(null, new ErrorInfo(ErrorType.Unknown, "Transfer failed")));
+                return result.AsError<BingXTransactionResult>(new ServerError(new ErrorInfo(ErrorType.Unknown, "Transfer failed")));
             return result;
         }
 
