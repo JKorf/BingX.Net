@@ -9,7 +9,7 @@ namespace BingX.Net
 {
     internal static class BingXErrors
     {
-        public static ErrorCollection SpotErrors { get; } = new ErrorCollection(
+        public static ErrorMapping SpotErrors { get; } = new ErrorMapping(
             [
                 new ErrorInfo(ErrorType.Unauthorized, false, "Signature error", "100001"),
                 new ErrorInfo(ErrorType.Unauthorized, false, "Invalid API key", "100413"),
@@ -45,7 +45,7 @@ namespace BingX.Net
             ]
         );
 
-        public static ErrorCollection FuturesErrors { get; } = new ErrorCollection(
+        public static ErrorMapping FuturesErrors { get; } = new ErrorMapping(
             [
                 new ErrorInfo(ErrorType.Unauthorized, false, "Signature error", "100001"),
                 new ErrorInfo(ErrorType.Unauthorized, false, "Invalid API key", "100413"),
@@ -68,6 +68,7 @@ namespace BingX.Net
                 new ErrorInfo(ErrorType.UnknownOrder, false, "Order does not exists", "80016"),
 
                 new ErrorInfo(ErrorType.NoPosition, false, "No open position", "80017"),
+                new ErrorInfo(ErrorType.MaxPosition, false, "Max position value reached", "101209"),
 
                 new ErrorInfo(ErrorType.InsufficientBalance, false, "Insufficient margin", "101204"),
 

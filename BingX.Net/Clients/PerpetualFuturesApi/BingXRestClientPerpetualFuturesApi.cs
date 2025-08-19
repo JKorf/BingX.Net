@@ -16,7 +16,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Perpetual Futures Api");
 
-        protected override ErrorCollection ErrorMapping => BingXErrors.FuturesErrors;
+        protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
         #endregion
 
         #region Api clients

@@ -37,7 +37,7 @@ namespace BingX.Net.Clients.SpotApi
         private static readonly MessagePath _eventPath2 = MessagePath.Get().Property("e");
         private static readonly MessagePath _symbolPath = MessagePath.Get().Property("data").Property("s");
 
-        protected override ErrorCollection ErrorMapping => BingXErrors.SpotErrors;
+        protected override ErrorMapping ErrorMapping => BingXErrors.SpotErrors;
         #endregion
 
         #region constructor/destructor

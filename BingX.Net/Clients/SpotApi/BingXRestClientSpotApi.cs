@@ -19,7 +19,7 @@ namespace BingX.Net.Clients.SpotApi
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Spot Api");
 
-        protected override ErrorCollection ErrorMapping => BingXErrors.SpotErrors;
+        protected override ErrorMapping ErrorMapping => BingXErrors.SpotErrors;
         #endregion
 
         #region Api clients

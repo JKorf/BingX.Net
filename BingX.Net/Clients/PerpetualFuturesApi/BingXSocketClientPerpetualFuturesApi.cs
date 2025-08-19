@@ -40,7 +40,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         private static readonly MessagePath _acPath = MessagePath.Get().Property("ac");
         private static readonly MessagePath _aPath = MessagePath.Get().Property("a");
 
-        protected override ErrorCollection ErrorMapping => BingXErrors.FuturesErrors;
+        protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
         #endregion
 
         #region constructor/destructor
