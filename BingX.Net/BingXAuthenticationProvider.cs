@@ -18,36 +18,15 @@ namespace BingX.Net
         {
         }
 
-        public override void AuthenticateRequest(
-            RestApiClient apiClient,
-            Uri uri,
-            HttpMethod method,
-            ref IDictionary<string, object>? uriParameters,
-            ref IDictionary<string, object>? bodyParameters,
-            ref Dictionary<string, string>? headers,
-            bool auth,
-            ArrayParametersSerialization arraySerialization,
-            HttpMethodParameterPosition parameterPosition,
-            RequestBodyFormat requestBodyFormat)
+        public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
         {
-            headers ??= new Dictionary<string, string>();
-            headers.Add("X-BX-APIKEY", ApiKey);
+            request.Headers.Add("X-BX-APIKEY", ApiKey);
 
-            if (!auth)
+            if (!request.Authenticated)
                 return;
 
-            IDictionary<string, object> parameters;
-            if (parameterPosition == HttpMethodParameterPosition.InUri)
-            {
-                uriParameters ??= new Dictionary<string, object>();
-                parameters = uriParameters;
-            }
-            else
-            {
-                bodyParameters ??= new Dictionary<string, object>();
-                parameters = bodyParameters;
-            }
-            var timestamp = DateTimeConverter.ConvertToMilliseconds(GetTimestamp(apiClient)).Value;
+            var timestamp = GetMillisecondTimestamp(apiClient);
+            var parameters = request.GetPositionParameters();
             parameters.Add("timestamp", timestamp);
             if (!parameters.ContainsKey("recvWindow"))
             {
@@ -55,13 +34,20 @@ namespace BingX.Net
                 parameters.Add("recvWindow", (int)receiveWindow.TotalMilliseconds);
             }
 
-            string parameterSignData;
-            if (parameterPosition == HttpMethodParameterPosition.InBody)
-                parameterSignData = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + (o.Value is bool ? o.Value?.ToString()!.ToLowerInvariant() : string.Format(CultureInfo.InvariantCulture, "{0}", o.Value))));
+            if (request.ParameterPosition == HttpMethodParameterPosition.InBody)
+            {
+                var bodyString = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + (o.Value is bool ? o.Value?.ToString()!.ToLowerInvariant() : string.Format(CultureInfo.InvariantCulture, "{0}", o.Value))));
+                var signature = SignHMACSHA256(bodyString, SignOutputType.Hex);
+                parameters.Add("signature", signature);
+                request.SetBodyContent($"{bodyString}&signature={signature}");
+            }
             else
-                parameterSignData = parameters.CreateParamString(false, arraySerialization);
-
-            parameters.Add("signature", SignHMACSHA256(parameterSignData, SignOutputType.Hex));
+            {
+                var queryString = parameters.CreateParamString(false, request.ArraySerialization);
+                var signature = SignHMACSHA256(queryString, SignOutputType.Hex);
+                parameters.Add("signature", signature);
+                request.SetQueryString($"{queryString}&signature={signature}");
+            }
         }
     }
 }

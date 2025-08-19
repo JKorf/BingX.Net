@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using CryptoExchange.Net.Interfaces;
 using BingX.Net.Objects.Models;
+using CryptoExchange.Net.Clients;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
@@ -15,14 +16,14 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
     {
         private readonly string _topic;
         private readonly Action<DataEvent<BingXBalanceUpdate>> _handler;
+        private readonly SocketApiClient _client;
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="handler"></param>
-        public BingXBalanceSubscription(ILogger logger, Action<DataEvent<BingXBalanceUpdate>> handler) : base(logger, false)
+        public BingXBalanceSubscription(ILogger logger, SocketApiClient client, Action<DataEvent<BingXBalanceUpdate>> handler) : base(logger, false)
         {
+            _client = client;
             _handler = handler;
             _topic = "ACCOUNT_UPDATE";
 
@@ -31,7 +32,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
 
         /// <inheritdoc />
         public override Query? GetSubQuery(SocketConnection connection)
-            => new BingXQuery(new BingXSocketRequest
+            => new BingXQuery(_client, new BingXSocketRequest
             {
                 Id = ExchangeHelpers.NextId().ToString(),
                 RequestType = "sub",
@@ -40,7 +41,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
 
         /// <inheritdoc />
         public override Query? GetUnsubQuery()
-            => new BingXQuery(new BingXSocketRequest
+            => new BingXQuery(_client, new BingXSocketRequest
             {
                 Id = ExchangeHelpers.NextId().ToString(),
                 RequestType = "unsub",

@@ -9490,12 +9490,10 @@
         <member name="T:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}})">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,CryptoExchange.Net.Clients.SocketApiClient,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}})">
             <summary>
             ctor
             </summary>
-            <param name="logger"></param>
-            <param name="handler"></param>
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
@@ -9509,15 +9507,10 @@
         <member name="T:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{`0}},System.Boolean)">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.#ctor(Microsoft.Extensions.Logging.ILogger,CryptoExchange.Net.Clients.SocketApiClient,System.String,System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{`0}},System.Boolean)">
             <summary>
             ctor
             </summary>
-            <param name="logger"></param>
-            <param name="dataType"></param>
-            <param name="listenId"></param>
-            <param name="handler"></param>
-            <param name="auth"></param>
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />

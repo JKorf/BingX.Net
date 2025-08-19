@@ -1,21 +1,12 @@
-﻿using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Objects;
+﻿using CryptoExchange.Net.Objects;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net;
 using BingX.Net.Objects.Options;
-using CryptoExchange.Net.Clients;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using BingX.Net.Objects.Internal;
-using CryptoExchange.Net.Converters.MessageParsing;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using BingX.Net.Interfaces.Clients.SpotApi;
-using CryptoExchange.Net.SharedApis;
+using CryptoExchange.Net.Objects.Errors;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -24,6 +15,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Perpetual Futures Api");
+
+        protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
         #endregion
 
         #region Api clients

@@ -9,6 +9,7 @@ using BingX.Net.Objects.Options;
 using System.Linq;
 using System.Globalization;
 using BingX.Net.Enums;
+using CryptoExchange.Net.Objects.Errors;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -17,6 +18,8 @@ namespace BingX.Net.Clients.SpotApi
     {
         #region fields 
         internal static TimeSyncState _timeSyncState = new TimeSyncState("Spot Api");
+
+        protected override ErrorMapping ErrorMapping => BingXErrors.SpotErrors;
         #endregion
 
         #region Api clients
