@@ -224,7 +224,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("limit", limit);
             parameters.AddOptional("fromId", fromId);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/market/trades", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/market/his/v1/trade", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXTrade[]>(request, parameters, ct).ConfigureAwait(false);
         }
 

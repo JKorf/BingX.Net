@@ -5074,7 +5074,7 @@
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Old%20Trade%20Lookup" /></para>
             </summary>
             <param name="symbol">Symbol, for example `ETH-USDT`</param>
-            <param name="limit">Amount or results</param>
+            <param name="limit">Amount or results, max 500</param>
             <param name="fromId">Return trades after this id</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
