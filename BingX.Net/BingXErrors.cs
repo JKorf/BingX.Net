@@ -34,6 +34,7 @@ namespace BingX.Net
                 new ErrorInfo(ErrorType.NoPosition, false, "No open position", "80017"),
 
                 new ErrorInfo(ErrorType.InsufficientBalance, false, "Insufficient margin", "101204"),
+                new ErrorInfo(ErrorType.InsufficientBalance, false, "Insufficient balance", "100202"),
 
                 new ErrorInfo(ErrorType.RateLimitOrder, false, "Entrust order limit reached", "80013"),
 
