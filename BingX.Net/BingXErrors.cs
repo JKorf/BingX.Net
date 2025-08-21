@@ -15,6 +15,7 @@ namespace BingX.Net
                 new ErrorInfo(ErrorType.Unauthorized, false, "Invalid API key", "100413"),
                 new ErrorInfo(ErrorType.Unauthorized, false, "Insufficient permissions", "100004"),
                 new ErrorInfo(ErrorType.Unauthorized, false, "IP not whitelisted", "100419"),
+                new ErrorInfo(ErrorType.Unauthorized, false, "Listen key expired", "100401"),
 
                 new ErrorInfo(ErrorType.InvalidTimestamp, false, "Invalid timestamp", "100421"),
 
