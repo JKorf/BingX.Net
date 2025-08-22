@@ -54,6 +54,13 @@ namespace BingX.Net.Clients
         }
 
         /// <inheritdoc />
+        public void ClearUserClients(string userIdentifier)
+        {
+            _restClients.TryRemove(userIdentifier, out _);
+            _socketClients.TryRemove(userIdentifier, out _);
+        }
+
+        /// <inheritdoc />
         public IBingXRestClient GetRestClient(string userIdentifier, ApiCredentials? credentials = null, BingXEnvironment? environment = null)
         {
             if (!_restClients.TryGetValue(userIdentifier, out var client))
