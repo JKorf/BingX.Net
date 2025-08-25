@@ -32,7 +32,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         }
 
         /// <inheritdoc />
-        public override Query? GetSubQuery(SocketConnection connection)
+        protected override Query? GetSubQuery(SocketConnection connection)
             => new BingXQuery(_client, new BingXSocketRequest
             {
                 Id = ExchangeHelpers.NextId().ToString(),
@@ -41,7 +41,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }, false);
 
         /// <inheritdoc />
-        public override Query? GetUnsubQuery()
+        protected override Query? GetUnsubQuery(SocketConnection connection)
             => new BingXQuery(_client, new BingXSocketRequest
             {
                 Id = ExchangeHelpers.NextId().ToString(),

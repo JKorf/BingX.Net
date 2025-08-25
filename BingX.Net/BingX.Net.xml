@@ -218,7 +218,7 @@
         <member name="M:BingX.Net.Clients.BingXRestClientApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.BingXRestClientApi.TryParseError(System.Collections.Generic.KeyValuePair{System.String,System.String[]}[],CryptoExchange.Net.Interfaces.IMessageAccessor)">
+        <member name="M:BingX.Net.Clients.BingXRestClientApi.TryParseError(CryptoExchange.Net.Objects.RequestDefinition,System.Collections.Generic.KeyValuePair{System.String,System.String[]}[],CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXRestClientApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
@@ -276,6 +276,9 @@
             </summary>
         </member>
         <member name="M:BingX.Net.Clients.BingXUserClientProvider.InitializeUserClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.BingXUserClientProvider.ClearUserClients(System.String)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
@@ -3909,6 +3912,11 @@
             <param name="userIdentifier">The identifier for the user</param>
             <param name="credentials">The credentials for the user</param>
             <param name="environment">The environment to use</param>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.ClearUserClients(System.String)">
+            <summary>
+            Reset the cached clients for a user. This can be useful when a user changes API credentials.
+            </summary>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.IBingXUserClientProvider.GetRestClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
             <summary>
@@ -9498,7 +9506,7 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetUnsubQuery">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXBalanceSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate})">
@@ -9515,7 +9523,7 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.GetUnsubQuery">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Internal.BingXUpdate{`0}})">
@@ -9534,7 +9542,7 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.GetSubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.GetUnsubQuery">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.GetUnsubQuery(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.DoHandleMessage(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate})">
