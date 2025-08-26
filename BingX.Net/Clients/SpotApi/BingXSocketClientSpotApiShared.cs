@@ -147,7 +147,7 @@ namespace BingX.Net.Clients.SpotApi
                     {
                         ClientOrderId = update.Data.ClientOrderId,
                         OrderPrice = update.Data.Price,
-                        OrderQuantity = new SharedOrderQuantity(update.Data.Quantity, update.Data.QuoteOrderQuantity, null),
+                        OrderQuantity = new SharedOrderQuantity(update.Data.Quantity, update.Data.QuoteOrderQuantity == 0 ? null : update.Data.QuoteOrderQuantity, null),
                         QuantityFilled = new SharedOrderQuantity(update.Data.QuantityFilled, update.Data.VolumeFilled, null),
                         Fee = update.Data.Fee.HasValue ? Math.Abs(update.Data.Fee.Value) : null,
                         FeeAsset = update.Data.FeeAsset,
