@@ -153,6 +153,11 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.6.1 - 26 Aug 2025
+    * Added check for 0 value in Shared Spot API order update
+    * Fixed body incorrectly set to formdata when json is requested
+    * Fixed incorrect request for requests with json body
+
 * Version 2.6.0 - 25 Aug 2025
     * Updated CryptoExchange.Net version to 9.6.0, see https://github.com/JKorf/CryptoExchange.Net/releases/
     * Added ClearUserClients method to user client provider
