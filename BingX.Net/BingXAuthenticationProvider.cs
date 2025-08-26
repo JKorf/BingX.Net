@@ -39,7 +39,8 @@ namespace BingX.Net
                 var bodyString = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + (o.Value is bool ? o.Value?.ToString()!.ToLowerInvariant() : string.Format(CultureInfo.InvariantCulture, "{0}", o.Value))));
                 var signature = SignHMACSHA256(bodyString, SignOutputType.Hex);
                 parameters.Add("signature", signature);
-                request.SetBodyContent($"{bodyString}&signature={signature}");
+                if (request.BodyFormat == RequestBodyFormat.FormData)
+                    request.SetBodyContent($"{bodyString}&signature={signature}");
             }
             else
             {
