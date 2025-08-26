@@ -25,7 +25,7 @@ namespace BingX.Net
             if (!request.Authenticated)
                 return;
 
-            var timestamp = GetMillisecondTimestamp(apiClient);
+            var timestamp = GetMillisecondTimestampLong(apiClient);
             var parameters = request.GetPositionParameters();
             parameters.Add("timestamp", timestamp);
             if (!parameters.ContainsKey("recvWindow"))
