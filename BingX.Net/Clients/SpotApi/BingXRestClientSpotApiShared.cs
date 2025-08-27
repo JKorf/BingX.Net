@@ -289,7 +289,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(order.Data.Fee),
                 FeeAsset = order.Data.FeeAsset,
                 UpdateTime = order.Data.UpdateTime,
-                AveragePrice = order.Data.AveragePrice,
+                AveragePrice = order.Data.AveragePrice == 0 ? null :order.Data.AveragePrice,
                 TriggerPrice = order.Data.StopPrice,
                 IsTriggerOrder = order.Data.StopPrice != null
             });
@@ -323,7 +323,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
-                AveragePrice = x.AveragePrice,
+                AveragePrice = x.AveragePrice == 0 ? null : x.AveragePrice,
                 TriggerPrice = x.StopPrice,
                 IsTriggerOrder = x.StopPrice != null
             }).ToArray());
@@ -376,7 +376,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(x.Fee),
                 FeeAsset = x.FeeAsset,
                 UpdateTime = x.UpdateTime,
-                AveragePrice = x.AveragePrice,
+                AveragePrice = x.AveragePrice == 0 ? null : x.AveragePrice,
                 TriggerPrice = x.StopPrice,
                 IsTriggerOrder = x.StopPrice != null
             }).ToArray(), nextToken);
@@ -538,7 +538,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fee = Math.Abs(order.Data.Fee),
                 FeeAsset = order.Data.FeeAsset,
                 UpdateTime = order.Data.UpdateTime,
-                AveragePrice = order.Data.AveragePrice,
+                AveragePrice = order.Data.AveragePrice == 0 ? null : order.Data.AveragePrice,
                 TriggerPrice = order.Data.StopPrice,
                 IsTriggerOrder = order.Data.StopPrice != null
             });
