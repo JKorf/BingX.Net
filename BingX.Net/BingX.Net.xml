@@ -6800,6 +6800,11 @@
             The main order id if this order is part of a Twap order
             </summary>
         </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesOrderDetails.PositionId">
+            <summary>
+            Position id
+            </summary>
+        </member>
         <member name="T:BingX.Net.Objects.Models.BingXStopOrder">
             <summary>
             Stop order info
