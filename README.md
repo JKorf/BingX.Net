@@ -153,6 +153,12 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.7.0 - 01 Sep 2025
+    * Updated CryptoExchange.Net version to 9.7.0, see https://github.com/JKorf/CryptoExchange.Net/releases/
+    * HTTP REST requests will now use HTTP version 2.0 by default
+    * Added PositionId property to BingXFuturesOrderDetails response model
+    * Added check for AveragePrice being 0 in Shared Spot order endpoints
+
 * Version 2.6.1 - 26 Aug 2025
     * Added check for 0 value in Shared Spot API order update
     * Fixed body incorrectly set to formdata when json is requested
