@@ -586,7 +586,8 @@ namespace BingX.Net.Clients.SpotApi
                     MinConfirmations = x.MinConfirmations,
                     MinWithdrawQuantity = x.MinWithdraw,
                     WithdrawEnabled = x.WithdrawEnabled,
-                    WithdrawFee = x.WithdrawFee
+                    WithdrawFee = x.WithdrawFee,
+                    ContractAddress = x.ContractAddress
                 }).ToArray()
             });
         }
@@ -613,7 +614,8 @@ namespace BingX.Net.Clients.SpotApi
                     MinConfirmations = x.MinConfirmations,
                     MinWithdrawQuantity = x.MinWithdraw,
                     WithdrawEnabled = x.WithdrawEnabled,
-                    WithdrawFee = x.WithdrawFee
+                    WithdrawFee = x.WithdrawFee,
+                    ContractAddress = x.ContractAddress
                 }).ToArray()
             }).ToArray());
         }

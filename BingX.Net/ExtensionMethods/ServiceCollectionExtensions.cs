@@ -102,6 +102,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICryptoSocketClient, CryptoSocketClient>();
             services.AddTransient<IBingXOrderBookFactory, BingXOrderBookFactory>();
             services.AddTransient<IBingXTrackerFactory, BingXTrackerFactory>();
+            services.AddTransient<ITrackerFactory, BingXTrackerFactory>();
             services.AddSingleton<IBingXUserClientProvider, BingXUserClientProvider>(x =>
             new BingXUserClientProvider(
                 x.GetRequiredService<HttpClient>(),

@@ -139,6 +139,12 @@
             </summary>
             <param name="serviceProvider">Service provider for resolving logging and clients</param>
         </member>
+        <member name="M:BingX.Net.BingXTrackerFactory.CanCreateKlineTracker(CryptoExchange.Net.SharedApis.SharedSymbol,CryptoExchange.Net.SharedApis.SharedKlineInterval)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.BingXTrackerFactory.CanCreateTradeTracker(CryptoExchange.Net.SharedApis.SharedSymbol)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.BingXTrackerFactory.CreateKlineTracker(CryptoExchange.Net.SharedApis.SharedSymbol,CryptoExchange.Net.SharedApis.SharedKlineInterval,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
             <inheritdoc />
         </member>
@@ -417,6 +423,9 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetLastTradePricesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiExchangeData.GetTradingRulesAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading">
@@ -1621,6 +1630,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTradingFees">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTradingRules">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -2846,6 +2860,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradingFeesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradingRules">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -4299,6 +4318,14 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiExchangeData.GetTradingRulesAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get trading rules for a symbol
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Trading%20Rules" /></para>
+            </summary>
+            <param name="symbol">Symbol, for example `ETH-USDT`</param>
+            <param name="ct">Cancellation token</param>
+        </member>
         <member name="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading">
             <summary>
             BingX futures trading endpoints, placing and mananging orders.
@@ -5410,25 +5437,6 @@
             <summary>
             Tracker factory
             </summary>
-        </member>
-        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.CreateKlineTracker(CryptoExchange.Net.SharedApis.SharedSymbol,CryptoExchange.Net.SharedApis.SharedKlineInterval,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
-            <summary>
-            Create a new kline tracker
-            </summary>
-            <param name="symbol">The symbol</param>
-            <param name="interval">Kline interval</param>
-            <param name="limit">The max amount of klines to retain</param>
-            <param name="period">The max period the data should be retained</param>
-            <returns></returns>
-        </member>
-        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.CreateTradeTracker(CryptoExchange.Net.SharedApis.SharedSymbol,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
-            <summary>
-            Create a new trade tracker for a symbol
-            </summary>
-            <param name="symbol">The symbol</param>
-            <param name="limit">The max amount of klines to retain</param>
-            <param name="period">The max period the data should be retained</param>
-            <returns></returns>
         </member>
         <member name="T:BingX.Net.Objects.BingXApiAddresses">
             <summary>
@@ -9088,6 +9096,56 @@
         <member name="P:BingX.Net.Objects.Models.BingXTradingFees.MakerFeeRate">
             <summary>
             Maker fee rate
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTradingRules">
+            <summary>
+            Trading rules
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.MinOrderQuantity">
+            <summary>
+            Min quantity for an order
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.MinOrderValue">
+            <summary>
+            Min order value in USD
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.MaxOrders">
+            <summary>
+            Max number of open orders
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.SpreadProtectThreshold">
+            <summary>
+            If spread protection is enabled and when a strategy order is triggered, if the spread between the latest price and mark price exceeds this threshold, the order will fail
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.BuyMaxPriceRatio">
+            <summary>
+            Buy max price ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.BuyMinPriceRatio">
+            <summary>
+            Buy min price ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.SellMaxPriceRatio">
+            <summary>
+            Sell max price ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.SellMinPriceRatio">
+            <summary>
+            Sell min price ratio
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradingRules.MarketRatio">
+            <summary>
+            Market order price tolerance ratio
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXTransactionResult">
