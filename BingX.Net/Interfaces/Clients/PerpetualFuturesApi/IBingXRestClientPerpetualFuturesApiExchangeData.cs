@@ -167,5 +167,13 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXLastTradePrice[]>> GetLastTradePricesAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Get trading rules for a symbol
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Trading%20Rules" /></para>
+        /// </summary>
+        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXTradingRules>> GetTradingRulesAsync(string symbol, CancellationToken ct = default);
     }
 }

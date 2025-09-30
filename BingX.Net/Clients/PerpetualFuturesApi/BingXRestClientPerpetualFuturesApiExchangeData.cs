@@ -272,5 +272,19 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
+        #region Get Trading Rules
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXTradingRules>> GetTradingRulesAsync(string symbol, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("symbol", symbol);
+            parameters.AddOptionalMillisecondsString("timestamp", DateTime.UtcNow);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/tradingRules", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<BingXTradingRules>(request, parameters, ct).ConfigureAwait(false);
+        }
+
+        #endregion
     }
 }

@@ -37,6 +37,7 @@ namespace BingX.Net.Converters
     [JsonSerializable(typeof(BingXResult<BingXServerTime[]>))]
     [JsonSerializable(typeof(BingXUpdate<BingXFuturesKlineUpdate[]>))]
     
+    [JsonSerializable(typeof(BingXResult<BingXTradingRules>))]
     [JsonSerializable(typeof(BingXResult<BingXAmount>))]
     [JsonSerializable(typeof(BingXResult<BingXAmount[]>))]
     [JsonSerializable(typeof(BingXResult<BingXApiKeyWrapper>))]
