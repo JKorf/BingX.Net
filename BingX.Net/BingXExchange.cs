@@ -93,16 +93,16 @@ namespace BingX.Net
 
         private void Initialize()
         {
-            RestMarket = new RateLimitGate("Spot Rest Market")
+            RestMarket = new RateLimitGate("Rest Market")
                                             .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding)) // As suggested by BingX API support: IP limit of 10 requests per 1 second in total 
-                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 100, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 100 requests per 10 seconds in total 
-                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 500, TimeSpan.FromSeconds(60), RateLimitWindowType.Sliding)); // IP limit of 500 requests per 60 seconds in total 
-            RestAccount1 = new RateLimitGate("Spot Rest Account 1")
-                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 1000, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 1000 requests per 10 seconds in total 
-                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerEndpoint, new List<IGuardFilter>(), 100, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)); // IP limit of 100 requests per 10 seconds per endpoint
-            RestAccount2 = new RateLimitGate("Spot Rest Account 1")
-                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 1000, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 1000 requests per 10 seconds in total 
-                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerEndpoint, new List<IGuardFilter>(), 200, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)); // IP limit of 200 requests per 10 seconds per endpoint
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 500, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 100 requests per 10 seconds in total 
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 1000, TimeSpan.FromSeconds(60), RateLimitWindowType.Sliding)); // IP limit of 500 requests per 60 seconds in total 
+            RestAccount1 = new RateLimitGate("Rest Account 1")
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 2000, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 1000 requests per 10 seconds in total 
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerEndpoint, new List<IGuardFilter>(), 300, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)); // IP limit of 100 requests per 10 seconds per endpoint
+            RestAccount2 = new RateLimitGate("Rest Account 2")
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 2000, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)) // IP limit of 1000 requests per 10 seconds in total 
+                                            .AddGuard(new RateLimitGuard(RateLimitGuard.PerEndpoint, new List<IGuardFilter>(), 300, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding)); // IP limit of 200 requests per 10 seconds per endpoint
 
             RestMarket.RateLimitTriggered += (x) => RateLimitTriggered?.Invoke(x);
             RestMarket.RateLimitUpdated += (x) => RateLimitUpdated?.Invoke(x);
