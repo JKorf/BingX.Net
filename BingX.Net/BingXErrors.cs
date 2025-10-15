@@ -19,7 +19,7 @@ namespace BingX.Net
 
                 new ErrorInfo(ErrorType.InvalidTimestamp, false, "Invalid timestamp", "100421"),
 
-                new ErrorInfo(ErrorType.InvalidParameter, false, "Invalid parameter", "80014"),
+                new ErrorInfo(ErrorType.InvalidParameter, false, "Invalid parameter", "80014", "109400"),
                 new ErrorInfo(ErrorType.InvalidParameter, false, "Invalid or missing arguments", "100400"),
                 new ErrorInfo(ErrorType.InvalidParameter, false, "Maximum leverage exceeded", "101414"),
 
@@ -28,7 +28,7 @@ namespace BingX.Net
 
                 new ErrorInfo(ErrorType.RejectedOrderConfiguration, false, "PostOnly order could not be placed", "101215"),
 
-                new ErrorInfo(ErrorType.UnknownOrder, false, "Order does not exists", "80016"),
+                new ErrorInfo(ErrorType.UnknownOrder, false, "Order does not exists", "80016", "109421"),
 
                 new ErrorInfo(ErrorType.UnknownSymbol, false, "Symbol not found", "100204"),
 
@@ -39,9 +39,9 @@ namespace BingX.Net
 
                 new ErrorInfo(ErrorType.RateLimitOrder, false, "Entrust order limit reached", "80013"),
 
-                new ErrorInfo(ErrorType.InvalidOperation, false, "Order already filled", "80018"),
+                new ErrorInfo(ErrorType.InvalidOperation, false, "Order already filled", "80018", "109422"),
 
-                new ErrorInfo(ErrorType.RateLimitRequest, false, "Rate limit reached", "100410"),
+                new ErrorInfo(ErrorType.RateLimitRequest, false, "Rate limit reached", "100410", "109429"),
 
                 new ErrorInfo(ErrorType.UnavailableSymbol, false, "Symbol is not currently trading", "101415"),
             ]
@@ -65,9 +65,9 @@ namespace BingX.Net
 
                 new ErrorInfo(ErrorType.RejectedOrderConfiguration, false, "PostOnly order could not be placed", "101215"),
 
-                new ErrorInfo(ErrorType.InvalidOperation, false, "Order already filled", "80018"),
+                new ErrorInfo(ErrorType.InvalidOperation, false, "Order already filled", "80018", "109422"),
 
-                new ErrorInfo(ErrorType.UnknownOrder, false, "Order does not exists", "80016"),
+                new ErrorInfo(ErrorType.UnknownOrder, false, "Order does not exists", "80016", "109421"),
 
                 new ErrorInfo(ErrorType.NoPosition, false, "No open position", "80017"),
                 new ErrorInfo(ErrorType.MaxPosition, false, "Max position value reached", "101209"),
@@ -76,7 +76,7 @@ namespace BingX.Net
 
                 new ErrorInfo(ErrorType.RateLimitOrder, false, "Entrust order limit reached", "80013"),
 
-                new ErrorInfo(ErrorType.RateLimitRequest, false, "Rate limit reached", "100410"),
+                new ErrorInfo(ErrorType.RateLimitRequest, false, "Rate limit reached", "100410", "109429"),
 
                 new ErrorInfo(ErrorType.UnavailableSymbol, false, "Symbol is not currently trading", "101415"),
             ]
