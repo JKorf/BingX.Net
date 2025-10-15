@@ -209,6 +209,7 @@ namespace BingX.Net.Converters
     [JsonSerializable(typeof(BingXUpdate<BingXTradeUpdate[]>))]
     [JsonSerializable(typeof(BingXResult<BingXTradingFees>))]
     [JsonSerializable(typeof(BingXResult<BingXTradingFees[]>))]
+    [JsonSerializable(typeof(BingXResult<BingXTransactionResultInt>))]
     [JsonSerializable(typeof(BingXResult<BingXTransactionResult>))]
     [JsonSerializable(typeof(BingXResult<BingXTransactionResult[]>))]
     [JsonSerializable(typeof(BingXResult<BingXTransfers>))]

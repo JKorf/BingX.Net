@@ -153,7 +153,20 @@ namespace BingX.Net.Clients.SpotApi
                         FeeAsset = update.Data.FeeAsset,
                         UpdateTime = update.Data.UpdateTime,
                         IsTriggerOrder = update.Data.Type == OrderType.StopLimit || update.Data.Type == OrderType.StopMarket || update.Data.Type == OrderType.TriggerLimit || update.Data.Type == OrderType.TriggerMarket,
-                        LastTrade = update.Data.LastFillQuantity > 0 ? new SharedUserTrade(ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol), update.Data.Symbol, update.Data.OrderId.ToString(), update.Data.TradeId.ToString(), update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell, update.Data.LastFillQuantity!.Value, update.Data.LastFillPrice!.Value, update.Data.UpdateTime!.Value) : null
+                        LastTrade = update.Data.LastFillQuantity > 0 ? 
+                            new SharedUserTrade(
+                                ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
+                                update.Data.Symbol,
+                                update.Data.OrderId.ToString(),
+                                update.Data.TradeId.ToString(),
+                                update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
+                                update.Data.LastFillQuantity!.Value,
+                                update.Data.LastFillPrice!.Value,
+                                update.Data.UpdateTime!.Value)
+                            {
+                                ClientOrderId = update.Data.ClientOrderId
+                            }
+                            : null
                     }
                 })),
                 ct: ct).ConfigureAwait(false);

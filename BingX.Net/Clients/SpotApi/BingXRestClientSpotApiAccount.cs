@@ -37,6 +37,20 @@ namespace BingX.Net.Clients.SpotApi
 
         #endregion
 
+
+        #region Get Funding Balances
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXBalance[]>> GetFundingBalancesAsync(CancellationToken ct = default)
+        {
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/fund/v1/account/balance", BingXExchange.RateLimiter.RestAccount2, 1, true,
+                limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
+            var result = await _baseClient.SendAsync<BingXBalanceWrapper>(request, null, ct).ConfigureAwait(false);
+            return result.As<BingXBalance[]>(result.Data?.Balances);
+        }
+
+        #endregion
+
         #region Get Deposit History
 
         /// <inheritdoc />
@@ -140,24 +154,26 @@ namespace BingX.Net.Clients.SpotApi
         #region Transfer
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXTransactionResult>> TransferAsync(TransferType transferType, string asset, decimal quantity, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXTransactionResult>> TransferAsync(string asset, decimal quantity, TransferAccountType fromAccount, TransferAccountType toAccount, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection()
             {
                 { "asset", asset },
                 { "amount", quantity }
             };
-            parameters.AddEnum("type", transferType);
+            parameters.AddEnum("fromAccount", fromAccount);
+            parameters.AddEnum("toAccount", toAccount);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/api/v3/post/asset/transfer", BingXExchange.RateLimiter.RestAccount2, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/api/asset/v1/transfer", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            var result = await _baseClient.SendRawAsync<BingXTransactionResult>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<BingXTransactionResultInt>(request, parameters, ct).ConfigureAwait(false);
             if (!result)
-                return result;
+                return result.As<BingXTransactionResult>(default);
 
-            if (result.Data == null)
-                return result.AsError<BingXTransactionResult>(new ServerError(new ErrorInfo(ErrorType.Unknown, "Transfer failed")));
-            return result;
+            if (result.Data.Error != null)
+                return result.AsError<BingXTransactionResult>(new ServerError(new ErrorInfo(ErrorType.Unknown, result.Data.Error)));
+
+            return result.As<BingXTransactionResult>(result.Data);
         }
 
         #endregion

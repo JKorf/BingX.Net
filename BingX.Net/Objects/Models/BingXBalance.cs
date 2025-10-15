@@ -11,6 +11,8 @@ namespace BingX.Net.Objects.Models
     {
         [JsonPropertyName("balances")]
         public BingXBalance[] Balances { get; set; } = Array.Empty<BingXBalance>();
+        [JsonInclude, JsonPropertyName("assets")]
+        internal BingXBalance[] BalancesInt { set => Balances = value; }
     }
 
     /// <summary>

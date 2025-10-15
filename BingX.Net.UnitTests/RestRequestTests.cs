@@ -31,7 +31,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.SpotApi.Account.GetAssetsAsync(), "GetAssets", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.SpotApi.Account.WithdrawAsync("ETH", "123", 1, Enums.AccountType.Funding), "Withdraw", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.SpotApi.Account.GetDepositAddressAsync("ETH"), "GetDepositAddress", nestedJsonProperty: "data");
-            await tester.ValidateAsync(client => client.SpotApi.Account.TransferAsync(Enums.TransferType.PerpetualFuturesToStandardFutures, "ETH", 1), "Transfer");
+            await tester.ValidateAsync(client => client.SpotApi.Account.TransferAsync("ETH", 1, TransferAccountType.Spot, TransferAccountType.UsdtPerpetualFutures), "Transfer", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.SpotApi.Account.GetTransfersAsync(Enums.TransferType.PerpetualFuturesToStandardFutures), "GetTransfers");
             await tester.ValidateAsync(client => client.SpotApi.Account.TransferInternalAsync("ETH", Enums.AccountIdentifierType.Uid, "123", 1, Enums.AccountType.Perpetual), "TransferInternal", "data");
             await tester.ValidateAsync(client => client.SpotApi.Account.GetInternalTransfersAsync("ETH"), "GetInternalTransfers", "data", new List<string> { "status" });

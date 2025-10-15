@@ -597,6 +597,9 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetBalancesAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetFundingBalancesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositHistoryAsync(System.String,System.Nullable{BingX.Net.Enums.DepositStatus},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -612,7 +615,7 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositAddressAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferAsync(BingX.Net.Enums.TransferType,System.String,System.Decimal,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferAsync(System.String,System.Decimal,BingX.Net.Enums.TransferAccountType,BingX.Net.Enums.TransferAccountType,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTransfersAsync(BingX.Net.Enums.TransferType,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
@@ -1645,6 +1648,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTransactionResult">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTransactionResultInt">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -2879,6 +2887,11 @@
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
         </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransactionResultInt">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTransfer">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
@@ -3706,6 +3719,36 @@
         <member name="F:BingX.Net.Enums.TradeSide.Short">
             <summary>
             Short position
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.TransferAccountType">
+            <summary>
+            Transfer account type
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferAccountType.Funding">
+            <summary>
+            Funding account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferAccountType.Spot">
+            <summary>
+            Spot account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferAccountType.StandardContract">
+            <summary>
+            Standard contract account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferAccountType.UsdtPerpetualFutures">
+            <summary>
+            USDT perpetual futures account
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferAccountType.CoinPerpetualFutures">
+            <summary>
+            Coin perpetual futures account
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.TransferType">
@@ -4813,7 +4856,13 @@
             <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /></para>
             </summary>
             <param name="ct">Cancellation token</param>
-            <returns></returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetFundingBalancesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get funding account balances
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Fund%20Account%20Assets" /></para>
+            </summary>
+            <param name="ct">Cancellation token</param>
         </member>
         <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.GetDepositHistoryAsync(System.String,System.Nullable{BingX.Net.Enums.DepositStatus},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
@@ -4882,14 +4931,15 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.TransferAsync(BingX.Net.Enums.TransferType,System.String,System.Decimal,System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApiAccount.TransferAsync(System.String,System.Decimal,BingX.Net.Enums.TransferAccountType,BingX.Net.Enums.TransferAccountType,System.Threading.CancellationToken)">
             <summary>
             Universal transfer
-            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer" /></para>
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer%20New" /></para>
             </summary>
-            <param name="tranferType">Transfer type</param>
             <param name="asset">Asset to transfer, for example `ETH`</param>
             <param name="quantity">Quantity to transfer</param>
+            <param name="fromAccount">From account type</param>
+            <param name="toAccount">To account type</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>

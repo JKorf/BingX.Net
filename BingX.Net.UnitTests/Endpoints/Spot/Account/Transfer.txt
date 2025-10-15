@@ -1,6 +1,11 @@
 POST
-/openApi/api/v3/post/asset/transfer
+/openApi/api/asset/v1/transfer
 true
 {
-  "tranId": "1728"
+	"code":0,
+	"timestamp":1760512784492,
+	"data":
+	{
+		"tranId":123
+	}
 }

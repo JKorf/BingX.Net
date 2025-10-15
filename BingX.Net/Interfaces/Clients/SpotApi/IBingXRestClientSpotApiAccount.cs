@@ -18,8 +18,14 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /></para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
-        /// <returns></returns>
         Task<WebCallResult<BingXBalance[]>> GetBalancesAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Get funding account balances
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Fund%20Account%20Assets" /></para>
+        /// </summary>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXBalance[]>> GetFundingBalancesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get deposit history
@@ -90,14 +96,15 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Universal transfer
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer%20New" /></para>
         /// </summary>
-        /// <param name="tranferType">Transfer type</param>
         /// <param name="asset">Asset to transfer, for example `ETH`</param>
         /// <param name="quantity">Quantity to transfer</param>
+        /// <param name="fromAccount">From account type</param>
+        /// <param name="toAccount">To account type</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXTransactionResult>> TransferAsync(TransferType tranferType, string asset, decimal quantity, CancellationToken ct = default);
+        Task<WebCallResult<BingXTransactionResult>> TransferAsync(string asset, decimal quantity, TransferAccountType fromAccount, TransferAccountType toAccount, CancellationToken ct = default);
 
         /// <summary>
         /// Get universal transfer history

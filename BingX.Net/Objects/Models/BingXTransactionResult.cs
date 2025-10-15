@@ -16,4 +16,10 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("tranId")]
         public long TransactionId { get; set; }
     }
+
+    internal record BingXTransactionResultInt : BingXTransactionResult
+    {
+        [JsonPropertyName("transferErrorMsg")]
+        public string? Error { get; set; }
+    }
 }
