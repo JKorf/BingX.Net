@@ -10,6 +10,7 @@ using System.Net.Http;
 using System;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.RateLimiting.Guards;
+using CryptoExchange.Net;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -19,14 +20,11 @@ namespace BingX.Net.Clients.SpotApi
         private static readonly RequestDefinitionCache _definitions = new();
         private readonly BingXRestClientSpotApi _baseClient;
         private readonly ILogger _logger;
-        private readonly string _brokerId;
 
         internal BingXRestClientSpotApiTrading(ILogger logger, BingXRestClientSpotApi baseClient)
         {
             _baseClient = baseClient;
             _logger = logger;
-
-            _brokerId = !string.IsNullOrEmpty(baseClient.ClientOptions.BrokerId) ? baseClient.ClientOptions.BrokerId! : "easytrading";
         }
 
         #region Place Order
@@ -52,7 +50,7 @@ namespace BingX.Net.Clients.SpotApi
             var result = await _baseClient.SendAsync<BingXOrder>(request, parameters, ct,
                 additionalHeaders: new Dictionary<string, string>
                  {
-                     { "X-SOURCE-KEY", _brokerId }
+                     { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
                  }).ConfigureAwait(false);
             return result;
         }
@@ -75,7 +73,7 @@ namespace BingX.Net.Clients.SpotApi
             var result = await _baseClient.SendAsync<BingXOrderWrapper>(request, parameters, ct,
                 additionalHeaders: new Dictionary<string, string>
                  {
-                     { "X-SOURCE-KEY", _brokerId }
+                     { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
                  }).ConfigureAwait(false);
             return result.As<BingXOrder[]>(result.Data?.Orders);
         }
@@ -257,7 +255,7 @@ namespace BingX.Net.Clients.SpotApi
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/oco/order", BingXExchange.RateLimiter.RestAccount1, 1, true);
             var result = await _baseClient.SendAsync<BingXOcoOrder[]>(request, parameters, ct, additionalHeaders: new Dictionary<string, string>
                  {
-                     { "X-SOURCE-KEY", _brokerId }
+                     { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
                  }).ConfigureAwait(false);
             return result;
         }
