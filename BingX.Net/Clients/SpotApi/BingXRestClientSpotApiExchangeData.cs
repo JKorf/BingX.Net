@@ -215,7 +215,7 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Trade History
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXTrade[]>> GetTradeHistoryAsync(string symbol, int? limit = null, string? fromId = null, CancellationToken ct = default)
+        public async Task<WebCallResult<BingXTradeHistory[]>> GetTradeHistoryAsync(string symbol, int? limit = null, string? fromId = null, CancellationToken ct = default)
         {
             var parameters = new ParameterCollection
             {
@@ -225,7 +225,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.AddOptional("fromId", fromId);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/market/his/v1/trade", BingXExchange.RateLimiter.RestMarket, 1, false);
-            return await _baseClient.SendAsync<BingXTrade[]>(request, parameters, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<BingXTradeHistory[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion

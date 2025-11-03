@@ -95,6 +95,11 @@
             Type of exchange
             </summary>
         </member>
+        <member name="P:BingX.Net.BingXExchange.AssetAliases">
+            <summary>
+            Aliases for BingX assets
+            </summary>
+        </member>
         <member name="M:BingX.Net.BingXExchange.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
             <summary>
             Format a base and quote asset to a BingX recognized symbol 
@@ -1627,6 +1632,11 @@
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
         </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTradeHistoryArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXTradingFeesArray">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
@@ -2848,6 +2858,16 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradeHistory">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXTradeHistoryArray">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -9096,6 +9116,41 @@
         <member name="P:BingX.Net.Objects.Models.BingXTrade.BuyerIsMaker">
             <summary>
             Whether buyer was the maker
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXTradeHistory">
+            <summary>
+            Trade info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradeHistory.Id">
+            <summary>
+            Trade id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradeHistory.Price">
+            <summary>
+            Trade price
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradeHistory.Quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradeHistory.Timestamp">
+            <summary>
+            timestamp
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradeHistory.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXTradeHistory.BuyerIsMaker">
+            <summary>
+            Buyer is maker
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXTradeUpdate">

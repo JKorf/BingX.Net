@@ -131,6 +131,6 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="fromId">Return trades after this id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXTrade[]>> GetTradeHistoryAsync(string symbol, int? limit = null, string? fromId = null, CancellationToken ct = default);
+        Task<WebCallResult<BingXTradeHistory[]>> GetTradeHistoryAsync(string symbol, int? limit = null, string? fromId = null, CancellationToken ct = default);
     }
 }
