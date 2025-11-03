@@ -51,6 +51,17 @@ namespace BingX.Net
         internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<BingXSourceGenerationContext>();
 
         /// <summary>
+        /// Aliases for BingX assets
+        /// </summary>
+        public static AssetAliasConfiguration AssetAliases { get; } = new AssetAliasConfiguration
+        {
+            Aliases =
+            [
+                new AssetAlias("USDT", SharedSymbol.UsdOrStable.ToUpperInvariant(), AliasType.OnlyToExchange)
+            ]
+        };
+
+        /// <summary>
         /// Format a base and quote asset to a BingX recognized symbol 
         /// </summary>
         /// <param name="baseAsset">Base asset</param>
@@ -60,7 +71,10 @@ namespace BingX.Net
         /// <returns></returns>
         public static string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null)
         {
-            return baseAsset.ToUpperInvariant() + "-" + quoteAsset.ToUpperInvariant();
+            baseAsset = AssetAliases.CommonToExchangeName(baseAsset.ToUpperInvariant());
+            quoteAsset = AssetAliases.CommonToExchangeName(quoteAsset.ToUpperInvariant());
+
+            return baseAsset + "-" + quoteAsset;
         }
 
         /// <summary>
