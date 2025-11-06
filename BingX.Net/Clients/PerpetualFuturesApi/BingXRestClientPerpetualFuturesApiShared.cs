@@ -872,7 +872,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result)
                 return result.AsExchangeResult<SharedBalance[]>(Exchange, null, default);
 
-            return result.AsExchangeResult<SharedBalance[]>(Exchange, SupportedTradingModes, result.Data.Select(x => new SharedBalance(x.Asset, x.AvailableMargin, x.Equity)).ToArray());
+            return result.AsExchangeResult<SharedBalance[]>(Exchange, SupportedTradingModes, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(x => 
+                new SharedBalance(x.Asset, x.AvailableMargin ?? 0, x.Equity ?? 0)).ToArray());
         }
 
         #endregion

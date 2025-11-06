@@ -24,17 +24,17 @@ namespace BingX.Net.Objects.Models
         /// Balance
         /// </summary>
         [JsonPropertyName("balance")]
-        public decimal Balance { get; set; }
+        public decimal? Balance { get; set; }
         /// <summary>
         /// Net asset value
         /// </summary>
         [JsonPropertyName("equity")]
-        public decimal Equity { get; set; }
+        public decimal? Equity { get; set; }
         /// <summary>
         /// Unrealized profit and loss
         /// </summary>
         [JsonPropertyName("unrealizedProfit")]
-        public decimal UnrealizedProfit { get; set; }
+        public decimal? UnrealizedProfit { get; set; }
         /// <summary>
         /// Realized profit
         /// </summary>
@@ -44,17 +44,17 @@ namespace BingX.Net.Objects.Models
         /// Available margin
         /// </summary>
         [JsonPropertyName("availableMargin")]
-        public decimal AvailableMargin { get; set; }
+        public decimal? AvailableMargin { get; set; }
         /// <summary>
         /// Used margin
         /// </summary>
         [JsonPropertyName("usedMargin")]
-        public decimal UsedMargin { get; set; }
+        public decimal? UsedMargin { get; set; }
         /// <summary>
         /// Frozen margin
         /// </summary>
         [JsonPropertyName("freezedMargin")]
-        public decimal FrozenMargin { get; set; }
+        public decimal? FrozenMargin { get; set; }
         /// <summary>
         /// Short uid
         /// </summary>
