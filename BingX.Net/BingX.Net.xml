@@ -275,7 +275,7 @@
         <member name="T:BingX.Net.Clients.BingXUserClientProvider">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.Clients.BingXUserClientProvider.Exchange">
+        <member name="P:BingX.Net.Clients.BingXUserClientProvider.ExchangeName">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXUserClientProvider.#ctor(System.Action{BingX.Net.Objects.Options.BingXOptions})">
@@ -9733,7 +9733,7 @@
             BingX order book factory
             </summary>
         </member>
-        <member name="P:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.Exchange">
+        <member name="P:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.ExchangeName">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.SymbolOrderBooks.BingXOrderBookFactory.#ctor(System.IServiceProvider)">
