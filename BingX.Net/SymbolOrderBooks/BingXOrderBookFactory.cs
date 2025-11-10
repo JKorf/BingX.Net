@@ -17,6 +17,9 @@ namespace BingX.Net.SymbolOrderBooks
     {
         private readonly IServiceProvider _serviceProvider;
 
+        /// <inheritdoc />
+        public string ExchangeName => BingXExchange.ExchangeName;
+
         /// <summary>
         /// ctor
         /// </summary>

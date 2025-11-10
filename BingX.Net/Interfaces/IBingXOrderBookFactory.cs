@@ -8,7 +8,7 @@ namespace BingX.Net.Interfaces
     /// <summary>
     /// BingX local order book factory
     /// </summary>
-    public interface IBingXOrderBookFactory
+    public interface IBingXOrderBookFactory : IExchangeService
     {
         /// <summary>
         /// Spot order book factory methods
