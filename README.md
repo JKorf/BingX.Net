@@ -156,6 +156,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.12.0 - 11 Nov 2025
+    * Updated CryptoExchange.Net version to 9.13.0, see https://github.com/JKorf/CryptoExchange.Net/releases/
+
 * Version 2.11.0 - 06 Nov 2025
     * Fixed deserialization issue in restClient.PerpetualFuturesApi.Account.GetBalancesAsync
 
