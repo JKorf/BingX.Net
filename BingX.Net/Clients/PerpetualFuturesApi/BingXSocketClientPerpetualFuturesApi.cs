@@ -1,29 +1,31 @@
-using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Sockets;
-using Microsoft.Extensions.Logging;
-using BingX.Net.Objects.Options;
+using BingX.Net.Clients.SpotApi;
 using BingX.Net.Enums;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Converters.MessageParsing;
-using CryptoExchange.Net.Clients;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
-using CryptoExchange.Net.Objects.Sockets;
-using System;
+using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
-using System.Threading;
-using CryptoExchange.Net.Objects;
-using System.Threading.Tasks;
+using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Sockets.Subscriptions;
 using CryptoExchange.Net;
+using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Converters.MessageParsing;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using CryptoExchange.Net.Converters.SystemTextJson;
-using System.Net.WebSockets;
+using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
+using CryptoExchange.Net.Objects.Sockets;
+using CryptoExchange.Net.SharedApis;
+using CryptoExchange.Net.Sockets;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
 using System.Linq;
-using BingX.Net.Interfaces.Clients.SpotApi;
-using CryptoExchange.Net.SharedApis;
-using CryptoExchange.Net.Objects.Errors;
+using System.Net.WebSockets;
+using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -64,6 +66,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
             => new BingXAuthenticationProvider(credentials);
+
+
+        public override IMessageConverter CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketClientPerpetualFuturesApiMessageConverter();
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
@@ -203,6 +208,16 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         /// <inheritdoc />
         public override ReadOnlyMemory<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlyMemory<byte> data)
+        {
+            if (type != WebSocketMessageType.Binary)
+                return data;
+
+            return data.DecompressGzip();
+        }
+
+
+        /// <inheritdoc />
+        public override ReadOnlySpan<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlySpan<byte> data)
         {
             if (type != WebSocketMessageType.Binary)
                 return data;

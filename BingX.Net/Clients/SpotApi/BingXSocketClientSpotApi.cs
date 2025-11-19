@@ -1,29 +1,30 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using CryptoExchange.Net;
-using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Sockets;
-using CryptoExchange.Net.Sockets;
-using Microsoft.Extensions.Logging;
+﻿using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Sockets.Subscriptions;
+using CryptoExchange.Net;
+using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Converters.MessageParsing;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
+using CryptoExchange.Net.Objects.Sockets;
+using CryptoExchange.Net.SharedApis;
+using CryptoExchange.Net.Sockets;
+using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Net.WebSockets;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Converters.MessageParsing;
-using CryptoExchange.Net.Clients;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using BingX.Net.Enums;
-using System.Runtime.InteropServices.ComTypes;
-using CryptoExchange.Net.SharedApis;
-using CryptoExchange.Net.Objects.Errors;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BingX.Net.Clients.SpotApi
 {
+
     /// <summary>
     /// Client providing access to the BingX spot websocket Api
     /// </summary>
@@ -63,6 +64,8 @@ namespace BingX.Net.Clients.SpotApi
                 => BingXExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverTime);
 
         public IBingXSocketClientSpotApiShared SharedClient => this;
+
+        public override IMessageConverter CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketClientSpotApiMessageConverter();
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
@@ -158,6 +161,15 @@ namespace BingX.Net.Clients.SpotApi
             var subscription = new BingXBalanceSubscription(_logger, this, x => onMessage(x
                 .WithDataTimestamp(x.Data.EventTime)));
             return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public override ReadOnlySpan<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlySpan<byte> data)
+        {
+            if (type != WebSocketMessageType.Binary)
+                return data;
+
+            return data.DecompressGzip();
         }
 
         /// <inheritdoc />

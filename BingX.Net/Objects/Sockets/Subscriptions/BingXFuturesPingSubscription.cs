@@ -18,7 +18,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
 
         public CallResult DoHandleMessage(SocketConnection connection, DataEvent<string> message)
         {
-            connection.Send(ExchangeHelpers.NextId(), "Pong", 1);
+            connection.SendAsync(ExchangeHelpers.NextId(), "Pong", 1);
             return CallResult.SuccessResult;
         }
     }
