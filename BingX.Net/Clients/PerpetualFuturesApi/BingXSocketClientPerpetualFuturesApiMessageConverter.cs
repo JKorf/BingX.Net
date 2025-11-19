@@ -25,7 +25,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fields = [
                     new PropertyFieldReference("dataType"),
                 ],
-                MessageIdentifier = x => x.FieldValue("dataType")
+                IdentifyMessageCallback = x => x.FieldValue("dataType")
             },
 
             new MessageEvaluator {
@@ -34,7 +34,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fields = [
                     new PropertyFieldReference("id"),
                 ],
-                MessageIdentifier = x => x.FieldValue("id")
+                IdentifyMessageCallback = x => x.FieldValue("id")
             }
         ];
 

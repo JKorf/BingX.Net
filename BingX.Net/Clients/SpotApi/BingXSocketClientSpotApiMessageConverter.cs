@@ -23,7 +23,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fields = [
                     new PropertyFieldReference("dataType"),
                 ],
-                MessageIdentifier = x => x.FieldValue("dataType")
+                IdentifyMessageCallback = x => x.FieldValue("dataType")
             },
 
             // Field 'e' on the first level only means account update
@@ -33,7 +33,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fields = [
                     new PropertyFieldReference("e"),
                 ],
-                MessageIdentifier = x => "ACCOUNT_UPDATE"
+                StaticIdentifier = "ACCOUNT_UPDATE"
             },
 
             new MessageEvaluator {
@@ -42,7 +42,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fields = [
                     new PropertyFieldReference("ping"),
                 ],
-                MessageIdentifier = x => "ping"
+                StaticIdentifier = "ping"
             },
 
             new MessageEvaluator {
@@ -51,7 +51,7 @@ namespace BingX.Net.Clients.SpotApi
                 Fields = [
                     new PropertyFieldReference("id"),
                 ],
-                MessageIdentifier = x => x.FieldValue("id"),
+                IdentifyMessageCallback = x => x.FieldValue("id"),
             }
         ];
 
