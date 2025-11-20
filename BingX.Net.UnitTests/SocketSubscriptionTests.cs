@@ -37,13 +37,18 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync<BingXBalanceUpdate>((client, handler) => client.SpotApi.SubscribeToBalanceUpdatesAsync("123", handler), "Balance");
         }
 
-        [Test]
-        public async Task ValidatePerpetualFutureSubscriptions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidatePerpetualFutureSubscriptions(bool newDeserialization)
         {
-            var client = new BingXSocketClient(opts =>
+            var logger = new LoggerFactory();
+            logger.AddProvider(new TraceLoggerProvider());
+
+            var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                opts.ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456");
-            });
+                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
+                UseUpdatedDeserialization = newDeserialization
+            }), logger);
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-ws.bingx.com/market");
             await tester.ValidateAsync<BingXFuturesTradeUpdate[]>((client, handler) => client.PerpetualFuturesApi.SubscribeToTradeUpdatesAsync("ETH-USDT", handler), "Trades", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXOrderBook>((client, handler) => client.PerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync("ETH-USDT", 20, 100, handler), "PartialBook", nestedJsonProperty: "data");

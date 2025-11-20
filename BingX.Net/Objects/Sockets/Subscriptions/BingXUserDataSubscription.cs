@@ -54,30 +54,53 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         protected override Query? GetUnsubQuery(SocketConnection connection) => null;
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXConfigUpdate> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXConfigUpdate message)
         {
-            _configHandler?.Invoke(message.As(message.Data, message.Data.Event, message.Data.Configuration.Symbol, message.Data.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update).WithDataTimestamp(message.Data.EventTime));
+            _configHandler?.Invoke(
+                new DataEvent<BingXConfigUpdate>(message, receiveTime, originalData)
+                    .WithStreamId(message.Event)
+                    .WithDataTimestamp(message.EventTime)
+                    .WithSymbol(message.Configuration.Symbol)
+                    .WithUpdateType(message.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
+                );
             return CallResult.SuccessResult;
         }
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXFuturesAccountUpdate> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXFuturesAccountUpdate message)
         {
-            _accountHandler?.Invoke(message.As(message.Data, message.Data.Event, null, message.Data.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update).WithDataTimestamp(message.Data.EventTime));
+            _accountHandler?.Invoke(
+                new DataEvent<BingXFuturesAccountUpdate>(message, receiveTime, originalData)
+                    .WithStreamId(message.Event)
+                    .WithDataTimestamp(message.EventTime)
+                    .WithUpdateType(message.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
+                );
             return CallResult.SuccessResult;
         }
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXFuturesOrderUpdateWrapper> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXFuturesOrderUpdateWrapper message)
         {
-            _orderHandler?.Invoke(message.As(message.Data.Data, message.Data.Event, message.Data.Data.Symbol, SocketUpdateType.Update).WithDataTimestamp(message.Data.EventTime));
+            _orderHandler?.Invoke(
+                new DataEvent<BingXFuturesOrderUpdate>(message.Data, receiveTime, originalData)
+                    .WithUpdateType(SocketUpdateType.Update)
+                    .WithStreamId(message.Event)
+                    .WithSymbol(message.Data.Symbol)
+                    .WithDataTimestamp(message.EventTime)
+                );
+
             return CallResult.SuccessResult;
         }
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXListenKeyExpiredUpdate> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXListenKeyExpiredUpdate message)
         {
-            _listenkeyHandler?.Invoke(message.As(message.Data!, message.Data.Event, null, SocketUpdateType.Update).WithDataTimestamp(message.Data.EventTime));
+            _listenkeyHandler?.Invoke(
+                new DataEvent<BingXListenKeyExpiredUpdate>(message, receiveTime, originalData)
+                    .WithUpdateType(SocketUpdateType.Update)
+                    .WithStreamId(message.Event)
+                    .WithDataTimestamp(message.EventTime)
+                );
             return CallResult.SuccessResult;
         }
     }

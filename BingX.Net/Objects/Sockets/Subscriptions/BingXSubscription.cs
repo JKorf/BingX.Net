@@ -50,15 +50,15 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }, false);
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXUpdate<T>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXUpdate<T> message)
         {
-            if (message.Data is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
+            if (message is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
             {
                 foreach (var klineUpdate in klineUpdates.Data!)
-                    klineUpdate.Symbol = message.Data.Symbol!;
+                    klineUpdate.Symbol = message.Symbol!;
             }
 
-            _handler.Invoke(message.As(message.Data.Data!, message.Data.DataType, message.Data.Symbol, SocketUpdateType.Update));
+            _handler.Invoke(new DataEvent<T>(message.Data!, receiveTime, originalData).WithUpdateType(SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

@@ -4,6 +4,7 @@ using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
@@ -15,9 +16,9 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             MessageMatcher = MessageMatcher.Create<BingXPing>("ping", HandleMessage);
         }
 
-        public CallResult HandleMessage(SocketConnection connection, DataEvent<BingXPing> message)
+        public CallResult HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXPing message)
         {
-            connection.SendAsync(ExchangeHelpers.NextId(), new BingXPong { Pong = message.Data.Ping, Timestamp = message.Data.Timestamp }, 1);
+            connection.SendAsync(ExchangeHelpers.NextId(), new BingXPong { Pong = message.Ping, Timestamp = message.Timestamp }, 1);
             return CallResult.SuccessResult;
         }
     }
