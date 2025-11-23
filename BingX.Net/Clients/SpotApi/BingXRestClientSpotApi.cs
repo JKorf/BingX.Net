@@ -1,15 +1,17 @@
+using BingX.Net.Clients.MessageHandlers;
+using BingX.Net.Enums;
+using BingX.Net.Interfaces.Clients.SpotApi;
+using BingX.Net.Objects.Options;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using BingX.Net.Interfaces.Clients.SpotApi;
-using BingX.Net.Objects.Options;
-using System.Linq;
-using System.Globalization;
-using BingX.Net.Enums;
-using CryptoExchange.Net.Objects.Errors;
 
 namespace BingX.Net.Clients.SpotApi
 {
@@ -40,6 +42,8 @@ namespace BingX.Net.Clients.SpotApi
             Trading = new BingXRestClientSpotApiTrading(logger, this);
         }
         #endregion
+
+        protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.SpotErrors);
 
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()

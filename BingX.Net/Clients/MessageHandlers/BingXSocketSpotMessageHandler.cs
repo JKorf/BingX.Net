@@ -1,17 +1,14 @@
 ﻿using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using CryptoExchange.Net.Converters.SystemTextJson;
-using System;
-using System.Net.WebSockets;
 using System.Text.Json;
 
-namespace BingX.Net.Clients.SpotApi
+namespace BingX.Net.Clients.MessageHandlers
 {
-    internal class BingXSocketClientPerpetualFuturesApiMessageConverter : DynamicJsonConverter
+    internal class BingXSocketClientSpotApiMessageConverter : JsonSocketMessageHandler
     {
         public override JsonSerializerOptions Options { get; } = SerializerOptions.WithConverters(BingXExchange._serializerContext);
 
         protected override MessageEvaluator[] MessageEvaluators { get; } = [
-
             new MessageEvaluator {
                 Priority = 1,
                 Fields = [
@@ -20,22 +17,33 @@ namespace BingX.Net.Clients.SpotApi
                 IdentifyMessageCallback = x => x.FieldValue("dataType")
             },
 
+            // Field 'e' on the first level only means account update
             new MessageEvaluator {
                 Priority = 2,
                 ForceIfFound = true,
                 Fields = [
+                    new PropertyFieldReference("e"),
+                ],
+                StaticIdentifier = "ACCOUNT_UPDATE"
+            },
+
+            new MessageEvaluator {
+                Priority = 3,
+                ForceIfFound = true,
+                Fields = [
+                    new PropertyFieldReference("ping"),
+                ],
+                StaticIdentifier = "ping"
+            },
+
+            new MessageEvaluator {
+                Priority = 4,
+                ForceIfFound = true,
+                Fields = [
                     new PropertyFieldReference("id"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("id")
+                IdentifyMessageCallback = x => x.FieldValue("id"),
             }
         ];
-
-        public override string? GetMessageIdentifier(ReadOnlySpan<byte> data, WebSocketMessageType? webSocketMessageType)
-        {
-            if (data.Length == 4)
-                return "Ping";
-
-            return base.GetMessageIdentifier(data, webSocketMessageType);
-        }
     }
 }

@@ -1,7 +1,9 @@
-﻿using BingX.Net.Clients.SpotApi;
+﻿using BingX.Net.Clients.MessageHandlers;
+using BingX.Net.Clients.SpotApi;
 using BingX.Net.Interfaces.Clients.Apis;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Options;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.RateLimiting.Guards;
 using Microsoft.Extensions.Logging;
@@ -42,6 +44,8 @@ namespace BingX.Net.Clients.Apis
         }
 
         #endregion
+
+        protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.SpotErrors);
 
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()

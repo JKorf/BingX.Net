@@ -1,4 +1,5 @@
-﻿using BingX.Net.Enums;
+﻿using BingX.Net.Clients.MessageHandlers;
+using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Options;
@@ -65,7 +66,7 @@ namespace BingX.Net.Clients.SpotApi
 
         public IBingXSocketClientSpotApiShared SharedClient => this;
 
-        public override IMessageConverter CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketClientSpotApiMessageConverter();
+        public override ISocketMessageHandler CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketClientSpotApiMessageConverter();
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));

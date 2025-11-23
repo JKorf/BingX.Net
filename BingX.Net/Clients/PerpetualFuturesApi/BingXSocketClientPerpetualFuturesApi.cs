@@ -68,7 +68,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             => new BingXAuthenticationProvider(credentials);
 
 
-        public override IMessageConverter CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketClientPerpetualFuturesApiMessageConverter();
+        public override ISocketMessageHandler CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketPerpetualFuturesMessageHandler();
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));

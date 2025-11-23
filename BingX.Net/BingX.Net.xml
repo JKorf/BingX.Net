@@ -235,9 +235,6 @@
         <member name="M:BingX.Net.Clients.BingXRestClientApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.BingXRestClientApi.GetSymbolName(System.String,System.String)">
-            <inheritdoc />
-        </member>
         <member name="T:BingX.Net.Clients.BingXSocketClient">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.IBingXSocketClient" />
         </member>
@@ -299,6 +296,229 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.BingXUserClientProvider.GetSocketClient(System.String,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi">
+            <inheritdoc cref="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi" />
+        </member>
+        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.Account">
+            <inheritdoc />
+        </member>
+        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.ExchangeData">
+            <inheritdoc />
+        </member>
+        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.Trading">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetTimeSyncInfo">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetTimeOffset">
+            <inheritdoc />
+        </member>
+        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.SharedClient">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetBalancesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetFundingBalancesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositHistoryAsync(System.String,System.Nullable{BingX.Net.Enums.DepositStatus},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetWithdrawalHistoryAsync(System.String,System.String,System.String,System.Nullable{BingX.Net.Enums.WithdrawalStatus},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetAssetsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.WithdrawAsync(System.String,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositAddressAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferAsync(System.String,System.Decimal,BingX.Net.Enums.TransferAccountType,BingX.Net.Enums.TransferAccountType,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTransfersAsync(BingX.Net.Enums.TransferType,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferInternalAsync(System.String,BingX.Net.Enums.AccountIdentifierType,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetInternalTransfersAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.StopUserStreamAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTradingFeesAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetUserIdAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetApiKeyPermissionsAsync(System.Int64,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetSymbolsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetRecentTradesAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetAggregatedOrderBookAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetHistoricalKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetTickersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetLastTradeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetLastTradesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetBookPriceAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetTradeHistoryAsync(System.String,System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Nullable{BingX.Net.Enums.TimeInForce},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceMultipleOrdersAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelAllOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOcoOrderAsync(System.String,BingX.Net.Enums.OrderSide,System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOpenOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetClosedOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi">
+            <summary>
+            Client providing access to the BingX spot websocket Api
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.#ctor(Microsoft.Extensions.Logging.ILogger,BingX.Net.Objects.Options.BingXSocketOptions)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateSerializer">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAccessor(System.Net.WebSockets.WebSocketMessageType)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXKlineUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToPartialOrderBookUpdatesAsync(System.String,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTickerUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTickerUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXPriceUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBookPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBookTickerUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToOrderUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBalanceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(CryptoExchange.Net.Sockets.SocketConnection,System.Net.WebSockets.WebSocketMessageType,System.ReadOnlySpan{System.Byte})">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(CryptoExchange.Net.Sockets.SocketConnection,System.Net.WebSockets.WebSocketMessageType,System.ReadOnlyMemory{System.Byte})">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi">
@@ -576,229 +796,6 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.SocketConnection)">
-            <inheritdoc />
-        </member>
-        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi">
-            <inheritdoc cref="T:BingX.Net.Interfaces.Clients.SpotApi.IBingXRestClientSpotApi" />
-        </member>
-        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.Account">
-            <inheritdoc />
-        </member>
-        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.ExchangeData">
-            <inheritdoc />
-        </member>
-        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.Trading">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetTimeSyncInfo">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetTimeOffset">
-            <inheritdoc />
-        </member>
-        <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.SharedClient">
-            <inheritdoc />
-        </member>
-        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetBalancesAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetFundingBalancesAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositHistoryAsync(System.String,System.Nullable{BingX.Net.Enums.DepositStatus},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetWithdrawalHistoryAsync(System.String,System.String,System.String,System.Nullable{BingX.Net.Enums.WithdrawalStatus},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetAssetsAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.WithdrawAsync(System.String,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetDepositAddressAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferAsync(System.String,System.Decimal,BingX.Net.Enums.TransferAccountType,BingX.Net.Enums.TransferAccountType,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTransfersAsync(BingX.Net.Enums.TransferType,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.TransferInternalAsync(System.String,BingX.Net.Enums.AccountIdentifierType,System.String,System.Decimal,BingX.Net.Enums.AccountType,System.String,System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetInternalTransfersAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.StartUserStreamAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.KeepAliveUserStreamAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.StopUserStreamAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetTradingFeesAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetUserIdAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiAccount.GetApiKeyPermissionsAsync(System.Int64,System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetServerTimeAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetSymbolsAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetRecentTradesAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetOrderBookAsync(System.String,System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetAggregatedOrderBookAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetHistoricalKlinesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetTickersAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetLastTradeAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetLastTradesAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetBookPriceAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiExchangeData.GetTradeHistoryAsync(System.String,System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="T:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.OrderType,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.Nullable{BingX.Net.Enums.TimeInForce},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceMultipleOrdersAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOrdersAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Collections.Generic.IEnumerable{System.String},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelAllOrdersAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelAllOrdersAfterAsync(System.Boolean,System.Int32,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOpenOrdersAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOrdersAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetUserTradesAsync(System.String,System.Nullable{System.Int64},System.Nullable{BingX.Net.Enums.OrderStatus},System.Nullable{BingX.Net.Enums.OrderType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Int32},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.PlaceOcoOrderAsync(System.String,BingX.Net.Enums.OrderSide,System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.String,System.String,System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.CancelOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOcoOrderAsync(System.String,System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetOpenOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApiTrading.GetClosedOcoOrdersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="T:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi">
-            <summary>
-            Client providing access to the BingX spot websocket Api
-            </summary>
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.#ctor(Microsoft.Extensions.Logging.ILogger,BingX.Net.Objects.Options.BingXSocketOptions)">
-            <summary>
-            ctor
-            </summary>
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.FormatSymbol(System.String,System.String,CryptoExchange.Net.SharedApis.TradingMode,System.Nullable{System.DateTime})">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateSerializer">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.CreateAccessor(System.Net.WebSockets.WebSocketMessageType)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTradeUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTradeUpdate}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToKlineUpdatesAsync(System.String,BingX.Net.Enums.KlineInterval,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXKlineUpdate}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToPartialOrderBookUpdatesAsync(System.String,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTickerUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTickerUpdate}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXPriceUpdate}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBookPriceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBookTickerUpdate}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToOrderUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderUpdate}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToBalanceUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXBalanceUpdate}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(CryptoExchange.Net.Sockets.SocketConnection,System.Net.WebSockets.WebSocketMessageType,System.ReadOnlySpan{System.Byte})">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.PreprocessStreamMessage(CryptoExchange.Net.Sockets.SocketConnection,System.Net.WebSockets.WebSocketMessageType,System.ReadOnlyMemory{System.Byte})">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Boolean">
