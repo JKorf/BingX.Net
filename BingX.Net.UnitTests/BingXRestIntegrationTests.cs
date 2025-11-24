@@ -15,14 +15,14 @@ namespace BingX.Net.UnitTests
     [NonParallelizable]
     internal class BingXRestIntegrationTests : RestIntegrationTest<BingXRestClient>
     {
-        public override bool Run { get; set; }
+        public override bool Run { get; set; } = true;
 
         public BingXRestIntegrationTests()
         {
             BingXExchange.RateLimiter.RateLimitTriggered += (x) => Debug.WriteLine(x);
         }
 
-        public override BingXRestClient GetClient(ILoggerFactory loggerFactory)
+        public override BingXRestClient GetClient(ILoggerFactory loggerFactory, bool useNewDeserialization)
         {
             var key = Environment.GetEnvironmentVariable("APIKEY");
             var sec = Environment.GetEnvironmentVariable("APISECRET");
@@ -35,99 +35,106 @@ namespace BingX.Net.UnitTests
             }));
         }
 
-        [Test]
-        public async Task TestErrorResponseParsing()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestErrorResponseParsing(bool useNewDeserialization)
         {
             if (!ShouldRun())
                 return;
 
-            var result = await CreateClient().SpotApi.ExchangeData.GetTickersAsync("TST-TST", default);
+            var result = await CreateClient(useNewDeserialization).SpotApi.ExchangeData.GetTickersAsync("TST-TST", default);
 
             Assert.That(result.Success, Is.False);
             Assert.That(result.Error.ErrorCode, Is.EqualTo("100204"));
             Assert.That(result.Error.ErrorType, Is.EqualTo(ErrorType.UnknownSymbol));
         }
 
-        [Test]
-        public async Task TestSpotAccount()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestSpotAccount(bool useNewDeserialization)
         {
-            await RunAndCheckResult(client => client.SpotApi.Account.GetBalancesAsync(default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetWithdrawalHistoryAsync(default, default, default, default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetAssetsAsync(default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetDepositAddressAsync("ETH", default, default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetTransfersAsync(Enums.TransferType.FundingToPerpetualFutures, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetInternalTransfersAsync("ETH", default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetTradingFeesAsync("ETH-USDT", default), true);
-            await RunAndCheckResult(client => client.SpotApi.Account.GetUserIdAsync(default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetBalancesAsync(default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetWithdrawalHistoryAsync(default, default, default, default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetAssetsAsync(default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetDepositAddressAsync("ETH", default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetTransfersAsync(Enums.TransferType.FundingToPerpetualFutures, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetInternalTransfersAsync("ETH", default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetTradingFeesAsync("ETH-USDT", default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Account.GetUserIdAsync(default), true);
         }
 
-        [Test]
-        public async Task TestSpotExchangeData()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestSpotExchangeData(bool useNewDeserialization)
         {
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetServerTimeAsync(default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetSymbolsAsync(default, default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetRecentTradesAsync("ETH-USDT", default, default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetOrderBookAsync("ETH-USDT", default, default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetAggregatedOrderBookAsync("ETH-USDT", 5, 5, default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetTickersAsync(default, default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetLastTradeAsync("ETH-USDT", default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetLastTradesAsync(default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetBookPriceAsync("ETH-USDT", default), false);
-            await RunAndCheckResult(client => client.SpotApi.ExchangeData.GetTradeHistoryAsync("ETH-USDT", default, default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetServerTimeAsync(default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetSymbolsAsync(default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetRecentTradesAsync("ETH-USDT", default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetOrderBookAsync("ETH-USDT", default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetAggregatedOrderBookAsync("ETH-USDT", 5, 5, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetTickersAsync(default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetLastTradeAsync("ETH-USDT", default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetLastTradesAsync(default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetBookPriceAsync("ETH-USDT", default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.ExchangeData.GetTradeHistoryAsync("ETH-USDT", default, default, default), false);
         }
 
-        [Test]
-        public async Task TestSpotTrading()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestSpotTrading(bool useNewDeserialization)
         {
-            await RunAndCheckResult(client => client.SpotApi.Trading.GetOpenOrdersAsync(default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Trading.GetOrdersAsync(default, default, default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.SpotApi.Trading.GetUserTradesAsync("ETH-USDT", default, default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Trading.GetOpenOrdersAsync(default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Trading.GetOrdersAsync(default, default, default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.SpotApi.Trading.GetUserTradesAsync("ETH-USDT", default, default, default, default, default, default, default, default), true);
         }
 
-        [Test]
-        public async Task TestPerpetualFuturesAccount()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestPerpetualFuturesAccount(bool useNewDeserialization)
         {
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetIncomesAsync(default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetMarginModeAsync("ETH-USDT", default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetLeverageAsync("ETH-USDT", default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Account.GetPositionModeAsync(default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Account.GetBalancesAsync(default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Account.GetIncomesAsync(default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Account.GetMarginModeAsync("ETH-USDT", default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Account.GetLeverageAsync("ETH-USDT", default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Account.GetPositionModeAsync(default), true);
         }
 
-        [Test]
-        public async Task TestPerpetualFuturesExchangeData()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestPerpetualFuturesExchangeData(bool useNewDeserialization)
         {
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetServerTimeAsync(default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetContractsAsync(default, default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetOrderBookAsync("ETH-USDT", default, default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetRecentTradesAsync("ETH-USDT", default, default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetTradeHistoryAsync("ETH-USDT", default, default, default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateAsync("ETH-USDT", default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetFundingRatesAsync(default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateHistoryAsync("ETH-USDT", default, default, default, default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetMarkPriceKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetOpenInterestAsync("ETH-USDT", default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetTickerAsync("ETH-USDT", default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetTickersAsync(default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetBookTickerAsync("ETH-USDT", default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePriceAsync("ETH-USDT", default), false);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePricesAsync(default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetServerTimeAsync(default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetContractsAsync(default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetOrderBookAsync("ETH-USDT", default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetRecentTradesAsync("ETH-USDT", default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetTradeHistoryAsync("ETH-USDT", default, default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateAsync("ETH-USDT", default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetFundingRatesAsync(default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateHistoryAsync("ETH-USDT", default, default, default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetMarkPriceKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetOpenInterestAsync("ETH-USDT", default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetTickerAsync("ETH-USDT", default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetTickersAsync(default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetBookTickerAsync("ETH-USDT", default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePriceAsync("ETH-USDT", default), false);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePricesAsync(default), false);
         }
 
-        [Test]
-        public async Task TestPerpetualFuturesTrading()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestPerpetualFuturesTrading(bool useNewDeserialization)
         {
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionsAsync(default, default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetOpenOrdersAsync(default, default, default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetClosedOrdersAsync(default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetLiquidationOrdersAsync(default, default, default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default, default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("ETH-USDT", default), true);
-            await RunAndCheckResult(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetPositionsAsync(default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetOpenOrdersAsync(default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetClosedOrdersAsync(default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetLiquidationOrdersAsync(default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("ETH-USDT", default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, default, default, default, default, default), true);
         }
 
         [Test]

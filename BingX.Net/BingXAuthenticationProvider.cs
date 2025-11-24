@@ -20,13 +20,14 @@ namespace BingX.Net
 
         public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
         {
+            request.Headers ??= new Dictionary<string, string>();
             request.Headers.Add("X-BX-APIKEY", ApiKey);
 
             if (!request.Authenticated)
                 return;
 
             var timestamp = GetMillisecondTimestampLong(apiClient);
-            var parameters = request.GetPositionParameters();
+            var parameters = request.GetPositionParameters() ?? new Dictionary<string, object>();
             parameters.Add("timestamp", timestamp);
             if (!parameters.ContainsKey("recvWindow"))
             {

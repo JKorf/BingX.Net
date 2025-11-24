@@ -103,6 +103,6 @@ namespace Binance.Net.Benchmark.Controllers
     public record SubscribeMessage
     {
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
     }
 }

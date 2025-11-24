@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace BingX.Net.Clients.MessageHandlers
             _errorMapping = errorMapping;
         }
 
-        public override async Task<Error?> CheckForErrorResponse(RequestDefinition request, object state, KeyValuePair<string, string[]>[] responseHeaders, Stream responseStream)
+        public override async ValueTask<Error?> CheckForErrorResponse(RequestDefinition request, object? state, HttpResponseHeaders responseHeaders, Stream responseStream)
         {
             var (error, document) = await GetJsonDocument(responseStream, state).ConfigureAwait(false);
             if (error != null)
@@ -38,8 +39,11 @@ namespace BingX.Net.Clients.MessageHandlers
             return new ServerError(code.ToString()!, _errorMapping.GetErrorInfo(code.ToString()!, msg));
         }
 
-        public override async Task<Error> ParseErrorResponse(int httpStatusCode, object state, KeyValuePair<string, string[]>[] responseHeaders, Stream responseStream)
+        public override async ValueTask<Error> ParseErrorResponse(int httpStatusCode, object? state, HttpResponseHeaders responseHeaders, Stream responseStream)
         {
+            if (httpStatusCode == 401 || httpStatusCode == 403)
+                return new ServerError(new ErrorInfo(ErrorType.Unauthorized, "Unauthorized"));
+
             using var streamReader = new StreamReader(responseStream);
             return new ServerError(ErrorInfo.Unknown with { Message = await streamReader.ReadToEndAsync().ConfigureAwait(false) });
         }
