@@ -15,12 +15,14 @@ namespace BingX.Net.UnitTests
     [TestFixture]
     public class RestRequestTests
     {
-        [Test]
-        public async Task ValidateSpotAccountCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateSpotAccountCalls(bool newDeserialization)
         {
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
+                opts.UseUpdatedDeserialization = newDeserialization;
                 opts.ApiCredentials = new ApiCredentials("123", "456");
                 opts.OutputOriginalData = true;
             });
@@ -43,12 +45,14 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.SpotApi.Account.GetApiKeyPermissionsAsync(123), "GetApiKeyPermissions", "data.apiInfos", ignoreProperties: new List<string> { "permissions" });
         }
 
-        [Test]
-        public async Task ValidateSpotExchangeDataCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateSpotExchangeDataCalls(bool newDeserialization)
         {
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
+                opts.UseUpdatedDeserialization = newDeserialization;
                 opts.ApiCredentials = new ApiCredentials("123", "456");
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/Spot/ExchangeData", "https://open-api.bingx.com", IsAuthenticated, "data");
@@ -62,11 +66,13 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.SpotApi.ExchangeData.GetTradeHistoryAsync("ETHUSDT"), "GetTradeHistory");
         }
 
-        [Test]
-        public async Task ValidateSpotTradingCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateSpotTradingCalls(bool newDeserialization)
         {
             var client = new BingXRestClient(opts =>
             {
+                opts.UseUpdatedDeserialization = newDeserialization;
                 opts.AutoTimestamp = false;
                 opts.ApiCredentials = new ApiCredentials("123", "456");
             });
@@ -87,11 +93,13 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.SpotApi.Trading.GetOpenOcoOrdersAsync(123, 123), "GetOpenOcoOrders", nestedJsonProperty: "data");
         }
 
-        [Test]
-        public async Task ValidatePerpetualFuturesAccountCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidatePerpetualFuturesAccountCalls(bool newDeserialization)
         {
             var client = new BingXRestClient(opts =>
             {
+                opts.UseUpdatedDeserialization = newDeserialization;
                 opts.AutoTimestamp = false;
                 opts.ApiCredentials = new ApiCredentials("123", "456");
             });
@@ -117,11 +125,13 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.ApplyForVSTAssetsAsync(), "ApplyForVSTAssets", nestedJsonProperty: "data");
         }
 
-        [Test]
-        public async Task ValidatePerpetualFuturesExchangeDataCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidatePerpetualFuturesExchangeDataCalls(bool newDeserialization)
         {
             var client = new BingXRestClient(opts =>
             {
+                opts.UseUpdatedDeserialization = newDeserialization;
                 opts.AutoTimestamp = false;
                 opts.ApiCredentials = new ApiCredentials("123", "456");
             });
@@ -140,11 +150,13 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePriceAsync("ETHUSDT"), "GetLastTradePrice", nestedJsonProperty: "data");
         }
 
-        [Test]
-        public async Task ValidatePerpetualFuturesTradingCalls()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidatePerpetualFuturesTradingCalls(bool newDeserialization)
         {
             var client = new BingXRestClient(opts =>
             {
+                opts.UseUpdatedDeserialization = newDeserialization;
                 opts.AutoTimestamp = false;
                 opts.ApiCredentials = new ApiCredentials("123", "456");
             });
