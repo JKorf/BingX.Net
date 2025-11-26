@@ -175,7 +175,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddOptional("clientOrderId", clientOrderId);
             parameter.AddOptional("priceRate", priceRate);
             parameter.AddOptionalEnum("timeInForce", timeInForce);
-            parameter.AddOptional("closePosition", closePosition);
+            parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
             parameter.AddOptional("activationPrice", triggerPrice);
             parameter.AddOptional("stopGuaranteed", stopGuaranteed);
             parameter.AddOptionalEnum("workingType", workingType);
