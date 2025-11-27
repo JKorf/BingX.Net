@@ -77,7 +77,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@trade";
-            var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -88,7 +88,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXKlineUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + KlineIntervalToWebsocketString(interval);
-            var subscription = new BingXSubscription<BingXKlineUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXKlineUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -101,7 +101,7 @@ namespace BingX.Net.Clients.SpotApi
             depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);
 
             var stream = symbol + "@depth" + depth;
-            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(symbol)
                 .WithDataTimestamp(x.Data.Timestamp)), false);
@@ -112,7 +112,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
-            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -123,7 +123,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@lastPrice";
-            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -134,7 +134,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@bookTicker";
-            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -147,7 +147,7 @@ namespace BingX.Net.Clients.SpotApi
             listenKey.ValidateNotNull(nameof(listenKey));
 
             var stream = "spot.executionReport";
-            var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, this, stream, stream, x => onMessage(x
+            var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, this, stream, x => onMessage(x
                 .WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);

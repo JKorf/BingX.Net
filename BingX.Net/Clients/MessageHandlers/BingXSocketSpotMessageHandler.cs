@@ -8,13 +8,13 @@ namespace BingX.Net.Clients.MessageHandlers
     {
         public override JsonSerializerOptions Options { get; } = SerializerOptions.WithConverters(BingXExchange._serializerContext);
 
-        protected override MessageEvaluator[] MessageEvaluators { get; } = [
+        protected override MessageEvaluator[] TypeEvaluators { get; } = [
             new MessageEvaluator {
                 Priority = 1,
                 Fields = [
                     new PropertyFieldReference("dataType"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("dataType")
+                IdentifyMessageCallback = x => x.FieldValue("dataType")!
             },
 
             // Field 'e' on the first level only means account update
@@ -42,7 +42,7 @@ namespace BingX.Net.Clients.MessageHandlers
                 Fields = [
                     new PropertyFieldReference("id"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("id"),
+                IdentifyMessageCallback = x => x.FieldValue("id")!,
             }
         ];
     }

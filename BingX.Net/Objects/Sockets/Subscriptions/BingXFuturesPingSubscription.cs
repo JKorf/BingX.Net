@@ -14,11 +14,12 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public BingXFuturesPingSubscription(ILogger logger) : base(logger, false)
         {
             MessageMatcher = MessageMatcher.Create<string>("Ping", DoHandleMessage);
+            MessageRouter = MessageRouter.Create<string>("Ping", DoHandleMessage);
         }
 
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, string message)
         {
-            connection.SendAsync(ExchangeHelpers.NextId(), "Pong", 1);
+            _ = connection.SendAsync(ExchangeHelpers.NextId(), "Pong", 1);
             return CallResult.SuccessResult;
         }
     }

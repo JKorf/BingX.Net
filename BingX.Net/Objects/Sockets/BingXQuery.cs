@@ -15,6 +15,7 @@ namespace BingX.Net.Objects.Sockets
         {
             _client = client;
             MessageMatcher = MessageMatcher.Create<BingXSocketResponse>(request.Id, HandleMessage);
+            MessageRouter = MessageRouter.Create<BingXSocketResponse>(request.Id, HandleMessage);
         }
 
         public CallResult<BingXSocketResponse> HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXSocketResponse message)

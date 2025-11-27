@@ -37,6 +37,15 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _accountHandler = accountHandler;
             _listenkeyHandler = listenkeyHandler;
 
+            MessageRouter = MessageRouter.Create([
+                new MessageRoute<BingXListenKeyExpiredUpdate>("listenKeyExpired", (string?)null, DoHandleMessage),
+                new MessageRoute<BingXConfigUpdate>("ACCOUNT_CONFIG_UPDATE",(string?)null, DoHandleMessage),
+                new MessageRoute<BingXFuturesAccountUpdate>("ACCOUNT_UPDATE",(string?)null, DoHandleMessage),
+                new MessageRoute<BingXFuturesOrderUpdateWrapper>("ORDER_TRADE_UPDATE", (string?)null,DoHandleMessage),
+                new MessageRoute<BingXConfigUpdate>("SNAPSHOTAC",(string?)null, DoHandleMessage),
+                new MessageRoute<BingXFuturesAccountUpdate>("SNAPSHOTA", (string?)null, DoHandleMessage),
+                ]);
+
             MessageMatcher = MessageMatcher.Create([
                 new MessageHandlerLink<BingXListenKeyExpiredUpdate>("listenKeyExpired", DoHandleMessage),
                 new MessageHandlerLink<BingXConfigUpdate>("ACCOUNT_CONFIG_UPDATE", DoHandleMessage),

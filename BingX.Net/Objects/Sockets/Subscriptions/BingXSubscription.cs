@@ -22,13 +22,14 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <summary>
         /// ctor
         /// </summary>
-        public BingXSubscription(ILogger logger, SocketApiClient client, string dataType, string listenId, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
+        public BingXSubscription(ILogger logger, SocketApiClient client, string listenId, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
         {
             _client = client;
             _handler = handler;
-            _topic = dataType;
+            _topic = listenId;
 
             MessageMatcher = MessageMatcher.Create<BingXUpdate<T>>(listenId, DoHandleMessage);
+            MessageRouter = MessageRouter.Create<BingXUpdate<T>>(listenId, DoHandleMessage);
         }
 
         /// <inheritdoc />

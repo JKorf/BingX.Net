@@ -33,6 +33,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync<BingXTickerUpdate>((client, handler) => client.SpotApi.SubscribeToTickerUpdatesAsync("BTC-USDT", handler), "Ticker", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXPriceUpdate>((client, handler) => client.SpotApi.SubscribeToPriceUpdatesAsync("BTC-USDT", handler), "Price", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXBookTickerUpdate>((client, handler) => client.SpotApi.SubscribeToBookPriceUpdatesAsync("BTC-USDT", handler), "BookPrice", nestedJsonProperty: "data");
+            await tester.ValidateAsync<BingXKlineUpdate>((client, handler) => client.SpotApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.EightHours, handler), "Kline", nestedJsonProperty: "data", ignoreProperties: ["i", "s"]);
             await tester.ValidateAsync<BingXOrderUpdate>((client, handler) => client.SpotApi.SubscribeToOrderUpdatesAsync("123", handler), "Order", ignoreProperties: new List<string> { "m" }, nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXBalanceUpdate>((client, handler) => client.SpotApi.SubscribeToBalanceUpdatesAsync("123", handler), "Balance");
         }
@@ -57,6 +58,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync<BingXPriceUpdate>((client, handler) => client.PerpetualFuturesApi.SubscribeToPriceUpdatesAsync("ETH-USDT", handler), "Price", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXMarkPriceUpdate>((client, handler) => client.PerpetualFuturesApi.SubscribeToMarkPriceUpdatesAsync("ETH-USDT", handler), "MarkPrice", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXBookTickerUpdate>((client, handler) => client.PerpetualFuturesApi.SubscribeToBookPriceUpdatesAsync("ETH-USDT", handler), "BookPrice", nestedJsonProperty: "data");
+            
         }
     }
 }
