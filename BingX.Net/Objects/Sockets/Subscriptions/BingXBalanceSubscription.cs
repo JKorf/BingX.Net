@@ -28,7 +28,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _topic = "ACCOUNT_UPDATE";
 
             MessageMatcher = MessageMatcher.Create<BingXBalanceUpdate>(_topic, DoHandleMessage);
-            MessageRouter = MessageRouter.Create<BingXBalanceUpdate>(_topic, DoHandleMessage);
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXBalanceUpdate>(_topic, DoHandleMessage);
         }
 
         /// <inheritdoc />

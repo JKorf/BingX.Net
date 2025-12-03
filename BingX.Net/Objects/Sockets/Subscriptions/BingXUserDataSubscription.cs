@@ -38,12 +38,12 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _listenkeyHandler = listenkeyHandler;
 
             MessageRouter = MessageRouter.Create([
-                new MessageRoute<BingXListenKeyExpiredUpdate>("listenKeyExpired", (string?)null, DoHandleMessage),
-                new MessageRoute<BingXConfigUpdate>("ACCOUNT_CONFIG_UPDATE",(string?)null, DoHandleMessage),
-                new MessageRoute<BingXFuturesAccountUpdate>("ACCOUNT_UPDATE",(string?)null, DoHandleMessage),
-                new MessageRoute<BingXFuturesOrderUpdateWrapper>("ORDER_TRADE_UPDATE", (string?)null,DoHandleMessage),
-                new MessageRoute<BingXConfigUpdate>("SNAPSHOTAC",(string?)null, DoHandleMessage),
-                new MessageRoute<BingXFuturesAccountUpdate>("SNAPSHOTA", (string?)null, DoHandleMessage),
+                MessageRoute<BingXListenKeyExpiredUpdate>.CreateWithoutTopicFilter("listenKeyExpired", DoHandleMessage),
+                MessageRoute<BingXConfigUpdate>.CreateWithoutTopicFilter("ACCOUNT_CONFIG_UPDATE", DoHandleMessage),
+                MessageRoute<BingXFuturesAccountUpdate>.CreateWithoutTopicFilter("ACCOUNT_UPDATE", DoHandleMessage),
+                MessageRoute<BingXFuturesOrderUpdateWrapper>.CreateWithoutTopicFilter("ORDER_TRADE_UPDATE", DoHandleMessage),
+                MessageRoute<BingXConfigUpdate>.CreateWithoutTopicFilter("SNAPSHOTAC", DoHandleMessage),
+                MessageRoute<BingXFuturesAccountUpdate>.CreateWithoutTopicFilter("SNAPSHOTA", DoHandleMessage),
                 ]);
 
             MessageMatcher = MessageMatcher.Create([
