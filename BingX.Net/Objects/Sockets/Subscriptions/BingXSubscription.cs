@@ -13,7 +13,7 @@ using CryptoExchange.Net.Clients;
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class BingXSubscription<T> : Subscription<BingXSocketResponse, BingXSocketResponse>
+    internal class BingXSubscription<T> : Subscription
     {
         private readonly SocketApiClient _client;
         private readonly string _topic;

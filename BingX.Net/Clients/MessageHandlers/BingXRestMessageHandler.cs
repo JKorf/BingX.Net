@@ -37,7 +37,7 @@ namespace BingX.Net.Clients.MessageHandlers
             return new ServerError(bingXResult.Code.ToString()!, _errorMapping.GetErrorInfo(bingXResult.Code.ToString()!, bingXResult.Message));
         }
 
-        public override async ValueTask<Error> ParseErrorResponse(int httpStatusCode, object? state, HttpResponseHeaders responseHeaders, Stream responseStream)
+        public override async ValueTask<Error> ParseErrorResponse(int httpStatusCode, HttpResponseHeaders responseHeaders, Stream responseStream)
         {
             if (httpStatusCode == 401 || httpStatusCode == 403)
                 return new ServerError(new ErrorInfo(ErrorType.Unauthorized, "Unauthorized"));

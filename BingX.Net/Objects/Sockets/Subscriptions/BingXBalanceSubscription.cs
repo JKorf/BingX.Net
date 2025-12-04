@@ -12,7 +12,7 @@ using CryptoExchange.Net.Clients;
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class BingXBalanceSubscription : Subscription<BingXSocketResponse, BingXSocketResponse>
+    internal class BingXBalanceSubscription : Subscription
     {
         private readonly string _topic;
         private readonly Action<DataEvent<BingXBalanceUpdate>> _handler;
