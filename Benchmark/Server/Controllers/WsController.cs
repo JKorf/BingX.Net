@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Binance.Net.Benchmark.Controllers
+namespace BingX.Net.Benchmark.Controllers
 {
     [ApiController]
     [Route("market")]

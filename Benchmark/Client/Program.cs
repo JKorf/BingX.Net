@@ -8,7 +8,7 @@ using CryptoExchange.Net.Objects;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Binance.Net.Benchmark.Client
+namespace BingX.Net.Benchmark.Client
 {
     [MemoryDiagnoser]
     //[ThreadingDiagnoser]
