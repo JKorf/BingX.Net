@@ -10,27 +10,24 @@ namespace BingX.Net.Clients.SpotApi
     {
         public override JsonSerializerOptions Options { get; } = SerializerOptions.WithConverters(BingXExchange._serializerContext);
 
-        protected override MessageEvaluator[] TypeEvaluators { get; } = [
+        protected override MessageTypeDefinition[] TypeEvaluators { get; } = [
 
-            new MessageEvaluator {
-                Priority = 1,
+            new MessageTypeDefinition {
                 Fields = [
                     new PropertyFieldReference("dataType"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("dataType")!
+                TypeIdentifierCallback = x => x.FieldValue("dataType")!
             },
 
             // Account updates have e on first level
-            new MessageEvaluator {
-                Priority = 2,
+            new MessageTypeDefinition {
                 Fields = [
                     new PropertyFieldReference("e"),
                     new PropertyFieldReference("ac"),
                 ],
                 StaticIdentifier = "SNAPSHOTAC"
             },
-            new MessageEvaluator {
-                Priority = 3,
+            new MessageTypeDefinition {
                 Fields = [
                     new PropertyFieldReference("e"),
                     new PropertyFieldReference("a"),
@@ -38,13 +35,12 @@ namespace BingX.Net.Clients.SpotApi
                 StaticIdentifier = "SNAPSHOTA"
             },
 
-            new MessageEvaluator {
-                Priority = 4,
+            new MessageTypeDefinition {
                 ForceIfFound = true,
                 Fields = [
                     new PropertyFieldReference("id"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("id")!
+                TypeIdentifierCallback = x => x.FieldValue("id")!
             }
         ];
 

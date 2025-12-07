@@ -8,18 +8,16 @@ namespace BingX.Net.Clients.MessageHandlers
     {
         public override JsonSerializerOptions Options { get; } = SerializerOptions.WithConverters(BingXExchange._serializerContext);
 
-        protected override MessageEvaluator[] TypeEvaluators { get; } = [
-            new MessageEvaluator {
-                Priority = 1,
+        protected override MessageTypeDefinition[] TypeEvaluators { get; } = [
+            new MessageTypeDefinition {
                 Fields = [
                     new PropertyFieldReference("dataType"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("dataType")!
+                TypeIdentifierCallback = x => x.FieldValue("dataType")!
             },
 
             // Field 'e' on the first level only means account update
-            new MessageEvaluator {
-                Priority = 2,
+            new MessageTypeDefinition {
                 ForceIfFound = true,
                 Fields = [
                     new PropertyFieldReference("e"),
@@ -27,8 +25,7 @@ namespace BingX.Net.Clients.MessageHandlers
                 StaticIdentifier = "ACCOUNT_UPDATE"
             },
 
-            new MessageEvaluator {
-                Priority = 3,
+            new MessageTypeDefinition {
                 ForceIfFound = true,
                 Fields = [
                     new PropertyFieldReference("ping"),
@@ -36,13 +33,12 @@ namespace BingX.Net.Clients.MessageHandlers
                 StaticIdentifier = "ping"
             },
 
-            new MessageEvaluator {
-                Priority = 4,
+            new MessageTypeDefinition {
                 ForceIfFound = true,
                 Fields = [
                     new PropertyFieldReference("id"),
                 ],
-                IdentifyMessageCallback = x => x.FieldValue("id")!,
+                TypeIdentifierCallback = x => x.FieldValue("id")!,
             }
         ];
     }
