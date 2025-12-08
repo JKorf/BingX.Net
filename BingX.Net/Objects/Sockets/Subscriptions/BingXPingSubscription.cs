@@ -1,11 +1,10 @@
 ﻿using BingX.Net.Objects.Internal;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
+using CryptoExchange.Net.Sockets.Default;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {

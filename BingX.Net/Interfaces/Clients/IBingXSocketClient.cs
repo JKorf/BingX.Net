@@ -1,8 +1,8 @@
 ﻿using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Interfaces;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using CryptoExchange.Net.Objects.Options;
+using CryptoExchange.Net.Interfaces.Clients;
 
 namespace BingX.Net.Interfaces.Clients
 {

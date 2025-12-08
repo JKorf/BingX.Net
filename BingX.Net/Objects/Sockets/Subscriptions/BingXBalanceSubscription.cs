@@ -4,10 +4,9 @@ using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using CryptoExchange.Net.Interfaces;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {

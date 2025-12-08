@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System;
-using System.Drawing;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {

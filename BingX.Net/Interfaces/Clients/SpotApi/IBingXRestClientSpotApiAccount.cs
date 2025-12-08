@@ -2,7 +2,6 @@ using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
 using CryptoExchange.Net.Objects;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 

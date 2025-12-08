@@ -1,12 +1,10 @@
 ﻿using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
 using CryptoExchange.Net.Authentication;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Net.Http;
 
 namespace BingX.Net.Clients

@@ -4,7 +4,6 @@ using BingX.Net.Objects.Sockets;
 using CryptoExchange.Net.Objects;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Converters

@@ -8,9 +8,7 @@ using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.RateLimiting.Guards;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,6 +43,7 @@ namespace BingX.Net.Clients.Apis
 
         #endregion
 
+        /// <inheritdoc />
         protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.SpotErrors);
 
         /// <inheritdoc />

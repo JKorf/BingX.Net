@@ -1,5 +1,4 @@
 using BingX.Net.Clients.MessageHandlers;
-using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Options;
 using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
@@ -7,10 +6,7 @@ using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Globalization;
-using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BingX.Net.Clients.SpotApi

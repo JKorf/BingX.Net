@@ -10,9 +10,7 @@ using System.Net.Http;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Linq;
-using System.Data.Common;
 using CryptoExchange.Net.RateLimiting.Guards;
-using System.Security.Cryptography;
 using CryptoExchange.Net;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi

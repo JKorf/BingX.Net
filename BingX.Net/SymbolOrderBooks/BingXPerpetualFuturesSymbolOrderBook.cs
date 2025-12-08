@@ -11,8 +11,6 @@ using BingX.Net.Clients;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Models;
-using System.Linq;
-using CryptoExchange.Net.Interfaces;
 
 namespace BingX.Net.SymbolOrderBooks
 {

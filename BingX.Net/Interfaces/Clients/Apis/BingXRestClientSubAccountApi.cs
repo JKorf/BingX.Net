@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using CryptoExchange.Net.Objects;
 using BingX.Net.Objects.Models;
-using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Interfaces.Clients;
 
 namespace BingX.Net.Interfaces.Clients.Apis
 {

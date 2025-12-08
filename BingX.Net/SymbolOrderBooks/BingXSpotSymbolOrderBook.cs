@@ -10,8 +10,6 @@ using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Converters.SystemTextJson;
-using System.Linq;
-using CryptoExchange.Net.Interfaces;
 
 namespace BingX.Net.SymbolOrderBooks
 {

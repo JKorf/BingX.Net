@@ -1,5 +1,6 @@
 ﻿using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Converters.SystemTextJson.MessageHandlers;
 using System.Text.Json;
 
 namespace BingX.Net.Clients.MessageHandlers

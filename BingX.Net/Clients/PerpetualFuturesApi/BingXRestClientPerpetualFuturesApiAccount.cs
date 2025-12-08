@@ -5,7 +5,6 @@ using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.RateLimiting.Guards;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
