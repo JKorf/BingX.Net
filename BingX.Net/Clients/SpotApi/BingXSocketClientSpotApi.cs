@@ -32,6 +32,8 @@ namespace BingX.Net.Clients.SpotApi
     /// </summary>
     internal partial class BingXSocketClientSpotApi : SocketApiClient, IBingXSocketClientSpotApi
     {
+        // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
+
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
         private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");

@@ -134,7 +134,7 @@ namespace BingX.Net.UnitTests
             await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetLiquidationOrdersAsync(default, default, default, default, default, default, default), true);
             await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default, default), true);
             await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("ETH-USDT", default), true);
-            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, default, default, default, default, default), true);
+            await RunAndCheckResult(useNewDeserialization, client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, DateTime.UtcNow, DateTime.UtcNow, default, default, default), true);
         }
 
         [Test]
