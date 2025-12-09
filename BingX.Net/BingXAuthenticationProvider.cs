@@ -12,6 +12,7 @@ namespace BingX.Net
 {
     internal class BingXAuthenticationProvider : AuthenticationProvider
     {
+        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.Hmac];
         public BingXAuthenticationProvider(ApiCredentials credentials) : base(credentials)
         {
         }
