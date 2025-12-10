@@ -232,9 +232,6 @@
         <member name="M:BingX.Net.Clients.BingXRestClientApi.CreateAuthenticationProvider(CryptoExchange.Net.Authentication.ApiCredentials)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.BingXRestClientApi.TryParseError(CryptoExchange.Net.Objects.RequestDefinition,System.Net.Http.Headers.HttpResponseHeaders,CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
         <member name="M:BingX.Net.Clients.BingXRestClientApi.WriteParamBody(CryptoExchange.Net.Interfaces.IRequest,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
             <inheritdoc />
         </member>
