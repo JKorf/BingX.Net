@@ -64,7 +64,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXConfigUpdate message)
         {
             _configHandler?.Invoke(
-                new DataEvent<BingXConfigUpdate>(message, receiveTime, originalData)
+                new DataEvent<BingXConfigUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
                     .WithStreamId(message.Event)
                     .WithDataTimestamp(message.EventTime)
                     .WithSymbol(message.Configuration.Symbol)
@@ -77,7 +77,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXFuturesAccountUpdate message)
         {
             _accountHandler?.Invoke(
-                new DataEvent<BingXFuturesAccountUpdate>(message, receiveTime, originalData)
+                new DataEvent<BingXFuturesAccountUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
                     .WithStreamId(message.Event)
                     .WithDataTimestamp(message.EventTime)
                     .WithUpdateType(message.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
@@ -89,7 +89,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXFuturesOrderUpdateWrapper message)
         {
             _orderHandler?.Invoke(
-                new DataEvent<BingXFuturesOrderUpdate>(message.Data, receiveTime, originalData)
+                new DataEvent<BingXFuturesOrderUpdate>(BingXExchange.ExchangeName, message.Data, receiveTime, originalData)
                     .WithUpdateType(SocketUpdateType.Update)
                     .WithStreamId(message.Event)
                     .WithSymbol(message.Data.Symbol)
@@ -103,7 +103,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXListenKeyExpiredUpdate message)
         {
             _listenkeyHandler?.Invoke(
-                new DataEvent<BingXListenKeyExpiredUpdate>(message, receiveTime, originalData)
+                new DataEvent<BingXListenKeyExpiredUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
                     .WithUpdateType(SocketUpdateType.Update)
                     .WithStreamId(message.Event)
                     .WithDataTimestamp(message.EventTime)

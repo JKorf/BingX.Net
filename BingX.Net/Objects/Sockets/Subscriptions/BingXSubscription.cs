@@ -58,7 +58,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                     klineUpdate.Symbol = message.Symbol!;
             }
 
-            _handler.Invoke(new DataEvent<T>(message.Data!, receiveTime, originalData).WithUpdateType(SocketUpdateType.Update));
+            _handler.Invoke(new DataEvent<T>(BingXExchange.ExchangeName, message.Data!, receiveTime, originalData).WithUpdateType(SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }
