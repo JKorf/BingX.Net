@@ -97,6 +97,7 @@ namespace BingX.Net.UnitTests
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/PerpetualFutures/Account", "https://open-api.bingx.com", IsAuthenticated, "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(), "GetBalances", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(), "GetBalances2", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetIncomesAsync(), "GetIncomes");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(), "GetTradingFees", "data.commission");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.StartUserStreamAsync(), "StartUserStream", "listenKey");

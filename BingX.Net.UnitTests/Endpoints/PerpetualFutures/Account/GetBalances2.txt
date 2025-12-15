@@ -1,0 +1,33 @@
+GET
+/openApi/swap/v3/user/balance
+true
+{
+    "code": 0,
+    "msg": "",
+    "data": [
+        {
+            "userId": "123",
+            "asset": "USDT",
+            "balance": "300.0000",
+            "equity": "300.0000",
+            "unrealizedProfit": "0.0000",
+            "realisedProfit": "0",
+            "availableMargin": "300.0000",
+            "usedMargin": "0.0000",
+            "freezedMargin": "0.0000",
+            "shortUid": "123"
+        },
+        {
+            "userId": "",
+            "asset": "USDC",
+            "balance": "",
+            "equity": "",
+            "unrealizedProfit": "",
+            "realisedProfit": "0",
+            "availableMargin": "",
+            "usedMargin": "",
+            "freezedMargin": "",
+            "shortUid": "123"
+        }
+    ]
+}
