@@ -1,0 +1,14 @@
+POST
+/openApi/swap/v1/trade/amend
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "orderId": 1989246372640981000,
+    "clientOrderId": "",
+    "symbol": "BTC-USDT",
+    "quantity": 0.00009
+  },
+  "timestamp": 0
+}

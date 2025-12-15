@@ -671,6 +671,9 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.EditOrderAsync(System.Nullable{System.Int64},System.String,System.String,System.Decimal,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -1164,6 +1167,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXDepositAddresses">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXResultBingXEditResult">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -2079,6 +2087,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXDepositAddressesArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXEditResult">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -4484,6 +4497,17 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.EditOrderAsync(System.Nullable{System.Int64},System.String,System.String,System.Decimal,System.Threading.CancellationToken)">
+            <summary>
+            Edit an existing open order
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Modify%20Order" /></para>
+            </summary>
+            <param name="orderId">Order id, either this or clientOrderId should be provided</param>
+            <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
+            <param name="symbol">Symbol name</param>
+            <param name="quantity">New quantity</param>
+            <param name="ct">Cancellation token</param>
+        </member>
         <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.GetOrderAsync(System.String,System.Nullable{System.Int64},System.String,System.Threading.CancellationToken)">
             <summary>
             Get an order
@@ -6237,6 +6261,31 @@
         <member name="P:BingX.Net.Objects.Models.BingXDepositAddress.WalletType">
             <summary>
             Wallet type
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXEditResult">
+            <summary>
+            Edit result
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXEditResult.OrderId">
+            <summary>
+            Order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXEditResult.ClientOrderId">
+            <summary>
+            Client order id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXEditResult.Symbol">
+            <summary>
+            Symbol name
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXEditResult.Quantity">
+            <summary>
+            Quantity
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXFundingRate">

@@ -159,6 +159,22 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
             CancellationToken ct = default);
 
         /// <summary>
+        /// Edit an existing open order
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Modify%20Order" /></para>
+        /// </summary>
+        /// <param name="orderId">Order id, either this or clientOrderId should be provided</param>
+        /// <param name="clientOrderId">Client order id, either this or orderId should be provided</param>
+        /// <param name="symbol">Symbol name</param>
+        /// <param name="quantity">New quantity</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXEditResult>> EditOrderAsync(
+            long? orderId,
+            string? clientOrderId,
+            string symbol,
+            decimal quantity,
+            CancellationToken ct = default);
+
+        /// <summary>
         /// Get an order
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20pending%20order%20status" /></para>
         /// </summary>
