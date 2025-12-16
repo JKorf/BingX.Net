@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using BingX.Net.Objects.Options;
 using CryptoExchange.Net;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Converters.SystemTextJson;
 using System.Linq;
 using System.Globalization;
 
@@ -14,19 +12,21 @@ namespace BingX.Net
 {
     internal class BingXAuthenticationProvider : AuthenticationProvider
     {
+        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.Hmac];
         public BingXAuthenticationProvider(ApiCredentials credentials) : base(credentials)
         {
         }
 
         public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
         {
+            request.Headers ??= new Dictionary<string, string>();
             request.Headers.Add("X-BX-APIKEY", ApiKey);
 
             if (!request.Authenticated)
                 return;
 
             var timestamp = GetMillisecondTimestampLong(apiClient);
-            var parameters = request.GetPositionParameters();
+            var parameters = request.GetPositionParameters() ?? new Dictionary<string, object>();
             parameters.Add("timestamp", timestamp);
             if (!parameters.ContainsKey("recvWindow"))
             {

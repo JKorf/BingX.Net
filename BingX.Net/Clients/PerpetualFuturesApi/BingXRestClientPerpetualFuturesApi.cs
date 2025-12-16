@@ -1,12 +1,14 @@
-﻿using CryptoExchange.Net.Objects;
+﻿using BingX.Net.Clients.MessageHandlers;
+using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
+using BingX.Net.Interfaces.Clients.SpotApi;
+using BingX.Net.Objects.Options;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BingX.Net.Objects.Options;
-using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
-using BingX.Net.Interfaces.Clients.SpotApi;
-using CryptoExchange.Net.Objects.Errors;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -42,6 +44,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         public IBingXRestClientPerpetualFuturesApiShared SharedClient => this;
+
+        protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.FuturesErrors);
 
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()

@@ -10,9 +10,7 @@ using System.Net.Http;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Linq;
-using System.Data.Common;
 using CryptoExchange.Net.RateLimiting.Guards;
-using System.Security.Cryptography;
 using CryptoExchange.Net;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
@@ -246,6 +244,35 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                      { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
                  }).ConfigureAwait(false);
             return result.As<BingXFuturesOrder[]>(result.Data?.Orders);
+        }
+
+        #endregion
+
+        #region Edit Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXEditResult>> EditOrderAsync(
+            long? orderId,
+            string? clientOrderId,
+            string symbol,
+            decimal quantity,
+            CancellationToken ct = default)
+        {
+            var parameter = new ParameterCollection()
+            {
+                { "symbol", symbol }
+            };
+            parameter.Add("quantity", quantity);
+            parameter.AddOptional("orderId", orderId);
+            parameter.AddOptional("clientOrderId", clientOrderId);
+
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/amend", BingXExchange.RateLimiter.RestAccount2, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), requestBodyFormat: RequestBodyFormat.Json);
+            var result = await _baseClient.SendAsync<BingXEditResult>(request, parameter, ct, additionalHeaders: new Dictionary<string, string>
+                 {
+                     { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
+                 }).ConfigureAwait(false);
+            return result;
         }
 
         #endregion

@@ -4,16 +4,15 @@ using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using BingX.Net.Objects.Internal;
-using CryptoExchange.Net.Interfaces;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class BingXSubscription<T> : Subscription<BingXSocketResponse, BingXSocketResponse>
+    internal class BingXSubscription<T> : Subscription
     {
         private readonly SocketApiClient _client;
         private readonly string _topic;
@@ -22,13 +21,14 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <summary>
         /// ctor
         /// </summary>
-        public BingXSubscription(ILogger logger, SocketApiClient client, string dataType, string listenId, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
+        public BingXSubscription(ILogger logger, SocketApiClient client, string listenId, Action<DataEvent<T>> handler, bool auth) : base(logger, auth)
         {
             _client = client;
             _handler = handler;
-            _topic = dataType;
+            _topic = listenId;
 
             MessageMatcher = MessageMatcher.Create<BingXUpdate<T>>(listenId, DoHandleMessage);
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXUpdate<T>>(listenId, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -50,15 +50,15 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }, false);
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXUpdate<T>> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXUpdate<T> message)
         {
-            if (message.Data is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
+            if (message is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
             {
                 foreach (var klineUpdate in klineUpdates.Data!)
-                    klineUpdate.Symbol = message.Data.Symbol!;
+                    klineUpdate.Symbol = message.Symbol!;
             }
 
-            _handler.Invoke(message.As(message.Data.Data!, message.Data.DataType, message.Data.Symbol, SocketUpdateType.Update));
+            _handler.Invoke(new DataEvent<T>(BingXExchange.ExchangeName, message.Data!, receiveTime, originalData).WithUpdateType(SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

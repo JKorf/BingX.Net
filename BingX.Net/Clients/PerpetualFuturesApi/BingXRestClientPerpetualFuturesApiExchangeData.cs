@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using BingX.Net.Objects.Internal;
 using System.Net.Http;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
-using System.Collections.Generic;
 using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
 

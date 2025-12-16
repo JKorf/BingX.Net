@@ -1,6 +1,5 @@
 using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using BingX.Net.Enums;
 

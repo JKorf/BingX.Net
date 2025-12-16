@@ -1,0 +1,6 @@
+>1 { "id": "|*|", "reqType": "sub", "dataType": "ETH-USDT@kline_1h" }
+>2 { "id": "|*|", "reqType": "sub", "dataType": "ETH-USDT@kline_1d" }
+<1 { "id": "|id|", "code": 0, "msg": "" }
+<2 { "id": "|id|", "code": 0, "msg": "" }
+=1 {"code":0,"dataType":"ETH-USDT@kline_1h","s":"ETH-USDT","data":[{"c":"2989.57","o":"2991.50","h":"2991.55","l":"2989.04","v":"215.89","T":1714650540000}]}
+=2 {"code":0,"dataType":"ETH-USDT@kline_1d","s":"ETH-USDT","data":[{"c":"2989.57","o":"2991.50","h":"2991.55","l":"2989.04","v":"215.89","T":1714650540000}]}

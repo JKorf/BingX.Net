@@ -1,8 +1,8 @@
 ﻿using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
-using System.Collections.Generic;
+using CryptoExchange.Net.Sockets.Default;
+using System;
 
 namespace BingX.Net.Objects.Sockets
 {
@@ -14,14 +14,15 @@ namespace BingX.Net.Objects.Sockets
         {
             _client = client;
             MessageMatcher = MessageMatcher.Create<BingXSocketResponse>(request.Id, HandleMessage);
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXSocketResponse>(request.Id, HandleMessage);
         }
 
-        public CallResult<BingXSocketResponse> HandleMessage(SocketConnection connection, DataEvent<BingXSocketResponse> message)
+        public CallResult<BingXSocketResponse> HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXSocketResponse message)
         {
-            if (message.Data.Code != 0)
-                return new CallResult<BingXSocketResponse>(new ServerError(message.Data.Code.ToString(), _client.GetErrorInfo(message.Data.Code, message.Data.Message!)), message.OriginalData);
+            if (message.Code != 0)
+                return new CallResult<BingXSocketResponse>(new ServerError(message.Code.ToString(), _client.GetErrorInfo(message.Code, message.Message!)), originalData);
 
-            return new CallResult<BingXSocketResponse>(message.Data, message.OriginalData, null);
+            return new CallResult<BingXSocketResponse>(message, originalData, null);
         }
     }
 }

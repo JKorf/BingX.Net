@@ -1,20 +1,21 @@
-﻿using CryptoExchange.Net;
+﻿using BingX.Net.Objects.Internal;
+using BingX.Net.Objects.Options;
+using CryptoExchange.Net;
 using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Converters.MessageParsing;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Options;
+using CryptoExchange.Net.SharedApis;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using BingX.Net.Objects.Options;
-using BingX.Net.Objects.Internal;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Clients;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using CryptoExchange.Net.Converters.MessageParsing;
-using CryptoExchange.Net.SharedApis;
-using CryptoExchange.Net.Objects.Options;
 
 namespace BingX.Net.Clients
 {
@@ -86,17 +87,6 @@ namespace BingX.Net.Clients
         }
 
         /// <inheritdoc />
-        protected override Error? TryParseError(RequestDefinition request, KeyValuePair<string, string[]>[] responseHeaders, IMessageAccessor accessor)
-        {
-            var code = accessor.GetValue<int>(MessagePath.Get().Property("code"));
-            if (code == 0)
-                return null;
-
-            var msg = accessor.GetValue<string>(MessagePath.Get().Property("msg"));
-            return new ServerError(code.ToString(), GetErrorInfo(code, msg));
-        }
-
-        /// <inheritdoc />
         protected override void WriteParamBody(IRequest request, IDictionary<string, object> parameters, string contentType)
         {
             if (contentType == Constants.JsonContentHeader)
@@ -110,8 +100,5 @@ namespace BingX.Net.Clients
                 request.SetContent(stringData, contentType);
             }
         }
-
-        /// <inheritdoc />
-        public string GetSymbolName(string baseAsset, string quoteAsset) => baseAsset + "-" + quoteAsset;
     }
 }

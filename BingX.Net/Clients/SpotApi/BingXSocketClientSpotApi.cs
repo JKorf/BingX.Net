@@ -1,34 +1,39 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using CryptoExchange.Net;
-using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Objects.Sockets;
-using CryptoExchange.Net.Sockets;
-using Microsoft.Extensions.Logging;
+﻿using BingX.Net.Clients.MessageHandlers;
+using BingX.Net.Enums;
 using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Sockets.Subscriptions;
+using CryptoExchange.Net;
+using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Converters.MessageParsing;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
+using CryptoExchange.Net.Objects.Sockets;
+using CryptoExchange.Net.SharedApis;
+using CryptoExchange.Net.Sockets;
+using CryptoExchange.Net.Sockets.Default;
+using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Net.WebSockets;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Converters.MessageParsing;
-using CryptoExchange.Net.Clients;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using BingX.Net.Enums;
-using System.Runtime.InteropServices.ComTypes;
-using CryptoExchange.Net.SharedApis;
-using CryptoExchange.Net.Objects.Errors;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BingX.Net.Clients.SpotApi
 {
+
     /// <summary>
     /// Client providing access to the BingX spot websocket Api
     /// </summary>
     internal partial class BingXSocketClientSpotApi : SocketApiClient, IBingXSocketClientSpotApi
     {
+        // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
+
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
         private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");
@@ -64,6 +69,8 @@ namespace BingX.Net.Clients.SpotApi
 
         public IBingXSocketClientSpotApiShared SharedClient => this;
 
+        public override ISocketMessageHandler CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketClientSpotApiMessageConverter();
+
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
         /// <inheritdoc />
@@ -73,7 +80,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@trade";
-            var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -84,7 +91,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXKlineUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + KlineIntervalToWebsocketString(interval);
-            var subscription = new BingXSubscription<BingXKlineUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXKlineUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -97,7 +104,7 @@ namespace BingX.Net.Clients.SpotApi
             depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);
 
             var stream = symbol + "@depth" + depth;
-            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(symbol)
                 .WithDataTimestamp(x.Data.Timestamp)), false);
@@ -108,7 +115,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
-            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -119,7 +126,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@lastPrice";
-            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -130,7 +137,7 @@ namespace BingX.Net.Clients.SpotApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@bookTicker";
-            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -143,7 +150,7 @@ namespace BingX.Net.Clients.SpotApi
             listenKey.ValidateNotNull(nameof(listenKey));
 
             var stream = "spot.executionReport";
-            var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, this, stream, stream, x => onMessage(x
+            var subscription = new BingXSubscription<BingXOrderUpdate>(_logger, this, stream, x => onMessage(x
                 .WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -158,6 +165,15 @@ namespace BingX.Net.Clients.SpotApi
             var subscription = new BingXBalanceSubscription(_logger, this, x => onMessage(x
                 .WithDataTimestamp(x.Data.EventTime)));
             return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public override ReadOnlySpan<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlySpan<byte> data)
+        {
+            if (type != WebSocketMessageType.Binary)
+                return data;
+
+            return data.DecompressGzip();
         }
 
         /// <inheritdoc />

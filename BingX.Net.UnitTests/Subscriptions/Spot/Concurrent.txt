@@ -1,0 +1,6 @@
+>1 { "id": "|*|", "reqType": "sub", "dataType": "ETH-USDT@kline_60min" }
+>2 { "id": "|*|", "reqType": "sub", "dataType": "ETH-USDT@kline_1day" }
+<1 { "id": "|id|", "code": 0, "msg": "" }
+<2 { "id": "|id|", "code": 0, "msg": "" }
+=1 { "code": 0, "dataType": "ETH-USDT@kline_60min", "success": true, "data": {"E":1709889719098,"K":{"T":1709891999999 },"e":"kline","s":"ETH-USDT"}}
+=2 { "code": 0, "dataType": "ETH-USDT@kline_1day", "success": true, "data": {"E":1709889719098,"K":{"T":1709891999999 },"e":"kline","s":"ETH-USDT"}}

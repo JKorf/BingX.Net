@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using CryptoExchange.Net.Objects;
 using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
-using System.Collections.Generic;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {

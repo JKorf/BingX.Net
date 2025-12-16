@@ -13,13 +13,13 @@ namespace BingX.Net.UnitTests
     [NonParallelizable]
     internal class BingXSocketIntegrationTests : SocketIntegrationTest<BingXSocketClient>
     {
-        public override bool Run { get; set; }
+        public override bool Run { get; set; } = false;
 
         public BingXSocketIntegrationTests()
         {
         }
 
-        public override BingXSocketClient GetClient(ILoggerFactory loggerFactory)
+        public override BingXSocketClient GetClient(ILoggerFactory loggerFactory, bool useNewDeserialization)
         {
             var key = Environment.GetEnvironmentVariable("APIKEY");
             var sec = Environment.GetEnvironmentVariable("APISECRET");
@@ -28,6 +28,7 @@ namespace BingX.Net.UnitTests
             return new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
                 OutputOriginalData = true,
+                UseUpdatedDeserialization = useNewDeserialization,
                 ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec) : null
             }), loggerFactory);
         }
@@ -44,16 +45,17 @@ namespace BingX.Net.UnitTests
             });
         }
 
-        [Test]
-        public async Task TestSubscriptions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TestSubscriptions(bool useNewDeserialization)
         {
             var listenKey = await GetRestClient().SpotApi.Account.StartUserStreamAsync();
-            await RunAndCheckUpdate<BingXTickerUpdate>((client, updateHandler) => client.SpotApi.SubscribeToBalanceUpdatesAsync(listenKey.Data, default, default), false, true);
-            await RunAndCheckUpdate<BingXTickerUpdate>((client, updateHandler) => client.SpotApi.SubscribeToTickerUpdatesAsync("ETH-USDT", updateHandler, default), true, false);
+            await RunAndCheckUpdate<BingXTickerUpdate>(useNewDeserialization, (client, updateHandler) => client.SpotApi.SubscribeToBalanceUpdatesAsync(listenKey.Data, default, default), false, true);
+            await RunAndCheckUpdate<BingXTickerUpdate>(useNewDeserialization, (client, updateHandler) => client.SpotApi.SubscribeToTickerUpdatesAsync("ETH-USDT", updateHandler, default), true, false);
 
             listenKey = await GetRestClient().PerpetualFuturesApi.Account.StartUserStreamAsync();
-            await RunAndCheckUpdate<BingXTickerUpdate>((client, updateHandler) => client.PerpetualFuturesApi.SubscribeToUserDataUpdatesAsync(listenKey.Data, default, default, default, default, default), false, true);
-            await RunAndCheckUpdate<BingXFuturesTickerUpdate>((client, updateHandler) => client.PerpetualFuturesApi.SubscribeToTickerUpdatesAsync("ETH-USDT", updateHandler, default), true, false);
+            await RunAndCheckUpdate<BingXTickerUpdate>(useNewDeserialization, (client, updateHandler) => client.PerpetualFuturesApi.SubscribeToUserDataUpdatesAsync(listenKey.Data, default, default, default, default, default), false, true);
+            await RunAndCheckUpdate<BingXFuturesTickerUpdate>(useNewDeserialization, (client, updateHandler) => client.PerpetualFuturesApi.SubscribeToTickerUpdatesAsync("ETH-USDT", updateHandler, default), true, false);
         } 
     }
 }

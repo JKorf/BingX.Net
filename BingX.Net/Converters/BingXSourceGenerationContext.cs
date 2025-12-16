@@ -4,7 +4,6 @@ using BingX.Net.Objects.Sockets;
 using CryptoExchange.Net.Objects;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Converters
@@ -27,6 +26,7 @@ namespace BingX.Net.Converters
     [JsonSerializable(typeof(DateTime))]
     [JsonSerializable(typeof(DateTime?))]
     
+    [JsonSerializable(typeof(BingXResult<BingXEditResult>))]
     [JsonSerializable(typeof(BingXResult<BingXListenKey>))]
     [JsonSerializable(typeof(BingXResult<BingXListenKey[]>))]
     [JsonSerializable(typeof(BingXPing))]

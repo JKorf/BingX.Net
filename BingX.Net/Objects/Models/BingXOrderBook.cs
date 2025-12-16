@@ -1,10 +1,8 @@
-using BingX.Net.Converters;
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models

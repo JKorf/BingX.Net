@@ -97,6 +97,7 @@ namespace BingX.Net.UnitTests
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/PerpetualFutures/Account", "https://open-api.bingx.com", IsAuthenticated, "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(), "GetBalances", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(), "GetBalances2", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetIncomesAsync(), "GetIncomes");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(), "GetTradingFees", "data.commission");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.StartUserStreamAsync(), "StartUserStream", "listenKey");
@@ -171,6 +172,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetTwapOrderAsync(123), "GetTwapOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.CancelTwapOrderAsync(123), "CancelTwapOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetOrdersAsync("123", 123), "GetOrders", nestedJsonProperty: "data.orders", ignoreProperties: new List<string> { "workingType", "advanceAttr", "positionID", "takeProfitEntrustPrice", "stopLossEntrustPrice", "orderType" });
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.EditOrderAsync(123, null, "ETH-USDT", 1), "EditOrder", nestedJsonProperty: "data");
         }
 
 

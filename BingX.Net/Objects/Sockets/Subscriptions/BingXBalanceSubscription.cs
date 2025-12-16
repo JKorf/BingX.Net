@@ -4,15 +4,14 @@ using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using CryptoExchange.Net.Interfaces;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Sockets.Default;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     /// <inheritdoc />
-    internal class BingXBalanceSubscription : Subscription<BingXSocketResponse, BingXSocketResponse>
+    internal class BingXBalanceSubscription : Subscription
     {
         private readonly string _topic;
         private readonly Action<DataEvent<BingXBalanceUpdate>> _handler;
@@ -28,6 +27,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _topic = "ACCOUNT_UPDATE";
 
             MessageMatcher = MessageMatcher.Create<BingXBalanceUpdate>(_topic, DoHandleMessage);
+            MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXBalanceUpdate>(_topic, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -49,9 +49,9 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             }, false);
 
         /// <inheritdoc />
-        public CallResult DoHandleMessage(SocketConnection connection, DataEvent<BingXBalanceUpdate> message)
+        public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXBalanceUpdate message)
         {
-            _handler.Invoke(message.As(message.Data!, message.Data.Event, null, SocketUpdateType.Update));
+            _handler.Invoke(new DataEvent<BingXBalanceUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData).WithUpdateType(SocketUpdateType.Update));
             return CallResult.SuccessResult;
         }
     }

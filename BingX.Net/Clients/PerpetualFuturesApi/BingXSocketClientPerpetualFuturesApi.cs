@@ -1,29 +1,29 @@
-using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Sockets;
-using Microsoft.Extensions.Logging;
-using BingX.Net.Objects.Options;
+using BingX.Net.Clients.SpotApi;
 using BingX.Net.Enums;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Converters.MessageParsing;
-using CryptoExchange.Net.Clients;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
-using CryptoExchange.Net.Objects.Sockets;
-using System;
+using BingX.Net.Interfaces.Clients.SpotApi;
 using BingX.Net.Objects.Models;
-using System.Threading;
-using CryptoExchange.Net.Objects;
-using System.Threading.Tasks;
+using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Sockets.Subscriptions;
 using CryptoExchange.Net;
+using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Converters.MessageParsing;
+using CryptoExchange.Net.Converters.MessageParsing.DynamicConverters;
 using CryptoExchange.Net.Converters.SystemTextJson;
-using System.Net.WebSockets;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.InteropServices.ComTypes;
-using System.Linq;
-using BingX.Net.Interfaces.Clients.SpotApi;
-using CryptoExchange.Net.SharedApis;
+using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
+using CryptoExchange.Net.Objects.Sockets;
+using CryptoExchange.Net.SharedApis;
+using CryptoExchange.Net.Sockets;
+using CryptoExchange.Net.Sockets.Default;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Net.WebSockets;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -32,6 +32,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     /// </summary>
     internal partial class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
     {
+        // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
+
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
         private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");
@@ -65,6 +67,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
             => new BingXAuthenticationProvider(credentials);
 
+
+        public override ISocketMessageHandler CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketPerpetualFuturesMessageHandler();
+
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
         /// <inheritdoc />
@@ -76,7 +81,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTradeUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@trade";
-            var subscription = new BingXSubscription<BingXFuturesTradeUpdate[]>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXFuturesTradeUpdate[]>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.First().Symbol)
                 .WithDataTimestamp(x.Data.Max(x => x.TradeTime))), false);
@@ -90,7 +95,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             updateInterval.ValidateIntValues(nameof(updateInterval),100, 200, 500, 1000);
 
             var stream = symbol + $"@depth{depth}@{updateInterval}ms";
-            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(symbol)
                 .WithDataTimestamp(x.Data.Timestamp)), false);
@@ -104,7 +109,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             updateInterval.ValidateIntValues(nameof(updateInterval), 100, 200, 500, 1000);
 
             var stream = $"all@depth{depth}@{updateInterval}ms";
-            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol!)
                 .WithDataTimestamp(x.Data.Timestamp)), false);
@@ -115,7 +120,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = "all@kline_" + EnumConverter.GetString(interval);
-            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)), false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
@@ -124,7 +129,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + EnumConverter.GetString(interval);
-            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(symbol)
                 .WithDataTimestamp(x.Data.Max(x => x.Timestamp))), false);
@@ -135,7 +140,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
-            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -146,7 +151,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = "all@ticker";
-            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -157,7 +162,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@lastPrice";
-            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -168,7 +173,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToMarkPriceUpdatesAsync(string symbol, Action<DataEvent<BingXMarkPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@markPrice";
-            var subscription = new BingXSubscription<BingXMarkPriceUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXMarkPriceUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -179,7 +184,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@bookTicker";
-            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, stream, x => onMessage(
+            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, x => onMessage(
                 x.WithStreamId(stream)
                 .WithSymbol(x.Data.Symbol)
                 .WithDataTimestamp(x.Data.EventTime)), false);
@@ -203,6 +208,16 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         /// <inheritdoc />
         public override ReadOnlyMemory<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlyMemory<byte> data)
+        {
+            if (type != WebSocketMessageType.Binary)
+                return data;
+
+            return data.DecompressGzip();
+        }
+
+
+        /// <inheritdoc />
+        public override ReadOnlySpan<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlySpan<byte> data)
         {
             if (type != WebSocketMessageType.Binary)
                 return data;

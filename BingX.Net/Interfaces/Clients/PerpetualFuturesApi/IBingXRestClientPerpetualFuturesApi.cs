@@ -1,5 +1,5 @@
 ﻿using BingX.Net.Interfaces.Clients.SpotApi;
-using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Interfaces.Clients;
 using System;
 
 namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi

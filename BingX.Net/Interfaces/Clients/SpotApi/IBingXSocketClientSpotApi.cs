@@ -2,10 +2,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects.Sockets;
 using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
+using CryptoExchange.Net.Interfaces.Clients;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {
@@ -15,7 +15,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     public interface IBingXSocketClientSpotApi : ISocketApiClient, IDisposable
     {
         /// <summary>
-        /// Get the shared socket subscription client. This interface is shared with other exhanges to allow for a common implementation for different exchanges.
+        /// Get the shared socket subscription client. This interface is shared with other exchanges to allow for a common implementation for different exchanges.
         /// </summary>
         IBingXSocketClientSpotApiShared SharedClient { get; }
 

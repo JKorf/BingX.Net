@@ -1,22 +1,52 @@
-﻿using NUnit.Framework;
-using System.Threading.Tasks;
-using BingX.Net.Clients;
+﻿using BingX.Net.Clients;
 using BingX.Net.Objects.Models;
+using BingX.Net.Objects.Options;
+using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Testing;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BingX.Net.UnitTests
 {
     [TestFixture]
     public class SocketSubscriptionTests
     {
-        [Test]
-        public async Task ValidateSpotSubscriptions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateConcurrentSpotSubscriptions(bool newDeserialization)
         {
-            var client = new BingXSocketClient(opts =>
+            var logger = new LoggerFactory();
+            logger.AddProvider(new TraceLoggerProvider());
+
+            var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                opts.ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456");
-            });
+                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
+                OutputOriginalData = true,
+                UseUpdatedDeserialization = newDeserialization
+            }), logger);
+
+            var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/Spot", "wss://open-api-ws.bingx.com/market", "data");
+            await tester.ValidateConcurrentAsync<BingXKlineUpdate>(
+                (client, handler) => client.SpotApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.OneDay, handler),
+                (client, handler) => client.SpotApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.OneHour, handler),
+                "Concurrent");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateSpotSubscriptions(bool newDeserialization)
+        {
+            var logger = new LoggerFactory();
+            logger.AddProvider(new TraceLoggerProvider());
+
+            var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
+            {
+                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
+                UseUpdatedDeserialization = newDeserialization
+            }), logger);
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/Spot", "wss://open-api-ws.bingx.com/market");
             await tester.ValidateAsync<BingXTradeUpdate>((client, handler) => client.SpotApi.SubscribeToTradeUpdatesAsync("BTC-USDT", handler), "Trades", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXKlineUpdate>((client, handler) => client.SpotApi.SubscribeToKlineUpdatesAsync("BTC-USDT", Enums.KlineInterval.TwoHours, handler), "Klines", nestedJsonProperty: "data");
@@ -24,17 +54,44 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync<BingXTickerUpdate>((client, handler) => client.SpotApi.SubscribeToTickerUpdatesAsync("BTC-USDT", handler), "Ticker", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXPriceUpdate>((client, handler) => client.SpotApi.SubscribeToPriceUpdatesAsync("BTC-USDT", handler), "Price", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXBookTickerUpdate>((client, handler) => client.SpotApi.SubscribeToBookPriceUpdatesAsync("BTC-USDT", handler), "BookPrice", nestedJsonProperty: "data");
+            await tester.ValidateAsync<BingXKlineUpdate>((client, handler) => client.SpotApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.EightHours, handler), "Kline", nestedJsonProperty: "data", ignoreProperties: ["i", "s"]);
             await tester.ValidateAsync<BingXOrderUpdate>((client, handler) => client.SpotApi.SubscribeToOrderUpdatesAsync("123", handler), "Order", ignoreProperties: new List<string> { "m" }, nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXBalanceUpdate>((client, handler) => client.SpotApi.SubscribeToBalanceUpdatesAsync("123", handler), "Balance");
         }
 
-        [Test]
-        public async Task ValidatePerpetualFutureSubscriptions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidateConcurrentPerpetualFutureSubscriptions(bool newDeserialization)
         {
-            var client = new BingXSocketClient(opts =>
+            var logger = new LoggerFactory();
+            logger.AddProvider(new TraceLoggerProvider());
+
+            var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                opts.ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456");
-            });
+                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
+                OutputOriginalData = true,
+                UseUpdatedDeserialization = newDeserialization
+            }), logger);
+
+            var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-ws.bingx.com/market", "data");
+            await tester.ValidateConcurrentAsync<BingXFuturesKlineUpdate[]>(
+                (client, handler) => client.PerpetualFuturesApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.OneDay, handler),
+                (client, handler) => client.PerpetualFuturesApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.OneHour, handler),
+                "Concurrent");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ValidatePerpetualFutureSubscriptions(bool newDeserialization)
+        {
+            var logger = new LoggerFactory();
+            logger.AddProvider(new TraceLoggerProvider());
+
+            var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
+            {
+                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
+                UseUpdatedDeserialization = newDeserialization
+            }), logger);
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-ws.bingx.com/market");
             await tester.ValidateAsync<BingXFuturesTradeUpdate[]>((client, handler) => client.PerpetualFuturesApi.SubscribeToTradeUpdatesAsync("ETH-USDT", handler), "Trades", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXOrderBook>((client, handler) => client.PerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync("ETH-USDT", 20, 100, handler), "PartialBook", nestedJsonProperty: "data");
@@ -43,6 +100,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync<BingXPriceUpdate>((client, handler) => client.PerpetualFuturesApi.SubscribeToPriceUpdatesAsync("ETH-USDT", handler), "Price", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXMarkPriceUpdate>((client, handler) => client.PerpetualFuturesApi.SubscribeToMarkPriceUpdatesAsync("ETH-USDT", handler), "MarkPrice", nestedJsonProperty: "data");
             await tester.ValidateAsync<BingXBookTickerUpdate>((client, handler) => client.PerpetualFuturesApi.SubscribeToBookPriceUpdatesAsync("ETH-USDT", handler), "BookPrice", nestedJsonProperty: "data");
+            
         }
     }
 }
