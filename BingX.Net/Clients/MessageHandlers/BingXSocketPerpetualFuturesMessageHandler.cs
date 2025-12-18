@@ -35,6 +35,12 @@ namespace BingX.Net.Clients.SpotApi
                 ],
                 StaticIdentifier = "SNAPSHOTA"
             },
+            new MessageTypeDefinition {
+                Fields = [
+                    new PropertyFieldReference("e"),
+                ],
+                TypeIdentifierCallback = x => x.FieldValue("e")!
+            },
 
             new MessageTypeDefinition {
                 ForceIfFound = true,
