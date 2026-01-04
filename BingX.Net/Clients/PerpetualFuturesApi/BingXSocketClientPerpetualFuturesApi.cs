@@ -33,6 +33,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     internal partial class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
     {
         // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
+#warning update socket message handling
 
         #region fields
         private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
@@ -250,8 +251,5 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             return evnt;
         }
-
-        /// <inheritdoc />
-        protected override Task<Query?> GetAuthenticationRequestAsync(SocketConnection connection) => Task.FromResult<Query?>(null);
     }
 }

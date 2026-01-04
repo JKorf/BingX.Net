@@ -16,8 +16,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     internal partial class BingXRestClientPerpetualFuturesApi : BingXRestClientApi, IBingXRestClientPerpetualFuturesApi
     {
         #region fields 
-        internal static TimeSyncState _timeSyncState = new TimeSyncState("Perpetual Futures Api");
-
         protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
         #endregion
 
@@ -50,13 +48,5 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
             => ExchangeData.GetServerTimeAsync();
-
-        /// <inheritdoc />
-        public override TimeSyncInfo? GetTimeSyncInfo()
-            => new TimeSyncInfo(_logger, ApiOptions.AutoTimestamp ?? ClientOptions.AutoTimestamp, ApiOptions.TimestampRecalculationInterval ?? ClientOptions.TimestampRecalculationInterval, _timeSyncState);
-
-        /// <inheritdoc />
-        public override TimeSpan? GetTimeOffset()
-            => _timeSyncState.TimeOffset;
     }
 }

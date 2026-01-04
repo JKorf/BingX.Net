@@ -210,9 +210,6 @@ namespace BingX.Net.Clients.SpotApi
             return ping != null ? "ping" : ping;
         }
 
-        /// <inheritdoc />
-        protected override Task<Query?> GetAuthenticationRequestAsync(SocketConnection connection) => Task.FromResult<Query?>(null);
-
         private string KlineIntervalToWebsocketString(KlineInterval interval) => interval switch
         {
             KlineInterval.OneMinute => "1min",

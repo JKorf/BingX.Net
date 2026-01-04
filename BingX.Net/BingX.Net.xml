@@ -168,12 +168,6 @@
         <member name="M:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi.GetServerTimestampAsync">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi.GetTimeSyncInfo">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.Apis.BingXRestClientSubAccountApi.GetTimeOffset">
-            <inheritdoc />
-        </member>
         <member name="T:BingX.Net.Clients.BingXRestClient">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.IBingXRestClient" />
         </member>
@@ -311,12 +305,6 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetServerTimestampAsync">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetTimeSyncInfo">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.GetTimeOffset">
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Clients.SpotApi.BingXRestClientSpotApi.SharedClient">
@@ -534,12 +522,6 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.GetServerTimestampAsync">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.GetTimeSyncInfo">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi.GetTimeOffset">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiAccount">
