@@ -86,7 +86,7 @@ namespace BingX.Net.SymbolOrderBooks
 
         private void HandleOrderBookUpdate(DataEvent<BingXOrderBook> @event)
         {
-            SetInitialOrderBook(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids, @event.Data.Asks);
+            SetInitialOrderBook(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids, @event.Data.Asks, @event.DataTime, @event.DataTimeLocal);
         }
 
         /// <inheritdoc />

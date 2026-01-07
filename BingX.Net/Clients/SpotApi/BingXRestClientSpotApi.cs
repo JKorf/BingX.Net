@@ -15,8 +15,6 @@ namespace BingX.Net.Clients.SpotApi
     internal partial class BingXRestClientSpotApi : BingXRestClientApi, IBingXRestClientSpotApi
     {
         #region fields 
-        internal static TimeSyncState _timeSyncState = new TimeSyncState("Spot Api");
-
         protected override ErrorMapping ErrorMapping => BingXErrors.SpotErrors;
         #endregion
 
@@ -44,14 +42,6 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
             => ExchangeData.GetServerTimeAsync();
-
-        /// <inheritdoc />
-        public override TimeSyncInfo? GetTimeSyncInfo()
-            => new TimeSyncInfo(_logger, ApiOptions.AutoTimestamp ?? ClientOptions.AutoTimestamp, ApiOptions.TimestampRecalculationInterval ?? ClientOptions.TimestampRecalculationInterval, _timeSyncState);
-
-        /// <inheritdoc />
-        public override TimeSpan? GetTimeOffset()
-            => _timeSyncState.TimeOffset;
 
         /// <inheritdoc />
         public IBingXRestClientSpotApiShared SharedClient => this;

@@ -49,13 +49,5 @@ namespace BingX.Net.Clients.Apis
         /// <inheritdoc />
         protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
             => _baseClient.SpotApi.ExchangeData.GetServerTimeAsync();
-
-        /// <inheritdoc />
-        public override TimeSyncInfo? GetTimeSyncInfo()
-            => ((BingXRestClientSpotApi)_baseClient.SpotApi).GetTimeSyncInfo();
-
-        /// <inheritdoc />
-        public override TimeSpan? GetTimeOffset()
-            => ((BingXRestClientSpotApi)_baseClient.SpotApi).GetTimeOffset();
     }
 }

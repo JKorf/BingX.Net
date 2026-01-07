@@ -81,10 +81,16 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTradeUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@trade";
-            var subscription = new BingXSubscription<BingXFuturesTradeUpdate[]>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(x.Data.First().Symbol)
-                .WithDataTimestamp(x.Data.Max(x => x.TradeTime))), false);
+            var subscription = new BingXSubscription<BingXFuturesTradeUpdate[]>(_logger, this, stream, x =>
+            {
+                var timestamp = x.Data.Max(x => x.TradeTime);
+                UpdateTimeOffset(timestamp);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(x.Data.First().Symbol)
+                    .WithDataTimestamp(timestamp, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -95,10 +101,16 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             updateInterval.ValidateIntValues(nameof(updateInterval),100, 200, 500, 1000);
 
             var stream = symbol + $"@depth{depth}@{updateInterval}ms";
-            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(symbol)
-                .WithDataTimestamp(x.Data.Timestamp)), false);
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x =>
+            {
+                if (x.Data.Timestamp != null)
+                    UpdateTimeOffset(x.Data.Timestamp.Value);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(symbol)
+                    .WithDataTimestamp(x.Data.Timestamp, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -109,10 +121,16 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             updateInterval.ValidateIntValues(nameof(updateInterval), 100, 200, 500, 1000);
 
             var stream = $"all@depth{depth}@{updateInterval}ms";
-            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(x.Data.Symbol!)
-                .WithDataTimestamp(x.Data.Timestamp)), false);
+            var subscription = new BingXSubscription<BingXOrderBook>(_logger, this, stream, x =>
+            {
+                if (x.Data.Timestamp != null)
+                    UpdateTimeOffset(x.Data.Timestamp.Value);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(x.Data.Symbol!)
+                    .WithDataTimestamp(x.Data.Timestamp, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -129,10 +147,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + EnumConverter.GetString(interval);
-            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(symbol)
-                .WithDataTimestamp(x.Data.Max(x => x.Timestamp))), false);
+            var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, x =>
+            {
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(symbol));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -140,10 +160,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
-            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(x.Data.Symbol)
-                .WithDataTimestamp(x.Data.EventTime)), false);
+            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x =>
+            {
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(x.Data.Symbol)
+                    .WithDataTimestamp(x.Data.EventTime, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -151,10 +174,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = "all@ticker";
-            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(x.Data.Symbol)
-                .WithDataTimestamp(x.Data.EventTime)), false);
+            var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x =>
+            {
+                UpdateTimeOffset(x.Data.EventTime);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(x.Data.Symbol)
+                    .WithDataTimestamp(x.Data.EventTime, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -162,10 +190,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@lastPrice";
-            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(x.Data.Symbol)
-                .WithDataTimestamp(x.Data.EventTime)), false);
+            var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, x =>
+            {
+                UpdateTimeOffset(x.Data.EventTime);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(x.Data.Symbol)
+                    .WithDataTimestamp(x.Data.EventTime, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -173,10 +206,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToMarkPriceUpdatesAsync(string symbol, Action<DataEvent<BingXMarkPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@markPrice";
-            var subscription = new BingXSubscription<BingXMarkPriceUpdate>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(x.Data.Symbol)
-                .WithDataTimestamp(x.Data.EventTime)), false);
+            var subscription = new BingXSubscription<BingXMarkPriceUpdate>(_logger, this, stream, x =>
+            {
+                UpdateTimeOffset(x.Data.EventTime);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(x.Data.Symbol)
+                    .WithDataTimestamp(x.Data.EventTime, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -184,10 +222,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@bookTicker";
-            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, x => onMessage(
-                x.WithStreamId(stream)
-                .WithSymbol(x.Data.Symbol)
-                .WithDataTimestamp(x.Data.EventTime)), false);
+            var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, x =>
+            {
+                UpdateTimeOffset(x.Data.EventTime);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(x.Data.Symbol)
+                    .WithDataTimestamp(x.Data.EventTime, GetTimeOffset()));
+            }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }
 
@@ -202,7 +245,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         {
             listenKey.ValidateNotNull(nameof(listenKey));
 
-            var subscription = new BingXUserDataSubscription(_logger, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate);
+            var subscription = new BingXUserDataSubscription(_logger, this, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
         }
 
@@ -250,8 +293,5 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             return evnt;
         }
-
-        /// <inheritdoc />
-        protected override Task<Query?> GetAuthenticationRequestAsync(SocketConnection connection) => Task.FromResult<Query?>(null);
     }
 }

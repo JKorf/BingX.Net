@@ -1,4 +1,6 @@
-﻿using BingX.Net.Objects.Models;
+﻿using BingX.Net.Clients.PerpetualFuturesApi;
+using BingX.Net.Clients.SpotApi;
+using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.Sockets;
@@ -10,6 +12,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
 {
     internal class BingXUserDataSubscription : Subscription
     {
+        private readonly BingXSocketClientPerpetualFuturesApi _client;
         private readonly Action<DataEvent<BingXFuturesOrderUpdate>>? _orderHandler;
         private readonly Action<DataEvent<BingXConfigUpdate>>? _configHandler;
         private readonly Action<DataEvent<BingXFuturesAccountUpdate>>? _accountHandler;
@@ -18,18 +21,15 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="orderHandler"></param>
-        /// <param name="configHandler"></param>
-        /// <param name="accountHandler"></param>
-        /// <param name="listenkeyHandler"></param>
         public BingXUserDataSubscription(
             ILogger logger,
+            BingXSocketClientPerpetualFuturesApi client,
             Action<DataEvent<BingXFuturesAccountUpdate>>? accountHandler,
             Action<DataEvent<BingXFuturesOrderUpdate>>? orderHandler,
             Action<DataEvent<BingXConfigUpdate>>? configHandler,
             Action<DataEvent<BingXListenKeyExpiredUpdate>>? listenkeyHandler) : base(logger, false)
         {
+            _client = client;
             _orderHandler = orderHandler;
             _configHandler = configHandler;
             _accountHandler = accountHandler;
@@ -63,10 +63,12 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXConfigUpdate message)
         {
+            _client.UpdateTimeOffset(message.EventTime);
+
             _configHandler?.Invoke(
                 new DataEvent<BingXConfigUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
                     .WithStreamId(message.Event)
-                    .WithDataTimestamp(message.EventTime)
+                    .WithDataTimestamp(message.EventTime, _client.GetTimeOffset())
                     .WithSymbol(message.Configuration.Symbol)
                     .WithUpdateType(message.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
                 );
@@ -76,10 +78,12 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXFuturesAccountUpdate message)
         {
+            _client.UpdateTimeOffset(message.EventTime);
+
             _accountHandler?.Invoke(
                 new DataEvent<BingXFuturesAccountUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
                     .WithStreamId(message.Event)
-                    .WithDataTimestamp(message.EventTime)
+                    .WithDataTimestamp(message.EventTime, _client.GetTimeOffset())
                     .WithUpdateType(message.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
                 );
             return CallResult.SuccessResult;
@@ -88,12 +92,14 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXFuturesOrderUpdateWrapper message)
         {
+            _client.UpdateTimeOffset(message.EventTime);
+
             _orderHandler?.Invoke(
                 new DataEvent<BingXFuturesOrderUpdate>(BingXExchange.ExchangeName, message.Data, receiveTime, originalData)
                     .WithUpdateType(SocketUpdateType.Update)
                     .WithStreamId(message.Event)
                     .WithSymbol(message.Data.Symbol)
-                    .WithDataTimestamp(message.EventTime)
+                    .WithDataTimestamp(message.EventTime, _client.GetTimeOffset())
                 );
 
             return CallResult.SuccessResult;
@@ -102,11 +108,13 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXListenKeyExpiredUpdate message)
         {
+            _client.UpdateTimeOffset(message.EventTime);
+
             _listenkeyHandler?.Invoke(
                 new DataEvent<BingXListenKeyExpiredUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
                     .WithUpdateType(SocketUpdateType.Update)
                     .WithStreamId(message.Event)
-                    .WithDataTimestamp(message.EventTime)
+                    .WithDataTimestamp(message.EventTime, _client.GetTimeOffset())
                 );
             return CallResult.SuccessResult;
         }
