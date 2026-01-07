@@ -506,9 +506,6 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.Default.SocketConnection)">
-            <inheritdoc />
-        </member>
         <member name="T:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApi">
             <inheritdoc cref="T:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApi" />
         </member>
@@ -778,9 +775,6 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.GetListenerIdentifier(CryptoExchange.Net.Interfaces.IMessageAccessor)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.GetAuthenticationRequestAsync(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.Boolean">
@@ -9734,15 +9728,10 @@
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXSubscription`1.DoHandleMessage(CryptoExchange.Net.Sockets.Default.SocketConnection,System.DateTime,System.String,BingX.Net.Objects.Internal.BingXUpdate{`0})">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesAccountUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesOrderUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}})">
+        <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.#ctor(Microsoft.Extensions.Logging.ILogger,BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesAccountUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesOrderUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXConfigUpdate}},System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXListenKeyExpiredUpdate}})">
             <summary>
             ctor
             </summary>
-            <param name="logger"></param>
-            <param name="orderHandler"></param>
-            <param name="configHandler"></param>
-            <param name="accountHandler"></param>
-            <param name="listenkeyHandler"></param>
         </member>
         <member name="M:BingX.Net.Objects.Sockets.Subscriptions.BingXUserDataSubscription.GetSubQuery(CryptoExchange.Net.Sockets.Default.SocketConnection)">
             <inheritdoc />

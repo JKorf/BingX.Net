@@ -51,7 +51,11 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXBalanceUpdate message)
         {
-            _handler.Invoke(new DataEvent<BingXBalanceUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData).WithUpdateType(SocketUpdateType.Update));
+            _client.UpdateTimeOffset(message.EventTime);
+
+            _handler.Invoke(new DataEvent<BingXBalanceUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
+                .WithUpdateType(SocketUpdateType.Update)
+                .WithDataTimestamp(message.EventTime, _client.GetTimeOffset()));
             return CallResult.SuccessResult;
         }
     }
