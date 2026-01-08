@@ -115,6 +115,22 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesIncrementalOrderBook>> onMessage, CancellationToken ct = default)
+        {
+            var stream = symbol + "@incrDepth";
+            var subscription = new BingXSubscription<BingXFuturesIncrementalOrderBook>(_logger, this, stream, x =>
+            {
+                UpdateTimeOffset(x.Data.Timestamp);
+
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(symbol)
+                    .WithDataTimestamp(x.Data.Timestamp, GetTimeOffset()));
+            }, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
         {
             depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);

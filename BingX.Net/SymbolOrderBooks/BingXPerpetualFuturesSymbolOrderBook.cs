@@ -11,6 +11,7 @@ using BingX.Net.Clients;
 using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
 using BingX.Net.Objects.Models;
+using System.Linq;
 
 namespace BingX.Net.SymbolOrderBooks
 {
@@ -70,7 +71,13 @@ namespace BingX.Net.SymbolOrderBooks
         /// <inheritdoc />
         protected override async Task<CallResult<UpdateSubscription>> DoStartAsync(CancellationToken ct)
         {
-            var result = await _socketClient.PerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync(Symbol, Levels ?? 20, 500, HandleOrderBookUpdate).ConfigureAwait(false);
+
+            CallResult<UpdateSubscription> result;
+            if (Levels == null)
+                result = await _socketClient.PerpetualFuturesApi.SubscribeToIncrementalOrderBookUpdatesAsync(Symbol, HandleOrderBookUpdate).ConfigureAwait(false);
+            else
+                result = await _socketClient.PerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync(Symbol, Levels.Value, 500, HandleOrderBookUpdate).ConfigureAwait(false);
+            
             if (!result)
                 return result;
 
@@ -89,6 +96,28 @@ namespace BingX.Net.SymbolOrderBooks
         private void HandleOrderBookUpdate(DataEvent<BingXOrderBook> @event)
         {
             SetInitialOrderBook(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids, @event.Data.Asks, @event.DataTime, @event.DataTimeLocal);
+        }
+
+        private void HandleOrderBookUpdate(DataEvent<BingXFuturesIncrementalOrderBook> @event)
+        {
+            if (@event.Data.Action == "all")
+            {
+                SetInitialOrderBook(
+                    @event.Data.LastUpdateId,
+                    @event.Data.Bids,
+                    @event.Data.Asks,
+                    @event.DataTime,
+                    @event.DataTimeLocal);
+            }
+            else
+            {
+                UpdateOrderBook(
+                    @event.Data.LastUpdateId,
+                    @event.Data.Bids,
+                    @event.Data.Asks,
+                    @event.DataTime,
+                    @event.DataTimeLocal);
+            }
         }
 
         /// <inheritdoc />

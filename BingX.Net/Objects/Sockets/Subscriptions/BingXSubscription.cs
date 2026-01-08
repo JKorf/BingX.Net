@@ -52,13 +52,19 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         public CallResult DoHandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXUpdate<T> message)
         {
+            if (message.Timestamp != null)
+                _client.UpdateTimeOffset(message.Timestamp.Value);
+
             if (message is BingXUpdate<BingXFuturesKlineUpdate[]> klineUpdates)
             {
                 foreach (var klineUpdate in klineUpdates.Data!)
                     klineUpdate.Symbol = message.Symbol!;
             }
 
-            _handler.Invoke(new DataEvent<T>(BingXExchange.ExchangeName, message.Data!, receiveTime, originalData).WithUpdateType(SocketUpdateType.Update));
+            _handler.Invoke(
+                new DataEvent<T>(BingXExchange.ExchangeName, message.Data!, receiveTime, originalData)
+                .WithUpdateType(SocketUpdateType.Update)
+                .WithDataTimestamp(message.Timestamp, _client.GetTimeOffset()));
             return CallResult.SuccessResult;
         }
     }

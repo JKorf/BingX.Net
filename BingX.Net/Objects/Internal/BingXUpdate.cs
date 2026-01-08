@@ -1,4 +1,5 @@
 using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Internal
@@ -13,6 +14,9 @@ namespace BingX.Net.Objects.Internal
         public bool Success { get; set; }
         [JsonPropertyName("s")]
         public string? Symbol { get; set; }
+
+        [JsonPropertyName("timestamp")]
+        public DateTime? Timestamp { get; set; }
     }
 
     [SerializationModel]

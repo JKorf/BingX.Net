@@ -52,6 +52,16 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(string symbol, int depth, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default);
 
         /// <summary>
+        /// Subscribe to live incremental order book updates
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Incremental%20and%20Full%20Depth%20Information" /></para>
+        /// </summary>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
+        /// <param name="onMessage">The event handler for the received data</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<CallResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXIncrementalOrderBook>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
         /// Subscribe to live price statistics updates
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%2024-hour%20Price%20Change" /></para>
         /// </summary>

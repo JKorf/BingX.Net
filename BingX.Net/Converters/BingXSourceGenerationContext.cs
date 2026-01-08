@@ -11,6 +11,8 @@ namespace BingX.Net.Converters
     [JsonSerializable(typeof(IEnumerable<BingXPlaceOrderRequest>))]
     [JsonSerializable(typeof(IEnumerable<BingXFuturesPlaceOrderRequest>))]
     [JsonSerializable(typeof(BingXUpdate<BingXOrderBook>))]
+    [JsonSerializable(typeof(BingXUpdate<BingXIncrementalOrderBook>))]
+    [JsonSerializable(typeof(BingXUpdate<BingXFuturesIncrementalOrderBook>))]
     [JsonSerializable(typeof(ParameterCollection))]
     [JsonSerializable(typeof(IDictionary<string, object>))]
 
