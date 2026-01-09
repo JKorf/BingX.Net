@@ -17,6 +17,8 @@ namespace BingX.Net.Objects.Internal
 
         [JsonPropertyName("timestamp")]
         public DateTime? Timestamp { get; set; }
+        [JsonInclude, JsonPropertyName("ts")]
+        internal DateTime? TimestampInt { set => Timestamp = value; }
     }
 
     [SerializationModel]

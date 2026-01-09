@@ -92,14 +92,14 @@ namespace BingX.Net.SymbolOrderBooks
 
         private void HandleOrderBookUpdate(DataEvent<BingXOrderBook> @event)
         {
-            SetInitialOrderBook(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids, @event.Data.Asks, @event.DataTime, @event.DataTimeLocal);
+            SetSnapshot(DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow)!.Value, @event.Data.Bids, @event.Data.Asks, @event.DataTime, @event.DataTimeLocal);
         }
 
         private void HandleOrderBookUpdate(DataEvent<BingXIncrementalOrderBook> @event)
         {
             if (@event.Data.Action == "all")
             {
-                SetInitialOrderBook(
+                SetSnapshot(
                     @event.Data.LastUpdateId,
                     @event.Data.Bids.Select(x => new BingXOrderBookEntry { Price = x.Key, Quantity = x.Value }).ToArray(),
                     @event.Data.Asks.Select(x => new BingXOrderBookEntry { Price = x.Key, Quantity = x.Value }).ToArray(),
