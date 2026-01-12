@@ -125,7 +125,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 onMessage(
                     x.WithStreamId(stream)
                     .WithSymbol(symbol)
-                    .WithDataTimestamp(x.Data.Timestamp, GetTimeOffset()));
+                    .WithDataTimestamp(x.Data.Timestamp, GetTimeOffset())
+                    .WithSequenceNumber(x.Data.LastUpdateId));
             }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("swap-market"), subscription, ct).ConfigureAwait(false);
         }

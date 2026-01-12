@@ -135,7 +135,8 @@ namespace BingX.Net.Clients.SpotApi
             {
                 onMessage(
                     x.WithStreamId(stream)
-                    .WithSymbol(symbol));
+                    .WithSymbol(symbol)
+                    .WithSequenceNumber(x.Data.LastUpdateId));
             }, false);
             return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
         }
