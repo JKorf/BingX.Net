@@ -3702,6 +3702,16 @@
             Trading suspended
             </summary>
         </member>
+        <member name="F:BingX.Net.Enums.SymbolStatus.PreDelisted">
+            <summary>
+            Pre-delisted
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.SymbolStatus.Delisted">
+            <summary>
+            Delisted
+            </summary>
+        </member>
         <member name="T:BingX.Net.Enums.TakeProfitStopLossMode">
             <summary>
             Take Profit / Stop Loss mode

@@ -29,6 +29,16 @@ namespace BingX.Net.Enums
         /// Trading suspended
         /// </summary>
         [Map("25")]
-        Suspended
+        Suspended,
+        /// <summary>
+        /// Pre-delisted
+        /// </summary>
+        [Map("29")]
+        PreDelisted,
+        /// <summary>
+        /// Delisted
+        /// </summary>
+        [Map("30")]
+        Delisted
     }
 }
