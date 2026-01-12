@@ -112,6 +112,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="stopGuaranteed">Stop guaranteed</param>
         /// <param name="clientOrderId">Client order id</param>
         /// <param name="workingType">Working type for stop orders</param>
+        /// <param name="quoteQuantity">Quantity in quote asset</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesOrder>> PlaceOrderAsync(
@@ -143,6 +144,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
             bool? stopGuaranteed = null,
             string? clientOrderId = null,
             TriggerType? workingType = null,
+            decimal? quoteQuantity = null,
             CancellationToken ct = default);
 
         /// <summary>

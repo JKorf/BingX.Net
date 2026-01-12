@@ -157,6 +157,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             bool? stopGuaranteed = null,
             string? clientOrderId = null,
             TriggerType? workingType = null,
+            decimal? quoteQuantity = null,
             CancellationToken ct = default)
         {
             var parameter = new ParameterCollection()
@@ -168,6 +169,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameter.AddEnum("positionSide", positionSide);
             parameter.AddOptional("reduceOnly", reduceOnly);
             parameter.AddOptional("quantity", quantity);
+            parameter.AddOptional("quoteOrderQty", quoteQuantity);
             parameter.AddOptional("price", price);
             parameter.AddOptional("stopPrice", stopPrice);
             parameter.AddOptional("clientOrderId", clientOrderId);

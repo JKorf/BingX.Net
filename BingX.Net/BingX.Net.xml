@@ -482,6 +482,9 @@
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToPartialOrderBookUpdatesAsync(System.String,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToIncrementalOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXIncrementalOrderBook}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:BingX.Net.Clients.SpotApi.BingXSocketClientSpotApi.SubscribeToTickerUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXTickerUpdate}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -644,7 +647,7 @@
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceTestOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Nullable{BingX.Net.Enums.TriggerType},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXRestClientPerpetualFuturesApiTrading.PlaceMultipleOrderAsync(System.Collections.Generic.IEnumerable{BingX.Net.Objects.Models.BingXFuturesPlaceOrderRequest},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
@@ -739,6 +742,9 @@
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync(System.String,System.Int32,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToIncrementalOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:BingX.Net.Clients.PerpetualFuturesApi.BingXSocketClientPerpetualFuturesApi.SubscribeToPartialOrderBookUpdatesAsync(System.Int32,System.Int32,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXOrderBook}},System.Threading.CancellationToken)">
@@ -1757,6 +1763,11 @@
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
         </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesIncrementalOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesKlineUpdateArray">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
@@ -1783,6 +1794,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXFuturesTradeUpdate">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXUpdateBingXIncrementalOrderBook">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -2152,6 +2168,11 @@
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
         </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesIncrementalOrderBook">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXFuturesKline">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
@@ -2403,6 +2424,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXIncomeArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.BingXIncrementalOrderBook">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -3028,6 +3054,11 @@
             </summary>
         </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.ParameterCollection">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.DictionaryDecimalDecimal">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
@@ -3669,6 +3700,16 @@
         <member name="F:BingX.Net.Enums.SymbolStatus.Suspended">
             <summary>
             Trading suspended
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.SymbolStatus.PreDelisted">
+            <summary>
+            Pre-delisted
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.SymbolStatus.Delisted">
+            <summary>
+            Delisted
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.TakeProfitStopLossMode">
@@ -4430,7 +4471,7 @@
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Nullable{BingX.Net.Enums.TriggerType},System.Threading.CancellationToken)">
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXRestClientPerpetualFuturesApiTrading.PlaceOrderAsync(System.String,BingX.Net.Enums.OrderSide,BingX.Net.Enums.FuturesOrderType,BingX.Net.Enums.PositionSide,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TakeProfitStopLossMode},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Boolean},System.Nullable{BingX.Net.Enums.TimeInForce},System.Nullable{System.Boolean},System.Nullable{System.Decimal},System.Nullable{System.Boolean},System.String,System.Nullable{BingX.Net.Enums.TriggerType},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
             <summary>
             Place a new order
             <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20order" /></para>
@@ -4460,6 +4501,7 @@
             <param name="stopGuaranteed">Stop guaranteed</param>
             <param name="clientOrderId">Client order id</param>
             <param name="workingType">Working type for stop orders</param>
+            <param name="quoteQuantity">Quantity in quote asset</param>
             <param name="ct">Cancellation token</param>
             <returns></returns>
         </member>
@@ -4735,6 +4777,16 @@
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="depth">Book depth, 5, 10, 20, 50 or 100</param>
             <param name="updateInterval">The update interval in ms, 100, 200, 500 or 1000</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.PerpetualFuturesApi.IBingXSocketClientPerpetualFuturesApi.SubscribeToIncrementalOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to live incremental order book updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Incremental%20Depth%20Information" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -5411,6 +5463,16 @@
             </summary>
             <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="depth">The depth of the orderbook, 5, 10, 20, 50 or 100</param>
+            <param name="onMessage">The event handler for the received data</param>
+            <param name="ct">Cancellation token for closing this subscription</param>
+            <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        </member>
+        <member name="M:BingX.Net.Interfaces.Clients.SpotApi.IBingXSocketClientSpotApi.SubscribeToIncrementalOrderBookUpdatesAsync(System.String,System.Action{CryptoExchange.Net.Objects.Sockets.DataEvent{BingX.Net.Objects.Models.BingXIncrementalOrderBook}},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe to live incremental order book updates
+            <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Incremental%20and%20Full%20Depth%20Information" /></para>
+            </summary>
+            <param name="symbol">The symbol, for example `ETH-USDT`</param>
             <param name="onMessage">The event handler for the received data</param>
             <param name="ct">Cancellation token for closing this subscription</param>
             <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
@@ -6497,6 +6559,46 @@
         <member name="P:BingX.Net.Objects.Models.BingXFuturesBookTicker.BestAskQuantity">
             <summary>
             Current best ask quantity
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook">
+            <summary>
+            Order book info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook.Action">
+            <summary>
+            Action
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook.Bids">
+            <summary>
+            List of bids
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook.Asks">
+            <summary>
+            List of asks
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook.Timestamp">
+            <summary>
+            Timestamp of the data
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook.LastUpdateId">
+            <summary>
+            Last update id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXFuturesIncrementalOrderBook.SourceUpdateId">
+            <summary>
+            Source update id
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXFuturesKline">
@@ -7637,6 +7739,46 @@
         <member name="P:BingX.Net.Objects.Models.BingXIncome.Timestamp">
             <summary>
             Timestamp
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Objects.Models.BingXIncrementalOrderBook">
+            <summary>
+            Order book info
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIncrementalOrderBook.Action">
+            <summary>
+            Action
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIncrementalOrderBook.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIncrementalOrderBook.Bids">
+            <summary>
+            List of bids
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIncrementalOrderBook.Asks">
+            <summary>
+            List of asks
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIncrementalOrderBook.Timestamp">
+            <summary>
+            Timestamp of the data
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIncrementalOrderBook.LastUpdateId">
+            <summary>
+            Last update id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXIncrementalOrderBook.SourceUpdateId">
+            <summary>
+            Source update id
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXInternalTransfers">

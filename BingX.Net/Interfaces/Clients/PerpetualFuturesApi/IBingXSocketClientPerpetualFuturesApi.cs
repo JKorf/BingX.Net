@@ -43,6 +43,16 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(string symbol, int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default);
 
         /// <summary>
+        /// Subscribe to live incremental order book updates
+        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Incremental%20Depth%20Information" /></para>
+        /// </summary>
+        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
+        /// <param name="onMessage">The event handler for the received data</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<CallResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesIncrementalOrderBook>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
         /// Subscribe to order book updates for all symbols
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data%20of%20all%20trading%20pairs" /></para>
         /// </summary>

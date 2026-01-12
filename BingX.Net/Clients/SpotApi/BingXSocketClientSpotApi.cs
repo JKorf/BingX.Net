@@ -128,6 +128,20 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
+        public async Task<CallResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXIncrementalOrderBook>> onMessage, CancellationToken ct = default)
+        {
+            var stream = symbol + "@incrDepth";
+            var subscription = new BingXSubscription<BingXIncrementalOrderBook>(_logger, this, stream, x =>
+            {
+                onMessage(
+                    x.WithStreamId(stream)
+                    .WithSymbol(symbol)
+                    .WithSequenceNumber(x.Data.LastUpdateId));
+            }, false);
+            return await SubscribeAsync(BaseAddress.AppendPath("market"), subscription, ct).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
