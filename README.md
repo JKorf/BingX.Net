@@ -157,6 +157,13 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 3.2.0 - 13 Jan 2026
+    * Updated CryptoExchange.Net to version 10.2.0, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
+    * Added SubscribeToIncrementalOrderBookUpdatesAsync for Spot and Perpetual Futures websocket API
+    * Added quoteQuantity parameter to restClient.PerpetualFuturesApi.Trading.PlaceOrderAsync endpoint
+    * Added PreDelisted, Delisted values to SymbolStatus enum
+    * Removed no longer applied IP rate limits for auth endpoints
+
 * Version 3.1.0 - 07 Jan 2026
     * Updated CryptoExchange.Net version to 10.1.0, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
     * Added DataTimeLocal and DataAge properties to DataEvent object
