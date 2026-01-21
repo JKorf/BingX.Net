@@ -948,6 +948,11 @@
             Defines the source generated JSON serialization contract metadata for a given type.
             </summary>
         </member>
+        <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TransferDirection">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
         <member name="P:BingX.Net.Converters.BingXSourceGenerationContext.TransferType">
             <summary>
             Defines the source generated JSON serialization contract metadata for a given type.
@@ -3805,6 +3810,21 @@
         <member name="F:BingX.Net.Enums.TransferAccountType.CoinPerpetualFutures">
             <summary>
             Coin perpetual futures account
+            </summary>
+        </member>
+        <member name="T:BingX.Net.Enums.TransferDirection">
+            <summary>
+            Transfer direction
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferDirection.Out">
+            <summary>
+            Out
+            </summary>
+        </member>
+        <member name="F:BingX.Net.Enums.TransferDirection.In">
+            <summary>
+            In
             </summary>
         </member>
         <member name="T:BingX.Net.Enums.TransferType">
@@ -7808,7 +7828,7 @@
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.Quantity">
             <summary>
-            Quantity transfered
+            Quantity transferred
             </summary>
         </member>
         <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.TransactionId">
@@ -7824,6 +7844,26 @@
         <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.Status">
             <summary>
             Status
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.FromUid">
+            <summary>
+            From
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.TransferType">
+            <summary>
+            Type
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.TransferClientId">
+            <summary>
+            Client id
+            </summary>
+        </member>
+        <member name="P:BingX.Net.Objects.Models.BingXInternalTransfer.Timestamp">
+            <summary>
+            Timestamp
             </summary>
         </member>
         <member name="T:BingX.Net.Objects.Models.BingXIsolatedMarginResult">

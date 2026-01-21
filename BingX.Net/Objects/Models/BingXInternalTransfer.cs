@@ -36,7 +36,7 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Quantity transfered
+        /// Quantity transferred
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }
@@ -55,5 +55,25 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("status")]
         public InternalTransferStatus Status { get; set; }
+        /// <summary>
+        /// From
+        /// </summary>
+        [JsonPropertyName("fromUid")]
+        public long FromUid { get; set; }
+        /// <summary>
+        /// Type
+        /// </summary>
+        [JsonPropertyName("recordType")]
+        public TransferDirection TransferType { get; set; }
+        /// <summary>
+        /// Client id
+        /// </summary>
+        [JsonPropertyName("transferClientId")]
+        public string? TransferClientId { get; set; }
+        /// <summary>
+        /// Timestamp
+        /// </summary>
+        [JsonPropertyName("time")]
+        public DateTime Timestamp { get; set; }
     }
 }
