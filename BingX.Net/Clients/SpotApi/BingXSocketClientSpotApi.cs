@@ -35,13 +35,6 @@ namespace BingX.Net.Clients.SpotApi
         // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
 
         #region fields
-        private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
-        private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");
-        private static readonly MessagePath _pingPath = MessagePath.Get().Property("ping");
-        private static readonly MessagePath _eventPath = MessagePath.Get().Property("data").Property("e");
-        private static readonly MessagePath _eventPath2 = MessagePath.Get().Property("e");
-        private static readonly MessagePath _symbolPath = MessagePath.Get().Property("data").Property("s");
-
         protected override ErrorMapping ErrorMapping => BingXErrors.SpotErrors;
         #endregion
 
@@ -73,8 +66,6 @@ namespace BingX.Net.Clients.SpotApi
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
-        /// <inheritdoc />
-        protected override IByteMessageAccessor CreateAccessor(WebSocketMessageType type) => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
         /// <inheritdoc />
         public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
@@ -223,40 +214,6 @@ namespace BingX.Net.Clients.SpotApi
                 return data;
 
             return data.DecompressGzip();
-        }
-
-        /// <inheritdoc />
-        public override ReadOnlyMemory<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlyMemory<byte> data)
-        {
-            if (type != WebSocketMessageType.Binary)
-                return data;
-
-            return data.DecompressGzip();
-        }
-
-        /// <inheritdoc />
-        public override string? GetListenerIdentifier(IMessageAccessor message)
-        {
-            var id = message.GetValue<string>(_idPath);
-            if (id != null)
-                return id;
-
-            var dataType = message.GetValue<string>(_dataTypePath);
-            if (dataType != null)
-                return dataType;
-
-            var evnt = message.GetValue<string>(_eventPath);
-            var symbol = message.GetValue<string>(_symbolPath);
-            if (evnt != null)
-                return evnt + symbol;
-
-            var evnt2 = message.GetValue<string>(_eventPath2);
-            if (evnt2 != null)
-                // Specifically for ACCOUNT_UPDATE messages which aren't wrapped
-                return evnt2;
-
-            var ping = message.GetValue<string>(_pingPath);
-            return ping != null ? "ping" : ping;
         }
 
         private string KlineIntervalToWebsocketString(KlineInterval interval) => interval switch

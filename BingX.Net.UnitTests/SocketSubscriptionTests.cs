@@ -14,9 +14,8 @@ namespace BingX.Net.UnitTests
     [TestFixture]
     public class SocketSubscriptionTests
     {
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task ValidateConcurrentSpotSubscriptions(bool newDeserialization)
+        [Test]
+        public async Task ValidateConcurrentSpotSubscriptions()
         {
             var logger = new LoggerFactory();
             logger.AddProvider(new TraceLoggerProvider());
@@ -24,8 +23,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
                 ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
-                OutputOriginalData = true,
-                UseUpdatedDeserialization = newDeserialization
+                OutputOriginalData = true
             }), logger);
 
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/Spot", "wss://open-api-ws.bingx.com/market", "data");
@@ -35,17 +33,15 @@ namespace BingX.Net.UnitTests
                 "Concurrent");
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task ValidateSpotSubscriptions(bool newDeserialization)
+        [Test]
+        public async Task ValidateSpotSubscriptions()
         {
             var logger = new LoggerFactory();
             logger.AddProvider(new TraceLoggerProvider());
 
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
-                UseUpdatedDeserialization = newDeserialization
+                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456")
             }), logger);
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/Spot", "wss://open-api-ws.bingx.com/market");
             await tester.ValidateAsync<BingXTradeUpdate>((client, handler) => client.SpotApi.SubscribeToTradeUpdatesAsync("BTC-USDT", handler), "Trades", nestedJsonProperty: "data");
@@ -59,9 +55,8 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync<BingXBalanceUpdate>((client, handler) => client.SpotApi.SubscribeToBalanceUpdatesAsync("123", handler), "Balance");
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task ValidateConcurrentPerpetualFutureSubscriptions(bool newDeserialization)
+        [Test]
+        public async Task ValidateConcurrentPerpetualFutureSubscriptions()
         {
             var logger = new LoggerFactory();
             logger.AddProvider(new TraceLoggerProvider());
@@ -69,8 +64,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
                 ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
-                OutputOriginalData = true,
-                UseUpdatedDeserialization = newDeserialization
+                OutputOriginalData = true
             }), logger);
 
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-ws.bingx.com/market", "data");
@@ -80,17 +74,15 @@ namespace BingX.Net.UnitTests
                 "Concurrent");
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task ValidatePerpetualFutureSubscriptions(bool newDeserialization)
+        [Test]
+        public async Task ValidatePerpetualFutureSubscriptions()
         {
             var logger = new LoggerFactory();
             logger.AddProvider(new TraceLoggerProvider());
 
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
-                UseUpdatedDeserialization = newDeserialization
+                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456")
             }), logger);
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-ws.bingx.com/market");
             await tester.ValidateAsync<BingXFuturesTradeUpdate[]>((client, handler) => client.PerpetualFuturesApi.SubscribeToTradeUpdatesAsync("ETH-USDT", handler), "Trades", nestedJsonProperty: "data");

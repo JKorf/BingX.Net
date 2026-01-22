@@ -43,15 +43,6 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                 MessageRoute<BingXConfigUpdate>.CreateWithoutTopicFilter("SNAPSHOTAC", DoHandleMessage),
                 MessageRoute<BingXFuturesAccountUpdate>.CreateWithoutTopicFilter("SNAPSHOTA", DoHandleMessage),
                 ]);
-
-            MessageMatcher = MessageMatcher.Create([
-                new MessageHandlerLink<BingXListenKeyExpiredUpdate>("listenKeyExpired", DoHandleMessage),
-                new MessageHandlerLink<BingXConfigUpdate>("ACCOUNT_CONFIG_UPDATE", DoHandleMessage),
-                new MessageHandlerLink<BingXFuturesAccountUpdate>("ACCOUNT_UPDATE", DoHandleMessage),
-                new MessageHandlerLink<BingXFuturesOrderUpdateWrapper>("ORDER_TRADE_UPDATE", DoHandleMessage),
-                new MessageHandlerLink<BingXConfigUpdate>("SNAPSHOTAC", DoHandleMessage),
-                new MessageHandlerLink<BingXFuturesAccountUpdate>("SNAPSHOTA", DoHandleMessage),
-                ]);
         }
 
         /// <inheritdoc />

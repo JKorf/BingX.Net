@@ -13,7 +13,6 @@ namespace BingX.Net.Objects.Sockets
         public BingXQuery(SocketApiClient client, BingXSocketRequest request, bool authenticated, int weight = 1) : base(request, authenticated, weight)
         {
             _client = client;
-            MessageMatcher = MessageMatcher.Create<BingXSocketResponse>(request.Id, HandleMessage);
             MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXSocketResponse>(request.Id, HandleMessage);
         }
 

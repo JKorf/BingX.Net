@@ -11,7 +11,6 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
     {
         public BingXFuturesPingSubscription(ILogger logger) : base(logger, false)
         {
-            MessageMatcher = MessageMatcher.Create<string>("Ping", DoHandleMessage);
             MessageRouter = MessageRouter.CreateWithoutTopicFilter<string>("Ping", DoHandleMessage);
         }
 

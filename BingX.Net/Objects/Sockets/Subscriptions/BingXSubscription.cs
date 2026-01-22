@@ -27,7 +27,6 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _handler = handler;
             _topic = listenId;
 
-            MessageMatcher = MessageMatcher.Create<BingXUpdate<T>>(listenId, DoHandleMessage);
             MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXUpdate<T>>(listenId, DoHandleMessage);
         }
 

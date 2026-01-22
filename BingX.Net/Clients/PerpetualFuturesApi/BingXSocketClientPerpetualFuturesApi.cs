@@ -35,12 +35,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
 
         #region fields
-        private static readonly MessagePath _idPath = MessagePath.Get().Property("id");
-        private static readonly MessagePath _dataTypePath = MessagePath.Get().Property("dataType");
-        private static readonly MessagePath _eventPath = MessagePath.Get().Property("e");
-
-        private static readonly MessagePath _acPath = MessagePath.Get().Property("ac");
-        private static readonly MessagePath _aPath = MessagePath.Get().Property("a");
 
         protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
         #endregion
@@ -53,8 +47,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         internal BingXSocketClientPerpetualFuturesApi(ILogger logger, BingXSocketOptions options) :
             base(logger, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
         {
-            ProcessUnparsableMessages = true;
-
             AddSystemSubscription(new BingXFuturesPingSubscription(_logger));
         }
         #endregion
@@ -72,8 +64,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
-        /// <inheritdoc />
-        protected override IByteMessageAccessor CreateAccessor(WebSocketMessageType type) => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
         public IBingXSocketClientPerpetualFuturesApiShared SharedClient => this;
 
@@ -267,16 +257,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public override ReadOnlyMemory<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlyMemory<byte> data)
-        {
-            if (type != WebSocketMessageType.Binary)
-                return data;
-
-            return data.DecompressGzip();
-        }
-
-
-        /// <inheritdoc />
         public override ReadOnlySpan<byte> PreprocessStreamMessage(SocketConnection connection, WebSocketMessageType type, ReadOnlySpan<byte> data)
         {
             if (type != WebSocketMessageType.Binary)
@@ -285,30 +265,5 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return data.DecompressGzip();
         }
 
-        /// <inheritdoc />
-        public override string? GetListenerIdentifier(IMessageAccessor message)
-        {
-            if (!message.IsValid && string.Equals(message.GetOriginalString(), "Ping", StringComparison.Ordinal))
-                return "Ping";
-
-            var id = message.GetValue<string>(_idPath);
-            if (id != null)
-                return id;
-
-            var dataType = message.GetValue<string>(_dataTypePath);
-            if (dataType != null)
-                return dataType;
-
-            var evnt = message.GetValue<string>(_eventPath);
-            if (evnt!.Equals("SNAPSHOT", StringComparison.Ordinal))
-            {
-                if (message.GetNodeType(_acPath) != null)
-                    return evnt + "AC";
-                if (message.GetNodeType(_aPath) != null)
-                    return evnt + "A";
-            }
-
-            return evnt;
-        }
     }
 }

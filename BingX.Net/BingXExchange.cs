@@ -17,6 +17,19 @@ namespace BingX.Net
     public static class BingXExchange
     {
         /// <summary>
+        /// Platform metadata
+        /// </summary>
+        public static PlatformInfo Metadata { get; } = new PlatformInfo(
+                "BingX",
+                "BingX",
+                "https://raw.githubusercontent.com/JKorf/BingX.Net/master/BingX.Net/Icon/BingX.png",
+                "https://www.bingx.com",
+                ["https://bingx-api.github.io/docs"],
+                PlatformType.CryptoCurrencyExchange,
+                CentralizationType.Centralized
+                );
+
+        /// <summary>
         /// Exchange name
         /// </summary>
         public static string ExchangeName => "BingX";

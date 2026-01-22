@@ -23,52 +23,10 @@ namespace BingX.Net.Benchmark.Client
         private const int _receiveTarget = 1000; // Should match the number in the server
 
 
-        [GlobalSetup(Target = nameof(NormalNew))]
+        [GlobalSetup]
         public void GlobalSetupNew()
         {
-            CreateClient(true);
-        }
-
-        [GlobalSetup(Targets = [nameof(Normal), /*nameof(HighPerf)*/])]
-        public void GlobalSetup()
-        {
-            CreateClient(false);
-        }
-
-        //[Benchmark()]
-        //public async Task HighPerf()
-        //{
-        //    var waitEvent = new AsyncResetEvent(false, false);
-        //    var received = 0;
-        //    var result = await Client.SpotApi.SubscribeToTradeUpdatesPerfAsync(["ETHUSDT"], x =>
-        //    {
-        //        received++;
-                
-        //        if (received == _receiveTarget)
-        //            waitEvent.Set();
-
-        //        return new ValueTask();
-        //    }, CancellationToken.None);
-
-        //    await waitEvent.WaitAsync();
-        //    await result.Data.CloseAsync();
-        //}
-
-        [Benchmark()]
-        public async Task NormalNew()
-        {
-            var waitEvent = new AsyncResetEvent(false, false);
-            var received = 0;
-            var result = await Client.SpotApi.SubscribeToTradeUpdatesAsync("ETH-USDT", x =>
-            {
-                received++;
-                if (received == _receiveTarget)
-                    waitEvent.Set();
-
-            }, CancellationToken.None);
-
-            await waitEvent.WaitAsync();
-            await result.Data.CloseAsync();
+            CreateClient();
         }
 
         [Benchmark()]
@@ -94,7 +52,7 @@ namespace BingX.Net.Benchmark.Client
             Client.Dispose();
         }
 
-        private void CreateClient(bool enableNewDeserialization)
+        private void CreateClient()
         {
             var logger = new LoggerFactory();
             //logger.AddProvider(new TraceLoggerProvider());
@@ -102,7 +60,6 @@ namespace BingX.Net.Benchmark.Client
             Client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
                 ReconnectPolicy = ReconnectPolicy.Disabled,
-                UseUpdatedDeserialization = enableNewDeserialization,
                 RateLimiterEnabled = false,
                 Environment = BingXEnvironment.CreateCustom("Benchmark", "", "ws://localhost:5034", "")
             }), logger);
