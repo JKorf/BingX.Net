@@ -1,3 +1,4 @@
+using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Text.Json.Serialization;
 
@@ -16,6 +17,7 @@ namespace BingX.Net.Objects.Internal
     internal record BingXResult<T> : BingXResult
     {
         [JsonPropertyName("data")]
+        [JsonConverter(typeof(ObjectOrArrayConverter))]
         public T? Data { get; set; }
     }
 }
