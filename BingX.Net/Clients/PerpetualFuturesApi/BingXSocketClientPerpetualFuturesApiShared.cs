@@ -216,6 +216,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 onAccountUpdate: update => handler(update.ToType(update.Data.Update.Positions.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), x.Symbol, x.Size, update.Data.EventTime)
                 {
                     AverageOpenPrice = x.EntryPrice,
+                    PositionMode = SharedPositionMode.HedgeMode,
                     PositionSide = x.Side == Enums.TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
                     UnrealizedPnl = x.UnrealizedPnl
                 }).ToArray())),

@@ -1,4 +1,6 @@
-﻿using CryptoExchange.Net.Interfaces;
+﻿using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Interfaces;
+using CryptoExchange.Net.Trackers.UserData;
 
 namespace BingX.Net.Interfaces
 {
@@ -7,5 +9,9 @@ namespace BingX.Net.Interfaces
     /// </summary>
     public interface IBingXTrackerFactory : ITrackerFactory
     {
+        IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, UserDataTrackerConfig config, ApiCredentials credentials, BingXEnvironment? environment = null);
+        IUserSpotDataTracker CreateUserSpotDataTracker(UserDataTrackerConfig config);
+        IUserFuturesDataTracker CreateUserFuturesDataTracker(string userIdentifier, UserDataTrackerConfig config, ApiCredentials credentials, BingXEnvironment? environment = null);
+        IUserFuturesDataTracker CreateUserFuturesDataTracker(UserDataTrackerConfig config);
     }
 }

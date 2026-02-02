@@ -782,6 +782,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 LiquidationPrice = x.LiquidationPrice,
                 Leverage = x.Leverage,
                 AverageOpenPrice = x.AveragePrice,
+                PositionMode = SharedPositionMode.HedgeMode,
                 PositionSide = x.Side == TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long
             }).ToArray());
         }
