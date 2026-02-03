@@ -1,6 +1,8 @@
 ﻿using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Trackers.UserData;
+using CryptoExchange.Net.Trackers.UserData.Interfaces;
+using CryptoExchange.Net.Trackers.UserData.Objects;
 
 namespace BingX.Net.Interfaces
 {
@@ -9,9 +11,32 @@ namespace BingX.Net.Interfaces
     /// </summary>
     public interface IBingXTrackerFactory : ITrackerFactory
     {
-        IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, UserDataTrackerConfig config, ApiCredentials credentials, BingXEnvironment? environment = null);
-        IUserSpotDataTracker CreateUserSpotDataTracker(UserDataTrackerConfig config);
-        IUserFuturesDataTracker CreateUserFuturesDataTracker(string userIdentifier, UserDataTrackerConfig config, ApiCredentials credentials, BingXEnvironment? environment = null);
-        IUserFuturesDataTracker CreateUserFuturesDataTracker(UserDataTrackerConfig config);
+        /// <summary>
+        /// Create a new Spot user data tracker
+        /// </summary>
+        /// <param name="userIdentifier">User identifier</param>
+        /// <param name="config">Configuration</param>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="environment">Environment</param>
+        IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, SpotUserDataTrackerConfig config, ApiCredentials credentials, BingXEnvironment? environment = null);
+        /// <summary>
+        /// Create a new spot user data tracker
+        /// </summary>
+        /// <param name="config">Configuration</param>
+        IUserSpotDataTracker CreateUserSpotDataTracker(SpotUserDataTrackerConfig config);
+
+        /// <summary>
+        /// Create a new futures user data tracker
+        /// </summary>
+        /// <param name="userIdentifier">User identifier</param>
+        /// <param name="config">Configuration</param>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="environment">Environment</param>
+        IUserFuturesDataTracker CreateUserFuturesDataTracker(string userIdentifier, FuturesUserDataTrackerConfig config, ApiCredentials credentials, BingXEnvironment? environment = null);
+        /// <summary>
+        /// Create a new futures user data tracker
+        /// </summary>
+        /// <param name="config">Configuration</param>
+        IUserFuturesDataTracker CreateUserFuturesDataTracker(FuturesUserDataTrackerConfig config);
     }
 }

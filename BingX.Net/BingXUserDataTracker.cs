@@ -1,32 +1,62 @@
 ﻿using BingX.Net.Interfaces.Clients;
 using CryptoExchange.Net.Trackers.UserData;
+using CryptoExchange.Net.Trackers.UserData.Objects;
 using Microsoft.Extensions.Logging;
 
 namespace BingX.Net
 {
+    /// <inheritdoc />
     public class BingXUserSpotDataTracker : UserSpotDataTracker
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
         public BingXUserSpotDataTracker(
             ILogger<BingXUserSpotDataTracker> logger,
             IBingXRestClient restClient,
             IBingXSocketClient socketClient,
             string? userIdentifier,
-            UserDataTrackerConfig config) : base(logger, restClient.SpotApi.SharedClient, socketClient.SpotApi.SharedClient, userIdentifier, config)
+            SpotUserDataTrackerConfig config) : base(
+                logger,
+                restClient.SpotApi.SharedClient,
+                restClient.SpotApi.SharedClient,
+                restClient.SpotApi.SharedClient,
+                socketClient.SpotApi.SharedClient,
+                restClient.SpotApi.SharedClient,
+                socketClient.SpotApi.SharedClient,
+                null,
+                userIdentifier,
+                config)
         {
 
         }
     }
 
+    /// <inheritdoc />
     public class BingXUserFuturesDataTracker : UserFuturesDataTracker
     {
+        /// <inheritdoc />
         protected override bool WebsocketPositionUpdatesAreFullSnapshots => false;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
         public BingXUserFuturesDataTracker(
             ILogger<BingXUserFuturesDataTracker> logger,
             IBingXRestClient restClient,
             IBingXSocketClient socketClient,
             string? userIdentifier,
-            UserDataTrackerConfig config) : base(logger, restClient.PerpetualFuturesApi.SharedClient, socketClient.PerpetualFuturesApi.SharedClient, userIdentifier, config)
+            FuturesUserDataTrackerConfig config) : base(logger,
+                restClient.PerpetualFuturesApi.SharedClient,
+                restClient.PerpetualFuturesApi.SharedClient,
+                restClient.PerpetualFuturesApi.SharedClient,
+                socketClient.PerpetualFuturesApi.SharedClient,
+                restClient.PerpetualFuturesApi.SharedClient,
+                socketClient.PerpetualFuturesApi.SharedClient,
+                null,
+                socketClient.PerpetualFuturesApi.SharedClient,
+                userIdentifier,
+                config)
         {
 
         }
