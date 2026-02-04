@@ -725,7 +725,13 @@ namespace BingX.Net.Clients.SpotApi
             if (result.Data.Count() == (request.Limit ?? 100))
                 nextToken = new OffsetToken((offset ?? 0) + result.Data.Count());
 
-            return result.AsExchangeResult<SharedDeposit[]>(Exchange, TradingMode.Spot, result.Data.Select(x => new SharedDeposit(x.Asset, x.Quantity, x.Status == DepositStatus.Completed, x.InsertTime)
+            return result.AsExchangeResult<SharedDeposit[]>(Exchange, TradingMode.Spot, result.Data.Select(x => 
+            new SharedDeposit(
+                x.Asset,
+                x.Quantity,
+                x.Status == DepositStatus.Completed,
+                x.InsertTime,
+                x.Status == DepositStatus.Completed ? SharedTransferStatus.Completed : SharedTransferStatus.InProgress)
             {
                 Confirmations = x.ConfirmedTimes.Contains("/") ? int.Parse(x.ConfirmedTimes.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries)[0]) : null,
                 Tag = x.AddressTag,
