@@ -16,7 +16,7 @@ namespace BingX.Net
             IBingXRestClient restClient,
             IBingXSocketClient socketClient,
             string? userIdentifier,
-            SpotUserDataTrackerConfig config) : base(
+            SpotUserDataTrackerConfig? config) : base(
                 logger,
                 restClient.SpotApi.SharedClient,
                 restClient.SpotApi.SharedClient,
@@ -26,14 +26,14 @@ namespace BingX.Net
                 socketClient.SpotApi.SharedClient,
                 null,
                 userIdentifier,
-                config)
+                config ?? new SpotUserDataTrackerConfig())
         {
 
         }
     }
 
     /// <inheritdoc />
-    public class BingXUserFuturesDataTracker : UserFuturesDataTracker
+    public class BingXUserPerpetualFuturesDataTracker : UserFuturesDataTracker
     {
         /// <inheritdoc />
         protected override bool WebsocketPositionUpdatesAreFullSnapshots => false;
@@ -41,12 +41,12 @@ namespace BingX.Net
         /// <summary>
         /// ctor
         /// </summary>
-        public BingXUserFuturesDataTracker(
-            ILogger<BingXUserFuturesDataTracker> logger,
+        public BingXUserPerpetualFuturesDataTracker(
+            ILogger<BingXUserPerpetualFuturesDataTracker> logger,
             IBingXRestClient restClient,
             IBingXSocketClient socketClient,
             string? userIdentifier,
-            FuturesUserDataTrackerConfig config) : base(logger,
+            FuturesUserDataTrackerConfig? config) : base(logger,
                 restClient.PerpetualFuturesApi.SharedClient,
                 restClient.PerpetualFuturesApi.SharedClient,
                 restClient.PerpetualFuturesApi.SharedClient,
@@ -56,7 +56,7 @@ namespace BingX.Net
                 null,
                 socketClient.PerpetualFuturesApi.SharedClient,
                 userIdentifier,
-                config)
+                config ?? new FuturesUserDataTrackerConfig())
         {
 
         }

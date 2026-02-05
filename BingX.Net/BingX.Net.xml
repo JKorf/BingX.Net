@@ -163,15 +163,14 @@
         </member>
         <member name="M:BingX.Net.BingXTrackerFactory.CreateUserSpotDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig)">
             <inheritdoc />
+        </member>
+        <member name="M:BingX.Net.BingXTrackerFactory.CreateUserSpotDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig,BingX.Net.BingXEnvironment)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.BingXTrackerFactory.CreateUserSpotDataTracker(System.String,CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+        <member name="M:BingX.Net.BingXTrackerFactory.BingXUserPerpetualFuturesDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.BingXTrackerFactory.CreateUserFuturesDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
-            <inheritdoc />
-        </member>
-        <member name="M:BingX.Net.BingXTrackerFactory.CreateUserFuturesDataTracker(System.String,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+        <member name="M:BingX.Net.BingXTrackerFactory.BingXUserPerpetualFuturesDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig,BingX.Net.BingXEnvironment)">
             <inheritdoc />
         </member>
         <member name="T:BingX.Net.BingXUserSpotDataTracker">
@@ -182,13 +181,13 @@
             ctor
             </summary>
         </member>
-        <member name="T:BingX.Net.BingXUserFuturesDataTracker">
+        <member name="T:BingX.Net.BingXUserPerpetualFuturesDataTracker">
             <inheritdoc />
         </member>
-        <member name="P:BingX.Net.BingXUserFuturesDataTracker.WebsocketPositionUpdatesAreFullSnapshots">
+        <member name="P:BingX.Net.BingXUserPerpetualFuturesDataTracker.WebsocketPositionUpdatesAreFullSnapshots">
             <inheritdoc />
         </member>
-        <member name="M:BingX.Net.BingXUserFuturesDataTracker.#ctor(Microsoft.Extensions.Logging.ILogger{BingX.Net.BingXUserFuturesDataTracker},BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient,System.String,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
+        <member name="M:BingX.Net.BingXUserPerpetualFuturesDataTracker.#ctor(Microsoft.Extensions.Logging.ILogger{BingX.Net.BingXUserPerpetualFuturesDataTracker},BingX.Net.Interfaces.Clients.IBingXRestClient,BingX.Net.Interfaces.Clients.IBingXSocketClient,System.String,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
             <summary>
             ctor
             </summary>
@@ -5612,7 +5611,7 @@
             Tracker factory
             </summary>
         </member>
-        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.CreateUserSpotDataTracker(System.String,CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.CreateUserSpotDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.SpotUserDataTrackerConfig,BingX.Net.BingXEnvironment)">
             <summary>
             Create a new Spot user data tracker
             </summary>
@@ -5627,7 +5626,7 @@
             </summary>
             <param name="config">Configuration</param>
         </member>
-        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.CreateUserFuturesDataTracker(System.String,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig,CryptoExchange.Net.Authentication.ApiCredentials,BingX.Net.BingXEnvironment)">
+        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.BingXUserPerpetualFuturesDataTracker(System.String,CryptoExchange.Net.Authentication.ApiCredentials,CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig,BingX.Net.BingXEnvironment)">
             <summary>
             Create a new futures user data tracker
             </summary>
@@ -5636,7 +5635,7 @@
             <param name="credentials">Credentials</param>
             <param name="environment">Environment</param>
         </member>
-        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.CreateUserFuturesDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
+        <member name="M:BingX.Net.Interfaces.IBingXTrackerFactory.BingXUserPerpetualFuturesDataTracker(CryptoExchange.Net.Trackers.UserData.Objects.FuturesUserDataTrackerConfig)">
             <summary>
             Create a new futures user data tracker
             </summary>
