@@ -1,11 +1,15 @@
 ﻿using BingX.Net.Clients;
 using BingX.Net.Interfaces;
 using BingX.Net.Interfaces.Clients;
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.SharedApis;
 using CryptoExchange.Net.Trackers.Klines;
 using CryptoExchange.Net.Trackers.Trades;
+using CryptoExchange.Net.Trackers.UserData.Interfaces;
+using CryptoExchange.Net.Trackers.UserData.Objects;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 
 namespace BingX.Net
@@ -92,6 +96,64 @@ namespace BingX.Net
                 symbol,
                 limit,
                 period
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserSpotDataTracker CreateUserSpotDataTracker(SpotUserDataTrackerConfig? config = null)
+        {
+            var restClient = _serviceProvider?.GetRequiredService<IBingXRestClient>() ?? new BingXRestClient();
+            var socketClient = _serviceProvider?.GetRequiredService<IBingXSocketClient>() ?? new BingXSocketClient();
+            return new BingXUserSpotDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<BingXUserSpotDataTracker>>() ?? new NullLogger<BingXUserSpotDataTracker>(),
+                restClient,
+                socketClient,
+                null,
+                config
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, ApiCredentials credentials, SpotUserDataTrackerConfig? config = null, BingXEnvironment? environment = null)
+        {
+            var clientProvider = _serviceProvider?.GetRequiredService<IBingXUserClientProvider>() ?? new BingXUserClientProvider();
+            var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);
+            var socketClient = clientProvider.GetSocketClient(userIdentifier, credentials, environment);
+            return new BingXUserSpotDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<BingXUserSpotDataTracker>>() ?? new NullLogger<BingXUserSpotDataTracker>(),
+                restClient,
+                socketClient,
+                userIdentifier,
+                config
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserFuturesDataTracker BingXUserPerpetualFuturesDataTracker(FuturesUserDataTrackerConfig? config = null)
+        {
+            var restClient = _serviceProvider?.GetRequiredService<IBingXRestClient>() ?? new BingXRestClient();
+            var socketClient = _serviceProvider?.GetRequiredService<IBingXSocketClient>() ?? new BingXSocketClient();
+            return new BingXUserPerpetualFuturesDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<BingXUserPerpetualFuturesDataTracker>>() ?? new NullLogger<BingXUserPerpetualFuturesDataTracker>(),
+                restClient,
+                socketClient,
+                null,
+                config
+                );
+        }
+
+        /// <inheritdoc />
+        public IUserFuturesDataTracker BingXUserPerpetualFuturesDataTracker(string userIdentifier, ApiCredentials credentials, FuturesUserDataTrackerConfig? config = null, BingXEnvironment? environment = null)
+        {
+            var clientProvider = _serviceProvider?.GetRequiredService<IBingXUserClientProvider>() ?? new BingXUserClientProvider();
+            var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);
+            var socketClient = clientProvider.GetSocketClient(userIdentifier, credentials, environment);
+            return new BingXUserPerpetualFuturesDataTracker(
+                _serviceProvider?.GetRequiredService<ILogger<BingXUserPerpetualFuturesDataTracker>>() ?? new NullLogger<BingXUserPerpetualFuturesDataTracker>(),
+                restClient,
+                socketClient,
+                userIdentifier,
+                config
                 );
         }
     }
