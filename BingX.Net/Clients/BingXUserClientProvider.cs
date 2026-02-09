@@ -12,8 +12,8 @@ namespace BingX.Net.Clients
     /// <inheritdoc />
     public class BingXUserClientProvider : IBingXUserClientProvider
     {
-        private static ConcurrentDictionary<string, IBingXRestClient> _restClients = new ConcurrentDictionary<string, IBingXRestClient>();
-        private static ConcurrentDictionary<string, IBingXSocketClient> _socketClients = new ConcurrentDictionary<string, IBingXSocketClient>();
+        private ConcurrentDictionary<string, IBingXRestClient> _restClients = new ConcurrentDictionary<string, IBingXRestClient>();
+        private ConcurrentDictionary<string, IBingXSocketClient> _socketClients = new ConcurrentDictionary<string, IBingXSocketClient>();
 
         private readonly IOptions<BingXRestOptions> _restOptions;
         private readonly IOptions<BingXSocketOptions> _socketOptions;
