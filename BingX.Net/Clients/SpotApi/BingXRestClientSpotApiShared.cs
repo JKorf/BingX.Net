@@ -39,7 +39,7 @@ namespace BingX.Net.Clients.SpotApi
             var direction = request.Direction ?? DataDirection.Ascending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var limit = request.Limit ?? 1000;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
 
             // Get data
             var result = await ExchangeData.GetKlinesAsync(
@@ -61,8 +61,6 @@ namespace BingX.Net.Clients.SpotApi
                     result.Data.Select(x => x.OpenTime),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             // Return
@@ -387,7 +385,7 @@ namespace BingX.Net.Clients.SpotApi
             var direction = DataDirection.Descending;
             var limit = request.Limit ?? 100;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
 
             // Pagination using orderId doesn't seem to work correctly
             var result = await Trading.GetOrdersAsync(
@@ -406,8 +404,6 @@ namespace BingX.Net.Clients.SpotApi
                    result.Data.Select(x => x.CreateTime),
                    request.StartTime,
                    request.EndTime ?? DateTime.UtcNow,
-                   limit,
-                   direction,
                    pageParams);
 
             return result.AsExchangeResult(
@@ -479,7 +475,7 @@ namespace BingX.Net.Clients.SpotApi
             var limit = request.Limit ?? 1000;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var pageParams = Pagination.GetPaginationParameters(
-                direction, request.StartTime,
+                direction, limit, request.StartTime,
                 request.EndTime ?? DateTime.UtcNow,
                 pageRequest);
 
@@ -500,8 +496,6 @@ namespace BingX.Net.Clients.SpotApi
                 result.Data.Select(x => x.Timestamp),
                 request.StartTime,
                 request.EndTime ?? DateTime.UtcNow,
-                limit,
-                direction,
                 pageParams);
 
             return result.AsExchangeResult(
@@ -716,7 +710,7 @@ namespace BingX.Net.Clients.SpotApi
 
             var limit = request.Limit ?? 100;
             var direction = DataDirection.Descending;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
 
             // Get data
             var result = await Account.GetDepositHistoryAsync(
@@ -735,8 +729,6 @@ namespace BingX.Net.Clients.SpotApi
                     result.Data.Select(x => x.InsertTime),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             return result.AsExchangeResult(
@@ -791,7 +783,7 @@ namespace BingX.Net.Clients.SpotApi
 
             var limit = request.Limit ?? 100;
             var direction = DataDirection.Descending;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
 
             // Get data
             var result = await Account.GetWithdrawalHistoryAsync(
@@ -810,8 +802,6 @@ namespace BingX.Net.Clients.SpotApi
                     result.Data.Select(x => x.ApplyTime),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             return result.AsExchangeResult(

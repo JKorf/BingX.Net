@@ -40,7 +40,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = DataDirection.Ascending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var limit = request.Limit ?? 1000;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
 
             var result = await ExchangeData.GetKlinesAsync(
                 symbol,
@@ -59,8 +59,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     result.Data.Select(x => x.Timestamp),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             // Return
@@ -336,7 +334,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = DataDirection.Ascending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var limit = request.Limit ?? 1000;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
 
             var result = await ExchangeData.GetMarkPriceKlinesAsync(
                 symbol,
@@ -355,8 +353,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     result.Data.Select(x => x.OpenTime),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             // Return
@@ -388,7 +384,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = DataDirection.Ascending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var limit = request.Limit ?? 1000;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
 
             var result = await ExchangeData.GetMarkPriceKlinesAsync(
                 symbol,
@@ -407,8 +403,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     result.Data.Select(x => x.OpenTime),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             // Return
@@ -453,7 +447,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = DataDirection.Descending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var limit = request.Limit ?? 1000;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
 
             // Get data
             var result = await ExchangeData.GetFundingRateHistoryAsync(
@@ -471,8 +465,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     result.Data.Select(x => x.FundingTime),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             // Return
@@ -628,7 +620,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = request.Direction ?? DataDirection.Ascending;
             var limit = request.Limit ?? 1000;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, maxPeriod: TimeSpan.FromDays(7));
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, maxPeriod: TimeSpan.FromDays(7));
 
             var result = await Trading.GetClosedOrdersAsync(
                 symbol,
@@ -648,8 +640,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                    result.Data.Select(x => x.CreateTime),
                    request.StartTime,
                    request.EndTime ?? DateTime.UtcNow,
-                   limit,
-                   direction,
                    pageParams,
                    TimeSpan.FromDays(7));
 
@@ -726,7 +716,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = request.Direction ?? DataDirection.Ascending;
             var limit = request.Limit ?? 1000;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, maxPeriod: TimeSpan.FromDays(7));
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, maxPeriod: TimeSpan.FromDays(7));
 
             // Get data
             var result = await Trading.GetUserTradesAsync(
@@ -748,8 +738,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                    result.Data.Select(x => x.Timestamp),
                    request.StartTime,
                    request.EndTime ?? DateTime.UtcNow,
-                   limit,
-                   direction,
                    pageParams,
                    TimeSpan.FromDays(7));
 
@@ -1001,7 +989,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = DataDirection.Descending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var limit = request.Limit ?? 1000;
-            var pageParams = Pagination.GetPaginationParameters(direction, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest);
 
             // Get data
             var result = await Trading.GetPositionHistoryAsync(
@@ -1021,8 +1009,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     result.Data.Select(x => x.OpenTime),
                     request.StartTime,
                     request.EndTime ?? DateTime.UtcNow,
-                    limit,
-                    direction,
                     pageParams);
 
             return result.AsExchangeResult(
