@@ -51,12 +51,12 @@ namespace BingX.Net.Clients.SpotApi
             }
         ];
 
-        public override string? GetTypeIdentifier(ReadOnlySpan<byte> data, WebSocketMessageType? webSocketMessageType)
+        protected override string? GetTypeIdentifierNonJson(ReadOnlySpan<byte> data, WebSocketMessageType? webSocketMessageType)
         {
             if (data.Length == 4)
                 return "Ping";
 
-            return base.GetTypeIdentifier(data, webSocketMessageType);
+            return null;
         }
     }
 }
