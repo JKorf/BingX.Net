@@ -21,7 +21,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to live trade updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscription%20transaction%20by%20transaction" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscription%20transaction%20by%20transaction" /><br />
+        /// Endpoint:<br />
+        /// WS /market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -31,7 +36,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to live kline/candlestick data updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#K-line%20Streams" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#K-line%20Streams" /><br />
+        /// Endpoint:<br />
+        /// WS /market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="interval">The interval to subscribe. Currently only the 1 minute interval is supported</param>
@@ -42,7 +52,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to live orderbook data updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20Market%20Depth%20Data" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20Market%20Depth%20Data" /><br />
+        /// Endpoint:<br />
+        /// WS /market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="depth">The depth of the orderbook, 5, 10, 20, 50 or 100</param>
@@ -53,7 +68,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to live incremental order book updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Incremental%20and%20Full%20Depth%20Information" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Incremental%20and%20Full%20Depth%20Information" /><br />
+        /// Endpoint:<br />
+        /// WS /market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -63,7 +83,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to live price statistics updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%2024-hour%20Price%20Change" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%2024-hour%20Price%20Change" /><br />
+        /// Endpoint:<br />
+        /// WS /market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -73,7 +98,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to live price updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Latest%20Trade%20Price" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Latest%20Trade%20Price" /><br />
+        /// Endpoint:<br />
+        /// WS /market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -83,7 +113,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to live best book price updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Best%20Order%20Book" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Best%20Order%20Book" /><br />
+        /// Endpoint:<br />
+        /// WS /market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -93,7 +128,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to user order updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20order%20update%20data" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20order%20update%20data" /><br />
+        /// Endpoint:<br />
+        /// WS /market?listenKey={listenKey}
+        /// </para>
         /// </summary>
         /// <param name="listenKey">Listen key retrieved by the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -103,7 +143,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Subscribe to user balance updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20account%20balance%20push" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20account%20balance%20push" /><br />
+        /// Endpoint:<br />
+        /// WS /market?listenKey={listenKey}
+        /// </para>
         /// </summary>
         /// <param name="listenKey">Listen key retrieved by the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method</param>
         /// <param name="onMessage">The event handler for the received data</param>

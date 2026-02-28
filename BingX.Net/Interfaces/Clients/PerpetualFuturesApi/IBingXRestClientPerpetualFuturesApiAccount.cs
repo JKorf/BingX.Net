@@ -14,7 +14,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
     {
         /// <summary>
         /// Get balance info
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20account%20data" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20account%20data" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v3/user/balance
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -22,7 +27,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get income history
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Get%20Account%20Profit%20and%20Loss%20Fund%20Flow" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Get%20Account%20Profit%20and%20Loss%20Fund%20Flow" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v2/user/income
+        /// </para>
         /// </summary>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="incomeType">Filter by income type</param>
@@ -35,7 +45,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get trading fee rates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#User%20fee%20rate" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#User%20fee%20rate" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v2/user/commissionRate
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -43,7 +58,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Generate a listen key used for subscribing to user data streams with the socket client
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20Trading%20Commission%20Rate" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20Trading%20Commission%20Rate" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/user/auth/userDataStream
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -51,7 +71,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Extend the lifetime of a listenkey with 60 minutes
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#extend%20Listen%20Key%20Validity%20period" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#extend%20Listen%20Key%20Validity%20period" /><br />
+        /// Endpoint:<br />
+        /// PUT /openApi/user/auth/userDataStream
+        /// </para>
         /// </summary>
         /// <param name="listenKey">Listen key</param>
         /// <param name="ct">Cancellation token</param>
@@ -60,7 +85,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Delete a listenkey and stop the user data stream
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#delete%20Listen%20Key" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#delete%20Listen%20Key" /><br />
+        /// Endpoint:<br />
+        /// DELETE /openApi/user/auth/userDataStream
+        /// </para>
         /// </summary>
         /// <param name="listenKey">Listen key</param>
         /// <param name="ct">Cancellation token</param>
@@ -69,7 +99,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get the current margin mode for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Type" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Type" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v2/trade/marginType
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
@@ -78,7 +113,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Change the margin mode for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Change%20Margin%20Type" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Change%20Margin%20Type" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/swap/v2/trade/marginType
+        /// </para>
         /// </summary>=
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="marginMode">New margin mode</param>
@@ -88,7 +128,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get the current leverage settings for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v2/trade/leverage
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
@@ -97,7 +142,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Set new leverage settings for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/swap/v2/trade/leverage
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="side">Position side. In the One-way mode, only supports BOTH.</param>
@@ -108,7 +158,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Adjust isolated margin for a position
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Leverage" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Leverage" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/swap/v2/trade/positionMargin
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="quantity">Quantity to adjust with</param>
@@ -120,7 +175,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get current position mode
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v1/positionSide/dual
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -128,7 +188,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Set position mode
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/swap/v1/positionSide/dual
+        /// </para>
         /// </summary>
         /// <param name="positionMode">Position mode</param>
         /// <param name="ct">Cancellation token</param>
@@ -137,7 +202,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get history of margin changes
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Isolated%20Margin%20Change%20History" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Isolated%20Margin%20Change%20History" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v1/positionMargin/history
+        /// </para>
         /// </summary>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="positionId">Filter by positionId</param>
@@ -150,14 +220,24 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Apply for receiving VST assets. Only available on the VST environment
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Apply%20VST" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Apply%20VST" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/swap/v1/trade/getVst
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXAmount>> ApplyForVSTAssetsAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Set multi asset mode
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Multi-Assets%20Mode" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Multi-Assets%20Mode" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/swap/v1/trade/assetMode
+        /// </para>
         /// </summary>
         /// <param name="assetMode">Multi asset mode</param>
         /// <param name="ct">Cancellation token</param>
@@ -165,21 +245,36 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Get current multi asset mode
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Mode" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Mode" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v1/trade/assetMode
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXMultiAssetMode>> GetMultiAssetModeAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get multi asset mode rules
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Rules" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Rules" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v1/trade/multiAssetsRules
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXMultiAssetRules[]>> GetMultiAssetRulesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get multi assets margin
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Margin" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Margin" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v1/user/marginAssets
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXMarginAsset[]>> GetMultiAssetsMarginAsync(CancellationToken ct = default);

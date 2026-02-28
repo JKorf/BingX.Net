@@ -14,7 +14,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     {
         /// <summary>
         /// Get the server time
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/base-info.html#Server%20time" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/base-info.html#Server%20time" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/server/time
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -22,7 +27,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get symbol information
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Spot%20trading%20symbols" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Spot%20trading%20symbols" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/common/symbols
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
@@ -31,7 +41,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get a list of the most recent trades
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Recent%20Trades%20List" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Recent%20Trades%20List" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/market/trades
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="limit">Max amount of results</param>
@@ -41,7 +56,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get the orderbook for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/market/depth
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="limit">Max amount of results</param>
@@ -51,7 +71,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get kline/candlestick data
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Kline/Candlestick%20Data" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Kline/Candlestick%20Data" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v2/market/kline
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="interval">Kline interval</param>
@@ -64,7 +89,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get kline/candlestick data
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Historical%20K-line" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Historical%20K-line" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/market/his/v1/kline
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="interval">Kline interval</param>
@@ -77,7 +107,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get ticker (24h price statistics)
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/ticker/24hr
+        /// </para>
         /// </summary>
         /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
@@ -86,7 +121,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get aggregated order book
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book%20aggregation" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book%20aggregation" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v2/market/depth
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="limit">Book depth</param>
@@ -97,7 +137,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get the last trade for a symbol
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/ticker/price
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
@@ -106,7 +151,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get the last trade for all symbols
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/ticker/price
+        /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -114,7 +164,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get the current best book prices
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Order%20Book%20Ticker" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Order%20Book%20Ticker" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/spot/v1/ticker/bookTicker
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
@@ -123,7 +178,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
 
         /// <summary>
         /// Get historic trades
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Old%20Trade%20Lookup" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Old%20Trade%20Lookup" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/market/his/v1/trade
+        /// </para>
         /// </summary>
         /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
         /// <param name="limit">Amount or results, max 500</param>

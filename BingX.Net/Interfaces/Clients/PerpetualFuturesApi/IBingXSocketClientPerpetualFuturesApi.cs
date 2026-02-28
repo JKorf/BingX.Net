@@ -22,7 +22,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to live trade updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20the%20Latest%20Trade%20Detail" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20the%20Latest%20Trade%20Detail" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -32,7 +37,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to order book updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="depth">Book depth, 5, 10, 20, 50 or 100</param>
@@ -44,7 +54,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to live incremental order book updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Incremental%20Depth%20Information" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Incremental%20Depth%20Information" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -54,7 +69,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to order book updates for all symbols
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data%20of%20all%20trading%20pairs" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data%20of%20all%20trading%20pairs" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="depth">Book depth, 5, 10, 20, 50 or 100</param>
         /// <param name="updateInterval">The update interval in ms, 100, 200, 500 or 1000</param>
@@ -65,7 +85,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to kline/candlestick updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="interval">The kline interval</param>
@@ -76,7 +101,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to kline/candlestick updates for all symbols
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="interval">The kline interval</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -86,7 +116,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to live price statistics updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data%20of%20all%20trading%20pairs" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data%20of%20all%20trading%20pairs" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -96,7 +131,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to live price statistics updates for all symbols
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%2024-hour%20price%20changes%20of%20all%20trading%20pairs" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%2024-hour%20price%20changes%20of%20all%20trading%20pairs" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="onMessage">The event handler for the received data</param>
         /// <param name="ct">Cancellation token for closing this subscription</param>
@@ -105,7 +145,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to live price updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20price%20changes" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20price%20changes" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -115,7 +160,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to live mark price updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20mark%20price%20changes" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20mark%20price%20changes" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -125,7 +175,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Subscribe to live best book price updates
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20the%20Book%20Ticker%20Streams" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20the%20Book%20Ticker%20Streams" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market
+        /// </para>
         /// </summary>
         /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
         /// <param name="onMessage">The event handler for the received data</param>
@@ -135,7 +190,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
 
         /// <summary>
         /// Listen to user data update events. Prior to using this, the <see cref="IBingXRestClientPerpetualFuturesApiAccount.StartUserStreamAsync(CancellationToken)">restClient.PerpetualFuturesApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /></para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market?listenKey={listenKey}
+        /// </para>
         /// </summary>
         /// <param name="listenKey">Listen key retrieved by the <see cref="IBingXRestClientPerpetualFuturesApiAccount.StartUserStreamAsync(CancellationToken)">restClient.PerpetualFuturesApi.Account.StartUserStreamAsync</see> method</param>
         /// <param name="onAccountUpdate">Event handler for balance and position updates</param>
