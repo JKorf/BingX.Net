@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -90,12 +91,12 @@ namespace BingX.Net.Clients
             if (contentType == Constants.JsonContentHeader)
             {
                 var stringData = (_serializer ??= (IStringMessageSerializer)CreateSerializer()).Serialize(parameters);
-                request.SetContent(stringData, contentType);
+                request.SetContent(stringData, Encoding.UTF8, contentType);
             }
             else
             {
                 var stringData = parameters.CreateParamString(false, ArraySerialization);
-                request.SetContent(stringData, contentType);
+                request.SetContent(stringData, Encoding.UTF8, contentType);
             }
         }
     }
