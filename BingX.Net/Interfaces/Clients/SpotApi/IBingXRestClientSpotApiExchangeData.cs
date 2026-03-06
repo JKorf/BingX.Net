@@ -34,7 +34,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/common/symbols
         /// </para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXSymbol[]>> GetSymbolsAsync(string? symbol = null, CancellationToken ct = default);
@@ -48,8 +48,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/market/trades
         /// </para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
-        /// <param name="limit">Max amount of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTrade[]>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default);
@@ -63,8 +63,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/market/depth
         /// </para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
-        /// <param name="limit">Max amount of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default);
@@ -78,11 +78,11 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v2/market/kline
         /// </para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
-        /// <param name="interval">Kline interval</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="limit">Max amount of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
+        /// <param name="interval">["<c>interval</c>"] Kline interval</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -96,11 +96,11 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/market/his/v1/kline
         /// </para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
-        /// <param name="interval">Kline interval</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="limit">Max amount of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
+        /// <param name="interval">["<c>interval</c>"] Kline interval</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXKline[]>> GetHistoricalKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -114,7 +114,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/ticker/24hr
         /// </para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTicker[]>> GetTickersAsync(string? symbol = null, CancellationToken ct = default);
@@ -128,8 +128,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v2/market/depth
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="limit">Book depth</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="limit">["<c>depth</c>"] Book depth</param>
         /// <param name="mergeDepth">0 is default precision, 1 to 5 are 10 to 100000 times precision respectively</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -144,7 +144,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/ticker/price
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXLastTrade>> GetLastTradeAsync(string symbol, CancellationToken ct = default);
@@ -171,7 +171,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/ticker/bookTicker
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXBookTicker>> GetBookPriceAsync(string symbol, CancellationToken ct = default);
@@ -185,9 +185,9 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/market/his/v1/trade
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="limit">Amount or results, max 500</param>
-        /// <param name="fromId">Return trades after this id</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="limit">["<c>limit</c>"] Amount or results, max 500</param>
+        /// <param name="fromId">["<c>fromId</c>"] Return trades after this id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTradeHistory[]>> GetTradeHistoryAsync(string symbol, int? limit = null, string? fromId = null, CancellationToken ct = default);

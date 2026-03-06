@@ -34,7 +34,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/contracts
         /// </para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol name, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Filter by symbol name, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXContract[]>> GetContractsAsync(string? symbol = null, CancellationToken ct = default);
@@ -48,8 +48,8 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/depth
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
-        /// <param name="limit">Number of rows in the book, 5, 10, 20, 50, 100, 500 or 1000</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol name, for example `ETH-USDT`</param>
+        /// <param name="limit">["<c>limit</c>"] Number of rows in the book, 5, 10, 20, 50, 100, 500 or 1000</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default);
@@ -63,8 +63,8 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/trades
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
-        /// <param name="limit">Number of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol name, for example `ETH-USDT`</param>
+        /// <param name="limit">["<c>limit</c>"] Number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesTrade[]>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default);
@@ -78,9 +78,9 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v1/market/historicalTrades
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol name, for example `ETH-USDT`</param>
-        /// <param name="fromId">Return trades after this</param>
-        /// <param name="limit">Number of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol name, for example `ETH-USDT`</param>
+        /// <param name="fromId">["<c>fromId</c>"] Return trades after this</param>
+        /// <param name="limit">["<c>limit</c>"] Number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesTrade[]>> GetTradeHistoryAsync(string symbol, long? fromId = null, int? limit = null, CancellationToken ct = default);
@@ -94,7 +94,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/premiumIndex
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFundingRate>> GetFundingRateAsync(string symbol, CancellationToken ct = default);
@@ -121,10 +121,10 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/fundingRate
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="limit">Max amount of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFundingRateHistory[]>> GetFundingRateHistoryAsync(string symbol, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -138,11 +138,11 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v3/quote/klines
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="interval">Kline interval</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="limit">Max amount of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="interval">["<c>interval</c>"] Kline interval</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -156,7 +156,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/openInterest
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXOpenInterest>> GetOpenInterestAsync(string symbol, CancellationToken ct = default);
@@ -170,7 +170,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/ticker
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesTicker>> GetTickerAsync(string symbol, CancellationToken ct = default);
@@ -197,7 +197,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/quote/bookTicker
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesBookTicker>> GetBookTickerAsync(string symbol, CancellationToken ct = default);
@@ -211,11 +211,11 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v1/market/markPriceKlines
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="interval">Kline interval</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="limit">Max amount of results</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="interval">["<c>interval</c>"] Kline interval</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXFuturesMarkPriceKline[]>> GetMarkPriceKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -229,7 +229,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v1/ticker/price
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXLastTradePrice>> GetLastTradePriceAsync(string symbol, CancellationToken ct = default);
@@ -256,7 +256,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v1/tradingRules
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXTradingRules>> GetTradingRulesAsync(string symbol, CancellationToken ct = default);
     }

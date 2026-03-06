@@ -45,13 +45,13 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/api/v3/capital/deposit/hisrec
         /// </para>
         /// </summary>
-        /// <param name="asset">Filter by asset, for example `ETH`</param>
-        /// <param name="status">Filter by status</param>
-        /// <param name="transactionId">Filter by transaction id</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="offset">Offset</param>
-        /// <param name="limit">Max number of results</param>
+        /// <param name="asset">["<c>coin</c>"] Filter by asset, for example `ETH`</param>
+        /// <param name="status">["<c>status</c>"] Filter by status</param>
+        /// <param name="transactionId">["<c>txId</c>"] Filter by transaction id</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="offset">["<c>offset</c>"] Offset</param>
+        /// <param name="limit">["<c>limit</c>"] Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
@@ -65,15 +65,15 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/api/v3/capital/withdraw/history
         /// </para>
         /// </summary>
-        /// <param name="id">Filter by id</param>
-        /// <param name="asset">Filter by asset, for example `ETH`</param>
-        /// <param name="clientOrderId">Filter by client order id</param>
-        /// <param name="status">Filter by status</param>
-        /// <param name="transactionId">Filter by transaction id</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="offset">Offset</param>
-        /// <param name="limit">Max number of results</param>
+        /// <param name="id">["<c>id</c>"] Filter by id</param>
+        /// <param name="asset">["<c>coin</c>"] Filter by asset, for example `ETH`</param>
+        /// <param name="clientOrderId">["<c>withdrawOrderId</c>"] Filter by client order id</param>
+        /// <param name="status">["<c>status</c>"] Filter by status</param>
+        /// <param name="transactionId">["<c>txId</c>"] Filter by transaction id</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="offset">["<c>offset</c>"] Offset</param>
+        /// <param name="limit">["<c>limit</c>"] Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
@@ -87,7 +87,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/wallets/v1/capital/config/getall
         /// </para>
         /// </summary>
-        /// <param name="asset">Filter by asset name, for example `ETH`</param>
+        /// <param name="asset">["<c>coin</c>"] Filter by asset name, for example `ETH`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXAsset[]>> GetAssetsAsync(string? asset = null, CancellationToken ct = default);
@@ -101,13 +101,13 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// POST /openApi/wallets/v1/capital/withdraw/apply
         /// </para>
         /// </summary>
-        /// <param name="asset">The asset, for example `ETH`</param>
-        /// <param name="address">Address to withdraw to</param>
-        /// <param name="quantity">Quantity</param>
-        /// <param name="walletType">Wallet type</param>
-        /// <param name="network">Network to use</param>
-        /// <param name="addressTag">Address tag</param>
-        /// <param name="clientOrderId">Client order id</param>
+        /// <param name="asset">["<c>coin</c>"] The asset, for example `ETH`</param>
+        /// <param name="address">["<c>address</c>"] Address to withdraw to</param>
+        /// <param name="quantity">["<c>amount</c>"] Quantity</param>
+        /// <param name="walletType">["<c>walletType</c>"] Wallet type</param>
+        /// <param name="network">["<c>network</c>"] Network to use</param>
+        /// <param name="addressTag">["<c>addressTag</c>"] Address tag</param>
+        /// <param name="clientOrderId">["<c>withdrawOrderId</c>"] Client order id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXWithdrawResult>> WithdrawAsync(string asset, string address, decimal quantity, AccountType walletType, string? network = null, string? addressTag = null, string? clientOrderId = null, CancellationToken ct = default);
@@ -121,9 +121,9 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/wallets/v1/capital/deposit/address
         /// </para>
         /// </summary>
-        /// <param name="asset">The asset, for example `ETH`</param>
-        /// <param name="offset">Offset</param>
-        /// <param name="limit">Limit</param>
+        /// <param name="asset">["<c>coin</c>"] The asset, for example `ETH`</param>
+        /// <param name="offset">["<c>offset</c>"] Offset</param>
+        /// <param name="limit">["<c>limit</c>"] Limit</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXDepositAddresses>> GetDepositAddressAsync(string asset, int? offset = null, int? limit = null, CancellationToken ct = default);
@@ -137,10 +137,10 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// POST /openApi/api/asset/v1/transfer
         /// </para>
         /// </summary>
-        /// <param name="asset">Asset to transfer, for example `ETH`</param>
-        /// <param name="quantity">Quantity to transfer</param>
-        /// <param name="fromAccount">From account type</param>
-        /// <param name="toAccount">To account type</param>
+        /// <param name="asset">["<c>asset</c>"] Asset to transfer, for example `ETH`</param>
+        /// <param name="quantity">["<c>amount</c>"] Quantity to transfer</param>
+        /// <param name="fromAccount">["<c>fromAccount</c>"] From account type</param>
+        /// <param name="toAccount">["<c>toAccount</c>"] To account type</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTransactionResult>> TransferAsync(string asset, decimal quantity, TransferAccountType fromAccount, TransferAccountType toAccount, CancellationToken ct = default);
@@ -154,12 +154,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/api/v3/asset/transfer
         /// </para>
         /// </summary>
-        /// <param name="type">Transaction type</param>
-        /// <param name="transactionId">Filter by id</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="page">Page</param>
-        /// <param name="pageSize">Page size</param>
+        /// <param name="type">["<c>type</c>"] Transaction type</param>
+        /// <param name="transactionId">["<c>tranId</c>"] Filter by id</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="page">["<c>current</c>"] Page</param>
+        /// <param name="pageSize">["<c>size</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTransfers>> GetTransfersAsync(TransferType type, long? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
@@ -173,13 +173,13 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// POST /openApi/wallets/v1/capital/innerTransfer/apply
         /// </para>
         /// </summary>
-        /// <param name="asset">Asset, for example `ETH`</param>
-        /// <param name="targetAccountType">Target account type</param>
-        /// <param name="targetAccount">Target account</param>
-        /// <param name="quantity">Quantity</param>
-        /// <param name="accountType">Source account type</param>
-        /// <param name="areaCode">Area code for telephone, required when targetAccountType is PhoneNumber</param>
-        /// <param name="clientOrderId">Client order id</param>
+        /// <param name="asset">["<c>coin</c>"] Asset, for example `ETH`</param>
+        /// <param name="targetAccountType">["<c>userAccountType</c>"] Target account type</param>
+        /// <param name="targetAccount">["<c>targetAccount</c>"] Target account</param>
+        /// <param name="quantity">["<c>amount</c>"] Quantity</param>
+        /// <param name="accountType">["<c>walletType</c>"] Source account type</param>
+        /// <param name="areaCode">["<c>callingCode</c>"] Area code for telephone, required when targetAccountType is PhoneNumber</param>
+        /// <param name="clientOrderId">["<c>transferClientId</c>"] Client order id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXId>> TransferInternalAsync(string asset, AccountIdentifierType targetAccountType, string targetAccount, decimal quantity, AccountType accountType, string? areaCode = null, string? clientOrderId = null, CancellationToken ct = default);
@@ -193,12 +193,12 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/wallets/v1/capital/innerTransfer/records
         /// </para>
         /// </summary>
-        /// <param name="asset">Asset, for example `ETH`</param>
-        /// <param name="clientOrderId">Client order id</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="offset">Offset</param>
-        /// <param name="limit">Limit</param>
+        /// <param name="asset">["<c>coin</c>"] Asset, for example `ETH`</param>
+        /// <param name="clientOrderId">["<c>transferClientId</c>"] Client order id</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="offset">["<c>offset</c>"] Offset</param>
+        /// <param name="limit">["<c>limit</c>"] Limit</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXInternalTransfers>> GetInternalTransfersAsync(string asset, string? clientOrderId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
@@ -225,7 +225,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// PUT /openApi/user/auth/userDataStream
         /// </para>
         /// </summary>
-        /// <param name="listenKey">Listen key</param>
+        /// <param name="listenKey">["<c>listenKey</c>"] Listen key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
@@ -239,7 +239,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// DELETE /openApi/user/auth/userDataStream
         /// </para>
         /// </summary>
-        /// <param name="listenKey">Listen key</param>
+        /// <param name="listenKey">["<c>listenKey</c>"] Listen key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult> StopUserStreamAsync(string listenKey, CancellationToken ct = default);
@@ -253,7 +253,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/user/commissionRate
         /// </para>
         /// </summary>
-        /// <param name="symbol">The symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default);
@@ -280,8 +280,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/account/v1/apiKey/query
         /// </para>
         /// </summary>
-        /// <param name="userId">The user id, can be retrieved with <see cref="GetUserIdAsync(CancellationToken)" /> </param>
-        /// <param name="apiKey">Filter by API key</param>
+        /// <param name="userId">["<c>uid</c>"] The user id, can be retrieved with <see cref="GetUserIdAsync(CancellationToken)" /> </param>
+        /// <param name="apiKey">["<c>apiKey</c>"] Filter by API key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXApiKey[]>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default);

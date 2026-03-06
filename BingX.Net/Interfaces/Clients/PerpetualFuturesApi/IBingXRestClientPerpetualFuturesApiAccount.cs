@@ -34,11 +34,11 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/user/income
         /// </para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
-        /// <param name="incomeType">Filter by income type</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="limit">Max results</param>
+        /// <param name="symbol">["<c>symbol</c>"] Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="incomeType">["<c>incomeType</c>"] Filter by income type</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="limit">["<c>limit</c>"] Max results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -78,7 +78,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// PUT /openApi/user/auth/userDataStream
         /// </para>
         /// </summary>
-        /// <param name="listenKey">Listen key</param>
+        /// <param name="listenKey">["<c>listenKey</c>"] Listen key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
@@ -92,7 +92,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// DELETE /openApi/user/auth/userDataStream
         /// </para>
         /// </summary>
-        /// <param name="listenKey">Listen key</param>
+        /// <param name="listenKey">["<c>listenKey</c>"] Listen key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult> StopUserStreamAsync(string listenKey, CancellationToken ct = default);
@@ -106,7 +106,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/trade/marginType
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXMarginMode>> GetMarginModeAsync(string symbol, CancellationToken ct = default);
@@ -120,8 +120,8 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// POST /openApi/swap/v2/trade/marginType
         /// </para>
         /// </summary>=
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="marginMode">New margin mode</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="marginMode">["<c>marginType</c>"] New margin mode</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult> SetMarginModeAsync(string symbol, MarginMode marginMode, CancellationToken ct = default);
@@ -135,7 +135,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v2/trade/leverage
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXLeverage>> GetLeverageAsync(string symbol, CancellationToken ct = default);
@@ -149,9 +149,9 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// POST /openApi/swap/v2/trade/leverage
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="side">Position side. In the One-way mode, only supports BOTH.</param>
-        /// <param name="leverage">Leverage</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="side">["<c>side</c>"] Position side. In the One-way mode, only supports BOTH.</param>
+        /// <param name="leverage">["<c>leverage</c>"] Leverage</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXLeverageResult>> SetLeverageAsync(string symbol, PositionSide side, int leverage, CancellationToken ct = default);
@@ -165,10 +165,10 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// POST /openApi/swap/v2/trade/positionMargin
         /// </para>
         /// </summary>
-        /// <param name="symbol">Symbol, for example `ETH-USDT`</param>
-        /// <param name="quantity">Quantity to adjust with</param>
-        /// <param name="direction">Direction</param>
-        /// <param name="side">Position side</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="quantity">["<c>amount</c>"] Quantity to adjust with</param>
+        /// <param name="direction">["<c>type</c>"] Direction</param>
+        /// <param name="side">["<c>positionSide</c>"] Position side</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult> AdjustIsolatedMarginAsync(string symbol, decimal quantity, AdjustDirection direction, PositionSide side, CancellationToken ct = default);
@@ -195,7 +195,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// POST /openApi/swap/v1/positionSide/dual
         /// </para>
         /// </summary>
-        /// <param name="positionMode">Position mode</param>
+        /// <param name="positionMode">["<c>dualSidePosition</c>"] Position mode</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(PositionMode positionMode, CancellationToken ct = default);
@@ -209,12 +209,12 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// GET /openApi/swap/v1/positionMargin/history
         /// </para>
         /// </summary>
-        /// <param name="symbol">Filter by symbol, for example `ETH-USDT`</param>
-        /// <param name="positionId">Filter by positionId</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="page">Page</param>
-        /// <param name="pageSize">Page size</param>
+        /// <param name="symbol">["<c>symbol</c>"] Filter by symbol, for example `ETH-USDT`</param>
+        /// <param name="positionId">["<c>positionId</c>"] Filter by positionId</param>
+        /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
+        /// <param name="page">["<c>pageIndex</c>"] Page</param>
+        /// <param name="pageSize">["<c>pageSize</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXMarginHistory>> GetIsolatedMarginChangeHistoryAsync(string positionId, string? symbol = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
@@ -239,7 +239,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// POST /openApi/swap/v1/trade/assetMode
         /// </para>
         /// </summary>
-        /// <param name="assetMode">Multi asset mode</param>
+        /// <param name="assetMode">["<c>assetMode</c>"] Multi asset mode</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<BingXMultiAssetMode>> SetMultiAssetModeAsync(MultiAssetMode assetMode, CancellationToken ct = default);
 
