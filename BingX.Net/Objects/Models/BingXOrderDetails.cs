@@ -20,87 +20,87 @@ namespace BingX.Net.Objects.Models
     public record BingXOrderDetails
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Order price
+        /// ["<c>price</c>"] Order price
         /// </summary>
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Stop price
+        /// ["<c>StopPrice</c>"] Stop price
         /// </summary>
         [JsonPropertyName("StopPrice")] // Actually is with uppercase
         public decimal? StopPrice { get; set; }
         /// <summary>
-        /// Order quantity
+        /// ["<c>origQty</c>"] Order quantity
         /// </summary>
         [JsonPropertyName("origQty")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Quantity filled
+        /// ["<c>executedQty</c>"] Quantity filled
         /// </summary>
         [JsonPropertyName("executedQty")]
         public decimal QuantityFilled { get; set; }
         /// <summary>
-        /// Total value filled (price * quantity)
+        /// ["<c>cummulativeQuoteQty</c>"] Total value filled (price * quantity)
         /// </summary>
         [JsonPropertyName("cummulativeQuoteQty")]
         public decimal ValueFilled { get; set; }
         /// <summary>
-        /// Order status
+        /// ["<c>status</c>"] Order status
         /// </summary>
         [JsonPropertyName("status")]
         public OrderStatus Status { get; set; }
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public OrderType Type { get; set; }
         /// <summary>
-        /// Order side
+        /// ["<c>side</c>"] Order side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Client order id
+        /// ["<c>clientOrderID</c>"] Client order id
         /// </summary>
         [JsonPropertyName("clientOrderID")]
         public string? ClientOrderId { get; set; }
         /// <summary>
-        /// Creation timestamp
+        /// ["<c>time</c>"] Creation timestamp
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// Update timestamp
+        /// ["<c>updateTime</c>"] Update timestamp
         /// </summary>
         [JsonPropertyName("updateTime")]
         public DateTime? UpdateTime { get; set; }
         /// <summary>
-        /// Original quote order quantity
+        /// ["<c>origQuoteOrderQty</c>"] Original quote order quantity
         /// </summary>
         [JsonPropertyName("origQuoteOrderQty")]
         public decimal? QuoteQuantity { get; set; }
         /// <summary>
-        /// Fee paid
+        /// ["<c>fee</c>"] Fee paid
         /// </summary>
         [JsonPropertyName("fee")]
         public decimal Fee { get; set; }
         /// <summary>
-        /// The fee asset
+        /// ["<c>feeAsset</c>"] The fee asset
         /// </summary>
         [JsonPropertyName("feeAsset")]
         public string? FeeAsset { get; set; } = string.Empty;
         /// <summary>
-        /// Average fill price
+        /// ["<c>avgPrice</c>"] Average fill price
         /// </summary>
         [JsonPropertyName("avgPrice")]
         public decimal? AveragePrice { get; set; }

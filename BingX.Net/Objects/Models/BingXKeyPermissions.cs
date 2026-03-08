@@ -13,22 +13,22 @@ namespace BingX.Net.Objects.Models
     public record BingXKeyPermissions
     {
         /// <summary>
-        /// Api key
+        /// ["<c>apiKey</c>"] Api key
         /// </summary>
         [JsonPropertyName("apiKey")]
         public string ApiKey { get; set; } = string.Empty;
         /// <summary>
-        /// Permissions
+        /// ["<c>permissions</c>"] Permissions
         /// </summary>
         [JsonPropertyName("permissions")]
         public ApiKeyPermission[] Permissions { get; set; } = Array.Empty<ApiKeyPermission>();
         /// <summary>
-        /// Ip addresses
+        /// ["<c>ipAddresses</c>"] Ip addresses
         /// </summary>
         [JsonPropertyName("ipAddresses")]
         public string[] IpAddresses { get; set; } = Array.Empty<string>();
         /// <summary>
-        /// Note
+        /// ["<c>note</c>"] Note
         /// </summary>
         [JsonPropertyName("note")]
         public string Note { get; set; } = string.Empty;

@@ -12,27 +12,27 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesOrderBook
     {
         /// <summary>
-        /// List of bids where quantity is in contracts
+        /// ["<c>bids</c>"] List of bids where quantity is in contracts
         /// </summary>
         [JsonPropertyName("bids")]
         public BingXOrderBookEntry[] Bids { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
-        /// List of asks where quantity is in contracts
+        /// ["<c>asks</c>"] List of asks where quantity is in contracts
         /// </summary>
         [JsonPropertyName("asks")]
         public BingXOrderBookEntry[] Asks { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
-        /// List of bids where quantity is in the quote asset
+        /// ["<c>bidsCoin</c>"] List of bids where quantity is in the quote asset
         /// </summary>
         [JsonPropertyName("bidsCoin")]
         public BingXOrderBookEntry[] BidsAsset { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
-        /// List of asks where quantity is in the quote asset
+        /// ["<c>asksCoin</c>"] List of asks where quantity is in the quote asset
         /// </summary>
         [JsonPropertyName("asksCoin")]
         public BingXOrderBookEntry[] AsksAsset { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
-        /// Timestamp of the data
+        /// ["<c>T</c>"] Timestamp of the data
         /// </summary>
         [JsonPropertyName("T")]
         public DateTime? Timestamp { get; set; }

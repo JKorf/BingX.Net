@@ -11,13 +11,13 @@ namespace BingX.Net.Objects.Models
     public record BingXOrderError
     {
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public string OrderId { get; set; } = string.Empty;
 
         /// <summary>
-        /// Error
+        /// ["<c>error</c>"] Error
         /// </summary>
         [JsonPropertyName("error")]
         public string? Error { get; set; } = string.Empty;

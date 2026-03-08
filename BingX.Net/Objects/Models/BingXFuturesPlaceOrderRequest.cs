@@ -11,77 +11,77 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesPlaceOrderRequest
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public FuturesOrderType OrderType { get; set; }
         /// <summary>
-        /// Order side
+        /// ["<c>side</c>"] Order side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>positionSide</c>"] Position side
         /// </summary>
         [JsonPropertyName("positionSide")]
         public PositionSide PositionSide { get; set; }
         /// <summary>
-        /// Reduce only
+        /// ["<c>reduceOnly</c>"] Reduce only
         /// </summary>
         [JsonPropertyName("reduceOnly"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? ReduceOnly { get; set; }
         /// <summary>
-        /// Price
+        /// ["<c>price</c>"] Price
         /// </summary>
         [JsonPropertyName("price"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public decimal? Price { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>quantity</c>"] Quantity
         /// </summary>
         [JsonPropertyName("quantity"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public decimal? Quantity { get; set; }
         /// <summary>
-        /// Stop price
+        /// ["<c>stopPrice</c>"] Stop price
         /// </summary>
         [JsonPropertyName("stopPrice"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public decimal? StopPrice { get; set; }
         /// <summary>
-        /// Price rate
+        /// ["<c>priceRate</c>"] Price rate
         /// </summary>
         [JsonPropertyName("priceRate"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public decimal? PriceRate { get; set; }
         /// <summary>
-        /// Client order id
+        /// ["<c>clientOrderID</c>"] Client order id
         /// </summary>
         [JsonPropertyName("clientOrderID"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? ClientOrderId { get; set; }
         /// <summary>
-        /// Trigger type
+        /// ["<c>workingType</c>"] Trigger type
         /// </summary>
         [JsonPropertyName("workingType"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
-        /// Time in force
+        /// ["<c>timeInForce</c>"] Time in force
         /// </summary>
         [JsonPropertyName("timeInForce"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TimeInForce? TimeInForce { get; set; }
         /// <summary>
-        /// Close position
+        /// ["<c>closePosition</c>"] Close position
         /// </summary>
         [JsonPropertyName("closePosition"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? ClosePosition { get; set; }
         /// <summary>
-        /// Trigger price
+        /// ["<c>activationPrice</c>"] Trigger price
         /// </summary>
         [JsonPropertyName("activationPrice"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public decimal? TriggerPrice { get; set; }
         /// <summary>
-        /// Stop guaranteed
+        /// ["<c>stopGuaranteed</c>"] Stop guaranteed
         /// </summary>
         [JsonPropertyName("stopGuaranteed"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? StopGuaranteed { get; set; }
@@ -98,12 +98,12 @@ namespace BingX.Net.Objects.Models
         public BingXStopOrderRequest? TakeProfit { get; set; }
 
         /// <summary>
-        /// Internal serialization parameter, use StopLoss for setting stop loss parameters
+        /// ["<c>stopLoss</c>"] Internal serialization parameter, use StopLoss for setting stop loss parameters
         /// </summary>
         [JsonPropertyName("stopLoss"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? StopLossStr { get; internal set; }
         /// <summary>
-        /// Internal serialization parameter, use TakeProfit for setting take profit parameters
+        /// ["<c>takeProfit</c>"] Internal serialization parameter, use TakeProfit for setting take profit parameters
         /// </summary>
         [JsonPropertyName("takeProfit"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? TakeProfitStr { get; internal set; }
@@ -115,27 +115,27 @@ namespace BingX.Net.Objects.Models
     public record BingXStopOrderRequest
     {
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public TakeProfitStopLossMode Type { get; set; }
         /// <summary>
-        /// Stop price
+        /// ["<c>stopPrice</c>"] Stop price
         /// </summary>
         [JsonPropertyName("stopPrice")]
         public decimal StopPrice { get; set; }
         /// <summary>
-        /// Price
+        /// ["<c>price</c>"] Price
         /// </summary>
         [JsonPropertyName("price"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public decimal? Price { get; set; }
         /// <summary>
-        /// Trigger type
+        /// ["<c>workingType</c>"] Trigger type
         /// </summary>
         [JsonPropertyName("workingType"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
-        /// Stop guarantied
+        /// ["<c>stopGuaranteed</c>"] Stop guarantied
         /// </summary>
         [JsonPropertyName("stopGuaranteed"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool? StopGuaranteed { get; set; }

@@ -11,12 +11,12 @@ namespace BingX.Net.Objects.Models
     public record BingXTradingFees
     {
         /// <summary>
-        /// Taker fee rate
+        /// ["<c>takerCommissionRate</c>"] Taker fee rate
         /// </summary>
         [JsonPropertyName("takerCommissionRate")]
         public decimal TakerFeeRate { get; set; }
         /// <summary>
-        /// Maker fee rate
+        /// ["<c>makerCommissionRate</c>"] Maker fee rate
         /// </summary>
         [JsonPropertyName("makerCommissionRate")]
         public decimal MakerFeeRate { get; set; }

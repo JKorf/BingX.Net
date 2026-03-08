@@ -13,12 +13,12 @@ namespace BingX.Net.Objects.Models
     public record BingXTransfers
     {
         /// <summary>
-        /// Total transfers
+        /// ["<c>total</c>"] Total transfers
         /// </summary>
         [JsonPropertyName("total")]
         public int Total { get; set; }
         /// <summary>
-        /// Transfer list
+        /// ["<c>rows</c>"] Transfer list
         /// </summary>
         [JsonPropertyName("rows")]
         public BingXTransfer[] Transfers { get; set; } = Array.Empty<BingXTransfer>();
@@ -32,32 +32,32 @@ namespace BingX.Net.Objects.Models
     public record BingXTransfer
     {
         /// <summary>
-        /// Asset
+        /// ["<c>asset</c>"] Asset
         /// </summary>
         [JsonPropertyName("asset")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Status
+        /// ["<c>status</c>"] Status
         /// </summary>
         [JsonPropertyName("status")]
         public string Status { get; set; } = string.Empty;
         /// <summary>
-        /// Quantity transfered
+        /// ["<c>amount</c>"] Quantity transfered
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Transfer type
+        /// ["<c>type</c>"] Transfer type
         /// </summary>
         [JsonPropertyName("type")]
         public TransferType Type { get; set; }
         /// <summary>
-        /// Transaction id
+        /// ["<c>tranId</c>"] Transaction id
         /// </summary>
         [JsonPropertyName("tranId")]
         public long TransactionId { get; set; }
         /// <summary>
-        /// Timestamp
+        /// ["<c>timestamp</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("timestamp")]
         public DateTime Timestamp { get; set; }

@@ -13,67 +13,67 @@ namespace BingX.Net.Objects.Models
     public record BingXWithdrawal
     {
         /// <summary>
-        /// Withdrawal address
+        /// ["<c>address</c>"] Withdrawal address
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; } = string.Empty;
         /// <summary>
-        /// Quantity
+        /// ["<c>amount</c>"] Quantity
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Apply time
+        /// ["<c>applyTime</c>"] Apply time
         /// </summary>
         [JsonPropertyName("applyTime")]
         public DateTime ApplyTime { get; set; }
         /// <summary>
-        /// Id
+        /// ["<c>id</c>"] Id
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; } = string.Empty;
         /// <summary>
-        /// Asset
+        /// ["<c>coin</c>"] Asset
         /// </summary>
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Withdrawal network
+        /// ["<c>network</c>"] Withdrawal network
         /// </summary>
         [JsonPropertyName("network")]
         public string Network { get; set; } = string.Empty;
         /// <summary>
-        /// Withdrawal status
+        /// ["<c>status</c>"] Withdrawal status
         /// </summary>
         [JsonPropertyName("status")]
         public WithdrawalStatus Status { get; set; }
         /// <summary>
-        /// Transfer type
+        /// ["<c>transferType</c>"] Transfer type
         /// </summary>
         [JsonPropertyName("transferType")]
         public int transferType { get; set; }
         /// <summary>
-        /// Fee
+        /// ["<c>transactionFee</c>"] Fee
         /// </summary>
         [JsonPropertyName("transactionFee")]
         public decimal Fee { get; set; }
         /// <summary>
-        /// Confirmations
+        /// ["<c>confirmNo</c>"] Confirmations
         /// </summary>
         [JsonPropertyName("confirmNo")]
         public int Confirmations { get; set; }
         /// <summary>
-        /// Address tag
+        /// ["<c>addressTag</c>"] Address tag
         /// </summary>
         [JsonPropertyName("addressTag")]
         public string? AddressTag { get; set; } = string.Empty;
         /// <summary>
-        /// Extra info
+        /// ["<c>info</c>"] Extra info
         /// </summary>
         [JsonPropertyName("info")]
         public string Info { get; set; } = string.Empty;
         /// <summary>
-        /// Transaction id
+        /// ["<c>txId</c>"] Transaction id
         /// </summary>
         [JsonPropertyName("txId")]
         public string TransactionId { get; set; } = string.Empty;

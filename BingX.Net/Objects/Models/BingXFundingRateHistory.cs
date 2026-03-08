@@ -12,17 +12,17 @@ namespace BingX.Net.Objects.Models
     public record BingXFundingRateHistory
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Funding rate
+        /// ["<c>fundingRate</c>"] Funding rate
         /// </summary>
         [JsonPropertyName("fundingRate")]
         public decimal FundingRate { get; set; }
         /// <summary>
-        /// Funding time
+        /// ["<c>fundingTime</c>"] Funding time
         /// </summary>
         [JsonPropertyName("fundingTime")]
         public DateTime FundingTime { get; set; }

@@ -11,12 +11,12 @@ namespace BingX.Net.Objects.Models
     public record BingXBalanceUpdate : BingXSocketUpdate
     {
         /// <summary>
-        /// Timestamp of the update
+        /// ["<c>T</c>"] Timestamp of the update
         /// </summary>
         [JsonPropertyName("T")]
         public DateTime UpdateTime { get; set; }
         /// <summary>
-        /// Event info
+        /// ["<c>a</c>"] Event info
         /// </summary>
         [JsonPropertyName("a")]
         public BingXBalanceItems EventData { get; set; } = default!;
@@ -29,12 +29,12 @@ namespace BingX.Net.Objects.Models
     public record BingXBalanceItems
     {
         /// <summary>
-        /// Changed balances
+        /// ["<c>B</c>"] Changed balances
         /// </summary>
         [JsonPropertyName("B")]
         public BingXBalanceItem[] Balances { get; set; } = Array.Empty<BingXBalanceItem>();
         /// <summary>
-        /// The event that caused the update
+        /// ["<c>m</c>"] The event that caused the update
         /// </summary>
         [JsonPropertyName("m")]
         public string UpdateType { get; set; } = string.Empty;
@@ -47,27 +47,27 @@ namespace BingX.Net.Objects.Models
     public record BingXBalanceItem
     {
         /// <summary>
-        /// Asset name
+        /// ["<c>a</c>"] Asset name
         /// </summary>
         [JsonPropertyName("a")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Balance change
+        /// ["<c>bc</c>"] Balance change
         /// </summary>
         [JsonPropertyName("bc")]
         public decimal BalanceChange { get; set; }
         /// <summary>
-        /// New balance
+        /// ["<c>cw</c>"] New balance
         /// </summary>
         [JsonPropertyName("cw")]
         public decimal NewBalance { get; set; }
         /// <summary>
-        /// Total balance
+        /// ["<c>wb</c>"] Total balance
         /// </summary>
         [JsonPropertyName("wb")]
         public decimal Total { get; set; }
         /// <summary>
-        /// Locked balance
+        /// ["<c>lk</c>"] Locked balance
         /// </summary>
         [JsonPropertyName("lk")]
         public decimal Locked { get; set; }

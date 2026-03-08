@@ -12,37 +12,37 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesKlineUpdate
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>s</c>"] Symbol
         /// </summary>
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty; // NOTE; not returned on this level, but set internally
         /// <summary>
-        /// Open price
+        /// ["<c>o</c>"] Open price
         /// </summary>
         [JsonPropertyName("o")]
         public decimal OpenPrice { get; set; }
         /// <summary>
-        /// Close price
+        /// ["<c>c</c>"] Close price
         /// </summary>
         [JsonPropertyName("c")]
         public decimal ClosePrice { get; set; }
         /// <summary>
-        /// High price
+        /// ["<c>h</c>"] High price
         /// </summary>
         [JsonPropertyName("h")]
         public decimal HighPrice { get; set; }
         /// <summary>
-        /// Low price
+        /// ["<c>l</c>"] Low price
         /// </summary>
         [JsonPropertyName("l")]
         public decimal LowPrice { get; set; }
         /// <summary>
-        /// Volume
+        /// ["<c>v</c>"] Volume
         /// </summary>
         [JsonPropertyName("v")]
         public decimal Volume { get; set; }
         /// <summary>
-        /// Timestamp
+        /// ["<c>T</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("T")]
         public DateTime Timestamp { get; set; }

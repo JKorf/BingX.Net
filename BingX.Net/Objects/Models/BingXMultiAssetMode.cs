@@ -12,7 +12,7 @@ namespace BingX.Net.Objects.Models
     public record BingXMultiAssetMode
     {
         /// <summary>
-        /// Asset mode
+        /// ["<c>assetMode</c>"] Asset mode
         /// </summary>
         [JsonPropertyName("assetMode")]
         public MultiAssetMode AssetMode { get; set; }

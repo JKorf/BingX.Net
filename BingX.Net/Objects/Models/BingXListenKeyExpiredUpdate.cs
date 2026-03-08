@@ -10,7 +10,7 @@ namespace BingX.Net.Objects.Models
     public record BingXListenKeyExpiredUpdate : BingXSocketUpdate
     {
         /// <summary>
-        /// The listen key
+        /// ["<c>listenKey</c>"] The listen key
         /// </summary>
         [JsonPropertyName("listenKey")]
         public string ListenKey { get; set; } = string.Empty;

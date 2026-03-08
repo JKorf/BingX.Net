@@ -14,22 +14,22 @@ namespace BingX.Net.Objects.Models
     public record BingXOrderBook
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string? Symbol { get; set; }
         /// <summary>
-        /// List of bids
+        /// ["<c>bids</c>"] List of bids
         /// </summary>
         [JsonPropertyName("bids")]
         public BingXOrderBookEntry[] Bids { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
-        /// List of asks
+        /// ["<c>asks</c>"] List of asks
         /// </summary>
         [JsonPropertyName("asks")]
         public BingXOrderBookEntry[] Asks { get; set; } = Array.Empty<BingXOrderBookEntry>();
         /// <summary>
-        /// Timestamp of the data
+        /// ["<c>ts</c>"] Timestamp of the data
         /// </summary>
         [JsonPropertyName("ts")]
         public DateTime? Timestamp { get; set; }

@@ -20,17 +20,17 @@ namespace BingX.Net.Objects.Models
     public record BingXBalance
     {
         /// <summary>
-        /// Asset name
+        /// ["<c>asset</c>"] Asset name
         /// </summary>
         [JsonPropertyName("asset")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Free
+        /// ["<c>free</c>"] Free
         /// </summary>
         [JsonPropertyName("free")]
         public decimal Free { get; set; }
         /// <summary>
-        /// Locked
+        /// ["<c>locked</c>"] Locked
         /// </summary>
         [JsonPropertyName("locked")]
         public decimal Locked { get; set; }

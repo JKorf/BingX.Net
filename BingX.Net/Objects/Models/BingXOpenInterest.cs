@@ -12,17 +12,17 @@ namespace BingX.Net.Objects.Models
     public record BingXOpenInterest
     {
         /// <summary>
-        /// Open interest
+        /// ["<c>openInterest</c>"] Open interest
         /// </summary>
         [JsonPropertyName("openInterest")]
         public decimal OpenInterest { get; set; }
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Timestamp
+        /// ["<c>time</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime Timestamp { get; set; }

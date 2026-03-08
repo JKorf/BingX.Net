@@ -12,27 +12,27 @@ namespace BingX.Net.Objects.Models
     public record BingXFundingRate
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Mark price
+        /// ["<c>markPrice</c>"] Mark price
         /// </summary>
         [JsonPropertyName("markPrice")]
         public decimal MarkPrice { get; set; }
         /// <summary>
-        /// Index price
+        /// ["<c>indexPrice</c>"] Index price
         /// </summary>
         [JsonPropertyName("indexPrice")]
         public decimal IndexPrice { get; set; }
         /// <summary>
-        /// Last funding rate
+        /// ["<c>lastFundingRate</c>"] Last funding rate
         /// </summary>
         [JsonPropertyName("lastFundingRate")]
         public decimal LastFundingRate { get; set; }
         /// <summary>
-        /// Next funding time
+        /// ["<c>nextFundingTime</c>"] Next funding time
         /// </summary>
         [JsonPropertyName("nextFundingTime")]
         public DateTime NextFundingTime { get; set; }

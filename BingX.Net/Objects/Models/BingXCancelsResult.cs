@@ -12,13 +12,13 @@ namespace BingX.Net.Objects.Models
     public record BingXCancelsResult
     {
         /// <summary>
-        /// Successfully canceled orders
+        /// ["<c>orders</c>"] Successfully canceled orders
         /// </summary>
         [JsonPropertyName("orders")]
         public BingXOrder[] Orders { get; set; } = Array.Empty<BingXOrder>();
 
         /// <summary>
-        /// Failed to cancel orders
+        /// ["<c>fails</c>"] Failed to cancel orders
         /// </summary>
         [JsonPropertyName("fails")]
         public BingXOrderError[] Fails { get; set; } = [];

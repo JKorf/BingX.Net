@@ -11,7 +11,7 @@ namespace BingX.Net.Objects.Models
     public record BingXUserId
     {
         /// <summary>
-        /// User id
+        /// ["<c>uid</c>"] User id
         /// </summary>
         [JsonPropertyName("uid")]
         public long UserId { get; set; }

@@ -11,7 +11,7 @@ namespace BingX.Net.Objects.Models
     public record BingXConfigUpdate : BingXSocketUpdate
     {
         /// <summary>
-        /// Configuration info
+        /// ["<c>ac</c>"] Configuration info
         /// </summary>
         [JsonPropertyName("ac")]
         public BingXAssetConfig Configuration { get; set; } = null!;
@@ -23,22 +23,22 @@ namespace BingX.Net.Objects.Models
     public record BingXAssetConfig
     {
         /// <summary>
-        /// Symbol name
+        /// ["<c>s</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Long position leverage
+        /// ["<c>l</c>"] Long position leverage
         /// </summary>
         [JsonPropertyName("l")]
         public decimal LeverageLong { get; set; }
         /// <summary>
-        /// Short position leverage
+        /// ["<c>S</c>"] Short position leverage
         /// </summary>
         [JsonPropertyName("S")]
         public decimal LeverageShort { get; set; }
         /// <summary>
-        /// Margin mode
+        /// ["<c>mt</c>"] Margin mode
         /// </summary>
         [JsonPropertyName("mt")]
         public MarginMode MarginMode { get; set; }

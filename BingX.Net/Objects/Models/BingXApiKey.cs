@@ -19,38 +19,38 @@ namespace BingX.Net.Objects.Models
     public record BingXApiKey
     {
         /// <summary>
-        /// The api key
+        /// ["<c>apiKey</c>"] The api key
         /// </summary>
         [JsonPropertyName("apiKey")]
         public string ApiKey { get; set; } = string.Empty;
         /// <summary>
-        /// Note
+        /// ["<c>note</c>"] Note
         /// </summary>
         [JsonPropertyName("note")]
         public string Note { get; set; } = string.Empty;
         /// <summary>
-        /// IP address restrictions
+        /// ["<c>ipAddresses</c>"] IP address restrictions
         /// </summary>
         [JsonPropertyName("ipAddresses")]
         public string[] IpAddresses { get; set; } = Array.Empty<string>();
         /// <summary>
-        /// IP address restrictions
+        /// ["<c>permissions</c>"] IP address restrictions
         /// </summary>
         [JsonPropertyName("permissions")]
         public ApiKeyPermission[] Permissions { get; set; } = Array.Empty<ApiKeyPermission>();
 
         /// <summary>
-        /// Status
+        /// ["<c>status</c>"] Status
         /// </summary>
         [JsonPropertyName("status")]
         public int Status { get; set; }
         /// <summary>
-        /// Create time
+        /// ["<c>createTime</c>"] Create time
         /// </summary>
         [JsonPropertyName("createTime")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// Update time
+        /// ["<c>updateTime</c>"] Update time
         /// </summary>
         [JsonPropertyName("updateTime")]
         public DateTime? UpdateTime { get; set; }

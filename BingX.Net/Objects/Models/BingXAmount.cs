@@ -11,7 +11,7 @@ namespace BingX.Net.Objects.Models
     public record BingXAmount
     {
         /// <summary>
-        /// Quantity
+        /// ["<c>amount</c>"] Quantity
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }

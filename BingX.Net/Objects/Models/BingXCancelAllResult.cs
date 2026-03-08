@@ -12,12 +12,12 @@ namespace BingX.Net.Objects.Models
     public record BingXCancelAllResult
     {
         /// <summary>
-        /// Successfully canceled orders
+        /// ["<c>success</c>"] Successfully canceled orders
         /// </summary>
         [JsonPropertyName("success")]
         public BingXFuturesOrderDetails[] Success { get; set; } = Array.Empty<BingXFuturesOrderDetails>();
         /// <summary>
-        /// Failed order cancelation results
+        /// ["<c>failed</c>"] Failed order cancelation results
         /// </summary>
         [JsonPropertyName("failed")]
         public BingXFailedCancel[] Failed { get; set; } = Array.Empty<BingXFailedCancel>();
@@ -29,17 +29,17 @@ namespace BingX.Net.Objects.Models
     public record BingXFailedCancel
     {
         /// <summary>
-        /// Id of order failed to cancel
+        /// ["<c>orderId</c>"] Id of order failed to cancel
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Error code
+        /// ["<c>errorCode</c>"] Error code
         /// </summary>
         [JsonPropertyName("errorCode")]
         public int ErrorCode { get; set; }
         /// <summary>
-        /// Error message
+        /// ["<c>errorMessage</c>"] Error message
         /// </summary>
         [JsonPropertyName("errorMessage")]
         public string ErrorMessage { get; set; } = string.Empty!;

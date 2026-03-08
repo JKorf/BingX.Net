@@ -11,42 +11,42 @@ namespace BingX.Net.Objects.Models
     public record BingXLeverageResult
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Leverage
+        /// ["<c>leverage</c>"] Leverage
         /// </summary>
         [JsonPropertyName("leverage")]
         public int Leverage { get; set; }
         /// <summary>
-        /// Available Long Volume
+        /// ["<c>availableLongVol</c>"] Available Long Volume
         /// </summary>
         [JsonPropertyName("availableLongVol")]
         public decimal? AvailableLongVolume { get; set; }
         /// <summary>
-        /// Available Short Volume
+        /// ["<c>availableShortVol</c>"] Available Short Volume
         /// </summary>
         [JsonPropertyName("availableShortVol")]
         public decimal? AvailableShortVolume { get; set; }
         /// <summary>
-        /// Available Long Value
+        /// ["<c>availableLongVal</c>"] Available Long Value
         /// </summary>
         [JsonPropertyName("availableLongVal")]
         public decimal? AvailableLongValue { get; set; }
         /// <summary>
-        /// Available Short Value
+        /// ["<c>availableShortVal</c>"] Available Short Value
         /// </summary>
         [JsonPropertyName("availableShortVal")]
         public decimal? AvailableShortValue { get; set; }
         /// <summary>
-        /// Maximum Position Long Value
+        /// ["<c>maxPositionLongVal</c>"] Maximum Position Long Value
         /// </summary>
         [JsonPropertyName("maxPositionLongVal")]
         public decimal? MaxPositionLongValue { get; set; }
         /// <summary>
-        /// Maximum Position Short Value
+        /// ["<c>maxPositionShortVal</c>"] Maximum Position Short Value
         /// </summary>
         [JsonPropertyName("maxPositionShortVal")]
         public decimal? MaxPositionShortValue { get; set; }

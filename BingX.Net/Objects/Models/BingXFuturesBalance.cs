@@ -11,52 +11,52 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesBalance
     {
         /// <summary>
-        /// User id
+        /// ["<c>userId</c>"] User id
         /// </summary>
         [JsonPropertyName("userId")]
         public string UserId { get; set; } = string.Empty;
         /// <summary>
-        /// Asset
+        /// ["<c>asset</c>"] Asset
         /// </summary>
         [JsonPropertyName("asset")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Balance
+        /// ["<c>balance</c>"] Balance
         /// </summary>
         [JsonPropertyName("balance")]
         public decimal? Balance { get; set; }
         /// <summary>
-        /// Net asset value
+        /// ["<c>equity</c>"] Net asset value
         /// </summary>
         [JsonPropertyName("equity")]
         public decimal? Equity { get; set; }
         /// <summary>
-        /// Unrealized profit and loss
+        /// ["<c>unrealizedProfit</c>"] Unrealized profit and loss
         /// </summary>
         [JsonPropertyName("unrealizedProfit")]
         public decimal? UnrealizedProfit { get; set; }
         /// <summary>
-        /// Realized profit
+        /// ["<c>realisedProfit</c>"] Realized profit
         /// </summary>
         [JsonPropertyName("realisedProfit")]
         public decimal RealizedProfit { get; set; }
         /// <summary>
-        /// Available margin
+        /// ["<c>availableMargin</c>"] Available margin
         /// </summary>
         [JsonPropertyName("availableMargin")]
         public decimal? AvailableMargin { get; set; }
         /// <summary>
-        /// Used margin
+        /// ["<c>usedMargin</c>"] Used margin
         /// </summary>
         [JsonPropertyName("usedMargin")]
         public decimal? UsedMargin { get; set; }
         /// <summary>
-        /// Frozen margin
+        /// ["<c>freezedMargin</c>"] Frozen margin
         /// </summary>
         [JsonPropertyName("freezedMargin")]
         public decimal? FrozenMargin { get; set; }
         /// <summary>
-        /// Short uid
+        /// ["<c>shortUid</c>"] Short uid
         /// </summary>
         [JsonPropertyName("shortUid")]
         public string? ShortUid { get; set; }

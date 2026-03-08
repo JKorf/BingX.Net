@@ -13,12 +13,12 @@ namespace BingX.Net.Objects.Models
     public record BingXTwapOrders
     {
         /// <summary>
-        /// List
+        /// ["<c>list</c>"] List
         /// </summary>
         [JsonPropertyName("list")]
         public BingXTwapOrder[] List { get; set; } = Array.Empty<BingXTwapOrder>();
         /// <summary>
-        /// Total orders
+        /// ["<c>total</c>"] Total orders
         /// </summary>
         [JsonPropertyName("total")]
         public decimal Total { get; set; }
@@ -31,82 +31,82 @@ namespace BingX.Net.Objects.Models
     public record BingXTwapOrder
     {
         /// <summary>
-        /// Main order id
+        /// ["<c>mainOrderId</c>"] Main order id
         /// </summary>
         [JsonPropertyName("mainOrderId")]
         public long MainOrderId { get; set; }
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Side
+        /// ["<c>side</c>"] Side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>positionSide</c>"] Position side
         /// </summary>
         [JsonPropertyName("positionSide")]
         public PositionSide PositionSide { get; set; }
         /// <summary>
-        /// Price type
+        /// ["<c>priceType</c>"] Price type
         /// </summary>
         [JsonPropertyName("priceType")]
         public PriceType PriceType { get; set; }
         /// <summary>
-        /// Price variance
+        /// ["<c>priceVariance</c>"] Price variance
         /// </summary>
         [JsonPropertyName("priceVariance")]
         public decimal PriceVariance { get; set; }
         /// <summary>
-        /// Trigger price
+        /// ["<c>triggerPrice</c>"] Trigger price
         /// </summary>
         [JsonPropertyName("triggerPrice")]
         public decimal TriggerPrice { get; set; }
         /// <summary>
-        /// Interval
+        /// ["<c>interval</c>"] Interval
         /// </summary>
         [JsonPropertyName("interval")]
         public int Interval { get; set; }
         /// <summary>
-        /// Quantity per order
+        /// ["<c>amountPerOrder</c>"] Quantity per order
         /// </summary>
         [JsonPropertyName("amountPerOrder")]
         public decimal QuantityPerOrder { get; set; }
         /// <summary>
-        /// Total quantity
+        /// ["<c>totalAmount</c>"] Total quantity
         /// </summary>
         [JsonPropertyName("totalAmount")]
         public decimal TotalQuantity { get; set; }
         /// <summary>
-        /// Order status
+        /// ["<c>orderStatus</c>"] Order status
         /// </summary>
         [JsonPropertyName("orderStatus")]
         public TwapOrderStatus OrderStatus { get; set; }
         /// <summary>
-        /// Executed quantity
+        /// ["<c>executedQty</c>"] Executed quantity
         /// </summary>
         [JsonPropertyName("executedQty")]
         public decimal ExecutedQuantity { get; set; }
         /// <summary>
-        /// Execution time, in seconds
+        /// ["<c>duration</c>"] Execution time, in seconds
         /// </summary>
         [JsonPropertyName("duration")]
         public decimal Duration { get; set; }
         /// <summary>
-        /// Maximum execution time execution time in seconds
+        /// ["<c>maxDuration</c>"] Maximum execution time execution time in seconds
         /// </summary>
         [JsonPropertyName("maxDuration")]
         public decimal MaxDuration { get; set; }
         /// <summary>
-        /// Creation time
+        /// ["<c>createdTime</c>"] Creation time
         /// </summary>
         [JsonPropertyName("createdTime")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// Update time
+        /// ["<c>updateTime</c>"] Update time
         /// </summary>
         [JsonPropertyName("updateTime")]
         public DateTime UpdateTime { get; set; }

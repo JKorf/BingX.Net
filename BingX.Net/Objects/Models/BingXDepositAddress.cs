@@ -13,12 +13,12 @@ namespace BingX.Net.Objects.Models
     public record BingXDepositAddresses
     {
         /// <summary>
-        /// Total
+        /// ["<c>total</c>"] Total
         /// </summary>
         [JsonPropertyName("total")]
         public int Total { get; set; }
         /// <summary>
-        /// Results
+        /// ["<c>data</c>"] Results
         /// </summary>
         [JsonPropertyName("data")]
         public BingXDepositAddress[] Data { get; set; } = Array.Empty<BingXDepositAddress>();
@@ -30,32 +30,32 @@ namespace BingX.Net.Objects.Models
     public record BingXDepositAddress
     {
         /// <summary>
-        /// Asset id
+        /// ["<c>coinId</c>"] Asset id
         /// </summary>
         [JsonPropertyName("coinId")]
         public int AssetId { get; set; }
         /// <summary>
-        /// Asset
+        /// ["<c>coin</c>"] Asset
         /// </summary>
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Network
+        /// ["<c>network</c>"] Network
         /// </summary>
         [JsonPropertyName("network")]
         public string Network { get; set; } = string.Empty;
         /// <summary>
-        /// Address
+        /// ["<c>address</c>"] Address
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; } = string.Empty;
         /// <summary>
-        /// Tag
+        /// ["<c>tag</c>"] Tag
         /// </summary>
         [JsonPropertyName("tag")]
         public string? Tag { get; set; }
         /// <summary>
-        /// Wallet type
+        /// ["<c>walletType</c>"] Wallet type
         /// </summary>
         [JsonPropertyName("walletType")]
         public AccountType WalletType { get; set; }

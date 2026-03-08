@@ -19,72 +19,72 @@ namespace BingX.Net.Objects.Models
     public record BingXSymbol
     {
         /// <summary>
-        /// Symbol name
+        /// ["<c>symbol</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Name { get; set; } = string.Empty;
         /// <summary>
-        /// Display name
+        /// ["<c>displayName</c>"] Display name
         /// </summary>
         [JsonPropertyName("displayName")]
         public string DisplayName { get; set; } = string.Empty;
         /// <summary>
-        /// Min order quantity
+        /// ["<c>minQty</c>"] Min order quantity
         /// </summary>
         [JsonPropertyName("minQty")]
         public decimal MinOrderQuantity { get; set; }
         /// <summary>
-        /// Max order quantity
+        /// ["<c>maxQty</c>"] Max order quantity
         /// </summary>
         [JsonPropertyName("maxQty")]
         public decimal MaxOrderQuantity { get; set; }
         /// <summary>
-        /// Min notional value of an order
+        /// ["<c>minNotional</c>"] Min notional value of an order
         /// </summary>
         [JsonPropertyName("minNotional")]
         public decimal MinNotional { get; set; }
         /// <summary>
-        /// Max notional value of an order
+        /// ["<c>maxNotional</c>"] Max notional value of an order
         /// </summary>
         [JsonPropertyName("maxNotional")]
         public decimal MaxNotional { get; set; }
         /// <summary>
-        /// Symbol status
+        /// ["<c>status</c>"] Symbol status
         /// </summary>
         [JsonPropertyName("status")]
         public SymbolStatus Status { get; set; }
         /// <summary>
-        /// Tick size
+        /// ["<c>tickSize</c>"] Tick size
         /// </summary>
         [JsonPropertyName("tickSize")]
         public decimal TickSize { get; set; }
         /// <summary>
-        /// Step size
+        /// ["<c>stepSize</c>"] Step size
         /// </summary>
         [JsonPropertyName("stepSize")]
         public decimal StepSize { get; set; }
         /// <summary>
-        /// Is this symbol buyable via the API
+        /// ["<c>apiStateSell</c>"] Is this symbol buyable via the API
         /// </summary>
         [JsonPropertyName("apiStateSell")]
         public bool ApiBuyable { get; set; }
         /// <summary>
-        /// Is this symbol sellable via the API
+        /// ["<c>apiStateBuy</c>"] Is this symbol sellable via the API
         /// </summary>
         [JsonPropertyName("apiStateBuy")]
         public bool ApiSellable { get; set; }
         /// <summary>
-        /// Time online
+        /// ["<c>timeOnline</c>"] Time online
         /// </summary>
         [JsonPropertyName("timeOnline")]
         public DateTime? TimeOnline { get; set; }
         /// <summary>
-        /// Time offline
+        /// ["<c>offTime</c>"] Time offline
         /// </summary>
         [JsonPropertyName("offTime")]
         public DateTime? TimeOffline { get; set; }
         /// <summary>
-        /// Maintenance online
+        /// ["<c>maintainTime</c>"] Maintenance online
         /// </summary>
         [JsonPropertyName("maintainTime")]
         public DateTime? TimeMaintenance { get; set; }

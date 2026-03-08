@@ -13,57 +13,57 @@ namespace BingX.Net.Objects.Models
     public record BingXOcoOrder
     {
         /// <summary>
-        /// Transaction time
+        /// ["<c>transactionTime</c>"] Transaction time
         /// </summary>
         [JsonPropertyName("transactionTime")]
         public DateTime? TransactionTime { get; set; }
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public string OrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Client order id
+        /// ["<c>clientOrderId</c>"] Client order id
         /// </summary>
         [JsonPropertyName("clientOrderId")]
         public string ClientOrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Order type
+        /// ["<c>orderType</c>"] Order type
         /// </summary>
         [JsonPropertyName("orderType")]
         public OcoOrderType? OrderType { get; set; }
         /// <summary>
-        /// Side
+        /// ["<c>side</c>"] Side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide? Side { get; set; }
         /// <summary>
-        /// Trigger price
+        /// ["<c>triggerPrice</c>"] Trigger price
         /// </summary>
         [JsonPropertyName("triggerPrice")]
         public decimal TriggerPrice { get; set; }
         /// <summary>
-        /// Order price
+        /// ["<c>price</c>"] Order price
         /// </summary>
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>quantity</c>"] Quantity
         /// </summary>
         [JsonPropertyName("quantity")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Order list id
+        /// ["<c>orderListId</c>"] Order list id
         /// </summary>
         [JsonPropertyName("orderListId")]
         public string OrderListId { get; set; } = string.Empty;
         /// <summary>
-        /// Order status
+        /// ["<c>status</c>"] Order status
         /// </summary>
         [JsonPropertyName("status")]
         public OrderStatus? Status { get; set; }

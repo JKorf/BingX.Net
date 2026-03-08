@@ -19,103 +19,103 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesOrderUpdate
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>s</c>"] Symbol
         /// </summary>
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Client order id
+        /// ["<c>C</c>"] Client order id
         /// </summary>
         [JsonPropertyName("C")]
         public string? ClientOrderId { get; set; }
         /// <summary>
-        /// Side
+        /// ["<c>S</c>"] Side
         /// </summary>
         [JsonPropertyName("S")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Type
+        /// ["<c>o</c>"] Type
         /// </summary>
         [JsonPropertyName("o")]
         public FuturesOrderType Type { get; set; }
         /// <summary>
-        /// Order price
+        /// ["<c>p</c>"] Order price
         /// </summary>
         [JsonPropertyName("p")]
         public decimal? Price { get; set; }
         /// <summary>
-        /// Order quantity
+        /// ["<c>q</c>"] Order quantity
         /// </summary>
         [JsonPropertyName("q")]
         public decimal? Quantity { get; set; }
         /// <summary>
-        /// Order quantity
+        /// ["<c>x</c>"] Order quantity
         /// </summary>
         [JsonPropertyName("x")]
         public string EventType { get; set; } = string.Empty;
         /// <summary>
-        /// Order status
+        /// ["<c>X</c>"] Order status
         /// </summary>
         [JsonPropertyName("X")]
         public OrderStatus Status { get; set; }
         /// <summary>
-        /// Order id
+        /// ["<c>i</c>"] Order id
         /// </summary>
         [JsonPropertyName("i")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Quantity filled
+        /// ["<c>z</c>"] Quantity filled
         /// </summary>
         [JsonPropertyName("z")]
         public decimal? QuantityFilled { get; set; }
         /// <summary>
-        /// Fee paid
+        /// ["<c>n</c>"] Fee paid
         /// </summary>
         [JsonPropertyName("n")]
         public decimal? Fee { get; set; }
         /// <summary>
-        /// Fee asset
+        /// ["<c>N</c>"] Fee asset
         /// </summary>
         [JsonPropertyName("N")]
         public string? FeeAsset { get; set; }
         /// <summary>
-        /// Update time
+        /// ["<c>T</c>"] Update time
         /// </summary>
         [JsonPropertyName("T")]
         public DateTime? UpdateTime { get; set; }
         /// <summary>
-        /// Quantity filled in quote asset
+        /// ["<c>Z</c>"] Quantity filled in quote asset
         /// </summary>
         [JsonPropertyName("Z")]
         public decimal? VolumeFilled { get; set; }
 
         /// <summary>
-        /// Trigger price
+        /// ["<c>sp</c>"] Trigger price
         /// </summary>
         [JsonPropertyName("sp")]
         public decimal? TriggerPrice { get; set; }
         /// <summary>
-        /// Trigger type
+        /// ["<c>wt</c>"] Trigger type
         /// </summary>
         [JsonPropertyName("wt")]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
-        /// Average order price
+        /// ["<c>ap</c>"] Average order price
         /// </summary>
         [JsonPropertyName("ap")]
         public decimal? AveragePrice { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>ps</c>"] Position side
         /// </summary>
         [JsonPropertyName("ps")]
         public PositionSide PositionSide { get; set; }
         /// <summary>
-        /// Profit and loss of the transaction
+        /// ["<c>rp</c>"] Profit and loss of the transaction
         /// </summary>
         [JsonPropertyName("rp")]
         public decimal? ProfitAndLoss { get; set; }
         /// <summary>
-        /// Reduce only
+        /// ["<c>ro</c>"] Reduce only
         /// </summary>
         [JsonPropertyName("ro")]
         public bool? ReduceOnly { get; set; }

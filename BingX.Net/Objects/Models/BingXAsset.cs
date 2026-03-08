@@ -12,22 +12,22 @@ namespace BingX.Net.Objects.Models
     public record BingXAsset
     {
         /// <summary>
-        /// Name 
+        /// ["<c>name</c>"] Name 
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
         /// <summary>
-        /// Asset
+        /// ["<c>coin</c>"] Asset
         /// </summary>
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Display name
+        /// ["<c>displayName</c>"] Display name
         /// </summary>
         [JsonPropertyName("displayName")]
         public string DisplayName { get; set; } = string.Empty;
         /// <summary>
-        /// Networks
+        /// ["<c>networkList</c>"] Networks
         /// </summary>
         [JsonPropertyName("networkList")]
         public BingXNetwork[] Networks { get; set; } = Array.Empty<BingXNetwork>();
@@ -40,72 +40,72 @@ namespace BingX.Net.Objects.Models
     public record BingXNetwork
     {
         /// <summary>
-        /// Network name
+        /// ["<c>name</c>"] Network name
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
         /// <summary>
-        /// Network
+        /// ["<c>network</c>"] Network
         /// </summary>
         [JsonPropertyName("network")]
         public string Network { get; set; } = string.Empty;
         /// <summary>
-        /// Is deposit enabled
+        /// ["<c>depositEnable</c>"] Is deposit enabled
         /// </summary>
         [JsonPropertyName("depositEnable")]
         public bool DepositEnabled { get; set; }
         /// <summary>
-        /// Minimal deposit amount
+        /// ["<c>depositMin</c>"] Minimal deposit amount
         /// </summary>
         [JsonPropertyName("depositMin")]
         public decimal MinDeposit { get; set; }
         /// <summary>
-        /// Min amount of confirmations
+        /// ["<c>minConfirm</c>"] Min amount of confirmations
         /// </summary>
         [JsonPropertyName("minConfirm")]
         public int MinConfirmations { get; set; }
         /// <summary>
-        /// Is default network
+        /// ["<c>isDefault</c>"] Is default network
         /// </summary>
         [JsonPropertyName("isDefault")]
         public bool IsDefault { get; set; }
         /// <summary>
-        /// Is withdrawing enabled
+        /// ["<c>withdrawEnable</c>"] Is withdrawing enabled
         /// </summary>
         [JsonPropertyName("withdrawEnable")]
         public bool WithdrawEnabled { get; set; }
         /// <summary>
-        /// Withdrawal fee
+        /// ["<c>withdrawFee</c>"] Withdrawal fee
         /// </summary>
         [JsonPropertyName("withdrawFee")]
         public decimal WithdrawFee { get; set; }
         /// <summary>
-        /// Minimal withdrawal
+        /// ["<c>withdrawMin</c>"] Minimal withdrawal
         /// </summary>
         [JsonPropertyName("withdrawMin")]
         public decimal MinWithdraw { get; set; }
         /// <summary>
-        /// Max withdrawal
+        /// ["<c>withdrawMax</c>"] Max withdrawal
         /// </summary>
         [JsonPropertyName("withdrawMax")]
         public decimal MaxWithdraw { get; set; }
         /// <summary>
-        /// Description
+        /// ["<c>withdrawDesc</c>"] Description
         /// </summary>
         [JsonPropertyName("withdrawDesc")]
         public string? WithdrawDescription { get; set; }
         /// <summary>
-        /// Witdraw precision
+        /// ["<c>withdrawPrecision</c>"] Witdraw precision
         /// </summary>
         [JsonPropertyName("withdrawPrecision")]
         public int WithdrawPrecision { get; set; }
         /// <summary>
-        /// Deposit precision
+        /// ["<c>depositPrecision</c>"] Deposit precision
         /// </summary>
         [JsonPropertyName("depositPrecision")]
         public int DepositPrecision { get; set; }
         /// <summary>
-        /// Contract address
+        /// ["<c>contractAddress</c>"] Contract address
         /// </summary>
         [JsonPropertyName("contractAddress")]
         public string ContractAddress { get; set; } = string.Empty;

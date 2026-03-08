@@ -13,42 +13,42 @@ namespace BingX.Net.Objects.Models
     public record BingXIncome
     {
         /// <summary>
-        /// Symbol name
+        /// ["<c>symbol</c>"] Symbol name
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Type
+        /// ["<c>incomeType</c>"] Type
         /// </summary>
         [JsonPropertyName("incomeType")]
         public IncomeType IncomeType { get; set; }
         /// <summary>
-        /// Income
+        /// ["<c>income</c>"] Income
         /// </summary>
         [JsonPropertyName("income")]
         public decimal Income { get; set; }
         /// <summary>
-        /// Asset
+        /// ["<c>asset</c>"] Asset
         /// </summary>
         [JsonPropertyName("asset")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Additional info
+        /// ["<c>info</c>"] Additional info
         /// </summary>
         [JsonPropertyName("info")]
         public string Info { get; set; } = string.Empty;
         /// <summary>
-        /// Transaction id
+        /// ["<c>tranId</c>"] Transaction id
         /// </summary>
         [JsonPropertyName("tranId")]
         public string? TransactionId { get; set; } = string.Empty;
         /// <summary>
-        /// Trade id
+        /// ["<c>tradeId</c>"] Trade id
         /// </summary>
         [JsonPropertyName("tradeId")]
         public string? TradeId { get; set; } = string.Empty;
         /// <summary>
-        /// Timestamp
+        /// ["<c>time</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime Timestamp { get; set; }

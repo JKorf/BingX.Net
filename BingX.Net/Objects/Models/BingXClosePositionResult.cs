@@ -12,37 +12,37 @@ namespace BingX.Net.Objects.Models
     public record BingXClosePositionResult
     {
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Position id
+        /// ["<c>positionId</c>"] Position id
         /// </summary>
         [JsonPropertyName("positionId")]
         public string PositionId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Side
+        /// ["<c>side</c>"] Side
         /// </summary>
         [JsonPropertyName("side")]
         public string Side { get; set; } = string.Empty;
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public OrderType Type { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>positionSide</c>"] Position side
         /// </summary>
         [JsonPropertyName("positionSide")]
         public PositionSide PositionSide { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>origQty</c>"] Quantity
         /// </summary>
         [JsonPropertyName("origQty")]
         public decimal Quantity { get; set; }

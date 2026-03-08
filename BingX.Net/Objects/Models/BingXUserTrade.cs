@@ -18,57 +18,57 @@ namespace BingX.Net.Objects.Models
     public record BingXUserTrade
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Id
+        /// ["<c>id</c>"] Id
         /// </summary>
         [JsonPropertyName("id")]
         public long Id { get; set; }
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Trade price
+        /// ["<c>price</c>"] Trade price
         /// </summary>
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Quantity traded
+        /// ["<c>qty</c>"] Quantity traded
         /// </summary>
         [JsonPropertyName("qty")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Value traded in quote asset
+        /// ["<c>quoteQty</c>"] Value traded in quote asset
         /// </summary>
         [JsonPropertyName("quoteQty")]
         public decimal Value { get; set; }
         /// <summary>
-        /// Fee paid
+        /// ["<c>commission</c>"] Fee paid
         /// </summary>
         [JsonPropertyName("commission")]
         public decimal Fee { get; set; }
         /// <summary>
-        /// Fee asset
+        /// ["<c>commissionAsset</c>"] Fee asset
         /// </summary>
         [JsonPropertyName("commissionAsset")]
         public string FeeAsset { get; set; } = string.Empty;
         /// <summary>
-        /// Trade time
+        /// ["<c>time</c>"] Trade time
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime Timestamp { get; set; }
         /// <summary>
-        /// Is buyer
+        /// ["<c>isBuyer</c>"] Is buyer
         /// </summary>
         [JsonPropertyName("isBuyer")]
         public bool IsBuyer { get; set; }
         /// <summary>
-        /// Is maker
+        /// ["<c>isMaker</c>"] Is maker
         /// </summary>
         [JsonPropertyName("isMaker")]
         public bool IsMaker { get; set; }

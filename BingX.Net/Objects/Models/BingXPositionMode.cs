@@ -12,7 +12,7 @@ namespace BingX.Net.Objects.Models
     public record BingXPositionMode
     {
         /// <summary>
-        /// Position mode
+        /// ["<c>dualSidePosition</c>"] Position mode
         /// </summary>
         [JsonPropertyName("dualSidePosition")]
         public PositionMode PositionMode { get; set; }

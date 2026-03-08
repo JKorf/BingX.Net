@@ -26,174 +26,174 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesOrderDetails
     {
         /// <summary>   
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public FuturesOrderType Type { get; set; }
         /// <summary>
-        /// Order side
+        /// ["<c>side</c>"] Order side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>positionSide</c>"] Position side
         /// </summary>
         [JsonPropertyName("positionSide")]
         public PositionSide? PositionSide { get; set; }
         /// <summary>
-        /// Order price
+        /// ["<c>price</c>"] Order price
         /// </summary>
         [JsonPropertyName("price")]
         public decimal? Price { get; set; }
         /// <summary>
-        /// Order quantity
+        /// ["<c>origQty</c>"] Order quantity
         /// </summary>
         [JsonPropertyName("origQty")]
         public decimal? Quantity { get; set; }
         /// <summary>
-        /// Quantity filled
+        /// ["<c>executedQty</c>"] Quantity filled
         /// </summary>
         [JsonPropertyName("executedQty")]
         public decimal? QuantityFilled { get; set; }
         /// <summary>
-        /// Value filled (price * quantity)
+        /// ["<c>cumQuote</c>"] Value filled (price * quantity)
         /// </summary>
         [JsonPropertyName("cumQuote")]
         public decimal? ValueFilled { get; set; }
         /// <summary>
-        /// Order average fill price
+        /// ["<c>avgPrice</c>"] Order average fill price
         /// </summary>
         [JsonPropertyName("avgPrice")]
         public decimal? AveragePrice { get; set; }
         /// <summary>
-        /// Profit
+        /// ["<c>profit</c>"] Profit
         /// </summary>
         [JsonPropertyName("profit")]
         public decimal? Profit { get; set; }
         /// <summary>
-        /// Fee
+        /// ["<c>commission</c>"] Fee
         /// </summary>
         [JsonPropertyName("commission")]
         public decimal? Fee { get; set; }
         /// <summary>
-        /// Order status
+        /// ["<c>status</c>"] Order status
         /// </summary>
         [JsonPropertyName("status")]
         public OrderStatus Status { get; set; }
         /// <summary>
-        /// Create time
+        /// ["<c>time</c>"] Create time
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// Last update time
+        /// ["<c>updateTime</c>"] Last update time
         /// </summary>
         [JsonPropertyName("updateTime")]
         public DateTime UpdateTime { get; set; }
         /// <summary>
-        /// Leverage
+        /// ["<c>leverage</c>"] Leverage
         /// </summary>
         [JsonPropertyName("leverage")]
         public string Leverage { get; set; } = string.Empty;
         /// <summary>
-        /// Stop price
+        /// ["<c>stopPrice</c>"] Stop price
         /// </summary>
         [JsonPropertyName("stopPrice")]
         public decimal? StopPrice { get; set; }
         /// <summary>
-        /// Price trigger type
+        /// ["<c>workingType</c>"] Price trigger type
         /// </summary>
         [JsonPropertyName("workingType")]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
-        /// Client order id
+        /// ["<c>clientOrderId</c>"] Client order id
         /// </summary>
         [JsonPropertyName("clientOrderId")]
         public string? ClientOrderId { get; set; }
         /// <summary>
-        /// Stop guaranteed
+        /// ["<c>stopGuaranteed</c>"] Stop guaranteed
         /// </summary>
         [JsonPropertyName("stopGuaranteed")]
         public bool? StopGuaranteed { get; set; }
         /// <summary>
-        /// Time in force
+        /// ["<c>timeInForce</c>"] Time in force
         /// </summary>
         [JsonPropertyName("timeInForce")]
         public TimeInForce? TimeInForce { get; set; }
         /// <summary>
-        /// Trailing stop price rate
+        /// ["<c>priceRate</c>"] Trailing stop price rate
         /// </summary>
         [JsonPropertyName("priceRate")]
         public decimal? PriceRate { get; set; }
         /// <summary>
-        /// Reduce only
+        /// ["<c>reduceOnly</c>"] Reduce only
         /// </summary>
         [JsonPropertyName("reduceOnly")]
         public bool ReduceOnly { get; set; }
         /// <summary>
-        /// Trigger price
+        /// ["<c>activationPrice</c>"] Trigger price
         /// </summary>
         [JsonPropertyName("activationPrice")]
         public decimal? TriggerPrice { get; set; }
         [JsonInclude, JsonPropertyName("actPrice")]
         internal decimal? TriggerPriceInt { get => TriggerPrice; set => TriggerPrice = value; }
         /// <summary>
-        /// Trailing stop rate
+        /// ["<c>trailingStopRate</c>"] Trailing stop rate
         /// </summary>
         [JsonPropertyName("trailingStopRate")]
         public decimal? TrailingStopRate { get; set; }
         /// <summary>
-        /// Trailing stop distance
+        /// ["<c>trailingStopDistance</c>"] Trailing stop distance
         /// </summary>
         [JsonPropertyName("trailingStopDistance")]
         public decimal? TrailingStopDistance { get; set; }
         /// <summary>
-        /// Close position
+        /// ["<c>closePosition</c>"] Close position
         /// </summary>
         [JsonPropertyName("closePosition")]
         public bool? ClosePosition { get; set; }
         /// <summary>
-        /// Stop loss order info
+        /// ["<c>stopLoss</c>"] Stop loss order info
         /// </summary>
         [JsonPropertyName("stopLoss")]
         public BingXStopOrder? StopLoss { get; set; }
         /// <summary>
-        /// Take profit order info
+        /// ["<c>takeProfit</c>"] Take profit order info
         /// </summary>
         [JsonPropertyName("takeProfit")]
         public BingXStopOrder? TakeProfit { get; set; }
         /// <summary>
-        /// Trigger order id
+        /// ["<c>triggerOrderId</c>"] Trigger order id
         /// </summary>
         [JsonPropertyName("triggerOrderId")]
         public long? TriggerOrderId { get; set; }
         /// <summary>
-        /// Is post only order
+        /// ["<c>postOnly</c>"] Is post only order
         /// </summary>
         [JsonPropertyName("postOnly")]
         public bool? PostOnly { get; set; }
         /// <summary>
-        /// Is part of a Time Weight Average Price Order
+        /// ["<c>isTwap</c>"] Is part of a Time Weight Average Price Order
         /// </summary>
         [JsonPropertyName("isTwap")]
         public bool IsTwap { get; set; }
         /// <summary>
-        /// The main order id if this order is part of a Twap order
+        /// ["<c>mainOrderId</c>"] The main order id if this order is part of a Twap order
         /// </summary>
         [JsonPropertyName("mainOrderId")]
         public string? MainOrderId { get; set; }
         /// <summary>
-        /// Position id
+        /// ["<c>positionId</c>"] Position id
         /// </summary>
         [JsonPropertyName("positionId")]
         public long? PositionId { get; set; }
@@ -206,32 +206,32 @@ namespace BingX.Net.Objects.Models
     public record BingXStopOrder
     {
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public TakeProfitStopLossMode? Type { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>quantity</c>"] Quantity
         /// </summary>
         [JsonPropertyName("quantity")]
         public decimal? Quantity { get; set; }
         /// <summary>
-        /// Stop price
+        /// ["<c>stopPrice</c>"] Stop price
         /// </summary>
         [JsonPropertyName("stopPrice")]
         public decimal? StopPrice { get; set; }
         /// <summary>
-        /// Price
+        /// ["<c>price</c>"] Price
         /// </summary>
         [JsonPropertyName("price")]
         public decimal? Price { get; set; }
         /// <summary>
-        /// Trigger type
+        /// ["<c>workingType</c>"] Trigger type
         /// </summary>
         [JsonPropertyName("workingType")]
         public TriggerType? TriggerType { get; set; }
         /// <summary>
-        /// Stop guarenteed
+        /// ["<c>stopGuaranteed</c>"] Stop guarenteed
         /// </summary>
         [JsonPropertyName("stopGuaranteed")]
         public bool? StopGuaranteed { get; set; }

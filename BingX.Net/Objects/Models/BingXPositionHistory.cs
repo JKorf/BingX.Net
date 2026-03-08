@@ -19,82 +19,82 @@ namespace BingX.Net.Objects.Models
     public record BingXPositionHistory
     {
         /// <summary>
-        /// Position id
+        /// ["<c>positionId</c>"] Position id
         /// </summary>
         [JsonPropertyName("positionId")]
         public string PositionId { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Isolated (true) or Cross (false) margin mode
+        /// ["<c>isolated</c>"] Isolated (true) or Cross (false) margin mode
         /// </summary>
         [JsonPropertyName("isolated")]
         public bool Isolated { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>positionSide</c>"] Position side
         /// </summary>
         [JsonPropertyName("positionSide")]
         public PositionSide PositionSide { get; set; }
         /// <summary>
-        /// Open time
+        /// ["<c>openTime</c>"] Open time
         /// </summary>
         [JsonPropertyName("openTime")]
         public DateTime OpenTime { get; set; }
         /// <summary>
-        /// Update time
+        /// ["<c>updateTime</c>"] Update time
         /// </summary>
         [JsonPropertyName("updateTime")]
         public DateTime UpdateTime { get; set; }
         /// <summary>
-        /// Average price
+        /// ["<c>avgPrice</c>"] Average price
         /// </summary>
         [JsonPropertyName("avgPrice")]
         public decimal AveragePrice { get; set; }
         /// <summary>
-        /// Average close price
+        /// ["<c>avgClosePrice</c>"] Average close price
         /// </summary>
         [JsonPropertyName("avgClosePrice")]
         public decimal AverageClosePrice { get; set; }
         /// <summary>
-        /// Realised profit and loss
+        /// ["<c>realisedProfit</c>"] Realised profit and loss
         /// </summary>
         [JsonPropertyName("realisedProfit")]
         public decimal RealisedPnl { get; set; }
         /// <summary>
-        /// Net profit and loss
+        /// ["<c>netProfit</c>"] Net profit and loss
         /// </summary>
         [JsonPropertyName("netProfit")]
         public decimal NetPnl { get; set; }
         /// <summary>
-        /// Position quantity
+        /// ["<c>positionAmt</c>"] Position quantity
         /// </summary>
         [JsonPropertyName("positionAmt")]
         public decimal PositionQuantity { get; set; }
         /// <summary>
-        /// Close position quantity
+        /// ["<c>closePositionAmt</c>"] Close position quantity
         /// </summary>
         [JsonPropertyName("closePositionAmt")]
         public decimal ClosePositionQuantity { get; set; }
         /// <summary>
-        /// Leverage
+        /// ["<c>leverage</c>"] Leverage
         /// </summary>
         [JsonPropertyName("leverage")]
         public int Leverage { get; set; }
         /// <summary>
-        /// Are all positions closed
+        /// ["<c>closeAllPositions</c>"] Are all positions closed
         /// </summary>
         [JsonPropertyName("closeAllPositions")]
         public bool CloseAllPositions { get; set; }
         /// <summary>
-        /// Position fee
+        /// ["<c>positionCommission</c>"] Position fee
         /// </summary>
         [JsonPropertyName("positionCommission")]
         public decimal PositionFee { get; set; }
         /// <summary>
-        /// Total funding
+        /// ["<c>totalFunding</c>"] Total funding
         /// </summary>
         [JsonPropertyName("totalFunding")]
         public decimal TotalFunding { get; set; }

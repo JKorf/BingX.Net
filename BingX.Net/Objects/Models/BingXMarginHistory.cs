@@ -12,12 +12,12 @@ namespace BingX.Net.Objects.Models
     public record BingXMarginHistory
     {
         /// <summary>
-        /// Records
+        /// ["<c>records</c>"] Records
         /// </summary>
         [JsonPropertyName("records")]
         public BingXMarginHistoryEntry[] Records { get; set; } = Array.Empty<BingXMarginHistoryEntry>();
         /// <summary>
-        /// Total amount of records
+        /// ["<c>total</c>"] Total amount of records
         /// </summary>
         [JsonPropertyName("total")]
         public decimal Total { get; set; }
@@ -29,32 +29,32 @@ namespace BingX.Net.Objects.Models
     public record BingXMarginHistoryEntry
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Position id
+        /// ["<c>positionId</c>"] Position id
         /// </summary>
         [JsonPropertyName("positionId")]
         public string PositionId { get; set; } = string.Empty;
         /// <summary>
-        /// Change reason
+        /// ["<c>changeReason</c>"] Change reason
         /// </summary>
         [JsonPropertyName("changeReason")]
         public string ChangeReason { get; set; } = string.Empty;
         /// <summary>
-        /// Margin change
+        /// ["<c>marginChange</c>"] Margin change
         /// </summary>
         [JsonPropertyName("marginChange")]
         public decimal MarginChange { get; set; }
         /// <summary>
-        /// Margin after change
+        /// ["<c>marginAfterChange</c>"] Margin after change
         /// </summary>
         [JsonPropertyName("marginAfterChange")]
         public decimal MarginAfterChange { get; set; }
         /// <summary>
-        /// Time of change
+        /// ["<c>time</c>"] Time of change
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime Timestamp { get; set; }

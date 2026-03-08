@@ -11,7 +11,7 @@ namespace BingX.Net.Objects.Models
     public record BingXTransactionResult
     {
         /// <summary>
-        /// Transaction id
+        /// ["<c>tranId</c>"] Transaction id
         /// </summary>
         [JsonPropertyName("tranId")]
         public long TransactionId { get; set; }

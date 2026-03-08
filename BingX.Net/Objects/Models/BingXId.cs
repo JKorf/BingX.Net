@@ -11,7 +11,7 @@ namespace BingX.Net.Objects.Models
     public record BingXId
     {
         /// <summary>
-        /// Id
+        /// ["<c>id</c>"] Id
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; } = string.Empty;

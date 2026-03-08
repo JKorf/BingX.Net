@@ -11,22 +11,22 @@ namespace BingX.Net.Objects.Models
     public record BingXMarginAsset
     {
         /// <summary>
-        /// Asset
+        /// ["<c>currency</c>"] Asset
         /// </summary>
         [JsonPropertyName("currency")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Total quantity
+        /// ["<c>totalAmount</c>"] Total quantity
         /// </summary>
         [JsonPropertyName("totalAmount")]
         public decimal TotalQuantity { get; set; }
         /// <summary>
-        /// Available transfer
+        /// ["<c>availableTransfer</c>"] Available transfer
         /// </summary>
         [JsonPropertyName("availableTransfer")]
         public decimal AvailableTransfer { get; set; }
         /// <summary>
-        /// Latest mortgage quantity
+        /// ["<c>latestMortgageAmount</c>"] Latest mortgage quantity
         /// </summary>
         [JsonPropertyName("latestMortgageAmount")]
         public decimal LatestMortgageQuantity { get; set; }

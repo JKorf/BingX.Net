@@ -11,32 +11,32 @@ namespace BingX.Net.Objects.Models
     public record BingXPositionMarginInfo
     {
         /// <summary>
-        /// Tier
+        /// ["<c>tier</c>"] Tier
         /// </summary>
         [JsonPropertyName("tier")]
         public string Tier { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Minimal position value
+        /// ["<c>minPositionVal</c>"] Minimal position value
         /// </summary>
         [JsonPropertyName("minPositionVal")]
         public decimal MinPositionValue { get; set; }
         /// <summary>
-        /// Max position value
+        /// ["<c>maxPositionVal</c>"] Max position value
         /// </summary>
         [JsonPropertyName("maxPositionVal")]
         public decimal MaxPositionValue { get; set; }
         /// <summary>
-        /// Maintenance margin ratio
+        /// ["<c>maintMarginRatio</c>"] Maintenance margin ratio
         /// </summary>
         [JsonPropertyName("maintMarginRatio")]
         public decimal MaintenanceMarginRatio { get; set; }
         /// <summary>
-        /// Maintenance amount
+        /// ["<c>maintAmount</c>"] Maintenance amount
         /// </summary>
         [JsonPropertyName("maintAmount")]
         public decimal MaintenanceAmount { get; set; }

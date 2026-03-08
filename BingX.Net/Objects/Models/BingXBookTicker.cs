@@ -12,37 +12,37 @@ namespace BingX.Net.Objects.Models
     public record BingXBookTicker
     {
         /// <summary>
-        /// Event type
+        /// ["<c>eventType</c>"] Event type
         /// </summary>
         [JsonPropertyName("eventType")]
         public string EventType { get; set; } = string.Empty;
         /// <summary>
-        /// Timestamp
+        /// ["<c>time</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime Timestamp { get; set; }
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Best bid price
+        /// ["<c>bidPrice</c>"] Best bid price
         /// </summary>
         [JsonPropertyName("bidPrice")]
         public decimal BestBidPrice { get; set; }
         /// <summary>
-        /// Best bid quantity
+        /// ["<c>bidVolume</c>"] Best bid quantity
         /// </summary>
         [JsonPropertyName("bidVolume")]
         public decimal BestBidQuantity { get; set; }
         /// <summary>
-        /// Best ask price
+        /// ["<c>askPrice</c>"] Best ask price
         /// </summary>
         [JsonPropertyName("askPrice")]
         public decimal BestAskPrice { get; set; }
         /// <summary>
-        /// Best ask quantity
+        /// ["<c>askVolume</c>"] Best ask quantity
         /// </summary>
         [JsonPropertyName("askVolume")]
         public decimal BestAskQuantity { get; set; }

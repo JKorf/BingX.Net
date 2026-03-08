@@ -12,27 +12,27 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesTradeUpdate
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>s</c>"] Symbol
         /// </summary>
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Trade price
+        /// ["<c>p</c>"] Trade price
         /// </summary>
         [JsonPropertyName("p")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>q</c>"] Quantity
         /// </summary>
         [JsonPropertyName("q")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Trade timestamp
+        /// ["<c>T</c>"] Trade timestamp
         /// </summary>
         [JsonPropertyName("T")]
         public DateTime TradeTime { get; set; }
         /// <summary>
-        /// Whether buyer is maker
+        /// ["<c>m</c>"] Whether buyer is maker
         /// </summary>
         [JsonPropertyName("m")]
         public bool BuyerIsMaker { get; set; }

@@ -11,7 +11,7 @@ namespace BingX.Net.Objects.Models
     public record BingXTwapOrderId
     {
         /// <summary>
-        /// Main order id
+        /// ["<c>mainOrderId</c>"] Main order id
         /// </summary>
         [JsonPropertyName("mainOrderId")]
         public long MainOrderId { get; set; }

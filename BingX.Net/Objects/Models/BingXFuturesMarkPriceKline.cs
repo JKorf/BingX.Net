@@ -12,37 +12,37 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesMarkPriceKline
     {
         /// <summary>
-        /// Open price
+        /// ["<c>open</c>"] Open price
         /// </summary>
         [JsonPropertyName("open")]
         public decimal OpenPrice { get; set; }
         /// <summary>
-        /// Close price
+        /// ["<c>close</c>"] Close price
         /// </summary>
         [JsonPropertyName("close")]
         public decimal ClosePrice { get; set; }
         /// <summary>
-        /// High price
+        /// ["<c>high</c>"] High price
         /// </summary>
         [JsonPropertyName("high")]
         public decimal HighPrice { get; set; }
         /// <summary>
-        /// Low price
+        /// ["<c>low</c>"] Low price
         /// </summary>
         [JsonPropertyName("low")]
         public decimal LowPrice { get; set; }
         /// <summary>
-        /// Volume
+        /// ["<c>volume</c>"] Volume
         /// </summary>
         [JsonPropertyName("volume")]
         public decimal Volume { get; set; }
         /// <summary>
-        /// Open time
+        /// ["<c>openTime</c>"] Open time
         /// </summary>
         [JsonPropertyName("openTime")]
         public DateTime OpenTime { get; set; }
         /// <summary>
-        /// Close time
+        /// ["<c>closeTime</c>"] Close time
         /// </summary>
         [JsonPropertyName("closeTime")]
         public DateTime CloseTime { get; set; }

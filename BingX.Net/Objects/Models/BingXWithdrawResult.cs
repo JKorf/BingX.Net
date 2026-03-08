@@ -11,12 +11,12 @@ namespace BingX.Net.Objects.Models
     public record BingXWithdrawResult
     {
         /// <summary>
-        /// Id
+        /// ["<c>id</c>"] Id
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; } = string.Empty;
         /// <summary>
-        /// Client order id
+        /// ["<c>withdrawOrderId</c>"] Client order id
         /// </summary>
         [JsonPropertyName("withdrawOrderId")]
         public string? ClientOrderId { get; set; }

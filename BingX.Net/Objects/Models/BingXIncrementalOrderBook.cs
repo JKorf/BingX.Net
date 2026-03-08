@@ -14,37 +14,37 @@ namespace BingX.Net.Objects.Models
     public record BingXIncrementalOrderBook
     {
         /// <summary>
-        /// Action
+        /// ["<c>action</c>"] Action
         /// </summary>
         [JsonPropertyName("action")]
         public string Action { get; set; } = string.Empty;
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string? Symbol { get; set; }
         /// <summary>
-        /// List of bids
+        /// ["<c>bids</c>"] List of bids
         /// </summary>
         [JsonPropertyName("bids")]
         public Dictionary<decimal, decimal> Bids { get; set; } = new Dictionary<decimal, decimal>();
         /// <summary>
-        /// List of asks
+        /// ["<c>asks</c>"] List of asks
         /// </summary>
         [JsonPropertyName("asks")]
         public Dictionary<decimal, decimal> Asks { get; set; } = new Dictionary<decimal, decimal>();
         /// <summary>
-        /// Timestamp of the data
+        /// ["<c>timestamp</c>"] Timestamp of the data
         /// </summary>
         [JsonPropertyName("timestamp")]
         public DateTime? Timestamp { get; set; }
         /// <summary>
-        /// Last update id
+        /// ["<c>lastUpdateId</c>"] Last update id
         /// </summary>
         [JsonPropertyName("lastUpdateId")]
         public long LastUpdateId { get; set; }
         /// <summary>
-        /// Source update id
+        /// ["<c>sourceUpdateId</c>"] Source update id
         /// </summary>
         [JsonPropertyName("sourceUpdateId")]
         public long SourceUpdateId { get; set; }

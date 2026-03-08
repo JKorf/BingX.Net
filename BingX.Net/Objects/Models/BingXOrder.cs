@@ -20,62 +20,62 @@ namespace BingX.Net.Objects.Models
     public record BingXOrder
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Timestamp
+        /// ["<c>transactTime</c>"] Timestamp
         /// </summary>
         [JsonPropertyName("transactTime")]
         public DateTime Timestamp { get; set; }
         /// <summary>
-        /// Order price
+        /// ["<c>price</c>"] Order price
         /// </summary>
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Stop price
+        /// ["<c>stopPrice</c>"] Stop price
         /// </summary>
         [JsonPropertyName("stopPrice")]
         public decimal? StopPrice { get; set; }
         /// <summary>
-        /// Order quantity
+        /// ["<c>origQty</c>"] Order quantity
         /// </summary>
         [JsonPropertyName("origQty")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Quantity filled
+        /// ["<c>executedQty</c>"] Quantity filled
         /// </summary>
         [JsonPropertyName("executedQty")]
         public decimal QuantityFilled { get; set; }
         /// <summary>
-        /// Total value filled (price * quantity)
+        /// ["<c>cummulativeQuoteQty</c>"] Total value filled (price * quantity)
         /// </summary>
         [JsonPropertyName("cummulativeQuoteQty")]
         public decimal ValueFilled { get; set; }
         /// <summary>
-        /// Order status
+        /// ["<c>status</c>"] Order status
         /// </summary>
         [JsonPropertyName("status")]
         public OrderStatus Status { get; set; }
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public OrderType Type { get; set; }
         /// <summary>
-        /// Order side
+        /// ["<c>side</c>"] Order side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Client order id
+        /// ["<c>clientOrderID</c>"] Client order id
         /// </summary>
         [JsonPropertyName("clientOrderID")]
         public string? ClientOrderId { get; set; }

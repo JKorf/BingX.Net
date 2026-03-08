@@ -12,82 +12,82 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesTicker
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Open price
+        /// ["<c>openPrice</c>"] Open price
         /// </summary>
         [JsonPropertyName("openPrice")]
         public decimal OpenPrice { get; set; }
         /// <summary>
-        /// High price
+        /// ["<c>highPrice</c>"] High price
         /// </summary>
         [JsonPropertyName("highPrice")]
         public decimal HighPrice { get; set; }
         /// <summary>
-        /// Low price
+        /// ["<c>lowPrice</c>"] Low price
         /// </summary>
         [JsonPropertyName("lowPrice")]
         public decimal LowPrice { get; set; }
         /// <summary>
-        /// Last price
+        /// ["<c>lastPrice</c>"] Last price
         /// </summary>
         [JsonPropertyName("lastPrice")]
         public decimal LastPrice { get; set; }
         /// <summary>
-        /// Last quantity
+        /// ["<c>lastQty</c>"] Last quantity
         /// </summary>
         [JsonPropertyName("lastQty")]
         public decimal LastQuantity { get; set; }
         /// <summary>
-        /// Price change
+        /// ["<c>priceChange</c>"] Price change
         /// </summary>
         [JsonPropertyName("priceChange")]
         public decimal PriceChange { get; set; }
         /// <summary>
-        /// Price change percentage
+        /// ["<c>priceChangePercent</c>"] Price change percentage
         /// </summary>
         [JsonPropertyName("priceChangePercent")]
         public decimal PriceChangePercent { get; set; }
         /// <summary>
-        /// Volume
+        /// ["<c>volume</c>"] Volume
         /// </summary>
         [JsonPropertyName("volume")]
         public decimal Volume { get; set; }
         /// <summary>
-        /// Quote volume
+        /// ["<c>quoteVolume</c>"] Quote volume
         /// </summary>
         [JsonPropertyName("quoteVolume")]
         public decimal QuoteVolume { get; set; }
         /// <summary>
-        /// Open time
+        /// ["<c>openTime</c>"] Open time
         /// </summary>
         [JsonPropertyName("openTime")]
         public DateTime OpenTime { get; set; }
         /// <summary>
-        /// Close time
+        /// ["<c>closeTime</c>"] Close time
         /// </summary>
         [JsonPropertyName("closeTime")]
         public DateTime CloseTime { get; set; }
         /// <summary>
-        /// Best ask price
+        /// ["<c>askPrice</c>"] Best ask price
         /// </summary>
         [JsonPropertyName("askPrice")]
         public decimal BestAskPrice { get; set; }
         /// <summary>
-        /// Best ask quantity
+        /// ["<c>askQty</c>"] Best ask quantity
         /// </summary>
         [JsonPropertyName("askQty")]
         public decimal BestAskQuantity { get; set; }
         /// <summary>
-        /// Best bid price
+        /// ["<c>bidPrice</c>"] Best bid price
         /// </summary>
         [JsonPropertyName("bidPrice")]
         public decimal BestBidPrice { get; set; }
         /// <summary>
-        /// Best bid quantity
+        /// ["<c>bidQty</c>"] Best bid quantity
         /// </summary>
         [JsonPropertyName("bidQty")]
         public decimal BestBidQuantity { get; set; }

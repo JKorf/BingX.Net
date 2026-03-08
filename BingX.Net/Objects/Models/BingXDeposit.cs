@@ -13,57 +13,57 @@ namespace BingX.Net.Objects.Models
     public record BingXDeposit
     {
         /// <summary>
-        /// Quantity 
+        /// ["<c>amount</c>"] Quantity 
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Asset
+        /// ["<c>coin</c>"] Asset
         /// </summary>
         [JsonPropertyName("coin")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Used network
+        /// ["<c>network</c>"] Used network
         /// </summary>
         [JsonPropertyName("network")]
         public string Network { get; set; } = string.Empty;
         /// <summary>
-        /// Current status
+        /// ["<c>status</c>"] Current status
         /// </summary>
         [JsonPropertyName("status")]
         public DepositStatus Status { get; set; }
         /// <summary>
-        /// Deposit address
+        /// ["<c>address</c>"] Deposit address
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; } = string.Empty;
         /// <summary>
-        /// Address tag
+        /// ["<c>addressTag</c>"] Address tag
         /// </summary>
         [JsonPropertyName("addressTag")]
         public string? AddressTag { get; set; } = string.Empty;
         /// <summary>
-        /// Source address
+        /// ["<c>sourceAddress</c>"] Source address
         /// </summary>
         [JsonPropertyName("sourceAddress")]
         public string SourceAddress { get; set; } = string.Empty;
         /// <summary>
-        /// Transaction id
+        /// ["<c>txId</c>"] Transaction id
         /// </summary>
         [JsonPropertyName("txId")]
         public string TransactionId { get; set; } = string.Empty;
         /// <summary>
-        /// Insert time
+        /// ["<c>insertTime</c>"] Insert time
         /// </summary>
         [JsonPropertyName("insertTime")]
         public DateTime InsertTime { get; set; }
         /// <summary>
-        /// Confirmed times for unlocking
+        /// ["<c>unlockConfirm</c>"] Confirmed times for unlocking
         /// </summary>
         [JsonPropertyName("unlockConfirm")]
         public string UnlockConfirmations { get; set; } = string.Empty;
         /// <summary>
-        /// Network confirmations
+        /// ["<c>confirmTimes</c>"] Network confirmations
         /// </summary>
         [JsonPropertyName("confirmTimes")]
         public string ConfirmedTimes { get; set; } = string.Empty;

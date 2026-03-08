@@ -12,17 +12,17 @@ namespace BingX.Net.Objects.Models
     public record BingXCancelAfterResult
     {
         /// <summary>
-        /// Trigger time
+        /// ["<c>triggerTime</c>"] Trigger time
         /// </summary>
         [JsonPropertyName("triggerTime")]
         public DateTime? TriggerTime { get; set; }
         /// <summary>
-        /// Status
+        /// ["<c>status</c>"] Status
         /// </summary>
         [JsonPropertyName("status")]
         public string Status { get; set; } = string.Empty;
         /// <summary>
-        /// Note
+        /// ["<c>note</c>"] Note
         /// </summary>
         [JsonPropertyName("note")]
         public string Note { get; set; } = string.Empty;

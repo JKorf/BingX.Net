@@ -9,27 +9,27 @@ namespace BingX.Net.Objects.Models
     public record BingXTradeHistory
     {
         /// <summary>
-        /// Trade id
+        /// ["<c>tid</c>"] Trade id
         /// </summary>
         [JsonPropertyName("tid")]
         public string Id { get; set; } = string.Empty;
         /// <summary>
-        /// Trade price
+        /// ["<c>p</c>"] Trade price
         /// </summary>
         [JsonPropertyName("p")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>v</c>"] Quantity
         /// </summary>
         [JsonPropertyName("v")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// timestamp
+        /// ["<c>t</c>"] timestamp
         /// </summary>
         [JsonPropertyName("t")]
         public DateTime Timestamp { get; set; }
         /// <summary>
-        /// Symbol
+        /// ["<c>s</c>"] Symbol
         /// </summary>
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;

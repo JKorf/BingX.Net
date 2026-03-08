@@ -12,7 +12,7 @@ namespace BingX.Net.Objects.Models
     public record BingXMarginMode
     {
         /// <summary>
-        /// Margin mode
+        /// ["<c>marginType</c>"] Margin mode
         /// </summary>
         [JsonPropertyName("marginType")]
         public MarginMode MarginMode { get; set; }

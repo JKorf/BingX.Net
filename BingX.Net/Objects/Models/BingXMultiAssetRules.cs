@@ -11,27 +11,27 @@ namespace BingX.Net.Objects.Models
     public record BingXMultiAssetRules
     {
         /// <summary>
-        /// Margin assets
+        /// ["<c>marginAssets</c>"] Margin assets
         /// </summary>
         [JsonPropertyName("marginAssets")]
         public string MarginAssets { get; set; } = string.Empty;
         /// <summary>
-        /// Loan to value ratio
+        /// ["<c>ltv</c>"] Loan to value ratio
         /// </summary>
         [JsonPropertyName("ltv")]
         public string Ltv { get; set; } = string.Empty;
         /// <summary>
-        /// Collateral value ratio
+        /// ["<c>collateralValueRatio</c>"] Collateral value ratio
         /// </summary>
         [JsonPropertyName("collateralValueRatio")]
         public string CollateralValueRatio { get; set; } = string.Empty;
         /// <summary>
-        /// Max transfer
+        /// ["<c>maxTransfer</c>"] Max transfer
         /// </summary>
         [JsonPropertyName("maxTransfer")]
         public decimal? MaxTransfer { get; set; }
         /// <summary>
-        /// Index price
+        /// ["<c>indexPrice</c>"] Index price
         /// </summary>
         [JsonPropertyName("indexPrice")]
         public decimal IndexPrice { get; set; }

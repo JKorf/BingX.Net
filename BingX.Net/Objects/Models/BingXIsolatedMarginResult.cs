@@ -12,12 +12,12 @@ namespace BingX.Net.Objects.Models
     public record BingXIsolatedMarginResult
     {
         /// <summary>
-        /// Adjusted quantity
+        /// ["<c>amount</c>"] Adjusted quantity
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Direction
+        /// ["<c>type</c>"] Direction
         /// </summary>
         [JsonPropertyName("type")]
         public AdjustDirection Direction { get; set; }

@@ -19,77 +19,77 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesUserTrade
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>symbol</c>"] Symbol
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Client order id
+        /// ["<c>clientOrderID</c>"] Client order id
         /// </summary>
         [JsonPropertyName("clientOrderID")]
         public string ClientOrderId { get; set; } = string.Empty;
         /// <summary>
-        /// Order id
+        /// ["<c>orderId</c>"] Order id
         /// </summary>
         [JsonPropertyName("orderId")]
         public long OrderId { get; set; }
         /// <summary>
-        /// Trade price
+        /// ["<c>price</c>"] Trade price
         /// </summary>
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
         /// <summary>
-        /// Quantity
+        /// ["<c>volume</c>"] Quantity
         /// </summary>
         [JsonPropertyName("volume")]
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Value traded
+        /// ["<c>amount</c>"] Value traded
         /// </summary>
         [JsonPropertyName("amount")]
         public decimal Value { get; set; }
         /// <summary>
-        /// Fee paid
+        /// ["<c>commission</c>"] Fee paid
         /// </summary>
         [JsonPropertyName("commission")]
         public decimal Fee { get; set; }
         /// <summary>
-        /// Asset
+        /// ["<c>currency</c>"] Asset
         /// </summary>
         [JsonPropertyName("currency")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Trade time
+        /// ["<c>filledTm</c>"] Trade time
         /// </summary>
         [JsonPropertyName("filledTm")]
         public DateTime Timestamp { get; set; }
         /// <summary>
-        /// Liquidation price
+        /// ["<c>liquidatedPrice</c>"] Liquidation price
         /// </summary>
         [JsonPropertyName("liquidatedPrice")]
         public decimal? LiquidatedPrice { get; set; }
         /// <summary>
-        /// Liquidation margin ratio
+        /// ["<c>liquidatedMarginRatio</c>"] Liquidation margin ratio
         /// </summary>
         [JsonPropertyName("liquidatedMarginRatio")]
         public decimal? LiquidatedMarginRatio { get; set; }
         /// <summary>
-        /// Stop price trigger type
+        /// ["<c>workingType</c>"] Stop price trigger type
         /// </summary>
         [JsonPropertyName("workingType")]
         public TriggerType? TriggerPriceType { get; set; }
         /// <summary>
-        /// Trade side
+        /// ["<c>side</c>"] Trade side
         /// </summary>
         [JsonPropertyName("side")]
         public OrderSide Side { get; set; }
         /// <summary>
-        /// Order type
+        /// ["<c>type</c>"] Order type
         /// </summary>
         [JsonPropertyName("type")]
         public FuturesOrderType Type { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>positionSide</c>"] Position side
         /// </summary>
         [JsonPropertyName("positionSide")]
         public PositionSide? PositionSide { get; set; }

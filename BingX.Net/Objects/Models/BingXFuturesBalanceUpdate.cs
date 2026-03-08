@@ -12,7 +12,7 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesAccountUpdate : BingXSocketUpdate
     {
         /// <summary>
-        /// Account change info
+        /// ["<c>a</c>"] Account change info
         /// </summary>
         [JsonPropertyName("a")]
         public BingXFuturesAccountChange Update { get; set; } = null!;
@@ -24,19 +24,19 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesAccountChange
     {
         /// <summary>
-        /// Event trigger reason
+        /// ["<c>m</c>"] Event trigger reason
         /// </summary>
         [JsonPropertyName("m")]
         public string Trigger { get; set; } = string.Empty;
 
         /// <summary>
-        /// Balance changes
+        /// ["<c>B</c>"] Balance changes
         /// </summary>
         [JsonPropertyName("B")]
         public BingXFuturesBalanceChange[] Balances { get; set; } = Array.Empty<BingXFuturesBalanceChange>();
 
         /// <summary>
-        /// Position changes
+        /// ["<c>P</c>"] Position changes
         /// </summary>
         [JsonPropertyName("P")]
         public BingXFuturesPositionChange[] Positions { get; set; } = Array.Empty<BingXFuturesPositionChange>();
@@ -49,22 +49,22 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesBalanceChange
     {
         /// <summary>
-        /// Asset name
+        /// ["<c>a</c>"] Asset name
         /// </summary>
         [JsonPropertyName("a")]
         public string Asset { get; set; } = string.Empty;
         /// <summary>
-        /// Wallet balance
+        /// ["<c>wb</c>"] Wallet balance
         /// </summary>
         [JsonPropertyName("wb")]
         public decimal Balance { get; set; }
         /// <summary>
-        /// Balance excluding isolated margin
+        /// ["<c>cw</c>"] Balance excluding isolated margin
         /// </summary>
         [JsonPropertyName("cw")]
         public decimal BalanceExIsolatedMargin { get; set; }
         /// <summary>
-        /// Balance change
+        /// ["<c>bc</c>"] Balance change
         /// </summary>
         [JsonPropertyName("bc")]
         public decimal BalanceChange { get; set; }
@@ -77,42 +77,42 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesPositionChange
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>s</c>"] Symbol
         /// </summary>
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// Position size
+        /// ["<c>pa</c>"] Position size
         /// </summary>
         [JsonPropertyName("pa")]
         public decimal Size { get; set; }
         /// <summary>
-        /// Entry price
+        /// ["<c>ep</c>"] Entry price
         /// </summary>
         [JsonPropertyName("ep")]
         public decimal EntryPrice { get; set; }
         /// <summary>
-        /// Unrealized profit and loss
+        /// ["<c>up</c>"] Unrealized profit and loss
         /// </summary>
         [JsonPropertyName("up")]
         public decimal UnrealizedPnl { get; set; }
         /// <summary>
-        /// Margin mode
+        /// ["<c>mt</c>"] Margin mode
         /// </summary>
         [JsonPropertyName("mt")]
         public MarginMode MarginMode { get; set; }
         /// <summary>
-        /// Position margin (isolated position)
+        /// ["<c>iw</c>"] Position margin (isolated position)
         /// </summary>
         [JsonPropertyName("iw")]
         public decimal? PositionMargin { get; set; }
         /// <summary>
-        /// Position side
+        /// ["<c>ps</c>"] Position side
         /// </summary>
         [JsonPropertyName("ps")]
         public TradeSide Side { get; set; }
         /// <summary>
-        /// Realized profit and loss of positions
+        /// ["<c>cr</c>"] Realized profit and loss of positions
         /// </summary>
         [JsonPropertyName("cr")]
         public decimal? RealizedPnl { get; set; }

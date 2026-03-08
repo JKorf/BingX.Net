@@ -11,12 +11,12 @@ namespace BingX.Net.Objects.Models
     public record BingXSocketUpdate
     {
         /// <summary>
-        /// Event name
+        /// ["<c>e</c>"] Event name
         /// </summary>
         [JsonPropertyName("e")]
         public string Event { get; set; } = string.Empty;
         /// <summary>
-        /// Event timestamp
+        /// ["<c>E</c>"] Event timestamp
         /// </summary>
         [JsonPropertyName("E")]
         public DateTime EventTime { get; set; }

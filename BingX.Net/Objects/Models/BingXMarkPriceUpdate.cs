@@ -11,12 +11,12 @@ namespace BingX.Net.Objects.Models
     public record BingXMarkPriceUpdate : BingXSocketUpdate
     {
         /// <summary>
-        /// Symbol
+        /// ["<c>s</c>"] Symbol
         /// </summary>
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// The current mark price
+        /// ["<c>p</c>"] The current mark price
         /// </summary>
         [JsonPropertyName("p")]
         public decimal MarkPrice { get; set; }

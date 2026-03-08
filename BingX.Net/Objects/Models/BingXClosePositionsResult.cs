@@ -11,12 +11,12 @@ namespace BingX.Net.Objects.Models
     public record BingXClosePositionsResult
     {
         /// <summary>
-        /// Order ids of orders which successfully closed a position
+        /// ["<c>success</c>"] Order ids of orders which successfully closed a position
         /// </summary>
         [JsonPropertyName("success")]
         public long[]? Success { get; set; }
         /// <summary>
-        /// Order ids or orders which failed to close a position
+        /// ["<c>failed</c>"] Order ids or orders which failed to close a position
         /// </summary>
         [JsonPropertyName("failed")]
         public long[]? Failed { get; set; }
