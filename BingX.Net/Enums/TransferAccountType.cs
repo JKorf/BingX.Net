@@ -11,27 +11,27 @@ namespace BingX.Net.Enums
     public enum TransferAccountType
     {
         /// <summary>
-        /// Funding account
+        /// ["<c>fund</c>"] Funding account
         /// </summary>
         [Map("fund")]
         Funding,
         /// <summary>
-        /// Spot account
+        /// ["<c>spot</c>"] Spot account
         /// </summary>
         [Map("spot")]
         Spot,
         /// <summary>
-        /// Standard contract account
+        /// ["<c>stdFutures</c>"] Standard contract account
         /// </summary>
         [Map("stdFutures")]
         StandardContract,
         /// <summary>
-        /// USDT perpetual futures account
+        /// ["<c>USDTMPerp</c>"] USDT perpetual futures account
         /// </summary>
         [Map("USDTMPerp")]
         UsdtPerpetualFutures,
         /// <summary>
-        /// Coin perpetual futures account
+        /// ["<c>coinMPerp</c>"] Coin perpetual futures account
         /// </summary>
         [Map("coinMPerp")]
         CoinPerpetualFutures

@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum AutoCloseType
     {
         /// <summary>
-        /// Liquidation
+        /// ["<c>LIQUIDATION</c>"] Liquidation
         /// </summary>
         [Map("LIQUIDATION")]
         Liquidation,
         /// <summary>
-        /// Adl
+        /// ["<c>ADL</c>"] Adl
         /// </summary>
         [Map("ADL")]
         Adl

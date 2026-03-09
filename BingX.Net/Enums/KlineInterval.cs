@@ -11,77 +11,77 @@ namespace BingX.Net.Enums
     public enum KlineInterval
     {
         /// <summary>
-        /// One minute
+        /// ["<c>1m</c>"] One minute
         /// </summary>
         [Map("1m")]
         OneMinute = 60,
         /// <summary>
-        /// Three minutes
+        /// ["<c>3m</c>"] Three minutes
         /// </summary>
         [Map("3m")]
         ThreeMinutes = 60 * 3,
         /// <summary>
-        /// Five minutes
+        /// ["<c>5m</c>"] Five minutes
         /// </summary>
         [Map("5m")]
         FiveMinutes = 60 * 5,
         /// <summary>
-        /// Fifteen minutes
+        /// ["<c>15m</c>"] Fifteen minutes
         /// </summary>
         [Map("15m")]
         FifteenMinutes = 60 * 15,
         /// <summary>
-        /// Thirty minutes
+        /// ["<c>30m</c>"] Thirty minutes
         /// </summary>
         [Map("30m")]
         ThirtyMinutes = 60 * 30,
         /// <summary>
-        /// One hour
+        /// ["<c>1h</c>"] One hour
         /// </summary>
         [Map("1h")]
         OneHour = 60 * 60,
         /// <summary>
-        /// Two hours
+        /// ["<c>2h</c>"] Two hours
         /// </summary>
         [Map("2h")]
         TwoHours = 60 * 60 * 2,
         /// <summary>
-        /// Four hours
+        /// ["<c>4h</c>"] Four hours
         /// </summary>
         [Map("4h")]
         FourHours = 60 * 60 * 4,
         /// <summary>
-        /// Six hours
+        /// ["<c>6h</c>"] Six hours
         /// </summary>
         [Map("6h")]
         SixHours = 60 * 60 * 6,
         /// <summary>
-        /// Eight hours
+        /// ["<c>8h</c>"] Eight hours
         /// </summary>
         [Map("8h")]
         EightHours = 60 * 60 * 8,
         /// <summary>
-        /// Twelve hours
+        /// ["<c>12h</c>"] Twelve hours
         /// </summary>
         [Map("12h")]
         TwelveHours = 60 * 60 * 12,
         /// <summary>
-        /// One day
+        /// ["<c>1d</c>"] One day
         /// </summary>
         [Map("1d")]
         OneDay = 60 * 60 * 24,
         /// <summary>
-        /// Three days
+        /// ["<c>3d</c>"] Three days
         /// </summary>
         [Map("3d")]
         ThreeDay = 60 * 60 * 24 * 3,
         /// <summary>
-        /// One week
+        /// ["<c>1w</c>"] One week
         /// </summary>
         [Map("1w")]
         OneWeek = 60 * 60 * 24 * 7,
         /// <summary>
-        /// One month
+        /// ["<c>1M</c>"] One month
         /// </summary>
         [Map("1M")]
         OneMonth = 60 * 60 * 24 * 30

@@ -11,17 +11,17 @@ namespace BingX.Net.Enums
     public enum TriggerType
     {
         /// <summary>
-        /// Mark price
+        /// ["<c>MARK_PRICE</c>"] Mark price
         /// </summary>
         [Map("MARK_PRICE")]
         MarkPrice,
         /// <summary>
-        /// Last price
+        /// ["<c>CONTRACT_PRICE</c>"] Last price
         /// </summary>
         [Map("CONTRACT_PRICE")]
         LastPrice,
         /// <summary>
-        /// Index price
+        /// ["<c>INDEX_PRICE</c>"] Index price
         /// </summary>
         [Map("INDEX_PRICE")]
         IndexPrice

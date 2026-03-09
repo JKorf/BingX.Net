@@ -11,47 +11,47 @@ namespace BingX.Net.Enums
     public enum IncomeType
     {
         /// <summary>
-        /// Transfer
+        /// ["<c>TRANSFER</c>"] Transfer
         /// </summary>
         [Map("TRANSFER")]
         Transfer,
         /// <summary>
-        /// Realized profit and loss
+        /// ["<c>REALIZED_PNL</c>"] Realized profit and loss
         /// </summary>
         [Map("REALIZED_PNL")]
         RealizedPnl,
         /// <summary>
-        /// Funding Fee
+        /// ["<c>FUNDING_FEE</c>"] Funding Fee
         /// </summary>
         [Map("FUNDING_FEE")]
         FundingFee,
         /// <summary>
-        /// Trading Fee
+        /// ["<c>TRADING_FEE</c>"] Trading Fee
         /// </summary>
         [Map("TRADING_FEE")]
         TradingFee,
         /// <summary>
-        /// Liquidation
+        /// ["<c>INSURANCE_CLEAR</c>"] Liquidation
         /// </summary>
         [Map("INSURANCE_CLEAR")]
         InsuranceClear,
         /// <summary>
-        /// Trial Fund
+        /// ["<c>TRIAL_FUND</c>"] Trial Fund
         /// </summary>
         [Map("TRIAL_FUND")]
         TrailFund,
         /// <summary>
-        /// Automatic Deleveraging
+        /// ["<c>ADL</c>"] Automatic Deleveraging
         /// </summary>
         [Map("ADL")]
         Adl,
         /// <summary>
-        /// System deduction
+        /// ["<c>SYSTEM_DEDUCTION</c>"] System deduction
         /// </summary>
         [Map("SYSTEM_DEDUCTION")]
         SystemDeduction,
         /// <summary>
-        /// Guaranteed price
+        /// ["<c>GTD_PRICE</c>"] Guaranteed price
         /// </summary>
         [Map("GTD_PRICE")]
         GtdPrice

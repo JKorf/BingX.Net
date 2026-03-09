@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum TransferDirection
     {
         /// <summary>
-        /// Out
+        /// ["<c>out</c>"] Out
         /// </summary>
         [Map("out")]
         Out,
         /// <summary>
-        /// In
+        /// ["<c>in</c>"] In
         /// </summary>
         [Map("in")]
         In

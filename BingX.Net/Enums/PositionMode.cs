@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum PositionMode
     {
         /// <summary>
-        /// Dual position mode
+        /// ["<c>true</c>"] Dual position mode
         /// </summary>
         [Map("true")]
         DualPositionMode,
         /// <summary>
-        /// Single position mode
+        /// ["<c>false</c>"] Single position mode
         /// </summary>
         [Map("false")]
         SinglePositionMode

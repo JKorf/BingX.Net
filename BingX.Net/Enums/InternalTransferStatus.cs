@@ -11,17 +11,17 @@ namespace BingX.Net.Enums
     public enum InternalTransferStatus
     {
         /// <summary>
-        /// Pending review
+        /// ["<c>4</c>"] Pending review
         /// </summary>
         [Map("4")]
         PendingReview,
         /// <summary>
-        /// Failed
+        /// ["<c>5</c>"] Failed
         /// </summary>
         [Map("5")]
         Failed,
         /// <summary>
-        /// Completed
+        /// ["<c>6</c>"] Completed
         /// </summary>
         [Map("6")]
         Completed

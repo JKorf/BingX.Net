@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum OcoOrderType
     {
         /// <summary>
-        /// Oco limit order
+        /// ["<c>ocoLimit</c>"] Oco limit order
         /// </summary>
         [Map("ocoLimit")]
         OcoLimit,
         /// <summary>
-        /// Oco stop limit order
+        /// ["<c>ocoTps</c>"] Oco stop limit order
         /// </summary>
         [Map("ocoTps")]
         OcoStopLimit

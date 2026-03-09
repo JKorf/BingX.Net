@@ -11,32 +11,32 @@ namespace BingX.Net.Enums
     public enum ApiKeyPermission
     {
         /// <summary>
-        /// Spot trading
+        /// ["<c>1</c>"] Spot trading
         /// </summary>
         [Map("1")]
         SpotTrading,
         /// <summary>
-        /// Read
+        /// ["<c>2</c>"] Read
         /// </summary>
         [Map("2")]
         Read,
         /// <summary>
-        /// Perpetual futures trading
+        /// ["<c>3</c>"] Perpetual futures trading
         /// </summary>
         [Map("3")]
         PerpetualFuturesTrading,
         /// <summary>
-        /// Universal transfer
+        /// ["<c>4</c>"] Universal transfer
         /// </summary>
         [Map("4")]
         UniversalTransfer,
         /// <summary>
-        /// Permission 6
+        /// ["<c>6</c>"] Permission 6
         /// </summary>
         [Map("6")]
         Undocumented6,
         /// <summary>
-        /// Internal transfer of sub accounts
+        /// ["<c>7</c>"] Internal transfer of sub accounts
         /// </summary>
         [Map("7")]
         InternalTransferOfSubaccounts

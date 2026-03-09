@@ -11,17 +11,17 @@ namespace BingX.Net.Enums
     public enum AccountIdentifierType
     {
         /// <summary>
-        /// Unique id
+        /// ["<c>1</c>"] Unique id
         /// </summary>
         [Map("1")]
         Uid,
         /// <summary>
-        /// Phone number
+        /// ["<c>2</c>"] Phone number
         /// </summary>
         [Map("2")]
         PhoneNumber,
         /// <summary>
-        /// Email
+        /// ["<c>3</c>"] Email
         /// </summary>
         [Map("3")]
         Email

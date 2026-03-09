@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum MultiAssetMode
     {
         /// <summary>
-        /// Single asset mode
+        /// ["<c>singleAssetMode</c>"] Single asset mode
         /// </summary>
         [Map("singleAssetMode")]
         SingleAssetMode,
         /// <summary>
-        /// Multi asset mode
+        /// ["<c>multiAssetsMode</c>"] Multi asset mode
         /// </summary>
         [Map("multiAssetsMode")]
         MultiAssetMode

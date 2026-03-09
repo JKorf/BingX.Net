@@ -11,17 +11,17 @@ namespace BingX.Net.Enums
     public enum WithdrawalStatus
     {
         /// <summary>
-        /// Under review
+        /// ["<c>4</c>"] Under review
         /// </summary>
         [Map("4")]
         UnderReview,
         /// <summary>
-        /// Failed
+        /// ["<c>5</c>"] Failed
         /// </summary>
         [Map("5")]
         Failed,
         /// <summary>
-        /// Completed
+        /// ["<c>6</c>"] Completed
         /// </summary>
         [Map("6")]
         Completed

@@ -11,22 +11,22 @@ namespace BingX.Net.Enums
     public enum OrderStatus
     {
         /// <summary>
-        /// New order
+        /// ["<c>NEW</c>"] New order
         /// </summary>
         [Map("NEW")]
         New,
         /// <summary>
-        /// Pending
+        /// ["<c>PENDING</c>"] Pending
         /// </summary>
         [Map("PENDING")]
         Pending,
         /// <summary>
-        /// Partially filled
+        /// ["<c>PARTIALLY_FILLED</c>"] Partially filled
         /// </summary>
         [Map("PARTIALLY_FILLED")]
         PartiallyFilled,
         /// <summary>
-        /// Filled
+        /// ["<c>FILLED</c>"] Filled
         /// </summary>
         [Map("FILLED")]
         Filled,
@@ -36,7 +36,7 @@ namespace BingX.Net.Enums
         [Map("CANCELED", "CANCELLED")]
         Canceled,
         /// <summary>
-        /// Failed
+        /// ["<c>FAILED</c>"] Failed
         /// </summary>
         [Map("FAILED")]
         Failed

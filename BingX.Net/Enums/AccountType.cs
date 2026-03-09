@@ -11,22 +11,22 @@ namespace BingX.Net.Enums
     public enum AccountType
     {
         /// <summary>
-        /// Funding account
+        /// ["<c>1</c>"] Funding account
         /// </summary>
         [Map("1")]
         Funding,
         /// <summary>
-        /// Standard account
+        /// ["<c>2</c>"] Standard account
         /// </summary>
         [Map("2")]
         Standard,
         /// <summary>
-        /// Perpetual account
+        /// ["<c>3</c>"] Perpetual account
         /// </summary>
         [Map("3")]
         Perpetual,
         /// <summary>
-        /// Spot account
+        /// ["<c>15</c>"] Spot account
         /// </summary>
         [Map("15")]
         Spot

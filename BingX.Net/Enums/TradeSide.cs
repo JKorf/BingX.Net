@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum TradeSide
     {
         /// <summary>
-        /// Long position
+        /// ["<c>LONG</c>"] Long position
         /// </summary>
         [Map("LONG")]
         Long,
         /// <summary>
-        /// Short position
+        /// ["<c>SHORT</c>"] Short position
         /// </summary>
         [Map("SHORT")]
         Short

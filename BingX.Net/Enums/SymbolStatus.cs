@@ -11,32 +11,32 @@ namespace BingX.Net.Enums
     public enum SymbolStatus
     {
         /// <summary>
-        /// Offline
+        /// ["<c>0</c>"] Offline
         /// </summary>
         [Map("0")]
         Offline,
         /// <summary>
-        /// Online
+        /// ["<c>1</c>"] Online
         /// </summary>
         [Map("1")]
         Online,
         /// <summary>
-        /// Pre-open
+        /// ["<c>5</c>"] Pre-open
         /// </summary>
         [Map("5")]
         PreOpen,
         /// <summary>
-        /// Trading suspended
+        /// ["<c>25</c>"] Trading suspended
         /// </summary>
         [Map("25")]
         Suspended,
         /// <summary>
-        /// Pre-delisted
+        /// ["<c>29</c>"] Pre-delisted
         /// </summary>
         [Map("29")]
         PreDelisted,
         /// <summary>
-        /// Delisted
+        /// ["<c>30</c>"] Delisted
         /// </summary>
         [Map("30")]
         Delisted

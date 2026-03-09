@@ -11,22 +11,22 @@ namespace BingX.Net.Enums
     public enum TimeInForce
     {
         /// <summary>
-        /// Post only order
+        /// ["<c>PostOnly</c>"] Post only order
         /// </summary>
         [Map("PostOnly")]
         PostOnly,
         /// <summary>
-        /// Good till canceled
+        /// ["<c>GTC</c>"] Good till canceled
         /// </summary>
         [Map("GTC")]
         GoodTillCanceled,
         /// <summary>
-        /// At least partially fill the order upon placement or cancel
+        /// ["<c>IOC</c>"] At least partially fill the order upon placement or cancel
         /// </summary>
         [Map("IOC")]
         ImmediateOrCancel,
         /// <summary>
-        /// Fill the order upon placement or cancel
+        /// ["<c>FOK</c>"] Fill the order upon placement or cancel
         /// </summary>
         [Map("FOK")]
         FillOrKill

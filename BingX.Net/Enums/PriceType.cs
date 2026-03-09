@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum PriceType
     {
         /// <summary>
-        /// Constant
+        /// ["<c>constant</c>"] Constant
         /// </summary>
         [Map("constant")]
         Constant,
         /// <summary>
-        /// Percentage
+        /// ["<c>percentage</c>"] Percentage
         /// </summary>
         [Map("percentage")]
         Percentage

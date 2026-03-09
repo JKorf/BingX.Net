@@ -11,32 +11,32 @@ namespace BingX.Net.Enums
     public enum OrderType
     {
         /// <summary>
-        /// Market order
+        /// ["<c>MARKET</c>"] Market order
         /// </summary>
         [Map("MARKET")]
         Market,
         /// <summary>
-        /// Limit order
+        /// ["<c>LIMIT</c>"] Limit order
         /// </summary>
         [Map("LIMIT")]
         Limit,
         /// <summary>
-        /// Stop limit order
+        /// ["<c>TAKE_STOP_LIMIT</c>"] Stop limit order
         /// </summary>
         [Map("TAKE_STOP_LIMIT")]
         StopLimit,
         /// <summary>
-        /// Stop market order
+        /// ["<c>TAKE_STOP_MARKET</c>"] Stop market order
         /// </summary>
         [Map("TAKE_STOP_MARKET")]
         StopMarket,
         /// <summary>
-        /// Trigger limit order
+        /// ["<c>TRIGGER_LIMIT</c>"] Trigger limit order
         /// </summary>
         [Map("TRIGGER_LIMIT")]
         TriggerLimit,
         /// <summary>
-        /// Trigger market order
+        /// ["<c>TRIGGER_MARKET</c>"] Trigger market order
         /// </summary>
         [Map("TRIGGER_MARKET")]
         TriggerMarket

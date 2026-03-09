@@ -11,12 +11,12 @@ namespace BingX.Net.Enums
     public enum AdjustDirection
     {
         /// <summary>
-        /// Increase
+        /// ["<c>1</c>"] Increase
         /// </summary>
         [Map("1")]
         Increase,
         /// <summary>
-        /// Decrease
+        /// ["<c>2</c>"] Decrease
         /// </summary>
         [Map("2")]
         Decrease

@@ -11,17 +11,17 @@ namespace BingX.Net.Enums
     public enum DepositStatus
     {
         /// <summary>
-        /// In progress
+        /// ["<c>0</c>"] In progress
         /// </summary>
         [Map("0")]
         InProgress,
         /// <summary>
-        /// Chain uploaded
+        /// ["<c>6</c>"] Chain uploaded
         /// </summary>
         [Map("6")]
         ChainUploaded,
         /// <summary>
-        /// Completed
+        /// ["<c>1</c>"] Completed
         /// </summary>
         [Map("1")]
         Completed

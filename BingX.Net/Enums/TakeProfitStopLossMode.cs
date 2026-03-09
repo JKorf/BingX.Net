@@ -11,22 +11,22 @@ namespace BingX.Net.Enums
     public enum TakeProfitStopLossMode
     {
         /// <summary>
-        /// Stop loss market order
+        /// ["<c>STOP_MARKET</c>"] Stop loss market order
         /// </summary>
         [Map("STOP_MARKET")]
         StopMarket,
         /// <summary>
-        /// Stop loss limit order
+        /// ["<c>STOP</c>"] Stop loss limit order
         /// </summary>
         [Map("STOP")]
         Stop,
         /// <summary>
-        /// Take profit market order
+        /// ["<c>TAKE_PROFIT_MARKET</c>"] Take profit market order
         /// </summary>
         [Map("TAKE_PROFIT_MARKET")]
         TakeProfitMarket,
         /// <summary>
-        /// Take profit limit order
+        /// ["<c>TAKE_PROFIT</c>"] Take profit limit order
         /// </summary>
         [Map("TAKE_PROFIT")]
         TakeProfit

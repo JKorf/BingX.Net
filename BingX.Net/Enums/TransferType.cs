@@ -11,32 +11,32 @@ namespace BingX.Net.Enums
     public enum TransferType
     {
         /// <summary>
-        /// Funding Account -> Standard Contract
+        /// ["<c>FUND_SFUTURES</c>"] Funding Account -> Standard Contract
         /// </summary>
         [Map("FUND_SFUTURES")]
         FundingToStandardFutures,
         /// <summary>
-        /// Standard Contract -> Funding Account
+        /// ["<c>SFUTURES_FUND</c>"] Standard Contract -> Funding Account
         /// </summary>
         [Map("SFUTURES_FUND")]
         StandardFuturesToFunding,
         /// <summary>
-        /// Funding Account -> Perpetual Futures
+        /// ["<c>FUND_PFUTURES</c>"] Funding Account -> Perpetual Futures
         /// </summary>
         [Map("FUND_PFUTURES")]
         FundingToPerpetualFutures,
         /// <summary>
-        /// Perpetual Futures -> Funding Account
+        /// ["<c>PFUTURES_FUND</c>"] Perpetual Futures -> Funding Account
         /// </summary>
         [Map("PFUTURES_FUND")]
         PerpetualFuturesToFunding,
         /// <summary>
-        /// Standard Contract -> Perpetual Futures
+        /// ["<c>SFUTURES_PFUTURES</c>"] Standard Contract -> Perpetual Futures
         /// </summary>
         [Map("SFUTURES_PFUTURES")]
         StandardFuturesToPerpetualFutures,
         /// <summary>
-        /// Perpetual Futures -> Standard Contract
+        /// ["<c>PFUTURES_SFUTURES</c>"] Perpetual Futures -> Standard Contract
         /// </summary>
         [Map("PFUTURES_SFUTURES")]
         PerpetualFuturesToStandardFutures

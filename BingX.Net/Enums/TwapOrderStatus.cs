@@ -11,52 +11,52 @@ namespace BingX.Net.Enums
     public enum TwapOrderStatus
     {
         /// <summary>
-        /// New
+        /// ["<c>New</c>"] New
         /// </summary>
         [Map("New")]
         New,
         /// <summary>
-        /// Executing
+        /// ["<c>Running</c>"] Executing
         /// </summary>
         [Map("Running")]
         Running,
         /// <summary>
-        /// Canceling
+        /// ["<c>Canceling</c>"] Canceling
         /// </summary>
         [Map("Canceling")]
         Canceling,
         /// <summary>
-        /// Fully filled
+        /// ["<c>Filled</c>"] Fully filled
         /// </summary>
         [Map("Filled")]
         Filled,
         /// <summary>
-        /// Partially filled
+        /// ["<c>PartiallyFilled</c>"] Partially filled
         /// </summary>
         [Map("PartiallyFilled")]
         PartiallyFilled,
         /// <summary>
-        /// Pending
+        /// ["<c>Pending</c>"] Pending
         /// </summary>
         [Map("Pending")]
         Pending,
         /// <summary>
-        /// Partially filled, remaining order failed
+        /// ["<c>PartiallyFilledAndResidueFailed</c>"] Partially filled, remaining order failed
         /// </summary>
         [Map("PartiallyFilledAndResidueFailed")]
         PartiallyFilledAndResidueFailed,
         /// <summary>
-        /// Partially filled, remaining cancellation
+        /// ["<c>PartiallyFilledAndResidueCancelled</c>"] Partially filled, remaining cancellation
         /// </summary>
         [Map("PartiallyFilledAndResidueCancelled")]
         PartiallyFilledAndResidueCancelled,
         /// <summary>
-        /// Canceled
+        /// ["<c>Cancelled</c>"] Canceled
         /// </summary>
         [Map("Cancelled")]
         Cancelled,
         /// <summary>
-        /// Order failed
+        /// ["<c>Failed</c>"] Order failed
         /// </summary>
         [Map("Failed")]
         Failed,
