@@ -23,7 +23,7 @@ namespace BingX.Net.Clients
     /// <summary>
     /// BingX rest client base
     /// </summary>
-    public abstract class BingXRestClientApi : RestApiClient
+    internal abstract class BingXRestClientApi : RestApiClient<BingXEnvironment, BingXAuthenticationProvider, BingXCredentials>
     {
         private IStringMessageSerializer? _serializer;
 
@@ -35,7 +35,7 @@ namespace BingX.Net.Clients
         #endregion
 
         #region constructor/destructor
-        internal BingXRestClientApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options, RestApiOptions apiOptions)
+        internal BingXRestClientApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options, RestApiOptions<BingXCredentials> apiOptions)
             : base(logger, httpClient, options.Environment.RestClientAddress, options, apiOptions)
         {
             ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;
@@ -51,7 +51,7 @@ namespace BingX.Net.Clients
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
         /// <inheritdoc />
-        protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
+        protected override BingXAuthenticationProvider CreateAuthenticationProvider(BingXCredentials credentials)
             => new BingXAuthenticationProvider(credentials);
 
         internal Task<WebCallResult> SendAsync(RequestDefinition definition, ParameterCollection? parameters, CancellationToken cancellationToken, int? weight = null)

@@ -6,7 +6,7 @@ namespace BingX.Net.Objects.Options
     /// <summary>
     /// BingX services options
     /// </summary>
-    public class BingXOptions : LibraryOptions<BingXRestOptions, BingXSocketOptions, ApiCredentials, BingXEnvironment>
+    public class BingXOptions : LibraryOptions<BingXRestOptions, BingXSocketOptions, BingXCredentials, BingXEnvironment>
     {
     }
 }

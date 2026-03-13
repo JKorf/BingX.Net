@@ -6,7 +6,7 @@ namespace BingX.Net.Objects.Options
     /// <summary>
     /// Options for the BingXRestClient
     /// </summary>
-    public class BingXRestOptions : RestExchangeOptions<BingXEnvironment>
+    public class BingXRestOptions : RestExchangeOptions<BingXEnvironment, BingXCredentials>
     {
         /// <summary>
         /// Default options for new clients
@@ -38,14 +38,14 @@ namespace BingX.Net.Objects.Options
         /// <summary>
         /// Spot API options
         /// </summary>
-        public RestApiOptions SpotOptions { get; private set; } = new RestApiOptions
+        public RestApiOptions<BingXCredentials> SpotOptions { get; private set; } = new RestApiOptions<BingXCredentials>
         {
         };
 
         /// <summary>
         /// Futures API options
         /// </summary>
-        public RestApiOptions FuturesOptions { get; private set; } = new RestApiOptions();
+        public RestApiOptions<BingXCredentials> FuturesOptions { get; private set; } = new RestApiOptions<BingXCredentials>();
 
         internal BingXRestOptions Set(BingXRestOptions targetOptions)
         {

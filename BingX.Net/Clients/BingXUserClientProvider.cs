@@ -49,7 +49,7 @@ namespace BingX.Net.Clients
         }
 
         /// <inheritdoc />
-        public void InitializeUserClient(string userIdentifier, ApiCredentials credentials, BingXEnvironment? environment = null)
+        public void InitializeUserClient(string userIdentifier, BingXCredentials credentials, BingXEnvironment? environment = null)
         {
             CreateRestClient(userIdentifier, credentials, environment);
             CreateSocketClient(userIdentifier, credentials, environment);
@@ -63,7 +63,7 @@ namespace BingX.Net.Clients
         }
 
         /// <inheritdoc />
-        public IBingXRestClient GetRestClient(string userIdentifier, ApiCredentials? credentials = null, BingXEnvironment? environment = null)
+        public IBingXRestClient GetRestClient(string userIdentifier, BingXCredentials? credentials = null, BingXEnvironment? environment = null)
         {
             if (!_restClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
                 client = CreateRestClient(userIdentifier, credentials, environment);
@@ -72,7 +72,7 @@ namespace BingX.Net.Clients
         }
 
         /// <inheritdoc />
-        public IBingXSocketClient GetSocketClient(string userIdentifier, ApiCredentials? credentials = null, BingXEnvironment? environment = null)
+        public IBingXSocketClient GetSocketClient(string userIdentifier, BingXCredentials? credentials = null, BingXEnvironment? environment = null)
         {
             if (!_socketClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
                 client = CreateSocketClient(userIdentifier, credentials, environment);
@@ -80,7 +80,7 @@ namespace BingX.Net.Clients
             return client;
         }
 
-        private IBingXRestClient CreateRestClient(string userIdentifier, ApiCredentials? credentials, BingXEnvironment? environment)
+        private IBingXRestClient CreateRestClient(string userIdentifier, BingXCredentials? credentials, BingXEnvironment? environment)
         {
             var clientRestOptions = SetRestEnvironment(environment);
             var client = new BingXRestClient(_httpClient, _loggerFactory, clientRestOptions);
@@ -92,7 +92,7 @@ namespace BingX.Net.Clients
             return client;
         }
 
-        private IBingXSocketClient CreateSocketClient(string userIdentifier, ApiCredentials? credentials, BingXEnvironment? environment)
+        private IBingXSocketClient CreateSocketClient(string userIdentifier, BingXCredentials? credentials, BingXEnvironment? environment)
         {
             var clientSocketOptions = SetSocketEnvironment(environment);
             var client = new BingXSocketClient(clientSocketOptions!, _loggerFactory);

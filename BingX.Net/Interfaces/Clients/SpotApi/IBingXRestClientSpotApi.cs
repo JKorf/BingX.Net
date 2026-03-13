@@ -6,7 +6,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     /// <summary>
     /// BingX Spot API endpoints
     /// </summary>
-    public interface IBingXRestClientSpotApi : IRestApiClient, IDisposable
+    public interface IBingXRestClientSpotApi : IRestApiClient<BingXCredentials>, IDisposable
     {
         /// <summary>
         /// Endpoints related to account settings, info or actions

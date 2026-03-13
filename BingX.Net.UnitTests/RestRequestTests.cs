@@ -21,7 +21,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456");
+                opts.ApiCredentials = new BingXCredentials("123", "456");
                 opts.OutputOriginalData = true;
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/Spot/Account", "https://open-api.bingx.com", IsAuthenticated);
@@ -49,7 +49,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456");
+                opts.ApiCredentials = new BingXCredentials("123", "456");
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/Spot/ExchangeData", "https://open-api.bingx.com", IsAuthenticated, "data");
             await tester.ValidateAsync(client => client.SpotApi.ExchangeData.GetSymbolsAsync(), "GetSymbols", nestedJsonProperty: "data.symbols");
@@ -68,7 +68,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456");
+                opts.ApiCredentials = new BingXCredentials("123", "456");
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/Spot/Trading", "https://open-api.bingx.com", IsAuthenticated, "data");
             await tester.ValidateAsync(client => client.SpotApi.Trading.PlaceOrderAsync("ETHUSDT", Enums.OrderSide.Buy, Enums.OrderType.Market, 1), "PlaceOrder", nestedJsonProperty: "data");
@@ -93,7 +93,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456");
+                opts.ApiCredentials = new BingXCredentials("123", "456");
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/PerpetualFutures/Account", "https://open-api.bingx.com", IsAuthenticated, "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Account.GetBalancesAsync(), "GetBalances", nestedJsonProperty: "data");
@@ -124,7 +124,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456");
+                opts.ApiCredentials = new BingXCredentials("123", "456");
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/PerpetualFutures/ExchangeData", "https://open-api.bingx.com", IsAuthenticated, "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.ExchangeData.GetContractsAsync(), "GetContracts", nestedJsonProperty: "data", ignoreProperties: new List<string> { "tradeMinLimit" });
@@ -147,7 +147,7 @@ namespace BingX.Net.UnitTests
             var client = new BingXRestClient(opts =>
             {
                 opts.AutoTimestamp = false;
-                opts.ApiCredentials = new ApiCredentials("123", "456");
+                opts.ApiCredentials = new BingXCredentials("123", "456");
             });
             var tester = new RestRequestValidator<BingXRestClient>(client, "Endpoints/PerpetualFutures/Trading", "https://open-api.bingx.com", IsAuthenticated, "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionsAsync(), "GetPositions");

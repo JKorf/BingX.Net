@@ -12,7 +12,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     /// <summary>
     /// BingX spot streams
     /// </summary>
-    public interface IBingXSocketClientSpotApi : ISocketApiClient, IDisposable
+    public interface IBingXSocketClientSpotApi : ISocketApiClient<BingXCredentials>, IDisposable
     {
         /// <summary>
         /// Get the shared socket subscription client. This interface is shared with other exchanges to allow for a common implementation for different exchanges.

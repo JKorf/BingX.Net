@@ -6,7 +6,7 @@ namespace BingX.Net.Objects.Options
     /// <summary>
     /// Options for the BingXSocketClient
     /// </summary>
-    public class BingXSocketOptions : SocketExchangeOptions<BingXEnvironment>
+    public class BingXSocketOptions : SocketExchangeOptions<BingXEnvironment, BingXCredentials>
     {
         /// <summary>
         /// Default options for new clients
@@ -28,7 +28,7 @@ namespace BingX.Net.Objects.Options
         /// <summary>
         /// Options for the Spot API
         /// </summary>
-        public SocketApiOptions SpotOptions { get; private set; } = new SocketApiOptions()
+        public SocketApiOptions<BingXCredentials> SpotOptions { get; private set; } = new SocketApiOptions<BingXCredentials>()
         {
             SocketNoDataTimeout = TimeSpan.FromSeconds(40) // Ping message is sent every 30 seconds
         };
@@ -36,7 +36,7 @@ namespace BingX.Net.Objects.Options
         /// <summary>
         /// Options for the Futures API
         /// </summary>
-        public SocketApiOptions FuturesOptions { get; private set; } = new SocketApiOptions()
+        public SocketApiOptions<BingXCredentials> FuturesOptions { get; private set; } = new SocketApiOptions<BingXCredentials>()
         {
             MaxSocketConnections = 60,
             SocketNoDataTimeout = TimeSpan.FromSeconds(40) // Ping message is sent every 30 seconds

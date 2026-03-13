@@ -14,7 +14,7 @@ using CryptoExchange.Net.Objects.Options;
 namespace BingX.Net.Clients
 {
     /// <inheritdoc cref="IBingXSocketClient" />
-    public class BingXSocketClient : BaseSocketClient, IBingXSocketClient
+    public class BingXSocketClient : BaseSocketClient<BingXEnvironment, BingXCredentials>, IBingXSocketClient
     {
         #region fields
         #endregion
@@ -54,13 +54,6 @@ namespace BingX.Net.Clients
         }
         #endregion
 
-        /// <inheritdoc />
-        public void SetOptions(UpdateOptions options)
-        {
-            PerpetualFuturesApi.SetOptions(options);
-            SpotApi.SetOptions(options);
-        }
-
         /// <summary>
         /// Set the default options to be used when creating new clients
         /// </summary>
@@ -70,11 +63,5 @@ namespace BingX.Net.Clients
             BingXSocketOptions.Default = ApplyOptionsDelegate(optionsDelegate);
         }
 
-        /// <inheritdoc />
-        public void SetApiCredentials(ApiCredentials credentials)
-        {
-            SpotApi.SetApiCredentials(credentials);
-            PerpetualFuturesApi.SetApiCredentials(credentials);
-        }
     }
 }

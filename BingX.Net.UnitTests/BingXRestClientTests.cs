@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CryptoExchange.Net.Objects;
 using BingX.Net.Interfaces.Clients;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using BingX.Net.Clients.SpotApi;
 
 namespace BingX.Net.UnitTests
 {
@@ -18,7 +19,7 @@ namespace BingX.Net.UnitTests
         [Test]
         public void CheckSignatureExample1()
         {
-            var authProvider = new BingXAuthenticationProvider(new ApiCredentials("hO6oQotzTE0S5FRYze2Jx2wGx7eVnJGMolpA1nZyehsoMgCcgKNWQHd4QgTFZuwl4Zt4xMe2PqGBegWXO4A", "mheO6dR8ovSsxZQCOYEFCtelpuxcWGTfHw7te326y6jOwq5WpvFQ9JNljoTwBXZGv5It07m9RXSPpDQEK2w"));
+            var authProvider = new BingXAuthenticationProvider(new BingXCredentials("hO6oQotzTE0S5FRYze2Jx2wGx7eVnJGMolpA1nZyehsoMgCcgKNWQHd4QgTFZuwl4Zt4xMe2PqGBegWXO4A", "mheO6dR8ovSsxZQCOYEFCtelpuxcWGTfHw7te326y6jOwq5WpvFQ9JNljoTwBXZGv5It07m9RXSPpDQEK2w"));
             var client = (RestApiClient)new BingXRestClient().SpotApi;
 
             CryptoExchange.Net.Testing.TestHelpers.CheckSignature(
@@ -139,8 +140,8 @@ namespace BingX.Net.UnitTests
 
             Assert.That(((BaseApiClient)restClient.SpotApi).OutputOriginalData, Is.True);
             Assert.That(((BaseApiClient)socketClient.SpotApi).OutputOriginalData, Is.False);
-            Assert.That(((BaseApiClient)restClient.SpotApi).AuthenticationProvider.ApiKey, Is.EqualTo("123"));
-            Assert.That(((BaseApiClient)socketClient.SpotApi).AuthenticationProvider.ApiKey, Is.EqualTo("456"));
+            Assert.That(((BingXRestClientSpotApi)restClient.SpotApi).AuthenticationProvider.PublicKey, Is.EqualTo("123"));
+            Assert.That(((BingXSocketClientSpotApi)socketClient.SpotApi).AuthenticationProvider.PublicKey, Is.EqualTo("456"));
             Assert.That(((BaseApiClient)restClient.SpotApi).ClientOptions.Proxy.Host, Is.EqualTo("host"));
             Assert.That(((BaseApiClient)restClient.SpotApi).ClientOptions.Proxy.Port, Is.EqualTo(80));
             Assert.That(((BaseApiClient)socketClient.SpotApi).ClientOptions.Proxy.Host, Is.EqualTo("host2"));

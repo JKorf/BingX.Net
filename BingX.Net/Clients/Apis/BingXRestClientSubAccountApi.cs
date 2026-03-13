@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace BingX.Net.Clients.Apis
 {
     /// <inheritdoc cref="IBingXRestClientSubAccountApi" />
-    public class BingXRestClientSubAccountApi : BingXRestClientApi, IBingXRestClientSubAccountApi
+    internal class BingXRestClientSubAccountApi : BingXRestClientApi, IBingXRestClientSubAccountApi
     {
         #region fields 
         private static readonly RequestDefinitionCache _definitions = new();

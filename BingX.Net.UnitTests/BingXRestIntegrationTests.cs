@@ -31,7 +31,7 @@ namespace BingX.Net.UnitTests
             return new BingXRestClient(null, loggerFactory, Options.Create(new Objects.Options.BingXRestOptions
             {
                 OutputOriginalData = true,
-                ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec) : null
+                ApiCredentials = Authenticated ? new BingXCredentials(key, sec) : null
             }));
         }
 

@@ -30,7 +30,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     /// <summary>
     /// Client providing access to the BingX futures websocket Api
     /// </summary>
-    internal partial class BingXSocketClientPerpetualFuturesApi : SocketApiClient, IBingXSocketClientPerpetualFuturesApi
+    internal partial class BingXSocketClientPerpetualFuturesApi : SocketApiClient<BingXEnvironment, BingXAuthenticationProvider, BingXCredentials>, IBingXSocketClientPerpetualFuturesApi
     {
         // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
 
@@ -56,7 +56,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 => BingXExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverTime);
 
         /// <inheritdoc />
-        protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
+        protected override BingXAuthenticationProvider CreateAuthenticationProvider(BingXCredentials credentials)
             => new BingXAuthenticationProvider(credentials);
 
 

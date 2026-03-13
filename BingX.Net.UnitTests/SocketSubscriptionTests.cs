@@ -22,7 +22,7 @@ namespace BingX.Net.UnitTests
 
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
+                ApiCredentials = new BingXCredentials("123", "456"),
                 OutputOriginalData = true
             }), logger);
 
@@ -41,7 +41,7 @@ namespace BingX.Net.UnitTests
 
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456")
+                ApiCredentials = new BingXCredentials("123", "456")
             }), logger);
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/Spot", "wss://open-api-ws.bingx.com/market");
             await tester.ValidateAsync<BingXTradeUpdate>((client, handler) => client.SpotApi.SubscribeToTradeUpdatesAsync("BTC-USDT", handler), "Trades", nestedJsonProperty: "data");
@@ -63,7 +63,7 @@ namespace BingX.Net.UnitTests
 
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456"),
+                ApiCredentials = new BingXCredentials("123", "456"),
                 OutputOriginalData = true
             }), logger);
 
@@ -82,7 +82,7 @@ namespace BingX.Net.UnitTests
 
             var client = new BingXSocketClient(Options.Create(new BingXSocketOptions
             {
-                ApiCredentials = new CryptoExchange.Net.Authentication.ApiCredentials("123", "456")
+                ApiCredentials = new BingXCredentials("123", "456")
             }), logger);
             var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-ws.bingx.com/market");
             await tester.ValidateAsync<BingXFuturesTradeUpdate[]>((client, handler) => client.PerpetualFuturesApi.SubscribeToTradeUpdatesAsync("ETH-USDT", handler), "Trades", nestedJsonProperty: "data");
