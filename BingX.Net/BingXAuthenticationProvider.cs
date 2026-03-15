@@ -20,7 +20,7 @@ namespace BingX.Net
         public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
         {
             request.Headers ??= new Dictionary<string, string>();
-            request.Headers.Add("X-BX-APIKEY", Credential.PublicKey);
+            request.Headers.Add("X-BX-APIKEY", Credential.Key);
 
             if (!request.Authenticated)
                 return;
