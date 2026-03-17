@@ -837,9 +837,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         private SharedOrderStatus ParseOrderStatus(OrderStatus status)
         {
-            if (status == OrderStatus.New || status == OrderStatus.PartiallyFilled || status == OrderStatus.Pending) return SharedOrderStatus.Open;
-            if (status == OrderStatus.Canceled || status == OrderStatus.Failed) return SharedOrderStatus.Canceled;
-            return SharedOrderStatus.Filled;
+            if (status == Enums.OrderStatus.Canceled || status == OrderStatus.Failed)
+                return SharedOrderStatus.Canceled;
+            if (status == Enums.OrderStatus.New || status == Enums.OrderStatus.Pending || status == Enums.OrderStatus.PartiallyFilled)
+                return SharedOrderStatus.Open;
+            if (status == OrderStatus.Filled)
+                return SharedOrderStatus.Filled;
+
+            return SharedOrderStatus.Unknown;
         }
 
         private SharedOrderType ParseOrderType(FuturesOrderType type)

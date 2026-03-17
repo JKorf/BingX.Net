@@ -539,9 +539,14 @@ namespace BingX.Net.Clients.SpotApi
 
         private SharedOrderStatus ParseOrderStatus(OrderStatus status)
         {
-            if (status == OrderStatus.Pending || status == OrderStatus.PartiallyFilled || status == OrderStatus.New) return SharedOrderStatus.Open;
-            if (status == OrderStatus.Canceled || status == OrderStatus.Failed) return SharedOrderStatus.Canceled;
-            return SharedOrderStatus.Filled;
+            if (status == Enums.OrderStatus.Canceled || status == OrderStatus.Failed)
+                return SharedOrderStatus.Canceled;
+            if (status == Enums.OrderStatus.New || status == Enums.OrderStatus.Pending || status == Enums.OrderStatus.PartiallyFilled)
+                return SharedOrderStatus.Open;
+            if (status == OrderStatus.Filled)
+                return SharedOrderStatus.Filled;
+
+            return SharedOrderStatus.Unknown;
         }
 
         private SharedOrderType ParseOrderType(OrderType type, TimeInForce? tif)
@@ -741,7 +746,8 @@ namespace BingX.Net.Clients.SpotApi
                             x.Quantity,
                             x.Status == DepositStatus.Completed,
                             x.InsertTime,
-                            x.Status == DepositStatus.Completed ? SharedTransferStatus.Completed : SharedTransferStatus.InProgress)
+                            ParseTransferStatus(x.Status)
+                            )
                         {
                             Confirmations = x.ConfirmedTimes.Contains("/") ? int.Parse(x.ConfirmedTimes.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries)[0]) : null,
                             Tag = x.AddressTag,
@@ -749,6 +755,16 @@ namespace BingX.Net.Clients.SpotApi
                             Network = x.Network,
                         })
                     .ToArray(), nextPageRequest);
+        }
+
+        private SharedTransferStatus ParseTransferStatus(DepositStatus status)
+        {
+            if (status == DepositStatus.Completed)
+                return SharedTransferStatus.Completed;
+            if (status == DepositStatus.InProgress || status == DepositStatus.ChainUploaded)
+                return SharedTransferStatus.InProgress;
+            
+            return SharedTransferStatus.Unknown;
         }
 
         #endregion
@@ -992,7 +1008,10 @@ namespace BingX.Net.Clients.SpotApi
             if (data.Status == OrderStatus.Canceled || data.Status == OrderStatus.Failed)
                 return SharedTriggerOrderStatus.CanceledOrRejected;
 
-            return SharedTriggerOrderStatus.Active;
+            if (data.Status == OrderStatus.New || data.Status == OrderStatus.PartiallyFilled)
+                return SharedTriggerOrderStatus.Active;
+
+            return SharedTriggerOrderStatus.Unknown;
         }
 
         EndpointOptions<CancelOrderRequest> ISpotTriggerOrderRestClient.CancelSpotTriggerOrderOptions { get; } = new EndpointOptions<CancelOrderRequest>(true);
