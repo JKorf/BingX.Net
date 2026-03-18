@@ -1,6 +1,7 @@
 ﻿using BingX.Net.Clients;
 using BingX.Net.Objects.Models;
 using BingX.Net.Objects.Options;
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Testing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

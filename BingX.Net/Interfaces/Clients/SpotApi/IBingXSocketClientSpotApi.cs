@@ -6,6 +6,7 @@ using CryptoExchange.Net.Objects.Sockets;
 using BingX.Net.Enums;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Interfaces.Clients;
+using CryptoExchange.Net.Authentication;
 
 namespace BingX.Net.Interfaces.Clients.SpotApi
 {

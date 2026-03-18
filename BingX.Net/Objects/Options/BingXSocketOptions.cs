@@ -1,4 +1,5 @@
-﻿using CryptoExchange.Net.Objects.Options;
+﻿using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Objects.Options;
 using System;
 
 namespace BingX.Net.Objects.Options
@@ -28,7 +29,7 @@ namespace BingX.Net.Objects.Options
         /// <summary>
         /// Options for the Spot API
         /// </summary>
-        public SocketApiOptions<BingXCredentials> SpotOptions { get; private set; } = new SocketApiOptions<BingXCredentials>()
+        public SocketApiOptions SpotOptions { get; private set; } = new SocketApiOptions()
         {
             SocketNoDataTimeout = TimeSpan.FromSeconds(40) // Ping message is sent every 30 seconds
         };
@@ -36,7 +37,7 @@ namespace BingX.Net.Objects.Options
         /// <summary>
         /// Options for the Futures API
         /// </summary>
-        public SocketApiOptions<BingXCredentials> FuturesOptions { get; private set; } = new SocketApiOptions<BingXCredentials>()
+        public SocketApiOptions FuturesOptions { get; private set; } = new SocketApiOptions()
         {
             MaxSocketConnections = 60,
             SocketNoDataTimeout = TimeSpan.FromSeconds(40) // Ping message is sent every 30 seconds

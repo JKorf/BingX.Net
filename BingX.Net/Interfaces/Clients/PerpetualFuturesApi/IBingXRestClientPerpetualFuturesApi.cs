@@ -1,4 +1,5 @@
 ﻿using BingX.Net.Interfaces.Clients.SpotApi;
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Interfaces.Clients;
 using System;
 

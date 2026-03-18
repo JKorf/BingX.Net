@@ -1,4 +1,5 @@
-﻿using CryptoExchange.Net.Objects.Options;
+﻿using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Objects.Options;
 using System;
 
 namespace BingX.Net.Objects.Options
@@ -38,14 +39,14 @@ namespace BingX.Net.Objects.Options
         /// <summary>
         /// Spot API options
         /// </summary>
-        public RestApiOptions<BingXCredentials> SpotOptions { get; private set; } = new RestApiOptions<BingXCredentials>
+        public RestApiOptions SpotOptions { get; private set; } = new RestApiOptions
         {
         };
 
         /// <summary>
         /// Futures API options
         /// </summary>
-        public RestApiOptions<BingXCredentials> FuturesOptions { get; private set; } = new RestApiOptions<BingXCredentials>();
+        public RestApiOptions FuturesOptions { get; private set; } = new RestApiOptions();
 
         internal BingXRestOptions Set(BingXRestOptions targetOptions)
         {

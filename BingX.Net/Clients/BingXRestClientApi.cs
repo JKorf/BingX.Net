@@ -35,7 +35,7 @@ namespace BingX.Net.Clients
         #endregion
 
         #region constructor/destructor
-        internal BingXRestClientApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options, RestApiOptions<BingXCredentials> apiOptions)
+        internal BingXRestClientApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options, RestApiOptions apiOptions)
             : base(logger, httpClient, options.Environment.RestClientAddress, options, apiOptions)
         {
             ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;

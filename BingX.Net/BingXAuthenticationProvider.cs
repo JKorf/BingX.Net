@@ -10,10 +10,9 @@ using System.Globalization;
 
 namespace BingX.Net
 {
-    internal class BingXAuthenticationProvider : AuthenticationProvider<BingXCredentials, HMACCredential>
+    internal class BingXAuthenticationProvider : AuthenticationProvider<BingXCredentials, BingXCredentials>
     {
-        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.HMAC];
-        public BingXAuthenticationProvider(BingXCredentials credentials) : base(credentials)
+        public BingXAuthenticationProvider(BingXCredentials credentials) : base(credentials, credentials)
         {
         }
 
