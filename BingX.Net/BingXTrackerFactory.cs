@@ -114,7 +114,7 @@ namespace BingX.Net
         }
 
         /// <inheritdoc />
-        public IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, ApiCredentials credentials, SpotUserDataTrackerConfig? config = null, BingXEnvironment? environment = null)
+        public IUserSpotDataTracker CreateUserSpotDataTracker(string userIdentifier, BingXCredentials credentials, SpotUserDataTrackerConfig? config = null, BingXEnvironment? environment = null)
         {
             var clientProvider = _serviceProvider?.GetRequiredService<IBingXUserClientProvider>() ?? new BingXUserClientProvider();
             var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);
@@ -143,7 +143,7 @@ namespace BingX.Net
         }
 
         /// <inheritdoc />
-        public IUserFuturesDataTracker BingXUserPerpetualFuturesDataTracker(string userIdentifier, ApiCredentials credentials, FuturesUserDataTrackerConfig? config = null, BingXEnvironment? environment = null)
+        public IUserFuturesDataTracker BingXUserPerpetualFuturesDataTracker(string userIdentifier, BingXCredentials credentials, FuturesUserDataTrackerConfig? config = null, BingXEnvironment? environment = null)
         {
             var clientProvider = _serviceProvider?.GetRequiredService<IBingXUserClientProvider>() ?? new BingXUserClientProvider();
             var restClient = clientProvider.GetRestClient(userIdentifier, credentials, environment);

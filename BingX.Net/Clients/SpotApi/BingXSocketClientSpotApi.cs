@@ -30,7 +30,7 @@ namespace BingX.Net.Clients.SpotApi
     /// <summary>
     /// Client providing access to the BingX spot websocket Api
     /// </summary>
-    internal partial class BingXSocketClientSpotApi : SocketApiClient, IBingXSocketClientSpotApi
+    internal partial class BingXSocketClientSpotApi : SocketApiClient<BingXEnvironment, BingXAuthenticationProvider, BingXCredentials>, IBingXSocketClientSpotApi
     {
         // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
 
@@ -53,7 +53,7 @@ namespace BingX.Net.Clients.SpotApi
         #endregion 
 
         /// <inheritdoc />
-        protected override AuthenticationProvider CreateAuthenticationProvider(ApiCredentials credentials)
+        protected override BingXAuthenticationProvider CreateAuthenticationProvider(BingXCredentials credentials)
             => new BingXAuthenticationProvider(credentials);
 
         /// <inheritdoc />

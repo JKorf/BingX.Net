@@ -1,4 +1,5 @@
-﻿using CryptoExchange.Net.Objects.Options;
+﻿using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Objects.Options;
 using System;
 
 namespace BingX.Net.Objects.Options
@@ -6,7 +7,7 @@ namespace BingX.Net.Objects.Options
     /// <summary>
     /// Options for the BingXSocketClient
     /// </summary>
-    public class BingXSocketOptions : SocketExchangeOptions<BingXEnvironment>
+    public class BingXSocketOptions : SocketExchangeOptions<BingXEnvironment, BingXCredentials>
     {
         /// <summary>
         /// Default options for new clients

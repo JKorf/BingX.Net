@@ -17,7 +17,7 @@ using CryptoExchange.Net.Objects.Options;
 namespace BingX.Net.Clients
 {
     /// <inheritdoc cref="IBingXRestClient" />
-    public class BingXRestClient : BaseRestClient, IBingXRestClient
+    public class BingXRestClient : BaseRestClient<BingXEnvironment, BingXCredentials>, IBingXRestClient
     {
         #region Api clients
 
@@ -58,14 +58,6 @@ namespace BingX.Net.Clients
 
         #endregion
 
-        /// <inheritdoc />
-        public void SetOptions(UpdateOptions options)
-        {
-            PerpetualFuturesApi.SetOptions(options);
-            SpotApi.SetOptions(options);
-            SubAccountApi.SetOptions(options);
-        }
-
         /// <summary>
         /// Set the default options to be used when creating new clients
         /// </summary>
@@ -75,12 +67,5 @@ namespace BingX.Net.Clients
             BingXRestOptions.Default = ApplyOptionsDelegate(optionsDelegate);
         }
 
-        /// <inheritdoc />
-        public void SetApiCredentials(ApiCredentials credentials)
-        {
-            SpotApi.SetApiCredentials(credentials);
-            PerpetualFuturesApi.SetApiCredentials(credentials);
-            SubAccountApi.SetApiCredentials(credentials);
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BingX.Net.Interfaces.Clients.SpotApi;
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Interfaces.Clients;
 using System;
 
@@ -7,7 +8,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
     /// <summary>
     /// BingX futures API endpoints
     /// </summary>
-    public interface IBingXRestClientPerpetualFuturesApi : IRestApiClient, IDisposable
+    public interface IBingXRestClientPerpetualFuturesApi : IRestApiClient<BingXCredentials>, IDisposable
     {
         /// <summary>
         /// Endpoints related to account settings, info or actions

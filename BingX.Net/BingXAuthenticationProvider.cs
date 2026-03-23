@@ -10,17 +10,16 @@ using System.Globalization;
 
 namespace BingX.Net
 {
-    internal class BingXAuthenticationProvider : AuthenticationProvider
+    internal class BingXAuthenticationProvider : AuthenticationProvider<BingXCredentials, BingXCredentials>
     {
-        public override ApiCredentialsType[] SupportedCredentialTypes => [ApiCredentialsType.Hmac];
-        public BingXAuthenticationProvider(ApiCredentials credentials) : base(credentials)
+        public BingXAuthenticationProvider(BingXCredentials credentials) : base(credentials, credentials)
         {
         }
 
         public override void ProcessRequest(RestApiClient apiClient, RestRequestConfiguration request)
         {
             request.Headers ??= new Dictionary<string, string>();
-            request.Headers.Add("X-BX-APIKEY", ApiKey);
+            request.Headers.Add("X-BX-APIKEY", Credential.Key);
 
             if (!request.Authenticated)
                 return;

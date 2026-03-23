@@ -1,6 +1,7 @@
 ﻿using BingX.Net;
 using BingX.Net.Clients;
 using BingX.Net.SymbolOrderBooks;
+using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Testing;
 using Microsoft.Extensions.Logging;
@@ -31,7 +32,7 @@ namespace BingX.Net.UnitTests
             return new BingXRestClient(null, loggerFactory, Options.Create(new Objects.Options.BingXRestOptions
             {
                 OutputOriginalData = true,
-                ApiCredentials = Authenticated ? new CryptoExchange.Net.Authentication.ApiCredentials(key, sec) : null
+                ApiCredentials = Authenticated ? new BingXCredentials(key, sec) : null
             }));
         }
 
