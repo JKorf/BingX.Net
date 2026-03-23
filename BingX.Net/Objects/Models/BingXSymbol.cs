@@ -49,6 +49,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("maxNotional")]
         public decimal MaxNotional { get; set; }
         /// <summary>
+        /// ["<c>maxMarketNotional</c>"] Max notional value of a market order
+        /// </summary>
+        [JsonPropertyName("maxMarketNotional")]
+        public decimal MaxMarketNotional { get; set; }
+        /// <summary>
         /// ["<c>status</c>"] Symbol status
         /// </summary>
         [JsonPropertyName("status")]

@@ -33,6 +33,11 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("ts")]
         public DateTime? Timestamp { get; set; }
+        /// <summary>
+        /// ["<c>lastUpdateId</c>"] Last update id
+        /// </summary>
+        [JsonPropertyName("lastUpdateId")]
+        public long? LastUpdateId { get; set; }
 
         /// <summary>
         /// Futures timestamp

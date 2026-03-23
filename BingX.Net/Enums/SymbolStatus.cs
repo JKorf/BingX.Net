@@ -26,6 +26,11 @@ namespace BingX.Net.Enums
         [Map("5")]
         PreOpen,
         /// <summary>
+        /// ["<c>10</c>"] Accessed
+        /// </summary>
+        [Map("10")]
+        Accessed,
+        /// <summary>
         /// ["<c>25</c>"] Trading suspended
         /// </summary>
         [Map("25")]
