@@ -46,17 +46,32 @@ The NuGet package files are added along side the source with the latest GitHub r
 
 		
 ## How to use
-*REST Endpoints*  
-
+*Basic request:*
 ```csharp
 // Get the ETH/USDT ticker via rest request
 var restClient = new BingXRestClient();
 var tickerResult = await restClient.SpotApi.ExchangeData.GetTickersAsync("ETH-USDT");
 var lastPrice = tickerResult.Data.Single().LastPrice;
 ```
-	
-*Websocket streams*  
 
+*Place order:*
+```csharp
+var restClient = new BingXRestClient(opts => {
+	opts.ApiCredentials = new BingXCredentials("APIKEY", "APISECRET");
+});
+
+// Place Limit order to go long for 0.1 ETH at 2000
+var orderResult = await restClient.PerpetualFuturesApi.Trading.PlaceOrderAsync(
+    "ETHUSDT",
+    OrderSide.Buy,
+    FuturesOrderType.Limit,
+    PositionSide.Long,
+    0.1m,
+    2000,
+    timeInForce: TimeInForce.GoodTillCanceled);
+```
+	
+*WebSocket subscription:*
 ```csharp
 // Subscribe to ETH/USDT ticker updates via the websocket API
 var socketClient = new BingXSocketClient();
