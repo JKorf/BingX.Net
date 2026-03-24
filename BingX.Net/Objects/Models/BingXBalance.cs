@@ -20,6 +20,11 @@ namespace BingX.Net.Objects.Models
     public record BingXBalance
     {
         /// <summary>
+        /// ["<c>disPlayName</c>"] Display name
+        /// </summary>
+        [JsonPropertyName("disPlayName")]
+        public string DisplayName { get; set; } = string.Empty;
+        /// <summary>
         /// ["<c>asset</c>"] Asset name
         /// </summary>
         [JsonPropertyName("asset")]

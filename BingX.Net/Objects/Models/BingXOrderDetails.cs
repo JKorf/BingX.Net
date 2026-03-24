@@ -75,6 +75,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("clientOrderID")]
         public string? ClientOrderId { get; set; }
         /// <summary>
+        /// ["<c>origClientOrderId</c>"] Original client order id
+        /// </summary>
+        [JsonPropertyName("origClientOrderId")]
+        public string? OrigClientOrderId { get; set; }
+        /// <summary>
         /// ["<c>time</c>"] Creation timestamp
         /// </summary>
         [JsonPropertyName("time")]

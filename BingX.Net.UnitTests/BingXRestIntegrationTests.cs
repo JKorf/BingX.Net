@@ -52,15 +52,15 @@ namespace BingX.Net.UnitTests
         [Test]
         public async Task TestSpotAccount()
         {
-            await RunAndCheckResult( client => client.SpotApi.Account.GetBalancesAsync(default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetWithdrawalHistoryAsync(default, default, default, default, default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetAssetsAsync(default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetDepositAddressAsync("ETH", default, default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetTransfersAsync(Enums.TransferType.FundingToPerpetualFutures, default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetInternalTransfersAsync("ETH", default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetTradingFeesAsync("ETH-USDT", default), true);
-            await RunAndCheckResult( client => client.SpotApi.Account.GetUserIdAsync(default), true);
+            await RunAndCheckResult( client => client.SpotApi.Account.GetBalancesAsync(default), true, true, "data.balances");
+            await RunAndCheckResult( client => client.SpotApi.Account.GetDepositHistoryAsync(default, default, default, default, default, default, default, default), true, true);
+            await RunAndCheckResult( client => client.SpotApi.Account.GetWithdrawalHistoryAsync(default, default, default, default, default, default, default, default, default, default), true, true);
+            await RunAndCheckResult( client => client.SpotApi.Account.GetAssetsAsync(default, default), true, true, "data");
+            await RunAndCheckResult( client => client.SpotApi.Account.GetDepositAddressAsync("ETH", default, default, default), true, true, "data");
+            await RunAndCheckResult( client => client.SpotApi.Account.GetTransfersAsync(Enums.TransferType.FundingToPerpetualFutures, default, default, default, default, default, default), true, true);
+            await RunAndCheckResult( client => client.SpotApi.Account.GetInternalTransfersAsync("ETH", default, default, default, default, default, default), true, true, "data");
+            await RunAndCheckResult( client => client.SpotApi.Account.GetTradingFeesAsync("ETH-USDT", default), true, true, "data");
+            await RunAndCheckResult( client => client.SpotApi.Account.GetUserIdAsync(default), true, true, "data", ignoreProperties: ["accountStatus"]);
         }
 
         [Test]
@@ -82,20 +82,20 @@ namespace BingX.Net.UnitTests
         [Test]
         public async Task TestSpotTrading()
         {
-            await RunAndCheckResult( client => client.SpotApi.Trading.GetOpenOrdersAsync(default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Trading.GetOrdersAsync(default, default, default, default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.SpotApi.Trading.GetUserTradesAsync("ETH-USDT", default, default, default, default, default, default, default, default), true);
+            await RunAndCheckResult( client => client.SpotApi.Trading.GetOpenOrdersAsync(default, default), true, true, "data.orders");
+            await RunAndCheckResult( client => client.SpotApi.Trading.GetOrdersAsync(default, default, default, default, default, default, default, default, default), true, true, "data.orders", ignoreProperties: ["clientUserID"]);
+            await RunAndCheckResult( client => client.SpotApi.Trading.GetUserTradesAsync("ETH-USDT", default, default, default, default, default, default, default, default), true, true, "data.fills");
         }
 
         [Test]
         public async Task TestPerpetualFuturesAccount()
         {
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetBalancesAsync(default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetIncomesAsync(default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetMarginModeAsync("ETH-USDT", default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetLeverageAsync("ETH-USDT", default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetPositionModeAsync(default), true);
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetBalancesAsync(default), true, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetIncomesAsync(default, default, default, default, default, default), true, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetTradingFeesAsync(default), true, true, "data.commission");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetMarginModeAsync("ETH-USDT", default), true, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetLeverageAsync("ETH-USDT", default), true, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Account.GetPositionModeAsync(default), true, true, "data");
         }
 
         [Test]
@@ -122,13 +122,13 @@ namespace BingX.Net.UnitTests
         [Test]
         public async Task TestPerpetualFuturesTrading()
         {
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetPositionsAsync(default, default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetOpenOrdersAsync(default, default, default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetClosedOrdersAsync(default, default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetLiquidationOrdersAsync(default, default, default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default, default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("ETH-USDT", default), true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, DateTime.UtcNow, DateTime.UtcNow, default, default, default), true);
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetPositionsAsync(default, default), true, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetOpenOrdersAsync(default, default, default), true, true, "data.orders");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetClosedOrdersAsync(default, default, default, default, default, default, default), true, true, "data.orders");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetLiquidationOrdersAsync(default, default, default, default, default, default, default), true, true, "data.orders");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetUserTradesAsync(default, default, default, default, default), true, true, "data.fill_orders");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("ETH-USDT", default), true, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ADA-USDT", default, default, DateTime.UtcNow, DateTime.UtcNow, default, default, default), true, true, "data.positionHistory");
         }
 
         [Test]

@@ -13,6 +13,11 @@ namespace BingX.Net.Objects.Models
     public record BingXWithdrawal
     {
         /// <summary>
+        /// ["<c>sourceAddress</c>"] Source address
+        /// </summary>
+        [JsonPropertyName("sourceAddress")]
+        public string SourceAddress { get; set; } = string.Empty;
+        /// <summary>
         /// ["<c>address</c>"] Withdrawal address
         /// </summary>
         [JsonPropertyName("address")]
@@ -33,6 +38,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("id")]
         public string Id { get; set; } = string.Empty;
         /// <summary>
+        /// ["<c>withdrawOrderId</c>"] Withdrawal order id
+        /// </summary>
+        [JsonPropertyName("withdrawOrderId")]
+        public string WithdrawOrderId { get; set; } = string.Empty;
+        /// <summary>
         /// ["<c>coin</c>"] Asset
         /// </summary>
         [JsonPropertyName("coin")]
@@ -51,7 +61,7 @@ namespace BingX.Net.Objects.Models
         /// ["<c>transferType</c>"] Transfer type
         /// </summary>
         [JsonPropertyName("transferType")]
-        public int transferType { get; set; }
+        public int TransferType { get; set; }
         /// <summary>
         /// ["<c>transactionFee</c>"] Fee
         /// </summary>

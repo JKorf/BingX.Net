@@ -109,5 +109,15 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("contractAddress")]
         public string ContractAddress { get; set; } = string.Empty;
+        /// <summary>
+        /// ["<c>needTagOrMemo</c>"] Needs tag or memo
+        /// </summary>
+        [JsonPropertyName("needTagOrMemo")]
+        public string NeedsTagOrMemo { get; set; } = string.Empty;
+        /// <summary>
+        /// ["<c>displayName</c>"] Display name
+        /// </summary>
+        [JsonPropertyName("displayName")]
+        public string DisplayName { get; set; } = string.Empty;
     }
 }

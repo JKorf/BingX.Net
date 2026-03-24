@@ -50,6 +50,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("address")]
         public string Address { get; set; } = string.Empty;
         /// <summary>
+        /// ["<c>address</c>"] Address with prefix
+        /// </summary>
+        [JsonPropertyName("addressWithPrefix")]
+        public string AddressWithPrefix { get; set; } = string.Empty;
+        /// <summary>
         /// ["<c>tag</c>"] Tag
         /// </summary>
         [JsonPropertyName("tag")]

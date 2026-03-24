@@ -11,6 +11,11 @@ namespace BingX.Net.Objects.Models
     public record BingXLeverage
     {
         /// <summary>
+        /// ["<c>symbol</c>"] Symbol
+        /// </summary>
+        [JsonPropertyName("symbol")]
+        public string Symbol { get; set; } = string.Empty;
+        /// <summary>
         /// ["<c>longLeverage</c>"] Long position leverage
         /// </summary>
         [JsonPropertyName("longLeverage")]
