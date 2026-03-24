@@ -44,5 +44,8 @@ namespace BingX.Net
             Secret = secret;
             return this;
         }
+
+        /// <inheritdoc />
+        public override ApiCredentials Copy() => new BingXCredentials(this);
     }
 }
