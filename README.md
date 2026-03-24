@@ -174,6 +174,22 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 3.9.0 - 24 Mar 2026
+    * Updated CryptoExchange.Net to version 11.0.1, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
+    * Updated class for supplying API credentials from ApiCredentials to BingXCredentials
+    * Updated Shared order status parsing to default to Unknown value if not parsable
+    * Added missing SymbolStatus Enum value
+    * Added LastUpdateId property to BingXOrderBook model
+    * Added MaxMarketNotional property to BingXSymbol model
+    * Added MarkPrice property to BingXFundingRateHistory model
+    * Added FundingIntervalHours, MinFundingRate, MaxFundingRate and UpdateTime properties to BingXFundingRate
+    * Added OfflineTime, MaintenanceTime and LaunchTime properties on BingXContract model
+    * Added LastUpdateId and UpdateTime properties on BingXFuturesBookTicker model
+    * Fixed Timestamp mapping on BingXFuturesTrade model
+
+    * Notes for updating:
+        * Update ApiCredentials to BingXCredentials for authentication, i.e. `ApiCredentials = new ApiCredentials(..)` => `ApiCredentials = new BingXCredentials(..)`
+
 * Version 3.8.0 - 06 Mar 2026
     * Updated CryptoExchange.Net to version 10.8.0, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
     * Improved method XML comments
