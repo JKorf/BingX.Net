@@ -1,5 +1,6 @@
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
@@ -41,5 +42,15 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("ask_qty")]
         public decimal BestAskQuantity { get; set; }
+        /// <summary>
+        /// ["<c>lastUpdateId</c>"] Last update sequence number
+        /// </summary>
+        [JsonPropertyName("lastUpdateId")]
+        public long LastUpdateId { get; set; }
+        /// <summary>
+        /// ["<c>time</c>"] Update time
+        /// </summary>
+        [JsonPropertyName("time")]
+        public DateTime UpdateTime { get; set; }
     }
 }

@@ -36,5 +36,25 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("nextFundingTime")]
         public DateTime NextFundingTime { get; set; }
+        /// <summary>
+        /// ["<c>fundingIntervalHours</c>"] Funding interval in hours
+        /// </summary>
+        [JsonPropertyName("fundingIntervalHours")]
+        public int? FundingIntervalHours { get; set; }
+        /// <summary>
+        /// ["<c>minFundingRate</c>"] Min funding rate
+        /// </summary>
+        [JsonPropertyName("minFundingRate")]
+        public decimal? MinFundingRate { get; set; }
+        /// <summary>
+        /// ["<c>maxFundingRate</c>"] Max funding rate
+        /// </summary>
+        [JsonPropertyName("maxFundingRate")]
+        public decimal? MaxFundingRate { get; set; }
+        /// <summary>
+        /// ["<c>updateTime</c>"] Update time
+        /// </summary>
+        [JsonPropertyName("updateTime")]
+        public DateTime? UpdateTime { get; set; }
     }
 }

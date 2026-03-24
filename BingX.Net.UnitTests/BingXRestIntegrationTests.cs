@@ -16,7 +16,7 @@ namespace BingX.Net.UnitTests
     [NonParallelizable]
     internal class BingXRestIntegrationTests : RestIntegrationTest<BingXRestClient>
     {
-        public override bool Run { get; set; } = true;
+        public override bool Run { get; set; } = false;
 
         public BingXRestIntegrationTests()
         {
@@ -74,7 +74,7 @@ namespace BingX.Net.UnitTests
             await RunAndCheckResult( client => client.SpotApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false, true, "data");
             await RunAndCheckResult( client => client.SpotApi.ExchangeData.GetTickersAsync(default, default), false, true, "data");
             await RunAndCheckResult( client => client.SpotApi.ExchangeData.GetLastTradeAsync("ETH-USDT", default), false, true, "data");
-            await RunAndCheckResult( client => client.SpotApi.ExchangeData.GetLastTradesAsync(default), false, true, "data");
+            await RunAndCheckResult( client => client.SpotApi.ExchangeData.GetLastTradesAsync(default), false, true, "data.0.trades");
             await RunAndCheckResult( client => client.SpotApi.ExchangeData.GetBookPriceAsync("ETH-USDT", default), false, true, "data");
             await RunAndCheckResult( client => client.SpotApi.ExchangeData.GetTradeHistoryAsync("ETH-USDT", default, default, default), false, true, "data");
         }
@@ -102,21 +102,21 @@ namespace BingX.Net.UnitTests
         public async Task TestPerpetualFuturesExchangeData()
         {
             await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetServerTimeAsync(default), false);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetContractsAsync(default, default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetOrderBookAsync("ETH-USDT", default, default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetRecentTradesAsync("ETH-USDT", default, default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetTradeHistoryAsync("ETH-USDT", default, default, default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateAsync("ETH-USDT", default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetFundingRatesAsync(default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateHistoryAsync("ETH-USDT", default, default, default, default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetMarkPriceKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetOpenInterestAsync("ETH-USDT", default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetTickerAsync("ETH-USDT", default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetTickersAsync(default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetBookTickerAsync("ETH-USDT", default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePriceAsync("ETH-USDT", default), false, true);
-            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePricesAsync(default), false, true);
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetContractsAsync(default, default), false, true, "data", ignoreProperties: ["tradeMinLimit"]);
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetOrderBookAsync("ETH-USDT", default, default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetRecentTradesAsync("ETH-USDT", default, default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetTradeHistoryAsync("ETH-USDT", default, default, default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateAsync("ETH-USDT", default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetFundingRatesAsync(default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetFundingRateHistoryAsync("ETH-USDT", default, default, default, default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetMarkPriceKlinesAsync("ETH-USDT", Enums.KlineInterval.OneDay, default, default, default, default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetOpenInterestAsync("ETH-USDT", default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetTickerAsync("ETH-USDT", default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetTickersAsync(default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetBookTickerAsync("ETH-USDT", default), false, true, "data.book_ticker");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePriceAsync("ETH-USDT", default), false, true, "data");
+            await RunAndCheckResult( client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePricesAsync(default), false, true, "data");
         }
 
         [Test]

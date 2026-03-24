@@ -1,5 +1,6 @@
 using BingX.Net.Objects.Internal;
 using CryptoExchange.Net.Converters.SystemTextJson;
+using System;
 using System.Text.Json.Serialization;
 
 namespace BingX.Net.Objects.Models
@@ -115,5 +116,20 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("brokerState")]
         public bool BrokerProhibited { get; set; }
+        /// <summary>
+        /// ["<c>launchTime</c>"] Launch time
+        /// </summary>
+        [JsonPropertyName("launchTime")]
+        public DateTime? LaunchTime { get; set; }
+        /// <summary>
+        /// ["<c>maintainTime</c>"] Time of planned maintenance
+        /// </summary>
+        [JsonPropertyName("maintainTime")]
+        public DateTime? MaintenanceTime { get; set; }
+        /// <summary>
+        /// ["<c>offTime</c>"] Time of planned offline
+        /// </summary>
+        [JsonPropertyName("offTime")]
+        public DateTime? OfflineTime { get; set; }
     }
 }

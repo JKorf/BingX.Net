@@ -41,6 +41,8 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("time")]
         public DateTime Timestamp { get; set; }
+        [JsonInclude, JsonPropertyName("ts")]
+        internal DateTime TimestampInt { set => Timestamp = value; }
         /// <summary>
         /// ["<c>isBuyerMaker</c>"] Whether buyer was the maker
         /// </summary>

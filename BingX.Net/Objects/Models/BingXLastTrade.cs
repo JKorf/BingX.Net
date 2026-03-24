@@ -22,6 +22,7 @@ namespace BingX.Net.Objects.Models
         /// <summary>
         /// Symbol
         /// </summary>
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
 
         /// <summary>

@@ -17,6 +17,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
+        /// ["<c>markPrice</c>"] Mark price
+        /// </summary>
+        [JsonPropertyName("markPrice")]
+        public decimal MarkPrice { get; set; }
+        /// <summary>
         /// ["<c>fundingRate</c>"] Funding rate
         /// </summary>
         [JsonPropertyName("fundingRate")]
