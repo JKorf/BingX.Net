@@ -8,6 +8,7 @@ using BingX.Net.Objects.Internal;
 using BingX.Net.Objects.Models;
 using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Sockets.Default;
+using CryptoExchange.Net.Sockets.Default.Routing;
 
 namespace BingX.Net.Objects.Sockets.Subscriptions
 {
