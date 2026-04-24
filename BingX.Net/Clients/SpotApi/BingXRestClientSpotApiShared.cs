@@ -541,7 +541,7 @@ namespace BingX.Net.Clients.SpotApi
         {
             if (status == Enums.OrderStatus.Canceled || status == OrderStatus.Failed)
                 return SharedOrderStatus.Canceled;
-            if (status == Enums.OrderStatus.New || status == Enums.OrderStatus.Pending || status == Enums.OrderStatus.PartiallyFilled)
+            if (status == Enums.OrderStatus.New || status == Enums.OrderStatus.Pending || status == Enums.OrderStatus.PartiallyFilled || status == OrderStatus.Working)
                 return SharedOrderStatus.Open;
             if (status == OrderStatus.Filled)
                 return SharedOrderStatus.Filled;
@@ -1008,7 +1008,7 @@ namespace BingX.Net.Clients.SpotApi
             if (data.Status == OrderStatus.Canceled || data.Status == OrderStatus.Failed)
                 return SharedTriggerOrderStatus.CanceledOrRejected;
 
-            if (data.Status == OrderStatus.New || data.Status == OrderStatus.PartiallyFilled)
+            if (data.Status == OrderStatus.New || data.Status == OrderStatus.PartiallyFilled || data.Status == OrderStatus.Working)
                 return SharedTriggerOrderStatus.Active;
 
             return SharedTriggerOrderStatus.Unknown;

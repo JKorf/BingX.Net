@@ -11,6 +11,11 @@ namespace BingX.Net.Enums
     public enum OrderStatus
     {
         /// <summary>
+        /// ["<c>WORKING</c>"] New order
+        /// </summary>
+        [Map("WORKING")]
+        Working,
+        /// <summary>
         /// ["<c>NEW</c>"] New order
         /// </summary>
         [Map("NEW")]
