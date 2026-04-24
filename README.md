@@ -175,6 +175,10 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 3.10.1 - 24 Apr 2026
+    * Added SymbolsUsdcReplaceFilter to websocket options
+    * Added TGBP websocket symbol for not replacing USDC to USD
+
 * Version 3.10.0 - 09 Apr 2026
     * Updated CryptoExchange.Net to version 11.1.0, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
     * Added NeedsTagOrMemo, DisplayName properties to BingXAsset model
