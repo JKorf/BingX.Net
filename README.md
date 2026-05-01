@@ -175,6 +175,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 3.10.2 - 01 May 2026
+    * Fixed Shared SpotApi PlaceOrderAsync not marked as supporting limit maker orders
+
 * Version 3.10.1 - 24 Apr 2026
     * Added SymbolsUsdcReplaceFilter to websocket options
     * Added TGBP websocket symbol for not replacing USDC to USD
