@@ -1,0 +1,102 @@
+---
+description: Conventions for using BingX.Net library when working with the BingX exchange in C#/.NET. Apply when generating code that interacts with the BingX API.
+globs:
+  - "**/*.cs"
+  - "**/*.csproj"
+alwaysApply: false
+---
+
+# BingX.Net Conventions
+
+This codebase uses **BingX.Net** for BingX exchange access. Do not write raw `HttpClient` calls to BingX endpoints.
+
+## Client setup pattern
+
+```csharp
+using BingX.Net;
+using BingX.Net.Clients;
+
+var restClient = new BingXRestClient(options =>
+{
+    options.ApiCredentials = new BingXCredentials("API_KEY", "API_SECRET");
+});
+```
+
+For public market data only, no credentials are needed: `new BingXRestClient()`.
+
+## Result pattern
+
+All methods return `WebCallResult<T>` (REST) or `CallResult<T>` (WebSocket). Always check `.Success` before reading `.Data`:
+
+```csharp
+var ticker = await restClient.SpotApi.ExchangeData.GetTickersAsync("BTC-USDT");
+if (!ticker.Success) { /* ticker.Error */ return; }
+var price = ticker.Data.Single().LastPrice;
+```
+
+## API surface
+
+- `restClient.SpotApi.{ExchangeData|Account|Trading}`
+- `restClient.PerpetualFuturesApi.{ExchangeData|Account|Trading}`
+- `restClient.SubAccountApi`
+- `socketClient.SpotApi` for Spot WebSocket subscriptions
+- `socketClient.PerpetualFuturesApi` for Perpetual Futures WebSocket subscriptions
+
+BingX spot symbols use hyphenated names such as `BTC-USDT`. Perpetual futures methods also use symbols such as `ETH-USDT`.
+
+## Order placement
+
+Let the library auto-generate `clientOrderId`. Do not pass a custom one unless required for an existing operational flow:
+
+```csharp
+var order = await restClient.SpotApi.Trading.PlaceOrderAsync(
+    "BTC-USDT", OrderSide.Buy, OrderType.Limit,
+    quantity: 0.001m, price: 50000m, timeInForce: TimeInForce.GoodTillCanceled);
+```
+
+## WebSocket pattern
+
+```csharp
+var socketClient = new BingXSocketClient();
+var sub = await socketClient.SpotApi.SubscribeToTickerUpdatesAsync(
+    "BTC-USDT",
+    update => { /* update.Data.LastPrice */ });
+if (!sub.Success) { /* sub.Error */ return; }
+
+// On shutdown:
+await socketClient.UnsubscribeAsync(sub.Data);
+```
+
+## Multi-exchange code
+
+For exchange-agnostic code, use `CryptoExchange.Net.SharedApis`:
+
+```csharp
+using CryptoExchange.Net.SharedApis;
+
+var shared = new BingXRestClient().SpotApi.SharedClient;
+var ticker = await shared.GetSpotTickerAsync(
+    new GetTickerRequest(new SharedSymbol(TradingMode.Spot, "BTC", "USDT")));
+```
+
+Same pattern works against other CryptoExchange.Net libraries such as Binance.Net, OKX.Net, and Bybit.Net.
+
+## Hard rules
+
+- Never write raw `HttpClient` to BingX endpoints.
+- Never use `.Result` or `.Wait()`; use async all the way.
+- Never instantiate clients per request; reuse them or use DI.
+- Never skip checking `WebCallResult.Success`.
+- Prefer `BingXRestClient` and `BingXSocketClient`.
+- Never pass a custom `clientOrderId` to `PlaceOrderAsync` unless required.
+- Always use `BingXCredentials("key", "secret")`, not generic `ApiCredentials`.
+- Always store WebSocket subscriptions and unsubscribe on shutdown.
+- Use `PerpetualFuturesApi`, not a generic `FuturesApi`.
+- Use `.SharedClient` for cross-exchange code.
+
+## Reference
+
+- Skill: `CLAUDE.md` in repo root has fuller examples
+- `llms.txt` in repo root for AI context
+- Examples: `Examples/ai-friendly/`
+
