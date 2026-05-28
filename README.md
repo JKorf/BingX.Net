@@ -1,6 +1,6 @@
 # ![.BingX.Net](https://github.com/JKorf/BingX.Net/blob/781598404ac510d462c91e6888be2d530bd6e350/BingX.Net/Icon/BingX.png) BingX.Net  
 
-[![.NET](https://img.shields.io/github/actions/workflow/status/JKorf/BingX.Net/dotnet.yml?style=for-the-badge)](https://github.com/JKorf/BingX.Net/actions/workflows/dotnet.yml) ![License](https://img.shields.io/github/license/JKorf/BingX.Net?style=for-the-badge)
+[![.NET](https://img.shields.io/github/actions/workflow/status/JKorf/BingX.Net/dotnet.yml?style=for-the-badge)](https://github.com/JKorf/BingX.Net/actions/workflows/dotnet.yml) ![License](https://img.shields.io/github/license/JKorf/BingX.Net?style=for-the-badge) ![Since](https://img.shields.io/badge/since-2024-brightgreen?style=for-the-badge)
 
 BingX.Net is a client library for accessing the [BingX REST and Websocket API](https://bingx-api.github.io/docs/#/en-us/swapV2/changelog).
 ## Features
