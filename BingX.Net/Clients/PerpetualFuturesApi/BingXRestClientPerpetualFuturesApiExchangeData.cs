@@ -8,6 +8,7 @@ using System.Net.Http;
 using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
 using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
+using CryptoExchange.Net.Objects.Errors;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -141,7 +142,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.AddOptional("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/quote/fundingRate", BingXExchange.RateLimiter.RestMarket, 1);
-            return await _baseClient.SendAsync<BingXFundingRateHistory[]>(request, parameters, ct).ConfigureAwait(false);
+            var result = await _baseClient.SendAsync<BingXFundingRateHistory[]>(request, parameters, ct).ConfigureAwait(false);
+            if (!result)
+                return result;
+
+            if (result.Data == null)
+                return result.As<BingXFundingRateHistory[]>([]);
+
+            return result;
         }
 
         #endregion
