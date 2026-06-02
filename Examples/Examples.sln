@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Examples.OrderBook", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Examples.Tracker", "BingX.Examples.Tracker\BingX.Examples.Tracker.csproj", "{0051E490-FA97-4B88-BB14-30AAF17DAAA1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingX.Examples.OrderPlacement", "BingX.Examples.OrderPlacement\BingX.Examples.OrderPlacement.csproj", "{A2F60B3B-102D-4ED5-A834-41539BA2CF36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0051E490-FA97-4B88-BB14-30AAF17DAAA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0051E490-FA97-4B88-BB14-30AAF17DAAA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0051E490-FA97-4B88-BB14-30AAF17DAAA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2F60B3B-102D-4ED5-A834-41539BA2CF36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2F60B3B-102D-4ED5-A834-41539BA2CF36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2F60B3B-102D-4ED5-A834-41539BA2CF36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2F60B3B-102D-4ED5-A834-41539BA2CF36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
