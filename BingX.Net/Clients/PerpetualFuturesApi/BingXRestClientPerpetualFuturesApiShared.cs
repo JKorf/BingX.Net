@@ -447,12 +447,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var direction = DataDirection.Descending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var limit = request.Limit ?? 1000;
-            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, false);
+            var pageParams = Pagination.GetPaginationParameters(direction, limit, request.StartTime, request.EndTime ?? DateTime.UtcNow, pageRequest, true);
 
             // Get data
             var result = await ExchangeData.GetFundingRateHistoryAsync(
                 request.Symbol!.GetSymbol(FormatSymbol),
-                startTime: pageParams.StartTime,
+                startTime: pageParams.StartTime ?? pageParams.EndTime?.AddHours(-(8 * pageParams.Limit)),
                 endTime: pageParams.EndTime,
                 limit: limit,
                 ct: ct).ConfigureAwait(false);
