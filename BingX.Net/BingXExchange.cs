@@ -62,6 +62,11 @@ namespace BingX.Net
         public static ExchangeType Type { get; } = ExchangeType.CEX;
 
         internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<BingXSourceGenerationContext>();
+        internal static readonly ParameterSerializationSettings _parameterSerializationSettings = new ParameterSerializationSettings()
+        {
+            Decimal = DecimalSerialization.Number,
+            Sort = true
+        };
 
         /// <summary>
         /// Aliases for BingX assets

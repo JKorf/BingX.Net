@@ -42,8 +42,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXSymbol[]>> GetSymbolsAsync(string? symbol = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("symbol", symbol);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("symbol", symbol);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/common/symbols", BingXExchange.RateLimiter.RestMarket, 1, false);
             var result =  await _baseClient.SendAsync<BingXSymbolsWrapper>(request, parameters, ct).ConfigureAwait(false);
@@ -57,11 +57,11 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXTrade[]>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameters.AddOptional("limit", limit);
+            parameters.Add("limit", limit);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/market/trades", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXTrade[]>(request, parameters, ct).ConfigureAwait(false);
         }
@@ -73,11 +73,11 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXOrderBook>> GetOrderBookAsync(string symbol, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameters.AddOptional("limit", limit);
+            parameters.Add("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/market/depth", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXOrderBook>(request, parameters, ct).ConfigureAwait(false);
@@ -95,7 +95,7 @@ namespace BingX.Net.Clients.SpotApi
             // This endpoint doesn't work unless symbol is with an underscore
             symbol = symbol.Replace('-', '_');
 
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol },
                 { "depth", limit },
@@ -113,14 +113,14 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol },
                 { "interval", EnumConverter.GetString(interval) }
             };
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("limit", limit);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v2/market/kline", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXKline[]>(request, parameters, ct).ConfigureAwait(false);
@@ -129,14 +129,14 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXKline[]>> GetHistoricalKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol },
                 { "interval", EnumConverter.GetString(interval) }
             };
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("limit", limit);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/market/his/v1/kline", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXKline[]>(request, parameters, ct).ConfigureAwait(false);
@@ -149,11 +149,11 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXTicker[]>> GetTickersAsync(string? symbol = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "timestamp", DateTimeConverter.ConvertToMilliseconds(DateTime.UtcNow) }
             };
-            parameters.AddOptional("symbol", symbol);
+            parameters.Add("symbol", symbol);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/ticker/24hr", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXTicker[]>(request, parameters, ct).ConfigureAwait(false);
@@ -166,7 +166,7 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXLastTrade>> GetLastTradeAsync(string symbol, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
@@ -200,7 +200,7 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXBookTicker>> GetBookPriceAsync(string symbol, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
@@ -216,12 +216,12 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXTradeHistory[]>> GetTradeHistoryAsync(string symbol, int? limit = null, string? fromId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameters.AddOptional("limit", limit);
-            parameters.AddOptional("fromId", fromId);
+            parameters.Add("limit", limit);
+            parameters.Add("fromId", fromId);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/market/his/v1/trade", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXTradeHistory[]>(request, parameters, ct).ConfigureAwait(false);

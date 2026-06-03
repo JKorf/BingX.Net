@@ -36,7 +36,6 @@ namespace BingX.Net.Clients.SpotApi
 
         #endregion
 
-
         #region Get Funding Balances
 
         /// <inheritdoc />
@@ -55,14 +54,14 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("coin", asset);
-            parameters.AddOptionalEnum("status", status);
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("offset", offset);
-            parameters.AddOptional("limit", limit);
-            parameters.AddOptional("txId", transactionId);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("coin", asset);
+            parameters.Add("status", status);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("offset", offset);
+            parameters.Add("limit", limit);
+            parameters.Add("txId", transactionId);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/deposit/hisrec", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendRawAsync<BingXDeposit[]>(request, parameters, ct).ConfigureAwait(false);
@@ -75,16 +74,16 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("id", id);
-            parameters.AddOptional("coin", asset);
-            parameters.AddOptional("withdrawOrderId", clientOrderId);
-            parameters.AddOptionalEnum("status", status);
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("offset", offset);
-            parameters.AddOptional("limit", limit);
-            parameters.AddOptional("txId", transactionId);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("id", id);
+            parameters.Add("coin", asset);
+            parameters.Add("withdrawOrderId", clientOrderId);
+            parameters.Add("status", status);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("offset", offset);
+            parameters.Add("limit", limit);
+            parameters.Add("txId", transactionId);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/capital/withdraw/history", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -98,8 +97,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXAsset[]>> GetAssetsAsync(string? asset = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("coin", asset);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("coin", asset);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/config/getall", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -113,16 +112,16 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXWithdrawResult>> WithdrawAsync(string asset, string address, decimal quantity, AccountType walletType, string? network = null, string? addressTag = null, string? clientOrderId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "coin", asset },
                 { "address", address },
                 { "amount", quantity }
             };
-            parameters.AddEnumAsInt("walletType", walletType);
-            parameters.AddOptional("network", network);
-            parameters.AddOptional("addressTag", addressTag);
-            parameters.AddOptional("withdrawOrderId", clientOrderId);
+            parameters.AddAsInt("walletType", walletType);
+            parameters.Add("network", network);
+            parameters.Add("addressTag", addressTag);
+            parameters.Add("withdrawOrderId", clientOrderId);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/wallets/v1/capital/withdraw/apply", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -136,12 +135,12 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXDepositAddresses>> GetDepositAddressAsync(string asset, int? offset = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "coin", asset }
             };
-            parameters.AddOptional("offset", offset);
-            parameters.AddOptional("limit", limit);
+            parameters.Add("offset", offset);
+            parameters.Add("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/deposit/address", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -155,13 +154,13 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXTransactionResult>> TransferAsync(string asset, decimal quantity, TransferAccountType fromAccount, TransferAccountType toAccount, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "asset", asset },
                 { "amount", quantity }
             };
-            parameters.AddEnum("fromAccount", fromAccount);
-            parameters.AddEnum("toAccount", toAccount);
+            parameters.Add("fromAccount", fromAccount);
+            parameters.Add("toAccount", toAccount);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/api/asset/v1/transfer", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -182,13 +181,13 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXTransfers>> GetTransfersAsync(TransferType type, long? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddEnum("type", type);
-            parameters.AddOptional("tranId", transactionId);
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("current", page);
-            parameters.AddOptional("size", pageSize);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("type", type);
+            parameters.Add("tranId", transactionId);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("current", page);
+            parameters.Add("size", pageSize);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/api/v3/asset/transfer", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -202,16 +201,16 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXId>> TransferInternalAsync(string asset, AccountIdentifierType targetAccountType, string targetAccount, decimal quantity, AccountType accountType, string? areaCode = null, string? clientOrderId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "coin", asset },
                 { "amount", quantity },
                 { "targetAccount", targetAccount }
             };
-            parameters.AddEnum("userAccountType", targetAccountType);
-            parameters.AddEnum("walletType", accountType);
-            parameters.AddOptional("callingCode", areaCode);
-            parameters.AddOptional("transferClientId", clientOrderId);
+            parameters.Add("userAccountType", targetAccountType);
+            parameters.Add("walletType", accountType);
+            parameters.Add("callingCode", areaCode);
+            parameters.Add("transferClientId", clientOrderId);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/wallets/v1/capital/innerTransfer/apply", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -225,15 +224,15 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXInternalTransfers>> GetInternalTransfersAsync(string asset, string? clientOrderId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "coin", asset }
             };
-            parameters.AddOptional("transferClientId", clientOrderId);
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("offset", offset);
-            parameters.AddOptional("limit", limit);
+            parameters.Add("transferClientId", clientOrderId);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("offset", offset);
+            parameters.Add("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/wallets/v1/capital/innerTransfer/records", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -266,7 +265,7 @@ namespace BingX.Net.Clients.SpotApi
             if (_baseClient.AuthenticationProvider == null)
                 return new WebCallResult(new NoApiCredentialsError());
 
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "listenKey", listenKey }
             };
@@ -285,7 +284,7 @@ namespace BingX.Net.Clients.SpotApi
             if (_baseClient.AuthenticationProvider == null)
                 return new WebCallResult(new NoApiCredentialsError());
 
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "listenKey", listenKey }
             };
@@ -301,7 +300,7 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
@@ -331,11 +330,11 @@ namespace BingX.Net.Clients.SpotApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXApiKey[]>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "uid", userId }
             };
-            parameters.AddOptional("apiKey", apiKey);
+            parameters.Add("apiKey", apiKey);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/account/v1/apiKey/query", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));

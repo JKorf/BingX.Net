@@ -35,7 +35,7 @@ namespace BingX.Net.Clients.Apis
         /// <inheritdoc />
         public async Task<WebCallResult<BingXKeyPermissions>> GetApiKeyPermissionsAsync(CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/v1/account/apiPermissions", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await SendRawAsync<BingXKeyPermissions>(request, parameters, ct).ConfigureAwait(false);
             return result;

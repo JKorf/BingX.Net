@@ -39,12 +39,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("symbol", symbol);
-            parameters.AddOptionalEnum("incomeType", incomeType);
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("limit", limit);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("symbol", symbol);
+            parameters.Add("incomeType", incomeType);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("limit", limit);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v2/user/income", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -96,7 +96,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (_baseClient.AuthenticationProvider == null)
                 return new WebCallResult(new NoApiCredentialsError());
 
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "listenKey", listenKey }
             };
@@ -115,7 +115,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (_baseClient.AuthenticationProvider == null)
                 return new WebCallResult(new NoApiCredentialsError());
 
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "listenKey", listenKey }
             };
@@ -131,7 +131,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXMarginMode>> GetMarginModeAsync(string symbol, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
@@ -147,11 +147,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult> SetMarginModeAsync(string symbol, MarginMode marginMode, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameters.AddEnum("marginType", marginMode);
+            parameters.Add("marginType", marginMode);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/marginType", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), parameterPosition: HttpMethodParameterPosition.InUri);
             return await _baseClient.SendAsync(request, parameters, ct).ConfigureAwait(false);
@@ -164,7 +164,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXLeverage>> GetLeverageAsync(string symbol, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
@@ -180,12 +180,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXLeverageResult>> SetLeverageAsync(string symbol, PositionSide side, int leverage, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol },
                 { "leverage", leverage }
             };
-            parameters.AddEnum("side", side);
+            parameters.Add("side", side);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/leverage", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -199,13 +199,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult> AdjustIsolatedMarginAsync(string symbol, decimal quantity, AdjustDirection direction, PositionSide side, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol },
                 { "amount", quantity }
             };
-            parameters.AddEnum("type", direction);
-            parameters.AddEnum("positionSide", side);
+            parameters.Add("type", direction);
+            parameters.Add("positionSide", side);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v2/trade/positionMargin", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -231,8 +231,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXPositionMode>> SetPositionModeAsync(PositionMode positionMode, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddEnum("dualSidePosition", positionMode);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("dualSidePosition", positionMode);
 
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/positionSide/dual", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -246,13 +246,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXMarginHistory>> GetIsolatedMarginChangeHistoryAsync(string positionId, string? symbol = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             parameters.Add("positionId", positionId);
-            parameters.AddOptional("symbol", symbol);
-            parameters.AddMilliseconds("startTime", startTime ?? DateTime.UtcNow.AddDays(-30));
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("pageIndex", page ?? 1);
-            parameters.AddOptional("pageSize", pageSize);
+            parameters.Add("symbol", symbol);
+            parameters.Add("startTime", startTime ?? DateTime.UtcNow.AddDays(-30));
+            parameters.Add("endTime", endTime);
+            parameters.Add("pageIndex", page ?? 1);
+            parameters.Add("pageSize", pageSize);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/positionMargin/history", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXMarginHistory>(request, parameters, ct).ConfigureAwait(false);
@@ -266,7 +266,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXAmount>> ApplyForVSTAssetsAsync(CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/getVst", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(1, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<BingXAmount>(request, parameters, ct).ConfigureAwait(false);
             return result;
@@ -279,8 +279,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXMultiAssetMode>> SetMultiAssetModeAsync(MultiAssetMode assetMode, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddEnum("assetMode", assetMode);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("assetMode", assetMode);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/assetMode", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<BingXMultiAssetMode>(request, parameters, ct).ConfigureAwait(false);
             return result;
@@ -293,7 +293,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXMultiAssetMode>> GetMultiAssetModeAsync(CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/assetMode", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<BingXMultiAssetMode>(request, parameters, ct).ConfigureAwait(false);
             return result;
@@ -306,7 +306,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXMultiAssetRules[]>> GetMultiAssetRulesAsync(CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/trade/multiAssetsRules", BingXExchange.RateLimiter.RestMarket, 1, true);
             var result = await _baseClient.SendAsync<BingXMultiAssetRules[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
@@ -319,7 +319,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         public async Task<WebCallResult<BingXMarginAsset[]>> GetMultiAssetsMarginAsync(CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/swap/v1/user/marginAssets", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<BingXMarginAsset[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
