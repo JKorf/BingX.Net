@@ -1,0 +1,55 @@
+POST
+/openApi/swap/v1/trade/cancelReplace
+true
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "cancelResult": "true",
+    "cancelMsg": "",
+    "cancelResponse": {
+      "cancelClientOrderId": "",
+      "cancelOrderId": 123456789,
+      "symbol": "BTC-USDT",
+      "orderId": 123456789,
+      "side": "BUY",
+      "positionSide": "LONG",
+      "type": "LIMIT",
+      "origQty": "1.0000",
+      "price": "38000.0",
+      "executedQty": "0.0000",
+      "avgPrice": "0.0",
+      "cumQuote": "0",
+      "stopPrice": "",
+      "profit": "0.0000",
+      "commission": "0.000000",
+      "status": "PENDING",
+      "time": 1706858471000,
+      "updateTime": 1706858471000,
+      "clientOrderId": "",
+      "leverage": "15X",
+      "workingType": "MARK_PRICE",
+      "onlyOnePosition": false,
+      "reduceOnly": false
+    },
+    "replaceResult": "true",
+    "replaceMsg": "",
+    "newOrderResponse": {
+      "orderId": 987654321,
+      "symbol": "BTC-USDT",
+      "positionSide": "LONG",
+      "side": "BUY",
+      "type": "LIMIT",
+      "price": 38000,
+      "quantity": 1,
+      "stopPrice": 0,
+      "workingType": "MARK_PRICE",
+      "clientOrderId": "",
+      "timeInForce": "GTC",
+      "priceRate": 0,
+      "stopLoss": "{\"type\": \"STOP\", \"stopPrice\": 37000, \"price\": 37000}",
+      "takeProfit": "{\"type\": \"TAKE_PROFIT\", \"stopPrice\": 45000, \"price\": 45000}",
+      "reduceOnly": false
+    }
+  }
+}

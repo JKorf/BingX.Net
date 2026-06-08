@@ -173,6 +173,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.CancelTwapOrderAsync(123), "CancelTwapOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetOrdersAsync("123", 123), "GetOrders", nestedJsonProperty: "data.orders", ignoreProperties: new List<string> { "workingType", "advanceAttr", "positionID", "takeProfitEntrustPrice", "stopLossEntrustPrice", "orderType" });
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.EditOrderAsync(123, null, "ETH-USDT", 1), "EditOrder", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.CancelReplaceOrderAsync(123, null, CancelReplaceMode.StopOnFailure, "ETH-USDT", OrderSide.Buy, FuturesOrderType.Limit, PositionSide.Long), "CancelReplaceOrder", nestedJsonProperty: "data", ignoreProperties: ["cancelOrderId", "cancelClientOrderId", "onlyOnePosition", "stopLoss", "takeProfit"]);
         }
 
 

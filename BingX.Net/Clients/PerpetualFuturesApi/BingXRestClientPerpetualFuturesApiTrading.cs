@@ -1,17 +1,18 @@
-using Microsoft.Extensions.Logging;
-using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
-using System.Threading.Tasks;
-using CryptoExchange.Net.Objects;
-using System.Collections.Generic;
-using BingX.Net.Objects.Models;
 using BingX.Net.Enums;
-using System.Threading;
-using System.Net.Http;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using System;
-using System.Linq;
-using CryptoExchange.Net.RateLimiting.Guards;
+using BingX.Net.Interfaces.Clients.PerpetualFuturesApi;
+using BingX.Net.Objects.Models;
 using CryptoExchange.Net;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.RateLimiting.Guards;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BingX.Net.Clients.PerpetualFuturesApi
 {
@@ -271,6 +272,108 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/amend", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), requestBodyFormat: RequestBodyFormat.Json);
             var result = await _baseClient.SendAsync<BingXEditResult>(request, parameter, ct, additionalHeaders: new Dictionary<string, string>
+                 {
+                     { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
+                 }).ConfigureAwait(false);
+            return result;
+        }
+
+        #endregion
+
+        #region Cancel Replace Order
+
+        /// <inheritdoc />
+        public async Task<WebCallResult<BingXCancelReplaceResult>> CancelReplaceOrderAsync(
+            long? orderId,
+            string? clientOrderId,
+            CancelReplaceMode mode,
+            string symbol,
+            OrderSide side,
+            FuturesOrderType type,
+            PositionSide positionSide,
+            decimal? quantity = null,
+            decimal? price = null,
+            bool? reduceOnly = null,
+            decimal? stopPrice = null,
+            decimal? priceRate = null,
+
+            TakeProfitStopLossMode? stopLossType = null,
+            decimal? stopLossStopPrice = null,
+            decimal? stopLossPrice = null,
+            TriggerType? stopLossTriggerType = null,
+            bool? stopLossStopGuaranteed = null,
+
+            TakeProfitStopLossMode? takeProfitType = null,
+            decimal? takeProfitStopPrice = null,
+            decimal? takeProfitPrice = null,
+            TriggerType? takeProfitTriggerType = null,
+            bool? takeProfitStopGuaranteed = null,
+
+            string? newClientOrderId = null,
+            TimeInForce? timeInForce = null,
+            bool? closePosition = null,
+            decimal? triggerPrice = null,
+            bool? stopGuaranteed = null,
+            TriggerType? workingType = null,
+            decimal? quoteQuantity = null,
+            CancelRestrictions? restrictions = null,
+            CancellationToken ct = default)
+        {
+
+            var parameter = new ParameterCollection()
+            {
+                { "symbol", symbol }
+            };
+            parameter.AddOptional("cancelOrderId", orderId);
+            parameter.AddOptional("cancelClientOrderId", clientOrderId);
+
+            parameter.AddEnum("cancelReplaceMode", mode);
+            parameter.AddOptionalEnum("cancelRestrictions", restrictions);
+
+            parameter.AddEnum("side", side);
+            parameter.AddEnum("type", type);
+            parameter.AddEnum("positionSide", positionSide);
+            parameter.AddOptional("reduceOnly", reduceOnly);
+            parameter.AddOptional("quantity", quantity);
+            parameter.AddOptional("price", price);
+            parameter.AddOptional("stopPrice", stopPrice);
+            parameter.AddOptional("priceRate", priceRate);
+            parameter.AddOptionalEnum("timeInForce", timeInForce);
+            parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
+            parameter.AddOptional("activationPrice", triggerPrice);
+            parameter.AddOptional("stopGuaranteed", stopGuaranteed);
+            parameter.AddOptionalEnum("workingType", workingType);
+            parameter.AddOptional("clientOrderId", newClientOrderId);
+
+            if (stopLossType != null)
+            {
+                var stopLossParams = new ParameterCollection();
+                stopLossParams.AddEnum("type", stopLossType.Value);
+                stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
+                stopLossParams.AddOptional("price", stopLossPrice);
+                stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
+                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
+                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(stopLossParams);
+                json = json.Replace("\u0022", "\"");
+                parameter.Add("stopLoss", json);
+            }
+
+            if (takeProfitType != null)
+            {
+                var takeProfitParams = new ParameterCollection();
+                takeProfitParams.AddEnum("type", takeProfitType.Value);
+                takeProfitParams.AddOptional("stopPrice", takeProfitStopPrice);
+                takeProfitParams.AddOptional("price", takeProfitPrice);
+                takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
+                takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
+                var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(takeProfitParams);
+                json = json.Replace("\u0022", "\"");
+                parameter.Add("takeProfit", json);
+            }
+
+            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/cancelReplace", BingXExchange.RateLimiter.RestAccount2, 1, true,
+                limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), requestBodyFormat: RequestBodyFormat.Json);
+            var result = await _baseClient.SendAsync<BingXCancelReplaceResult>(request, parameter, ct, additionalHeaders: new Dictionary<string, string>
                  {
                      { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
                  }).ConfigureAwait(false);

@@ -202,6 +202,82 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
             CancellationToken ct = default);
 
         /// <summary>
+        /// Cancel and replace an existing open order
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Cancel%20an%20Existing%20Order%20and%20Send%20a%20New%20Orde" /><br />
+        /// Endpoint:<br />
+        /// POST /openApi/swap/v1/trade/cancelReplace
+        /// </para>
+        /// </summary>
+        /// <param name="orderId">Cancel by order id. Either this or clientOrderId should be provied</param>
+        /// <param name="clientOrderId">Cancel by client order id. Either this or orderId should be provided</param>
+        /// <param name="mode">Cancel replace mode</param>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="side">["<c>side</c>"] Order side</param>
+        /// <param name="type">["<c>type</c>"] Order type</param>
+        /// <param name="quantity">["<c>quantity</c>"] Quantity</param>
+        /// <param name="price">["<c>price</c>"] Limit price</param>
+        /// <param name="positionSide">["<c>positionSide</c>"] Position side</param>
+        /// <param name="reduceOnly">["<c>reduceOnly</c>"] Reduce only</param>
+        /// <param name="stopPrice">["<c>stopPrice</c>"] Stop price</param>
+        /// <param name="priceRate">["<c>priceRate</c>"] Trailing percentage (between 0 and 1)</param>
+        /// <param name="stopLossType">Stop loss order type</param>
+        /// <param name="stopLossStopPrice">Stop loss trigger price</param>
+        /// <param name="stopLossPrice">Stop loss order price</param>
+        /// <param name="stopLossTriggerType">Stop loss trigger price type</param>
+        /// <param name="stopLossStopGuaranteed">Stop loss stop guaranteed</param>
+        /// <param name="takeProfitType">Take profit order type</param>
+        /// <param name="takeProfitStopPrice">Take profit trigger price</param>
+        /// <param name="takeProfitPrice">Take profit order price</param>
+        /// <param name="takeProfitTriggerType">Take profit trigger price type</param>
+        /// <param name="takeProfitStopGuaranteed">Take profit stop guaranteed</param>
+        /// <param name="timeInForce">["<c>timeInForce</c>"] Time in force</param>
+        /// <param name="closePosition">["<c>closePosition</c>"] Close the position</param>
+        /// <param name="triggerPrice">["<c>activationPrice</c>"] Trigger price</param>
+        /// <param name="stopGuaranteed">["<c>stopGuaranteed</c>"] Stop guaranteed</param>
+        /// <param name="newClientOrderId">["<c>clientOrderId</c>"] Client order id</param>
+        /// <param name="workingType">["<c>workingType</c>"] Working type for stop orders</param>
+        /// <param name="quoteQuantity">["<c>quoteOrderQty</c>"] Quantity in quote asset</param>
+        /// <param name="restrictions">["<c>restrictions</c>"] Cancel restrictions</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<WebCallResult<BingXCancelReplaceResult>> CancelReplaceOrderAsync(
+            long? orderId,
+            string? clientOrderId,
+            CancelReplaceMode mode,
+            string symbol,
+            OrderSide side,
+            FuturesOrderType type,
+            PositionSide positionSide,
+            decimal? quantity = null,
+            decimal? price = null,
+            bool? reduceOnly = null,
+            decimal? stopPrice = null,
+            decimal? priceRate = null,
+
+            TakeProfitStopLossMode? stopLossType = null,
+            decimal? stopLossStopPrice = null,
+            decimal? stopLossPrice = null,
+            TriggerType? stopLossTriggerType = null,
+            bool? stopLossStopGuaranteed = null,
+
+            TakeProfitStopLossMode? takeProfitType = null,
+            decimal? takeProfitStopPrice = null,
+            decimal? takeProfitPrice = null,
+            TriggerType? takeProfitTriggerType = null,
+            bool? takeProfitStopGuaranteed = null,
+
+            string? newClientOrderId = null,
+            TimeInForce? timeInForce = null,
+            bool? closePosition = null,
+            decimal? triggerPrice = null,
+            bool? stopGuaranteed = null,
+            TriggerType? workingType = null,
+            decimal? quoteQuantity = null,
+            CancelRestrictions? restrictions = null,
+            CancellationToken ct = default);
+
+        /// <summary>
         /// Get an order
         /// <para>
         /// Docs:<br />
