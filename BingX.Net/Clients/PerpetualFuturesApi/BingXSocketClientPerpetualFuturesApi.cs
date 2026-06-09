@@ -45,7 +45,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// ctor
         /// </summary>
         internal BingXSocketClientPerpetualFuturesApi(ILogger logger, BingXSocketOptions options) :
-            base(logger, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
+            base(logger, BingXExchange.Metadata.Id, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXFuturesPingSubscription(_logger));
         }
@@ -68,7 +68,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public IBingXSocketClientPerpetualFuturesApiShared SharedClient => this;
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTradeUpdate[]>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTradeUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@trade";
             var subscription = new BingXSubscription<BingXFuturesTradeUpdate[]>(_logger, this, stream, x =>
@@ -85,7 +85,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(string symbol, int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(string symbol, int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
         {
             depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);
             updateInterval.ValidateIntValues(nameof(updateInterval),100, 200, 500, 1000);
@@ -105,7 +105,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesIncrementalOrderBook>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesIncrementalOrderBook>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@incrDepth";
             var subscription = new BingXSubscription<BingXFuturesIncrementalOrderBook>(_logger, this, stream, x =>
@@ -122,7 +122,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(int depth, int updateInterval, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
         {
             depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);
             updateInterval.ValidateIntValues(nameof(updateInterval), 100, 200, 500, 1000);
@@ -142,7 +142,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = "all@kline_" + EnumConverter.GetString(interval);
             var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, x => onMessage(
@@ -151,7 +151,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXFuturesKlineUpdate[]>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + EnumConverter.GetString(interval);
             var subscription = new BingXSubscription<BingXFuturesKlineUpdate[]>(_logger, this, stream, x =>
@@ -164,7 +164,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
             var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x =>
@@ -178,7 +178,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(Action<DataEvent<BingXFuturesTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = "all@ticker";
             var subscription = new BingXSubscription<BingXFuturesTickerUpdate>(_logger, this, stream, x =>
@@ -194,7 +194,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@lastPrice";
             var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, x =>
@@ -210,7 +210,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToMarkPriceUpdatesAsync(string symbol, Action<DataEvent<BingXMarkPriceUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToMarkPriceUpdatesAsync(string symbol, Action<DataEvent<BingXMarkPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@markPrice";
             var subscription = new BingXSubscription<BingXMarkPriceUpdate>(_logger, this, stream, x =>
@@ -226,7 +226,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@bookTicker";
             var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, x =>
@@ -242,7 +242,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
             string listenKey, 
             Action<DataEvent<BingXFuturesAccountUpdate>>? onAccountUpdate = null,
             Action<DataEvent<BingXFuturesOrderUpdate>>? onOrderUpdate = null,

@@ -25,7 +25,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXPosition[]>> GetPositionsAsync(string? symbol = null, CancellationToken ct = default);
+        Task<HttpResult<BingXPosition[]>> GetPositionsAsync(string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Place a new test order. Order won't actually get placed
@@ -62,7 +62,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="clientOrderId">["<c>newClientOrderId</c>"] Client order id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrder>> PlaceTestOrderAsync(
+        Task<HttpResult<BingXFuturesOrder>> PlaceTestOrderAsync(
             string symbol,
             OrderSide side,
             FuturesOrderType type,
@@ -130,7 +130,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="quoteQuantity">["<c>quoteOrderQty</c>"] Quantity in quote asset</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrder>> PlaceOrderAsync(
+        Task<HttpResult<BingXFuturesOrder>> PlaceOrderAsync(
             string symbol,
             OrderSide side,
             FuturesOrderType type,
@@ -175,7 +175,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="sync">["<c>sync</c>"] When false (default): Parallel order processing, all orders need to target the same symbol. true: sequential order processing, orders can target different symbols</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrder[]>> PlaceMultipleOrderAsync(
+        Task<HttpResult<BingXFuturesOrder[]>> PlaceMultipleOrderAsync(
             IEnumerable<BingXFuturesPlaceOrderRequest> orders,
             bool? sync = null,
             CancellationToken ct = default);
@@ -194,7 +194,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="symbol">["<c>symbol</c>"] Symbol name</param>
         /// <param name="quantity">["<c>quantity</c>"] New quantity</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXEditResult>> EditOrderAsync(
+        Task<HttpResult<BingXEditResult>> EditOrderAsync(
             long? orderId,
             string? clientOrderId,
             string symbol,
@@ -215,7 +215,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="clientOrderId">["<c>clientOrderId</c>"] Client order id. Either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel an order
@@ -231,7 +231,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="clientOrderId">["<c>clientOrderId</c>"] Client order id. Either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrderDetails>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesOrderDetails>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Close all positions. Positions will be closed via market order
@@ -245,7 +245,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="symbol">["<c>symbol</c>"] Only close for a specific symbol</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXClosePositionsResult>> CloseAllPositionsAsync(string? symbol = null, CancellationToken ct = default);
+        Task<HttpResult<BingXClosePositionsResult>> CloseAllPositionsAsync(string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel multiple orders on a symbol
@@ -261,7 +261,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="clientOrderIds">["<c>clientOrderIDList</c>"] The client order ids of orders to cancel</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXCancelAllResult>> CancelMultipleOrderAsync(string symbol, IEnumerable<long>? orderIds, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default);
+        Task<HttpResult<BingXCancelAllResult>> CancelMultipleOrderAsync(string symbol, IEnumerable<long>? orderIds, IEnumerable<string>? clientOrderIds = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all open orders
@@ -276,7 +276,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="orderType">["<c>type</c>"] Only cancel orders of this type</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXCancelAllResult>> CancelAllOrderAsync(string? symbol = null, OrderType? orderType = null, CancellationToken ct = default);
+        Task<HttpResult<BingXCancelAllResult>> CancelAllOrderAsync(string? symbol = null, OrderType? orderType = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get all open orders
@@ -291,7 +291,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="orderType">["<c>type</c>"] Filter by type of order</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrderDetails[]>> GetOpenOrdersAsync(string? symbol = null, OrderType? orderType = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesOrderDetails[]>> GetOpenOrdersAsync(string? symbol = null, OrderType? orderType = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get liquidation order history
@@ -310,7 +310,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">["<c>limit</c>"] Max results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrderDetails[]>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesOrderDetails[]>> GetLiquidationOrdersAsync(string? symbol = null, AutoCloseType? closeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed orders
@@ -329,7 +329,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">["<c>limit</c>"] Max results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesOrderDetails[]>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesOrderDetails[]>> GetClosedOrdersAsync(string? symbol = null, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get user trade history
@@ -346,7 +346,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="endTime">["<c>endTs</c>"] Filter by end time</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesUserTrade[]>> GetUserTradesAsync(long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesUserTrade[]>> GetUserTradesAsync(long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get user trade history
@@ -366,7 +366,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="limit">["<c>pageSize</c>"] Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXFuturesUserTradeDetails[]>> GetUserTradesAsync(string symbol, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesUserTradeDetails[]>> GetUserTradesAsync(string symbol, long? orderId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
@@ -381,7 +381,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="cancelAfterSeconds">["<c>timeOut</c>"] Seconds after which to cancel all orders, between 10 and 120</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXCancelAfterResult>> CancelAllOrdersAfterAsync(bool activate, int cancelAfterSeconds, CancellationToken ct = default);
+        Task<HttpResult<BingXCancelAfterResult>> CancelAllOrdersAfterAsync(bool activate, int cancelAfterSeconds, CancellationToken ct = default);
 
         /// <summary>
         /// Close a position by its id
@@ -395,7 +395,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="positionId">["<c>positionId</c>"] The id of the position to close</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXClosePositionResult>> ClosePositionAsync(string positionId, CancellationToken ct = default);
+        Task<HttpResult<BingXClosePositionResult>> ClosePositionAsync(string positionId, CancellationToken ct = default);
 
         /// <summary>
         /// Get all orders, max 7 days ago
@@ -412,7 +412,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
         /// <param name="limit">["<c>limit</c>"] Max number of results</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXFuturesOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXFuturesOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get position and margin info
@@ -426,7 +426,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="symbol">["<c>symbol</c>"] Symbol name, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXPositionMarginInfo[]>> GetPositionAndMarginInfoAsync(string symbol, CancellationToken ct = default);
+        Task<HttpResult<BingXPositionMarginInfo[]>> GetPositionAndMarginInfoAsync(string symbol, CancellationToken ct = default);
 
         /// <summary>
         /// Get position close history
@@ -445,7 +445,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="page">["<c>pageIndex</c>"] Page number</param>
         /// <param name="pageSize">["<c>pageSize</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXPositionHistory[]>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        Task<HttpResult<BingXPositionHistory[]>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
         /// <summary>
         /// Place a new time weighted average price order
@@ -466,7 +466,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="orderQuantity">["<c>amountPerOrder</c>"] Maximum quantity for a single order</param>
         /// <param name="totalQuantity">["<c>totalAmount</c>"] Total quantity to trade</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXTwapOrderId>> PlaceTwapOrderAsync(string symbol, OrderSide orderSide, PositionSide positionSide, PriceType priceType, decimal priceVariance, decimal triggerPrice, int interval, decimal orderQuantity, decimal totalQuantity, CancellationToken ct = default);
+        Task<HttpResult<BingXTwapOrderId>> PlaceTwapOrderAsync(string symbol, OrderSide orderSide, PositionSide positionSide, PriceType priceType, decimal priceVariance, decimal triggerPrice, int interval, decimal orderQuantity, decimal totalQuantity, CancellationToken ct = default);
 
         /// <summary>
         /// Get open Twap orders
@@ -479,7 +479,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXTwapOrders>> GetOpenTwapOrdersAsync(string symbol, CancellationToken ct = default);
+        Task<HttpResult<BingXTwapOrders>> GetOpenTwapOrdersAsync(string symbol, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed Twap orders
@@ -496,7 +496,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
         /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXTwapOrders>> GetClosedTwapOrdersAsync(string symbol, int page, int pageSize, DateTime startTime, DateTime endTime, CancellationToken ct = default);
+        Task<HttpResult<BingXTwapOrders>> GetClosedTwapOrdersAsync(string symbol, int page, int pageSize, DateTime startTime, DateTime endTime, CancellationToken ct = default);
 
         /// <summary>
         /// Get a Twap order by id
@@ -509,7 +509,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="orderId">["<c>mainOrderId</c>"] Order id</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXTwapOrder>> GetTwapOrderAsync(long orderId, CancellationToken ct = default);
+        Task<HttpResult<BingXTwapOrder>> GetTwapOrderAsync(long orderId, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel Twap order
@@ -522,7 +522,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="orderId">["<c>mainOrderId</c>"] Main order id</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXTwapOrder>> CancelTwapOrderAsync(long orderId, CancellationToken ct = default);
+        Task<HttpResult<BingXTwapOrder>> CancelTwapOrderAsync(long orderId, CancellationToken ct = default);
 
     }
 }

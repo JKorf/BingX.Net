@@ -18,26 +18,23 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         private const string _exchangeName = "BingX";
         private const string _topicId = "BingXPerpFutures";
 
-        public string Exchange => BingXExchange.ExchangeName;
         public TradingMode[] SupportedTradingModes => new[] { TradingMode.PerpetualLinear };
         public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
         public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
+        public SharedClientInfo Discover() => SharedUtils.GetClientInfo(this);
 
         #region Klines client
 
         GetKlinesOptions IKlineRestClient.GetKlinesOptions { get; } = new GetKlinesOptions(_exchangeName, true, false, true, 1000, false);
 
-        Task<ExchangeWebResult<SharedKline[]>> IKlineRestClient.GetKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
+        async Task<HttpResult<SharedKline[]>> IKlineRestClient.GetKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IKlineRestClient, GetKlinesRequest, SharedKline[]>(
-                this,
-                client => client.GetKlinesOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetKlinesOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedKline[]>(Exchange, validationError);
             var interval = (Enums.KlineInterval)request.Interval;
             if (!Enum.IsDefined(typeof(Enums.KlineInterval), interval))
-                return SharedExecutionResult<SharedKline[]>.Error(new ExchangeWebResult<SharedKline[]>(Exchange, ArgumentError.Invalid(nameof(GetKlinesRequest.Interval), "Interval not supported")));
+                return HttpResult.Fail<SharedKline[]>(Exchange, ArgumentError.Invalid(nameof(GetKlinesRequest.Interval), "Interval not supported"));
 
             // Descending order doesn't work; too little klines are returned when specifying only end time
             var direction = DataDirection.Ascending;
@@ -53,8 +50,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 limit,
                 ct: ct
                 ).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedKline[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedKline[]>(result);
 
             var nextPageRequest = Pagination.GetNextPageRequest(
                     () => Pagination.NextPageFromTime(pageParams, result.Data.Max(x => x.Timestamp)),
@@ -65,32 +62,29 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     pageParams);
 
             // Return
-            return SharedExecutionResult<SharedKline[]>.Ok(result,
+            return HttpResult.Ok(result,
                 ExchangeHelpers.ApplyFilter(result.Data, x => x.Timestamp, request.StartTime, request.EndTime, direction)
                     .Select(x =>
                         new SharedKline(request.Symbol, symbol, x.Timestamp, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume))
                     .ToArray(), nextPageRequest);
         
-                });
+                
         }
 
         #endregion
 
         #region Futures Symbol client
 
-        EndpointOptions<GetSymbolsRequest, IFuturesSymbolRestClient> IFuturesSymbolRestClient.GetFuturesSymbolsOptions { get; } = new EndpointOptions<GetSymbolsRequest, IFuturesSymbolRestClient>(_exchangeName, false);
-        Task<ExchangeWebResult<SharedFuturesSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
+        GetFuturesSymbolsOptions IFuturesSymbolRestClient.GetFuturesSymbolsOptions { get; } = new GetFuturesSymbolsOptions(_exchangeName, false);
+        async Task<HttpResult<SharedFuturesSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesSymbolRestClient, GetSymbolsRequest, SharedFuturesSymbol[]>(
-                this,
-                client => client.GetFuturesSymbolsOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFuturesSymbolsOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesSymbol[]>(Exchange, validationError);
 
             var result = await ExchangeData.GetContractsAsync(ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedFuturesSymbol[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedFuturesSymbol[]>(result);
 
             var resultData = result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(s => new SharedFuturesSymbol(TradingMode.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
             {
@@ -104,24 +98,24 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             }).ToArray();
 
             ExchangeSymbolCache.UpdateSymbolInfo(_topicId, resultData);
-            return SharedExecutionResult<SharedFuturesSymbol[]>.Ok(result, resultData);
+            return HttpResult.Ok(result, resultData);
         
-                });
+                
         }
 
-        async Task<ExchangeResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)
+        async Task<ExchangeCallResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)
         {
             if (!ExchangeSymbolCache.HasCached(_topicId))
             {
                 var symbols = await ((IFuturesSymbolRestClient)this).GetFuturesSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
-                if (!symbols)
-                    return new ExchangeResult<SharedSymbol[]>(Exchange, symbols.Error!);
+                if (!symbols.Success)
+                    return ExchangeCallResult<SharedSymbol[]>.Fail(Exchange, symbols.Error!);
             }
 
-            return new ExchangeResult<SharedSymbol[]>(Exchange, ExchangeSymbolCache.GetSymbolsForBaseAsset(_topicId, baseAsset));
+            return ExchangeCallResult<SharedSymbol[]>.Ok(Exchange, ExchangeSymbolCache.GetSymbolsForBaseAsset(_topicId, baseAsset));
         }
 
-        async Task<ExchangeResult<bool>> IFuturesSymbolRestClient.SupportsFuturesSymbolAsync(SharedSymbol symbol)
+        async Task<ExchangeCallResult<bool>> IFuturesSymbolRestClient.SupportsFuturesSymbolAsync(SharedSymbol symbol)
         {
             if (symbol.TradingMode == TradingMode.Spot)
                 throw new ArgumentException(nameof(symbol), "Spot symbols not allowed");
@@ -129,47 +123,44 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!ExchangeSymbolCache.HasCached(_topicId))
             {
                 var symbols = await ((IFuturesSymbolRestClient)this).GetFuturesSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
-                if (!symbols)
-                    return new ExchangeResult<bool>(Exchange, symbols.Error!);
+                if (!symbols.Success)
+                    return ExchangeCallResult<bool>.Fail(Exchange, symbols.Error!);
             }
 
-            return new ExchangeResult<bool>(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicId, symbol));
+            return ExchangeCallResult<bool>.Ok(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicId, symbol));
         }
 
-        async Task<ExchangeResult<bool>> IFuturesSymbolRestClient.SupportsFuturesSymbolAsync(string symbolName)
+        async Task<ExchangeCallResult<bool>> IFuturesSymbolRestClient.SupportsFuturesSymbolAsync(string symbolName)
         {
             if (!ExchangeSymbolCache.HasCached(_topicId))
             {
                 var symbols = await ((IFuturesSymbolRestClient)this).GetFuturesSymbolsAsync(new GetSymbolsRequest()).ConfigureAwait(false);
-                if (!symbols)
-                    return new ExchangeResult<bool>(Exchange, symbols.Error!);
+                if (!symbols.Success)
+                    return ExchangeCallResult<bool>.Fail(Exchange, symbols.Error!);
             }
 
-            return new ExchangeResult<bool>(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicId, symbolName));
+            return ExchangeCallResult<bool>.Ok(Exchange, ExchangeSymbolCache.SupportsSymbol(_topicId, symbolName));
         }
         #endregion
 
         #region Futures Ticker client
 
         GetFuturesTickerOptions IFuturesTickerRestClient.GetFuturesTickerOptions { get; } = new GetFuturesTickerOptions(_exchangeName);
-        Task<ExchangeWebResult<SharedFuturesTicker>> IFuturesTickerRestClient.GetFuturesTickerAsync(GetTickerRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedFuturesTicker>> IFuturesTickerRestClient.GetFuturesTickerAsync(GetTickerRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesTickerRestClient, GetTickerRequest, SharedFuturesTicker>(
-                this,
-                client => client.GetFuturesTickerOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFuturesTickerOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesTicker>(Exchange, validationError);
 
             var resultTicker = ExchangeData.GetTickerAsync(request.Symbol!.GetSymbol(FormatSymbol), ct);
             var resultFunding = ExchangeData.GetFundingRateAsync(request.Symbol.GetSymbol(FormatSymbol), ct);
             await Task.WhenAll(resultTicker, resultFunding).ConfigureAwait(false);
-            if (!resultTicker.Result)
-                return SharedExecutionResult<SharedFuturesTicker>.Error(resultTicker.Result);
-            if (!resultFunding.Result)
-                return SharedExecutionResult<SharedFuturesTicker>.Error(resultFunding.Result);
+            if (!resultTicker.Result.Success)
+                return HttpResult.Fail<SharedFuturesTicker>(resultTicker.Result);
+            if (!resultFunding.Result.Success)
+                return HttpResult.Fail<SharedFuturesTicker>(resultFunding.Result);
 
-            return SharedExecutionResult<SharedFuturesTicker>.Ok(resultTicker.Result, new SharedFuturesTicker(
+            return HttpResult.Ok(resultTicker.Result, new SharedFuturesTicker(
                     ExchangeSymbolCache.ParseSymbol(_topicId, resultTicker.Result.Data.Symbol),
                     resultTicker.Result.Data.Symbol,
                     resultTicker.Result.Data.LastPrice,
@@ -184,28 +175,25 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     NextFundingTime = resultFunding.Result.Data.NextFundingTime
                 });
         
-                });
+                
         }
 
         GetFuturesTickersOptions IFuturesTickerRestClient.GetFuturesTickersOptions { get; } = new GetFuturesTickersOptions(_exchangeName);
-        Task<ExchangeWebResult<SharedFuturesTicker[]>> IFuturesTickerRestClient.GetFuturesTickersAsync(GetTickersRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedFuturesTicker[]>> IFuturesTickerRestClient.GetFuturesTickersAsync(GetTickersRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesTickerRestClient, GetTickersRequest, SharedFuturesTicker[]>(
-                this,
-                client => client.GetFuturesTickersOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFuturesTickersOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesTicker[]>(Exchange, validationError);
 
             var resultTickers = ExchangeData.GetTickersAsync(ct: ct);
             var resultFunding = ExchangeData.GetFundingRatesAsync(ct: ct);
             await Task.WhenAll(resultTickers, resultFunding).ConfigureAwait(false);
-            if (!resultTickers.Result)
-                return SharedExecutionResult<SharedFuturesTicker[]>.Error(resultTickers.Result);
-            if (!resultFunding.Result)
-                return SharedExecutionResult<SharedFuturesTicker[]>.Error(resultFunding.Result);
+            if (!resultTickers.Result.Success)
+                return HttpResult.Fail<SharedFuturesTicker[]>(resultTickers.Result);
+            if (!resultFunding.Result.Success)
+                return HttpResult.Fail<SharedFuturesTicker[]>(resultFunding.Result);
 
-            return SharedExecutionResult<SharedFuturesTicker[]>.Ok(resultTickers.Result, resultTickers.Result.Data.Select(x =>
+            return HttpResult.Ok(resultTickers.Result, resultTickers.Result.Data.Select(x =>
             {
                 var markPrice = resultFunding.Result.Data.Single(p => p.Symbol == x.Symbol);
                 return new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, x.PriceChangePercent)
@@ -217,28 +205,25 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 };
             }).ToArray());
         
-                });
+                
         }
 
         #endregion
 
         #region Book Ticker client
 
-        EndpointOptions<GetBookTickerRequest, IBookTickerRestClient> IBookTickerRestClient.GetBookTickerOptions { get; } = new EndpointOptions<GetBookTickerRequest, IBookTickerRestClient>(_exchangeName, false);
-        Task<ExchangeWebResult<SharedBookTicker>> IBookTickerRestClient.GetBookTickerAsync(GetBookTickerRequest request, CancellationToken ct)
+        GetBookTickerOptions IBookTickerRestClient.GetBookTickerOptions { get; } = new GetBookTickerOptions(_exchangeName, false);
+        async Task<HttpResult<SharedBookTicker>> IBookTickerRestClient.GetBookTickerAsync(GetBookTickerRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IBookTickerRestClient, GetBookTickerRequest, SharedBookTicker>(
-                this,
-                client => client.GetBookTickerOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetBookTickerOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedBookTicker>(Exchange, validationError);
 
             var resultTicker = await ExchangeData.GetBookTickerAsync(request.Symbol!.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
-            if (!resultTicker)
-                return SharedExecutionResult<SharedBookTicker>.Error(resultTicker);
+            if (!resultTicker.Success)
+                return HttpResult.Fail<SharedBookTicker>(resultTicker);
 
-            return SharedExecutionResult<SharedBookTicker>.Ok(resultTicker, new SharedBookTicker(
+            return HttpResult.Ok(resultTicker, new SharedBookTicker(
                 ExchangeSymbolCache.ParseSymbol(_topicId, resultTicker.Data.Symbol),
                 resultTicker.Data.Symbol,
                 resultTicker.Data.BestAskPrice,
@@ -246,7 +231,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 resultTicker.Data.BestBidPrice,
                 resultTicker.Data.BestBidQuantity));
         
-                });
+                
         }
 
         #endregion
@@ -254,30 +239,27 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Recent Trade client
 
         GetRecentTradesOptions IRecentTradeRestClient.GetRecentTradesOptions { get; } = new GetRecentTradesOptions(_exchangeName, 1000, false);
-        Task<ExchangeWebResult<SharedTrade[]>> IRecentTradeRestClient.GetRecentTradesAsync(GetRecentTradesRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedTrade[]>> IRecentTradeRestClient.GetRecentTradesAsync(GetRecentTradesRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IRecentTradeRestClient, GetRecentTradesRequest, SharedTrade[]>(
-                this,
-                client => client.GetRecentTradesOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetRecentTradesOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedTrade[]>(Exchange, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var result = await ExchangeData.GetRecentTradesAsync(
                 symbol,
                 limit: request.Limit,
                 ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedTrade[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedTrade[]>(result);
 
-            return SharedExecutionResult<SharedTrade[]>.Ok(result, result.Data.AsEnumerable().Reverse().Select(x => 
+            return HttpResult.Ok(result, result.Data.AsEnumerable().Reverse().Select(x => 
                 new SharedTrade(request.Symbol, symbol, x.Quantity, x.Price, x.Timestamp)
             {
                 Side = x.BuyerIsMaker ? SharedOrderSide.Sell : SharedOrderSide.Buy,
             }).ToArray());
         
-                });
+                
         }
 
         #endregion
@@ -285,93 +267,81 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Leverage client
         SharedLeverageSettingMode ILeverageRestClient.LeverageSettingType => SharedLeverageSettingMode.PerSide;
 
-        EndpointOptions<GetLeverageRequest, ILeverageRestClient> ILeverageRestClient.GetLeverageOptions { get; } = new EndpointOptions<GetLeverageRequest, ILeverageRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedLeverage>> ILeverageRestClient.GetLeverageAsync(GetLeverageRequest request, CancellationToken ct)
+        GetLeverageOptions ILeverageRestClient.GetLeverageOptions { get; } = new GetLeverageOptions(_exchangeName, true);
+        async Task<HttpResult<SharedLeverage>> ILeverageRestClient.GetLeverageAsync(GetLeverageRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<ILeverageRestClient, GetLeverageRequest, SharedLeverage>(
-                this,
-                client => client.GetLeverageOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetLeverageOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedLeverage>(Exchange, validationError);
 
             var result = await Account.GetLeverageAsync(symbol: request.Symbol!.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedLeverage>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedLeverage>(result);
 
-            return SharedExecutionResult<SharedLeverage>.Ok(result, new SharedLeverage(request.PositionSide == SharedPositionSide.Short ? result.Data.ShortLeverage : result.Data.LongLeverage) { 
+            return HttpResult.Ok(result, new SharedLeverage(request.PositionSide == SharedPositionSide.Short ? result.Data.ShortLeverage : result.Data.LongLeverage) { 
                 Side = request.PositionSide
             });
         
-                });
+                
         }
 
         SetLeverageOptions ILeverageRestClient.SetLeverageOptions { get; } = new SetLeverageOptions(_exchangeName);
-        Task<ExchangeWebResult<SharedLeverage>> ILeverageRestClient.SetLeverageAsync(SetLeverageRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedLeverage>> ILeverageRestClient.SetLeverageAsync(SetLeverageRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<ILeverageRestClient, SetLeverageRequest, SharedLeverage>(
-                this,
-                client => client.SetLeverageOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.SetLeverageOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedLeverage>(Exchange, validationError);
 
             var result = await Account.SetLeverageAsync(symbol: request.Symbol!.GetSymbol(FormatSymbol),
                 request.Side == null ? PositionSide.Both : request.Side == SharedPositionSide.Long ? PositionSide.Long : PositionSide.Short,
                 (int)request.Leverage,
                 ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedLeverage>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedLeverage>(result);
 
-            return SharedExecutionResult<SharedLeverage>.Ok(result, new SharedLeverage(result.Data.Leverage)
+            return HttpResult.Ok(result, new SharedLeverage(result.Data.Leverage)
             {
                 Side = request.Side
             });
         
-                });
+                
         }
         #endregion
 
         #region Order Book client
         GetOrderBookOptions IOrderBookRestClient.GetOrderBookOptions { get; } = new GetOrderBookOptions(_exchangeName, new[] { 5, 10, 20, 50, 100, 500, 1000 }, false);
-        Task<ExchangeWebResult<SharedOrderBook>> IOrderBookRestClient.GetOrderBookAsync(GetOrderBookRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedOrderBook>> IOrderBookRestClient.GetOrderBookAsync(GetOrderBookRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IOrderBookRestClient, GetOrderBookRequest, SharedOrderBook>(
-                this,
-                client => client.GetOrderBookOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetOrderBookOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedOrderBook>(Exchange, validationError);
 
             var result = await ExchangeData.GetOrderBookAsync(
                 request.Symbol!.GetSymbol(FormatSymbol),
                 limit: request.Limit,
                 ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedOrderBook>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedOrderBook>(result);
 
-            return SharedExecutionResult<SharedOrderBook>.Ok(result, new SharedOrderBook(result.Data.Asks, result.Data.Bids));
+            return HttpResult.Ok(result, new SharedOrderBook(result.Data.Asks, result.Data.Bids));
         
-                });
+                
         }
 
         #endregion
 
         #region Index Klines client
 
-        GetKlinesOptions IIndexPriceKlineRestClient.GetIndexPriceKlinesOptions { get; } = new GetKlinesOptions(_exchangeName, false, true, true, 1440, false);
+        GetIndexPriceKlinesOptions IIndexPriceKlineRestClient.GetIndexPriceKlinesOptions { get; } = new GetIndexPriceKlinesOptions(_exchangeName, false, true, true, 1440, false);
 
-        Task<ExchangeWebResult<SharedFuturesKline[]>> IIndexPriceKlineRestClient.GetIndexPriceKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
+        async Task<HttpResult<SharedFuturesKline[]>> IIndexPriceKlineRestClient.GetIndexPriceKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IKlineRestClient, GetKlinesRequest, SharedFuturesKline[]>(
-                this,
-                client => ((IIndexPriceKlineRestClient)this).GetIndexPriceKlinesOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetIndexPriceKlinesOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesKline[]>(Exchange, validationError);
             var interval = (Enums.KlineInterval)request.Interval;
             if (!Enum.IsDefined(typeof(Enums.KlineInterval), interval))
-                return SharedExecutionResult<SharedFuturesKline[]>.Error(new ExchangeWebResult<SharedFuturesKline[]>(Exchange, ArgumentError.Invalid(nameof(GetKlinesRequest.Interval), "Interval not supported")));
+                return HttpResult.Fail<SharedFuturesKline[]>(Exchange, ArgumentError.Invalid(nameof(GetKlinesRequest.Interval), "Interval not supported"));
 
 
             var direction = DataDirection.Ascending;
@@ -387,8 +357,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 limit,
                 ct: ct
                 ).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedFuturesKline[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedFuturesKline[]>(result);
 
             var nextPageRequest = Pagination.GetNextPageRequest(
                     () => Pagination.NextPageFromTime(pageParams, result.Data.Max(x => x.OpenTime)),
@@ -399,32 +369,29 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     pageParams);
 
             // Return
-            return SharedExecutionResult<SharedFuturesKline[]>.Ok(result,
+            return HttpResult.Ok(result,
                 ExchangeHelpers.ApplyFilter(result.Data, x => x.OpenTime, request.StartTime, request.EndTime, direction)
                     .Select(x =>
                         new SharedFuturesKline(request.Symbol, symbol, x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice))
                     .ToArray(), nextPageRequest);
         
-                });
+                
         }
 
         #endregion
 
         #region Mark Klines client
 
-        GetKlinesOptions IMarkPriceKlineRestClient.GetMarkPriceKlinesOptions { get; } = new GetKlinesOptions(_exchangeName, false, true, true, 1440, false);
+        GetMarkPriceKlinesOptions IMarkPriceKlineRestClient.GetMarkPriceKlinesOptions { get; } = new GetMarkPriceKlinesOptions(_exchangeName, false, true, true, 1440, false);
 
-        Task<ExchangeWebResult<SharedFuturesKline[]>> IMarkPriceKlineRestClient.GetMarkPriceKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
+        async Task<HttpResult<SharedFuturesKline[]>> IMarkPriceKlineRestClient.GetMarkPriceKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IKlineRestClient, GetKlinesRequest, SharedFuturesKline[]>(
-                this,
-                client => ((IMarkPriceKlineRestClient)this).GetMarkPriceKlinesOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetMarkPriceKlinesOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesKline[]>(Exchange, validationError);
             var interval = (Enums.KlineInterval)request.Interval;
             if (!Enum.IsDefined(typeof(Enums.KlineInterval), interval))
-                return SharedExecutionResult<SharedFuturesKline[]>.Error(new ExchangeWebResult<SharedFuturesKline[]>(Exchange, ArgumentError.Invalid(nameof(GetKlinesRequest.Interval), "Interval not supported")));
+                return HttpResult.Fail<SharedFuturesKline[]>(Exchange, ArgumentError.Invalid(nameof(GetKlinesRequest.Interval), "Interval not supported"));
 
             var direction = DataDirection.Ascending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
@@ -439,8 +406,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 limit,
                 ct: ct
                 ).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedFuturesKline[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedFuturesKline[]>(result);
 
             var nextPageRequest = Pagination.GetNextPageRequest(
                     () => Pagination.NextPageFromTime(pageParams, result.Data.Max(x => x.OpenTime)),
@@ -451,36 +418,33 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     pageParams);
 
             // Return
-            return SharedExecutionResult<SharedFuturesKline[]>.Ok(result,
+            return HttpResult.Ok(result,
                 ExchangeHelpers.ApplyFilter(result.Data, x => x.OpenTime, request.StartTime, request.EndTime, direction)
                     .Select(x =>
                         new SharedFuturesKline(request.Symbol, symbol, x.OpenTime, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice))
                     .ToArray(), nextPageRequest);
         
-                });
+                
         }
 
         #endregion
 
         #region Open Interest client
 
-        EndpointOptions<GetOpenInterestRequest, IOpenInterestRestClient> IOpenInterestRestClient.GetOpenInterestOptions { get; } = new EndpointOptions<GetOpenInterestRequest, IOpenInterestRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedOpenInterest>> IOpenInterestRestClient.GetOpenInterestAsync(GetOpenInterestRequest request, CancellationToken ct)
+        GetOpenInterestOptions IOpenInterestRestClient.GetOpenInterestOptions { get; } = new GetOpenInterestOptions(_exchangeName, true);
+        async Task<HttpResult<SharedOpenInterest>> IOpenInterestRestClient.GetOpenInterestAsync(GetOpenInterestRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IOpenInterestRestClient, GetOpenInterestRequest, SharedOpenInterest>(
-                this,
-                client => client.GetOpenInterestOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetOpenInterestOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedOpenInterest>(Exchange, validationError);
 
             var result = await ExchangeData.GetOpenInterestAsync(request.Symbol!.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedOpenInterest>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedOpenInterest>(result);
 
-            return SharedExecutionResult<SharedOpenInterest>.Ok(result, new SharedOpenInterest(result.Data.OpenInterest));
+            return HttpResult.Ok(result, new SharedOpenInterest(result.Data.OpenInterest));
         
-                });
+                
         }
 
         #endregion
@@ -488,14 +452,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Funding Rate client
         GetFundingRateHistoryOptions IFundingRateRestClient.GetFundingRateHistoryOptions { get; } = new GetFundingRateHistoryOptions(_exchangeName, false, true, true, 1000, false);
 
-        Task<ExchangeWebResult<SharedFundingRate[]>> IFundingRateRestClient.GetFundingRateHistoryAsync(GetFundingRateHistoryRequest request, PageRequest? pageRequest, CancellationToken ct)
+        async Task<HttpResult<SharedFundingRate[]>> IFundingRateRestClient.GetFundingRateHistoryAsync(GetFundingRateHistoryRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFundingRateRestClient, GetFundingRateHistoryRequest, SharedFundingRate[]>(
-                this,
-                client => client.GetFundingRateHistoryOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFundingRateHistoryOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFundingRate[]>(Exchange, validationError);
 
             var direction = DataDirection.Descending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
@@ -509,8 +470,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 endTime: pageParams.EndTime,
                 limit: limit,
                 ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedFundingRate[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedFundingRate[]>(result);
 
             var nextPageRequest = Pagination.GetNextPageRequest(
                     () => Pagination.NextPageFromTime(pageParams, result.Data.Min(x => x.FundingTime)),
@@ -521,13 +482,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     pageParams);
 
             // Return
-            return SharedExecutionResult<SharedFundingRate[]>.Ok(result,
+            return HttpResult.Ok(result,
                 ExchangeHelpers.ApplyFilter(result.Data, x => x.FundingTime, request.StartTime, request.EndTime, direction)
                     .Select(x => 
                         new SharedFundingRate(x.FundingRate, x.FundingTime))
                     .ToArray(), nextPageRequest);
         
-                });
+                
         }
         #endregion
 
@@ -547,14 +508,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         string IFuturesOrderRestClient.GenerateClientOrderId() => ExchangeHelpers.RandomString(40).ToLowerInvariant();
 
         PlaceFuturesOrderOptions IFuturesOrderRestClient.PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(_exchangeName, true);
-        Task<ExchangeWebResult<SharedId>> IFuturesOrderRestClient.PlaceFuturesOrderAsync(PlaceFuturesOrderRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedId>> IFuturesOrderRestClient.PlaceFuturesOrderAsync(PlaceFuturesOrderRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, PlaceFuturesOrderRequest, SharedId>(
-                this,
-                client => client.PlaceFuturesOrderOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.PlaceFuturesOrderOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedId>(Exchange, validationError);
 
             var result = await Trading.PlaceOrderAsync(
                 request.Symbol!.GetSymbol(FormatSymbol),
@@ -573,32 +531,29 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 stopLossType: request.StopLossPrice == null ? null : TakeProfitStopLossMode.StopMarket,
                 ct: ct).ConfigureAwait(false);
 
-            if (!result)
-                return SharedExecutionResult<SharedId>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedId>(result);
 
-            return SharedExecutionResult<SharedId>.Ok(result, new SharedId(result.Data.OrderId.ToString()));
+            return HttpResult.Ok(result, new SharedId(result.Data.OrderId.ToString()));
         
-                });
+                
         }
 
-        EndpointOptions<GetOrderRequest, IFuturesOrderRestClient> IFuturesOrderRestClient.GetFuturesOrderOptions { get; } = new EndpointOptions<GetOrderRequest, IFuturesOrderRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedFuturesOrder>> IFuturesOrderRestClient.GetFuturesOrderAsync(GetOrderRequest request, CancellationToken ct)
+        GetFuturesOrderOptions IFuturesOrderRestClient.GetFuturesOrderOptions { get; } = new GetFuturesOrderOptions(_exchangeName, true);
+        async Task<HttpResult<SharedFuturesOrder>> IFuturesOrderRestClient.GetFuturesOrderAsync(GetOrderRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, GetOrderRequest, SharedFuturesOrder>(
-                this,
-                client => client.GetFuturesOrderOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFuturesOrderOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesOrder>(Exchange, validationError);
 
             if (!long.TryParse(request.OrderId, out var orderId))
-                return SharedExecutionResult<SharedFuturesOrder>.Error(new ExchangeWebResult<SharedFuturesOrder>(Exchange, ArgumentError.Invalid(nameof(GetOrderRequest.OrderId), "Invalid order id")));
+                return HttpResult.Fail<SharedFuturesOrder>(Exchange, ArgumentError.Invalid(nameof(GetOrderRequest.OrderId), "Invalid order id"));
 
             var order = await Trading.GetOrderAsync(request.Symbol!.GetSymbol(FormatSymbol), orderId, ct: ct).ConfigureAwait(false);
-            if (!order)
-                return SharedExecutionResult<SharedFuturesOrder>.Error(order);
+            if (!order.Success)
+                return HttpResult.Fail<SharedFuturesOrder>(order);
 
-            return SharedExecutionResult<SharedFuturesOrder>.Ok(order, new SharedFuturesOrder(
+            return HttpResult.Ok(order, new SharedFuturesOrder(
                 ExchangeSymbolCache.ParseSymbol(_topicId, order.Data.Symbol),
                 order.Data.Symbol,
                 order.Data.OrderId.ToString(),
@@ -624,25 +579,22 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 IsCloseOrder = order.Data.ClosePosition
             });
         
-                });
+                
         }
 
-        EndpointOptions<GetOpenOrdersRequest, IFuturesOrderRestClient> IFuturesOrderRestClient.GetOpenFuturesOrdersOptions { get; } = new EndpointOptions<GetOpenOrdersRequest, IFuturesOrderRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedFuturesOrder[]>> IFuturesOrderRestClient.GetOpenFuturesOrdersAsync(GetOpenOrdersRequest request, CancellationToken ct)
+        GetOpenFuturesOrdersOptions IFuturesOrderRestClient.GetOpenFuturesOrdersOptions { get; } = new GetOpenFuturesOrdersOptions(_exchangeName, true);
+        async Task<HttpResult<SharedFuturesOrder[]>> IFuturesOrderRestClient.GetOpenFuturesOrdersAsync(GetOpenOrdersRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, GetOpenOrdersRequest, SharedFuturesOrder[]>(
-                this,
-                client => client.GetOpenFuturesOrdersOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetOpenFuturesOrdersOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesOrder[]>(Exchange, validationError);
 
             var symbol = request.Symbol?.GetSymbol(FormatSymbol);
             var orders = await Trading.GetOpenOrdersAsync(symbol, ct: ct).ConfigureAwait(false);
-            if (!orders)
-                return SharedExecutionResult<SharedFuturesOrder[]>.Error(orders);
+            if (!orders.Success)
+                return HttpResult.Fail<SharedFuturesOrder[]>(orders);
 
-            return SharedExecutionResult<SharedFuturesOrder[]>.Ok(orders, orders.Data.Select(x => new SharedFuturesOrder(
+            return HttpResult.Ok(orders, orders.Data.Select(x => new SharedFuturesOrder(
                 ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), 
                 x.Symbol,
                 x.OrderId.ToString(),
@@ -668,18 +620,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 IsCloseOrder = x.ClosePosition
             }).ToArray());
         
-                });
+                
         }
 
         GetFuturesClosedOrdersOptions IFuturesOrderRestClient.GetClosedFuturesOrdersOptions { get; } = new GetFuturesClosedOrdersOptions(_exchangeName, true, true, true, 1000);
-        Task<ExchangeWebResult<SharedFuturesOrder[]>> IFuturesOrderRestClient.GetClosedFuturesOrdersAsync(GetClosedOrdersRequest request, PageRequest? pageRequest, CancellationToken ct)
+        async Task<HttpResult<SharedFuturesOrder[]>> IFuturesOrderRestClient.GetClosedFuturesOrdersAsync(GetClosedOrdersRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, GetClosedOrdersRequest, SharedFuturesOrder[]>(
-                this,
-                client => client.GetClosedFuturesOrdersOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetClosedFuturesOrdersOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesOrder[]>(Exchange, validationError);
 
             var direction = request.Direction ?? DataDirection.Ascending;
             var limit = request.Limit ?? 1000;
@@ -693,8 +642,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 limit: limit,
                 orderId: pageParams.FromId == null ? null : long.Parse(pageParams.FromId),
                 ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedFuturesOrder[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedFuturesOrder[]>(result);
 
             var nextPageRequest = Pagination.GetNextPageRequest(
                    () => direction == DataDirection.Ascending
@@ -707,7 +656,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                    pageParams,
                    TimeSpan.FromDays(7));
 
-            return SharedExecutionResult<SharedFuturesOrder[]>.Ok(result,
+            return HttpResult.Ok(result,
                     ExchangeHelpers.ApplyFilter(result.Data, x => x.CreateTime, request.StartTime, request.EndTime, direction)
                     .Select(x => 
                         new SharedFuturesOrder(
@@ -737,27 +686,24 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         })
                     .ToArray(), nextPageRequest);
         
-                });
+                
         }
 
-        EndpointOptions<GetOrderTradesRequest, IFuturesOrderRestClient> IFuturesOrderRestClient.GetFuturesOrderTradesOptions { get; } = new EndpointOptions<GetOrderTradesRequest, IFuturesOrderRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedUserTrade[]>> IFuturesOrderRestClient.GetFuturesOrderTradesAsync(GetOrderTradesRequest request, CancellationToken ct)
+        GetFuturesOrderTradesOptions IFuturesOrderRestClient.GetFuturesOrderTradesOptions { get; } = new GetFuturesOrderTradesOptions(_exchangeName, true);
+        async Task<HttpResult<SharedUserTrade[]>> IFuturesOrderRestClient.GetFuturesOrderTradesAsync(GetOrderTradesRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, GetOrderTradesRequest, SharedUserTrade[]>(
-                this,
-                client => client.GetFuturesOrderTradesOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFuturesOrderTradesOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedUserTrade[]>(Exchange, validationError);
 
             if (!long.TryParse(request.OrderId, out var orderId))
-                return SharedExecutionResult<SharedUserTrade[]>.Error(new ExchangeWebResult<SharedUserTrade[]>(Exchange, ArgumentError.Invalid(nameof(GetOrderTradesRequest.OrderId), "Invalid order id")));
+                return HttpResult.Fail<SharedUserTrade[]>(Exchange, ArgumentError.Invalid(nameof(GetOrderTradesRequest.OrderId), "Invalid order id"));
 
             var orders = await Trading.GetUserTradesAsync(request.Symbol!.GetSymbol(FormatSymbol), orderId: orderId, ct: ct).ConfigureAwait(false);
-            if (!orders)
-                return SharedExecutionResult<SharedUserTrade[]>.Error(orders);
+            if (!orders.Success)
+                return HttpResult.Fail<SharedUserTrade[]>(orders);
 
-            return SharedExecutionResult<SharedUserTrade[]>.Ok(orders, orders.Data.Select(x => new SharedUserTrade(
+            return HttpResult.Ok(orders, orders.Data.Select(x => new SharedUserTrade(
                 ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), 
                 x.Symbol,
                 x.OrderId.ToString(),
@@ -772,18 +718,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 Role = x.Role == Role.Maker ? SharedRole.Maker : SharedRole.Taker
             }).ToArray());
         
-                });
+                
         }
 
         GetFuturesUserTradesOptions IFuturesOrderRestClient.GetFuturesUserTradesOptions { get; } = new GetFuturesUserTradesOptions(_exchangeName, true, true, true, 1000);
-        Task<ExchangeWebResult<SharedUserTrade[]>> IFuturesOrderRestClient.GetFuturesUserTradesAsync(GetUserTradesRequest request, PageRequest? pageRequest, CancellationToken ct)
+        async Task<HttpResult<SharedUserTrade[]>> IFuturesOrderRestClient.GetFuturesUserTradesAsync(GetUserTradesRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, GetUserTradesRequest, SharedUserTrade[]>(
-                this,
-                client => client.GetFuturesUserTradesOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFuturesUserTradesOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedUserTrade[]>(Exchange, validationError);
 
             var direction = request.Direction ?? DataDirection.Ascending;
             var limit = request.Limit ?? 1000;
@@ -799,8 +742,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 fromId: pageParams.FromId == null ? null : long.Parse(pageParams.FromId),
                 ct: ct
                 ).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedUserTrade[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedUserTrade[]>(result);
 
             var nextPageRequest = Pagination.GetNextPageRequest(
                    () => direction == DataDirection.Ascending
@@ -813,7 +756,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                    pageParams,
                    TimeSpan.FromDays(7));
 
-            return SharedExecutionResult<SharedUserTrade[]>.Ok(result,
+            return HttpResult.Ok(result,
                     ExchangeHelpers.ApplyFilter(result.Data, x => x.Timestamp, request.StartTime, request.EndTime, direction)
                     .Select(x =>
                         new SharedUserTrade(
@@ -831,46 +774,40 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                             Role = x.Role == Role.Maker ? SharedRole.Maker : SharedRole.Taker
                         }).ToArray(), nextPageRequest);
         
-                });
+                
         }
 
-        EndpointOptions<CancelOrderRequest, IFuturesOrderRestClient> IFuturesOrderRestClient.CancelFuturesOrderOptions { get; } = new EndpointOptions<CancelOrderRequest, IFuturesOrderRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedId>> IFuturesOrderRestClient.CancelFuturesOrderAsync(CancelOrderRequest request, CancellationToken ct)
+        CancelFuturesOrderOptions IFuturesOrderRestClient.CancelFuturesOrderOptions { get; } = new CancelFuturesOrderOptions(_exchangeName, true);
+        async Task<HttpResult<SharedId>> IFuturesOrderRestClient.CancelFuturesOrderAsync(CancelOrderRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, CancelOrderRequest, SharedId>(
-                this,
-                client => client.CancelFuturesOrderOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.CancelFuturesOrderOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedId>(Exchange, validationError);
 
             if (!long.TryParse(request.OrderId, out var orderId))
-                return SharedExecutionResult<SharedId>.Error(new ExchangeWebResult<SharedId>(Exchange, ArgumentError.Invalid(nameof(CancelOrderRequest.OrderId), "Invalid order id")));
+                return HttpResult.Fail<SharedId>(Exchange, ArgumentError.Invalid(nameof(CancelOrderRequest.OrderId), "Invalid order id"));
 
             var order = await Trading.CancelOrderAsync(request.Symbol!.GetSymbol(FormatSymbol), orderId, ct: ct).ConfigureAwait(false);
-            if (!order)
-                return SharedExecutionResult<SharedId>.Error(order);
+            if (!order.Success)
+                return HttpResult.Fail<SharedId>(order);
 
-            return SharedExecutionResult<SharedId>.Ok(order, new SharedId(order.Data.OrderId.ToString()));
+            return HttpResult.Ok(order, new SharedId(order.Data.OrderId.ToString()));
         
-                });
+                
         }
 
-        EndpointOptions<GetPositionsRequest, IFuturesOrderRestClient> IFuturesOrderRestClient.GetPositionsOptions { get; } = new EndpointOptions<GetPositionsRequest, IFuturesOrderRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedPosition[]>> IFuturesOrderRestClient.GetPositionsAsync(GetPositionsRequest request, CancellationToken ct)
+        GetPositionsOptions IFuturesOrderRestClient.GetPositionsOptions { get; } = new GetPositionsOptions(_exchangeName, true);
+        async Task<HttpResult<SharedPosition[]>> IFuturesOrderRestClient.GetPositionsAsync(GetPositionsRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, GetPositionsRequest, SharedPosition[]>(
-                this,
-                client => client.GetPositionsOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetPositionsOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedPosition[]>(Exchange, validationError);
 
             var result = await Trading.GetPositionsAsync(symbol: request.Symbol?.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedPosition[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedPosition[]>(result);
 
-            return SharedExecutionResult<SharedPosition[]>.Ok(result, result.Data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), x.Symbol, x.Size, x.UpdateTime)
+            return HttpResult.Ok(result, result.Data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), x.Symbol, x.Size, x.UpdateTime)
             {
                 UnrealizedPnl = x.UnrealizedProfit,
                 LiquidationPrice = x.LiquidationPrice,
@@ -880,34 +817,31 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 PositionSide = x.Side == TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long
             }).ToArray());
         
-                });
+                
         }
 
-        EndpointOptions<ClosePositionRequest, IFuturesOrderRestClient> IFuturesOrderRestClient.ClosePositionOptions { get; } = new EndpointOptions<ClosePositionRequest, IFuturesOrderRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedId>> IFuturesOrderRestClient.ClosePositionAsync(ClosePositionRequest request, CancellationToken ct)
+        ClosePositionOptions IFuturesOrderRestClient.ClosePositionOptions { get; } = new ClosePositionOptions(_exchangeName, true);
+        async Task<HttpResult<SharedId>> IFuturesOrderRestClient.ClosePositionAsync(ClosePositionRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderRestClient, ClosePositionRequest, SharedId>(
-                this,
-                client => client.ClosePositionOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.ClosePositionOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedId>(Exchange, validationError);
 
             var positions = await Trading.GetPositionsAsync(request.Symbol!.GetSymbol(FormatSymbol), ct: ct).ConfigureAwait(false);
-            if (!positions)
-                return SharedExecutionResult<SharedId>.Error(positions);
+            if (!positions.Success)
+                return HttpResult.Fail<SharedId>(positions);
 
             var position = positions.Data.FirstOrDefault(x => request.PositionSide == null ? x.Size != 0 : x.Side == (request.PositionSide == SharedPositionSide.Short ? TradeSide.Short : TradeSide.Long));
             if (position == null)
-                return SharedExecutionResult<SharedId>.Error(new ServerError(new ErrorInfo(ErrorType.NoPosition, "Position not found")));
+                return HttpResult.Fail<SharedId>(Exchange, new ServerError(new ErrorInfo(ErrorType.NoPosition, "Position not found")));
 
             var result = await Trading.ClosePositionAsync(position.PositionId).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedId>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedId>(result);
 
-            return SharedExecutionResult<SharedId>.Ok(result, new SharedId(result.Data.OrderId.ToString()));
+            return HttpResult.Ok(result, new SharedId(result.Data.OrderId.ToString()));
         
-                });
+                
         }
 
         private TimeInForce? GetTimeInForce(SharedTimeInForce? tif)
@@ -958,21 +892,18 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #region Futures Client Id Order Client
 
-        EndpointOptions<GetOrderRequest, IFuturesOrderClientIdRestClient> IFuturesOrderClientIdRestClient.GetFuturesOrderByClientOrderIdOptions { get; } = new EndpointOptions<GetOrderRequest, IFuturesOrderClientIdRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedFuturesOrder>> IFuturesOrderClientIdRestClient.GetFuturesOrderByClientOrderIdAsync(GetOrderRequest request, CancellationToken ct)
+        GetFuturesOrderByClientOrderIdOptions IFuturesOrderClientIdRestClient.GetFuturesOrderByClientOrderIdOptions { get; } = new GetFuturesOrderByClientOrderIdOptions(_exchangeName, true);
+        async Task<HttpResult<SharedFuturesOrder>> IFuturesOrderClientIdRestClient.GetFuturesOrderByClientOrderIdAsync(GetOrderRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderClientIdRestClient, GetOrderRequest, SharedFuturesOrder>(
-                this,
-                client => client.GetFuturesOrderByClientOrderIdOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFuturesOrderByClientOrderIdOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFuturesOrder>(Exchange, validationError);
 
             var order = await Trading.GetOrderAsync(request.Symbol!.GetSymbol(FormatSymbol), clientOrderId: request.OrderId, ct: ct).ConfigureAwait(false);
-            if (!order)
-                return SharedExecutionResult<SharedFuturesOrder>.Error(order);
+            if (!order.Success)
+                return HttpResult.Fail<SharedFuturesOrder>(order);
 
-            return SharedExecutionResult<SharedFuturesOrder>.Ok(order, new SharedFuturesOrder(
+            return HttpResult.Ok(order, new SharedFuturesOrder(
                 ExchangeSymbolCache.ParseSymbol(_topicId, order.Data.Symbol),
                 order.Data.Symbol,
                 order.Data.OrderId.ToString(),
@@ -998,49 +929,43 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 IsCloseOrder = order.Data.ClosePosition
             });
         
-                });
+                
         }
 
-        EndpointOptions<CancelOrderRequest, IFuturesOrderClientIdRestClient> IFuturesOrderClientIdRestClient.CancelFuturesOrderByClientOrderIdOptions { get; } = new EndpointOptions<CancelOrderRequest, IFuturesOrderClientIdRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedId>> IFuturesOrderClientIdRestClient.CancelFuturesOrderByClientOrderIdAsync(CancelOrderRequest request, CancellationToken ct)
+        CancelFuturesOrderByClientOrderIdOptions IFuturesOrderClientIdRestClient.CancelFuturesOrderByClientOrderIdOptions { get; } = new CancelFuturesOrderByClientOrderIdOptions(_exchangeName, true);
+        async Task<HttpResult<SharedId>> IFuturesOrderClientIdRestClient.CancelFuturesOrderByClientOrderIdAsync(CancelOrderRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesOrderClientIdRestClient, CancelOrderRequest, SharedId>(
-                this,
-                client => client.CancelFuturesOrderByClientOrderIdOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.CancelFuturesOrderByClientOrderIdOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedId>(Exchange, validationError);
 
             var order = await Trading.CancelOrderAsync(request.Symbol!.GetSymbol(FormatSymbol), clientOrderId: request.OrderId, ct: ct).ConfigureAwait(false);
-            if (!order)
-                return SharedExecutionResult<SharedId>.Error(order);
+            if (!order.Success)
+                return HttpResult.Fail<SharedId>(order);
 
-            return SharedExecutionResult<SharedId>.Ok(order, new SharedId(order.Data.OrderId.ToString()));
+            return HttpResult.Ok(order, new SharedId(order.Data.OrderId.ToString()));
         
-                });
+                
         }
         #endregion
 
         #region Balance client
         GetBalancesOptions IBalanceRestClient.GetBalancesOptions { get; } = new GetBalancesOptions(_exchangeName, AccountTypeFilter.Futures);
 
-        Task<ExchangeWebResult<SharedBalance[]>> IBalanceRestClient.GetBalancesAsync(GetBalancesRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedBalance[]>> IBalanceRestClient.GetBalancesAsync(GetBalancesRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IBalanceRestClient, GetBalancesRequest, SharedBalance[]>(
-                this,
-                client => client.GetBalancesOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetBalancesOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedBalance[]>(Exchange, validationError);
 
             var result = await Account.GetBalancesAsync(ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedBalance[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedBalance[]>(result);
 
-            return SharedExecutionResult<SharedBalance[]>.Ok(result, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(x => 
+            return HttpResult.Ok(result, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(x => 
                 new SharedBalance(x.Asset, x.AvailableMargin ?? 0, x.Equity ?? 0)).ToArray());
         
-                });
+                
         }
 
         #endregion
@@ -1050,41 +975,35 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         SharedPositionModeSelection IPositionModeRestClient.PositionModeSettingType => SharedPositionModeSelection.PerAccount;
 
         GetPositionModeOptions IPositionModeRestClient.GetPositionModeOptions { get; } = new GetPositionModeOptions(_exchangeName);
-        Task<ExchangeWebResult<SharedPositionModeResult>> IPositionModeRestClient.GetPositionModeAsync(GetPositionModeRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedPositionModeResult>> IPositionModeRestClient.GetPositionModeAsync(GetPositionModeRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IPositionModeRestClient, GetPositionModeRequest, SharedPositionModeResult>(
-                this,
-                client => client.GetPositionModeOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetPositionModeOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedPositionModeResult>(Exchange, validationError);
 
             var result = await Account.GetPositionModeAsync(ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedPositionModeResult>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedPositionModeResult>(result);
 
-            return SharedExecutionResult<SharedPositionModeResult>.Ok(result, new SharedPositionModeResult(result.Data.PositionMode == PositionMode.DualPositionMode ? SharedPositionMode.HedgeMode : SharedPositionMode.OneWay));
+            return HttpResult.Ok(result, new SharedPositionModeResult(result.Data.PositionMode == PositionMode.DualPositionMode ? SharedPositionMode.HedgeMode : SharedPositionMode.OneWay));
         
-                });
+                
         }
 
         SetPositionModeOptions IPositionModeRestClient.SetPositionModeOptions { get; } = new SetPositionModeOptions(_exchangeName);
-        Task<ExchangeWebResult<SharedPositionModeResult>> IPositionModeRestClient.SetPositionModeAsync(SetPositionModeRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedPositionModeResult>> IPositionModeRestClient.SetPositionModeAsync(SetPositionModeRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IPositionModeRestClient, SetPositionModeRequest, SharedPositionModeResult>(
-                this,
-                client => client.SetPositionModeOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.SetPositionModeOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedPositionModeResult>(Exchange, validationError);
 
             var result = await Account.SetPositionModeAsync(request.PositionMode == SharedPositionMode.HedgeMode ? PositionMode.DualPositionMode : PositionMode.SinglePositionMode, ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedPositionModeResult>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedPositionModeResult>(result);
 
-            return SharedExecutionResult<SharedPositionModeResult>.Ok(result, new SharedPositionModeResult(request.PositionMode));
+            return HttpResult.Ok(result, new SharedPositionModeResult(request.PositionMode));
         
-                });
+                
         }
         #endregion
 
@@ -1097,14 +1016,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 new ParameterDescription(nameof(GetPositionHistoryRequest.Symbol), typeof(SharedSymbol), "The symbol to get position history for", "ETH-USDT")
             }
         };
-        Task<ExchangeWebResult<SharedPositionHistory[]>> IPositionHistoryRestClient.GetPositionHistoryAsync(GetPositionHistoryRequest request, PageRequest? pageRequest, CancellationToken ct)
+        async Task<HttpResult<SharedPositionHistory[]>> IPositionHistoryRestClient.GetPositionHistoryAsync(GetPositionHistoryRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IPositionHistoryRestClient, GetPositionHistoryRequest, SharedPositionHistory[]>(
-                this,
-                client => client.GetPositionHistoryOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetPositionHistoryOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedPositionHistory[]>(Exchange, validationError);
 
             var direction = DataDirection.Descending;
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
@@ -1120,8 +1036,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 pageSize: limit,
                 ct: ct
                 ).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedPositionHistory[]>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedPositionHistory[]>(result);
 
             var nextPageRequest = Pagination.GetNextPageRequest(
                     () => Pagination.NextPageFromPage(pageParams),
@@ -1131,7 +1047,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     request.EndTime ?? DateTime.UtcNow,
                     pageParams);
 
-            return SharedExecutionResult<SharedPositionHistory[]>.Ok(result,
+            return HttpResult.Ok(result,
                 ExchangeHelpers.ApplyFilter(result.Data, x => x.OpenTime, request.StartTime, request.EndTime, direction)
                     .Select(x => 
                         new SharedPositionHistory(
@@ -1149,108 +1065,93 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         })
                     .ToArray(), nextPageRequest);
         
-                });
+                
         }
         #endregion
 
         #region Listen Key client
 
-        EndpointOptions<StartListenKeyRequest, IListenKeyRestClient> IListenKeyRestClient.StartOptions { get; } = new EndpointOptions<StartListenKeyRequest, IListenKeyRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<string>> IListenKeyRestClient.StartListenKeyAsync(StartListenKeyRequest request, CancellationToken ct)
+        StartListenKeyOptions IListenKeyRestClient.StartOptions { get; } = new StartListenKeyOptions(_exchangeName, true);
+        async Task<HttpResult<string>> IListenKeyRestClient.StartListenKeyAsync(StartListenKeyRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IListenKeyRestClient, StartListenKeyRequest, string>(
-                this,
-                client => client.StartOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.StartOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<string>(Exchange, validationError);
 
             // Get data
             var result = await Account.StartUserStreamAsync(ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<string>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<string>(result);
 
-            return SharedExecutionResult<string>.Ok(result, result.Data);
+            return HttpResult.Ok(result, result.Data);
         
-                });
+                
         }
-        EndpointOptions<KeepAliveListenKeyRequest, IListenKeyRestClient> IListenKeyRestClient.KeepAliveOptions { get; } = new EndpointOptions<KeepAliveListenKeyRequest, IListenKeyRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<string>> IListenKeyRestClient.KeepAliveListenKeyAsync(KeepAliveListenKeyRequest request, CancellationToken ct)
+        KeepAliveListenKeyOptions IListenKeyRestClient.KeepAliveOptions { get; } = new KeepAliveListenKeyOptions(_exchangeName, true);
+        async Task<HttpResult<string>> IListenKeyRestClient.KeepAliveListenKeyAsync(KeepAliveListenKeyRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IListenKeyRestClient, KeepAliveListenKeyRequest, string>(
-                this,
-                client => client.KeepAliveOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.KeepAliveOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<string>(Exchange, validationError);
 
             // Get data
             var result = await Account.KeepAliveUserStreamAsync(request.ListenKey, ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<string>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<string>(result);
 
-            return SharedExecutionResult<string>.Ok(result, request.ListenKey);
+            return HttpResult.Ok(result, request.ListenKey);
         
-                });
+                
         }
 
-        EndpointOptions<StopListenKeyRequest, IListenKeyRestClient> IListenKeyRestClient.StopOptions { get; } = new EndpointOptions<StopListenKeyRequest, IListenKeyRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<string>> IListenKeyRestClient.StopListenKeyAsync(StopListenKeyRequest request, CancellationToken ct)
+        StopListenKeyOptions IListenKeyRestClient.StopOptions { get; } = new StopListenKeyOptions(_exchangeName, true);
+        async Task<HttpResult<string>> IListenKeyRestClient.StopListenKeyAsync(StopListenKeyRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IListenKeyRestClient, StopListenKeyRequest, string>(
-                this,
-                client => client.StopOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.StopOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<string>(Exchange, validationError);
 
             // Get data
             var result = await Account.StopUserStreamAsync(request.ListenKey, ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<string>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<string>(result);
 
-            return SharedExecutionResult<string>.Ok(result, request.ListenKey);
+            return HttpResult.Ok(result, request.ListenKey);
         
-                });
+                
         }
         #endregion
 
         #region Fee Client
-        EndpointOptions<GetFeeRequest, IFeeRestClient> IFeeRestClient.GetFeeOptions { get; } = new EndpointOptions<GetFeeRequest, IFeeRestClient>(_exchangeName, true);
+        GetFeeOptions IFeeRestClient.GetFeeOptions { get; } = new GetFeeOptions(_exchangeName, true);
 
-        Task<ExchangeWebResult<SharedFee>> IFeeRestClient.GetFeesAsync(GetFeeRequest request, CancellationToken ct)
+        async Task<HttpResult<SharedFee>> IFeeRestClient.GetFeesAsync(GetFeeRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFeeRestClient, GetFeeRequest, SharedFee>(
-                this,
-                client => client.GetFeeOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.GetFeeOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedFee>(Exchange, validationError);
 
             // Get data
             var result = await Account.GetTradingFeesAsync(ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<SharedFee>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedFee>(result);
 
             // Return
-            return SharedExecutionResult<SharedFee>.Ok(result, new SharedFee(result.Data.MakerFeeRate * 100, result.Data.TakerFeeRate * 100));
+            return HttpResult.Ok(result, new SharedFee(result.Data.MakerFeeRate * 100, result.Data.TakerFeeRate * 100));
         
-                });
+                
         }
         #endregion
 
         #region Tp/SL Client
-        EndpointOptions<SetTpSlRequest, IFuturesTpSlRestClient> IFuturesTpSlRestClient.SetFuturesTpSlOptions { get; } = new EndpointOptions<SetTpSlRequest, IFuturesTpSlRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<SharedId>> IFuturesTpSlRestClient.SetFuturesTpSlAsync(SetTpSlRequest request, CancellationToken ct)
+        SetFuturesTpSlOptions IFuturesTpSlRestClient.SetFuturesTpSlOptions { get; } = new SetFuturesTpSlOptions(_exchangeName, true);
+        async Task<HttpResult<SharedId>> IFuturesTpSlRestClient.SetFuturesTpSlAsync(SetTpSlRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesTpSlRestClient, SetTpSlRequest, SharedId>(
-                this,
-                client => client.SetFuturesTpSlOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.SetFuturesTpSlOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<SharedId>(Exchange, validationError);
 
-            WebCallResult<BingXFuturesOrder> result;
+            HttpResult<BingXFuturesOrder> result;
             if (request.TpSlSide == SharedTpSlSide.TakeProfit)
             {
                 result = await Trading.PlaceOrderAsync(
@@ -1276,24 +1177,21 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     ct: ct).ConfigureAwait(false);
             }
 
-            if (!result)
-                return SharedExecutionResult<SharedId>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<SharedId>(result);
 
             // Return
-            return SharedExecutionResult<SharedId>.Ok(result, new SharedId(result.Data.OrderId.ToString()));
+            return HttpResult.Ok(result, new SharedId(result.Data.OrderId.ToString()));
         
-                });
+                
         }
 
-        EndpointOptions<CancelTpSlRequest, IFuturesTpSlRestClient> IFuturesTpSlRestClient.CancelFuturesTpSlOptions { get; } = new EndpointOptions<CancelTpSlRequest, IFuturesTpSlRestClient>(_exchangeName, true);
-        Task<ExchangeWebResult<bool>> IFuturesTpSlRestClient.CancelFuturesTpSlAsync(CancelTpSlRequest request, CancellationToken ct)
+        CancelFuturesTpSlOptions IFuturesTpSlRestClient.CancelFuturesTpSlOptions { get; } = new CancelFuturesTpSlOptions(_exchangeName, true);
+        async Task<HttpResult<bool>> IFuturesTpSlRestClient.CancelFuturesTpSlAsync(CancelTpSlRequest request, CancellationToken ct)
         {
-            return SharedUtils.ExecuteSharedAsync<IFuturesTpSlRestClient, CancelTpSlRequest, bool>(
-                this,
-                client => client.CancelFuturesTpSlOptions,
-                request,
-                async () =>
-                {
+            var validationError = SharedClient.CancelFuturesTpSlOptions.ValidateRequest(request, this);
+            if (validationError != null)
+                return HttpResult.Fail<bool>(Exchange, validationError);
 
             if (!long.TryParse(request.OrderId, out var id))
                 throw new ArgumentException($"Invalid order id");
@@ -1302,13 +1200,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 request.Symbol!.GetSymbol(FormatSymbol),
                 id,
                 ct: ct).ConfigureAwait(false);
-            if (!result)
-                return SharedExecutionResult<bool>.Error(result);
+            if (!result.Success)
+                return HttpResult.Fail<bool>(result);
 
             // Return
-            return SharedExecutionResult<bool>.Ok(result, true);
+            return HttpResult.Ok(result, true);
         
-                });
+                
         }
 
         #endregion

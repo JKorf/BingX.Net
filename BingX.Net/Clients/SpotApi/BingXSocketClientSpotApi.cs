@@ -44,7 +44,7 @@ namespace BingX.Net.Clients.SpotApi
         /// ctor
         /// </summary>
         internal BingXSocketClientSpotApi(ILogger logger, BingXSocketOptions options) :
-            base(logger, options.Environment.SocketClientSpotAddress!, options, options.FuturesOptions)
+            base(logger, BingXExchange.Metadata.Id, options.Environment.SocketClientSpotAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXPingSubscription(_logger));
 
@@ -68,7 +68,7 @@ namespace BingX.Net.Clients.SpotApi
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXTradeUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@trade";
             var subscription = new BingXSubscription<BingXTradeUpdate>(_logger, this, stream, x =>
@@ -84,7 +84,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXKlineUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(string symbol, KlineInterval interval, Action<DataEvent<BingXKlineUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@kline_" + KlineIntervalToWebsocketString(interval);
             var subscription = new BingXSubscription<BingXKlineUpdate>(_logger, this, stream, x =>
@@ -100,7 +100,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(string symbol, int depth, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToPartialOrderBookUpdatesAsync(string symbol, int depth, Action<DataEvent<BingXOrderBook>> onMessage, CancellationToken ct = default)
         {
             depth.ValidateIntValues(nameof(depth), 5, 10, 20, 50, 100);
 
@@ -119,7 +119,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXIncrementalOrderBook>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToIncrementalOrderBookUpdatesAsync(string symbol, Action<DataEvent<BingXIncrementalOrderBook>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@incrDepth";
             var subscription = new BingXSubscription<BingXIncrementalOrderBook>(_logger, this, stream, x =>
@@ -133,7 +133,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTickerUpdatesAsync(string symbol, Action<DataEvent<BingXTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@ticker";
             var subscription = new BingXSubscription<BingXTickerUpdate>(_logger, this, stream, x =>
@@ -149,7 +149,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToPriceUpdatesAsync(string symbol, Action<DataEvent<BingXPriceUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@lastPrice";
             var subscription = new BingXSubscription<BingXPriceUpdate>(_logger, this, stream, x =>
@@ -165,7 +165,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default)
         {
             var stream = symbol + "@bookTicker";
             var subscription = new BingXSubscription<BingXBookTickerUpdate>(_logger, this, stream, x =>
@@ -181,7 +181,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default)
         {
             listenKey.ValidateNotNull(nameof(listenKey));
 
@@ -199,7 +199,7 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<CallResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(string listenKey, Action<DataEvent<BingXBalanceUpdate>> onMessage, CancellationToken ct = default)
+        public async Task<WebSocketResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(string listenKey, Action<DataEvent<BingXBalanceUpdate>> onMessage, CancellationToken ct = default)
         {
             listenKey.ValidateNotNull(nameof(listenKey));
 

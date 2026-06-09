@@ -21,7 +21,7 @@ namespace BingX.Net
             request.Headers ??= new Dictionary<string, string>();
             request.Headers.Add("X-BX-APIKEY", Credential.Key);
 
-            if (!request.Authenticated)
+            if (!request.RequestDefinition.Authenticated)
                 return;
 
             var timestamp = GetMillisecondTimestampLong(apiClient);

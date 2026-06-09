@@ -27,7 +27,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _handler = handler;
             _topic = "ACCOUNT_UPDATE";
 
-            MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXBalanceUpdate>(_topic, DoHandleMessage);
+            MessageRouter = MessageRouter.CreateForEvent<BingXBalanceUpdate>(_topic, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _handler.Invoke(new DataEvent<BingXBalanceUpdate>(BingXExchange.ExchangeName, message, receiveTime, originalData)
                 .WithUpdateType(SocketUpdateType.Update)
                 .WithDataTimestamp(message.EventTime, _client.GetTimeOffset()));
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
     }
 }

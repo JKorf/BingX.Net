@@ -40,7 +40,7 @@ namespace BingX.Net.Clients.SpotApi
         protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.SpotErrors);
 
         /// <inheritdoc />
-        protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
+        protected override Task<HttpResult<DateTime>> GetServerTimestampAsync()
             => ExchangeData.GetServerTimeAsync();
 
         /// <inheritdoc />

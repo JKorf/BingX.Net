@@ -69,28 +69,28 @@ namespace BingX.Net.SymbolOrderBooks
         /// <inheritdoc />
         protected override async Task<CallResult<UpdateSubscription>> DoStartAsync(CancellationToken ct)
         {
-            CallResult<UpdateSubscription> result;
+            WebSocketResult<UpdateSubscription> result;
             if (Levels == null)
                 result = await _socketClient.SpotApi.SubscribeToIncrementalOrderBookUpdatesAsync(Symbol, HandleOrderBookUpdate).ConfigureAwait(false);            
             else
                 result = await _socketClient.SpotApi.SubscribeToPartialOrderBookUpdatesAsync(Symbol, Levels.Value, HandleOrderBookUpdate).ConfigureAwait(false);
 
-            if (!result)
-                return result;
+            if (!result.Success)
+                return CallResult.Fail<UpdateSubscription>(result.Error);
 
             if (ct.IsCancellationRequested)
             {
                 await result.Data.CloseAsync().ConfigureAwait(false);
-                return result.AsError<UpdateSubscription>(new CancellationRequestedError());
+                return CallResult.Fail<UpdateSubscription>(new CancellationRequestedError());
             }
 
             Status = OrderBookStatus.Syncing;
 
             var setResult = await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
-            if (!setResult)
+            if (!setResult.Success)
                 await result.Data.CloseAsync().ConfigureAwait(false);
 
-            return setResult ? result : new CallResult<UpdateSubscription>(setResult.Error!);            
+            return setResult.Success ? CallResult.Ok(result.Data) : CallResult.Fail<UpdateSubscription>(setResult.Error!);
         }
 
         private void HandleOrderBookUpdate(DataEvent<BingXOrderBook> @event)
@@ -121,7 +121,7 @@ namespace BingX.Net.SymbolOrderBooks
         }
 
         /// <inheritdoc />
-        protected override async Task<CallResult<bool>> DoResyncAsync(CancellationToken ct)
+        protected override async Task<CallResult> DoResyncAsync(CancellationToken ct)
         {
             return await WaitForSetOrderBookAsync(_initialDataTimeout, ct).ConfigureAwait(false);
         }

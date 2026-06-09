@@ -18,7 +18,7 @@ namespace BingX.Net.Interfaces.Clients.Apis
         /// <para><a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20user%20API%20Key%20permissions" /></para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXKeyPermissions>> GetApiKeyPermissionsAsync(CancellationToken ct = default);
+        Task<HttpResult<BingXKeyPermissions>> GetApiKeyPermissionsAsync(CancellationToken ct = default);
 
     }
 }

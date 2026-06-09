@@ -13,13 +13,13 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
     {
         public BingXPingSubscription(ILogger logger) : base(logger, false)
         {
-            MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXPing>("ping", HandleMessage);
+            MessageRouter = MessageRouter.CreateForEvent<BingXPing>("ping", HandleMessage);
         }
 
         public CallResult HandleMessage(SocketConnection connection, DateTime receiveTime, string? originalData, BingXPing message)
         {
             _ = connection.SendAsync(ExchangeHelpers.NextId(), new BingXPong { Pong = message.Ping, Timestamp = message.Timestamp }, 1);
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
     }
 }

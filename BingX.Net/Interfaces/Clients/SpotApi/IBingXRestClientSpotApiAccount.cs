@@ -22,7 +22,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXBalance[]>> GetBalancesAsync(CancellationToken ct = default);
+        Task<HttpResult<BingXBalance[]>> GetBalancesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get funding account balances
@@ -34,7 +34,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// </para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXBalance[]>> GetFundingBalancesAsync(CancellationToken ct = default);
+        Task<HttpResult<BingXBalance[]>> GetFundingBalancesAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get deposit history
@@ -54,7 +54,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">["<c>limit</c>"] Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXDeposit[]>> GetDepositHistoryAsync(string? asset = null, DepositStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get withdrawal history
@@ -76,7 +76,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">["<c>limit</c>"] Max number of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXWithdrawal[]>> GetWithdrawalHistoryAsync(string? id = null, string? asset = null, string? clientOrderId = null, WithdrawalStatus? status = null, string? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get asset info
@@ -90,7 +90,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="asset">["<c>coin</c>"] Filter by asset name, for example `ETH`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXAsset[]>> GetAssetsAsync(string? asset = null, CancellationToken ct = default);
+        Task<HttpResult<BingXAsset[]>> GetAssetsAsync(string? asset = null, CancellationToken ct = default);
 
         /// <summary>
         /// Withdraw funds
@@ -110,7 +110,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="clientOrderId">["<c>withdrawOrderId</c>"] Client order id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXWithdrawResult>> WithdrawAsync(string asset, string address, decimal quantity, AccountType walletType, string? network = null, string? addressTag = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXWithdrawResult>> WithdrawAsync(string asset, string address, decimal quantity, AccountType walletType, string? network = null, string? addressTag = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get deposit addresses
@@ -126,7 +126,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">["<c>limit</c>"] Limit</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXDepositAddresses>> GetDepositAddressAsync(string asset, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXDepositAddresses>> GetDepositAddressAsync(string asset, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Universal transfer
@@ -143,7 +143,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="toAccount">["<c>toAccount</c>"] To account type</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXTransactionResult>> TransferAsync(string asset, decimal quantity, TransferAccountType fromAccount, TransferAccountType toAccount, CancellationToken ct = default);
+        Task<HttpResult<BingXTransactionResult>> TransferAsync(string asset, decimal quantity, TransferAccountType fromAccount, TransferAccountType toAccount, CancellationToken ct = default);
 
         /// <summary>
         /// Get universal transfer history
@@ -162,7 +162,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="pageSize">["<c>size</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXTransfers>> GetTransfersAsync(TransferType type, long? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        Task<HttpResult<BingXTransfers>> GetTransfersAsync(TransferType type, long? transactionId = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
         /// <summary>
         /// Transfer internal to an account on the BingX platform
@@ -182,7 +182,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="clientOrderId">["<c>transferClientId</c>"] Client order id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXId>> TransferInternalAsync(string asset, AccountIdentifierType targetAccountType, string targetAccount, decimal quantity, AccountType accountType, string? areaCode = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXId>> TransferInternalAsync(string asset, AccountIdentifierType targetAccountType, string targetAccount, decimal quantity, AccountType accountType, string? areaCode = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get internal transfer history
@@ -201,7 +201,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">["<c>limit</c>"] Limit</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXInternalTransfers>> GetInternalTransfersAsync(string asset, string? clientOrderId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXInternalTransfers>> GetInternalTransfersAsync(string asset, string? clientOrderId = null, DateTime? startTime = null, DateTime? endTime = null, int? offset = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Generate a listen key used for subscribing to user data streams with the socket client
@@ -214,7 +214,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// </summary>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<WebCallResult<string>> StartUserStreamAsync(CancellationToken ct = default);
+        Task<HttpResult<string>> StartUserStreamAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Extend the lifetime of a listenkey with 60 minutes
@@ -228,7 +228,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="listenKey">["<c>listenKey</c>"] Listen key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
+        Task<HttpResult> KeepAliveUserStreamAsync(string listenKey, CancellationToken ct = default);
 
         /// <summary>
         /// Delete a listenkey and stop the user data stream
@@ -242,7 +242,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="listenKey">["<c>listenKey</c>"] Listen key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult> StopUserStreamAsync(string listenKey, CancellationToken ct = default);
+        Task<HttpResult> StopUserStreamAsync(string listenKey, CancellationToken ct = default);
 
         /// <summary>
         /// Get trading fees for a symbol
@@ -256,7 +256,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default);
+        Task<HttpResult<BingXTradingFees>> GetTradingFeesAsync(string symbol, CancellationToken ct = default);
 
         /// <summary>
         /// Get user id
@@ -269,7 +269,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXUserId>> GetUserIdAsync(CancellationToken ct = default);
+        Task<HttpResult<BingXUserId>> GetUserIdAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get API key permissions and info
@@ -284,6 +284,6 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="apiKey">["<c>apiKey</c>"] Filter by API key</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXApiKey[]>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default);
+        Task<HttpResult<BingXApiKey[]>> GetApiKeyPermissionsAsync(long userId, string? apiKey = null, CancellationToken ct = default);
     }
 }

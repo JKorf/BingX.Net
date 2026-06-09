@@ -37,12 +37,12 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _listenkeyHandler = listenkeyHandler;
 
             MessageRouter = MessageRouter.Create([
-                MessageRoute<BingXListenKeyExpiredUpdate>.CreateWithoutTopicFilter("listenKeyExpired", DoHandleMessage),
-                MessageRoute<BingXConfigUpdate>.CreateWithoutTopicFilter("ACCOUNT_CONFIG_UPDATE", DoHandleMessage),
-                MessageRoute<BingXFuturesAccountUpdate>.CreateWithoutTopicFilter("ACCOUNT_UPDATE", DoHandleMessage),
-                MessageRoute<BingXFuturesOrderUpdateWrapper>.CreateWithoutTopicFilter("ORDER_TRADE_UPDATE", DoHandleMessage),
-                MessageRoute<BingXConfigUpdate>.CreateWithoutTopicFilter("SNAPSHOTAC", DoHandleMessage),
-                MessageRoute<BingXFuturesAccountUpdate>.CreateWithoutTopicFilter("SNAPSHOTA", DoHandleMessage),
+                MessageRoute.CreateForEvent<BingXListenKeyExpiredUpdate>("listenKeyExpired", DoHandleMessage),
+                MessageRoute.CreateForEvent<BingXConfigUpdate>("ACCOUNT_CONFIG_UPDATE", DoHandleMessage),
+                MessageRoute.CreateForEvent<BingXFuturesAccountUpdate>("ACCOUNT_UPDATE", DoHandleMessage),
+                MessageRoute.CreateForEvent<BingXFuturesOrderUpdateWrapper>("ORDER_TRADE_UPDATE", DoHandleMessage),
+                MessageRoute.CreateForEvent<BingXConfigUpdate>("SNAPSHOTAC", DoHandleMessage),
+                MessageRoute.CreateForEvent<BingXFuturesAccountUpdate>("SNAPSHOTA", DoHandleMessage),
                 ]);
         }
 
@@ -64,7 +64,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                     .WithSymbol(message.Configuration.Symbol)
                     .WithUpdateType(message.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
 
         /// <inheritdoc />
@@ -78,7 +78,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                     .WithDataTimestamp(message.EventTime, _client.GetTimeOffset())
                     .WithUpdateType(message.Event == "SNAPSHOT" ? SocketUpdateType.Snapshot : SocketUpdateType.Update)
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
 
         /// <inheritdoc />
@@ -94,7 +94,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                     .WithDataTimestamp(message.EventTime, _client.GetTimeOffset())
                 );
 
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
 
         /// <inheritdoc />
@@ -108,7 +108,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                     .WithStreamId(message.Event)
                     .WithDataTimestamp(message.EventTime, _client.GetTimeOffset())
                 );
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
     }
 }

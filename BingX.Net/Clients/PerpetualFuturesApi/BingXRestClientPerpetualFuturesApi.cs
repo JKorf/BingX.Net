@@ -46,7 +46,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.FuturesErrors);
 
         /// <inheritdoc />
-        protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
+        protected override Task<HttpResult<DateTime>> GetServerTimestampAsync()
             => ExchangeData.GetServerTimeAsync();
     }
 }
