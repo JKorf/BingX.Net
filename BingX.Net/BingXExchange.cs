@@ -65,6 +65,7 @@ namespace BingX.Net
         internal static readonly ParameterSerializationSettings _parameterSerializationSettings = new ParameterSerializationSettings()
         {
             Decimal = DecimalSerialization.Number,
+            Array = ArrayParametersSerialization.JsonArray,
             Sort = true
         };
 

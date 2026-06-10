@@ -603,11 +603,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.Add("side", orderSide);
             parameters.Add("positionSide", positionSide);
             parameters.Add("priceType", priceType);
-            parameters.AddAsString("priceVariance", priceVariance);
-            parameters.AddAsString("triggerPrice", triggerPrice);
+            parameters.Add("priceVariance", priceVariance, DecimalSerialization.String);
+            parameters.Add("triggerPrice", triggerPrice, DecimalSerialization.String);
             parameters.Add("interval", interval);
-            parameters.AddAsString("amountPerOrder", orderQuantity);
-            parameters.AddAsString("totalAmount", totalQuantity);
+            parameters.Add("amountPerOrder", orderQuantity, DecimalSerialization.String);
+            parameters.Add("totalAmount", totalQuantity, DecimalSerialization.String);
             var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/swap/v1/twap/order", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<BingXTwapOrderId>(request, parameters, ct, additionalHeaders: new Dictionary<string, string>
                  {
@@ -670,7 +670,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public async Task<HttpResult<BingXTwapOrder>> CancelTwapOrderAsync(long orderId, CancellationToken ct = default)
         {
             var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
-            parameters.AddAsString("mainOrderId", orderId);
+            parameters.Add("mainOrderId", orderId, IntegerSerialization.String);
             var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/swap/v1/twap/cancelOrder", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<BingXTwapOrder>(request, parameters, ct).ConfigureAwait(false);
             return result;

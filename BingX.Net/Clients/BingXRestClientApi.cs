@@ -86,7 +86,7 @@ namespace BingX.Net.Clients
             }
             else
             {
-                var stringData = parameters.CreateParamString(false, ArraySerialization);
+                var stringData = parameters.CreateParamString(false, BingXExchange._parameterSerializationSettings.Array);
                 request.SetContent(stringData, Encoding.UTF8, contentType);
             }
         }

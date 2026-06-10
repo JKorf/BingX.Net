@@ -124,7 +124,7 @@ namespace BingX.Net.Clients.SpotApi
                 { "address", address },
                 { "amount", quantity }
             };
-            parameters.AddAsInt("walletType", walletType);
+            parameters.Add("walletType", walletType, EnumSerialization.Number);
             parameters.Add("network", network);
             parameters.Add("addressTag", addressTag);
             parameters.Add("withdrawOrderId", clientOrderId);

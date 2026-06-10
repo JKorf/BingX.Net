@@ -35,8 +35,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             Account = new BingXRestClientPerpetualFuturesApiAccount(this);
             ExchangeData = new BingXRestClientPerpetualFuturesApiExchangeData(logger, this);
             Trading = new BingXRestClientPerpetualFuturesApiTrading(logger, this);
-
-            ArraySerialization = ArrayParametersSerialization.JsonArray;
         }
 
         #endregion
