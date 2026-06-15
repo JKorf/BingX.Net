@@ -23,8 +23,8 @@ namespace BingX.Net.Clients.Apis
         #endregion
 
         #region constructor/destructor
-        internal BingXRestClientSubAccountApi(BingXRestClient baseClient, ILogger logger, HttpClient? httpClient, BingXRestOptions options)
-            : base(logger, httpClient, options, options.SpotOptions)
+        internal BingXRestClientSubAccountApi(BingXRestClient baseClient, ILoggerFactory? loggerFactory, HttpClient? httpClient, BingXRestOptions options)
+            : base(loggerFactory, httpClient, options, options.SpotOptions)
         {
             _baseClient = baseClient;
         }

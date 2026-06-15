@@ -35,8 +35,8 @@ namespace BingX.Net.Clients
         #endregion
 
         #region constructor/destructor
-        internal BingXRestClientApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options, RestApiOptions apiOptions)
-            : base(logger, BingXExchange.Metadata.Id, httpClient, options.Environment.RestClientAddress, options, apiOptions)
+        internal BingXRestClientApi(ILoggerFactory? loggerFactory, HttpClient? httpClient, BingXRestOptions options, RestApiOptions apiOptions)
+            : base(loggerFactory, BingXExchange.Metadata.Id, httpClient, options.Environment.RestClientAddress, options, apiOptions)
         {
             ParameterPositions[HttpMethod.Delete] = HttpMethodParameterPosition.InUri;
             RequestBodyFormat = RequestBodyFormat.FormData;

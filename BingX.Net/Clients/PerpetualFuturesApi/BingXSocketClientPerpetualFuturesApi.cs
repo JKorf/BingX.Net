@@ -44,8 +44,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <summary>
         /// ctor
         /// </summary>
-        internal BingXSocketClientPerpetualFuturesApi(ILogger logger, BingXSocketOptions options) :
-            base(logger, BingXExchange.Metadata.Id, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
+        internal BingXSocketClientPerpetualFuturesApi(ILoggerFactory? loggerFactory, BingXSocketOptions options) :
+            base(loggerFactory, BingXExchange.Metadata.Id, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXFuturesPingSubscription(_logger));
         }

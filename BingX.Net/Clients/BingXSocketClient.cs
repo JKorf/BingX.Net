@@ -49,8 +49,8 @@ namespace BingX.Net.Clients
         {
             Initialize(options.Value);
 
-            SpotApi = AddApiClient(new BingXSocketClientSpotApi(_logger, options.Value));
-            PerpetualFuturesApi = AddApiClient(new BingXSocketClientPerpetualFuturesApi(_logger, options.Value));
+            SpotApi = AddApiClient(new BingXSocketClientSpotApi(loggerFactory, options.Value));
+            PerpetualFuturesApi = AddApiClient(new BingXSocketClientPerpetualFuturesApi(loggerFactory, options.Value));
         }
         #endregion
 

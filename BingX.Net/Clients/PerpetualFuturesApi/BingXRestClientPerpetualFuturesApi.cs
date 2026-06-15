@@ -29,12 +29,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         #region constructor/destructor
-        internal BingXRestClientPerpetualFuturesApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options)
-            : base(logger, httpClient, options, options.FuturesOptions)
+        internal BingXRestClientPerpetualFuturesApi(ILoggerFactory? loggerFactory, HttpClient? httpClient, BingXRestOptions options)
+            : base(loggerFactory, httpClient, options, options.FuturesOptions)
         {
             Account = new BingXRestClientPerpetualFuturesApiAccount(this);
-            ExchangeData = new BingXRestClientPerpetualFuturesApiExchangeData(logger, this);
-            Trading = new BingXRestClientPerpetualFuturesApiTrading(logger, this);
+            ExchangeData = new BingXRestClientPerpetualFuturesApiExchangeData(_logger, this);
+            Trading = new BingXRestClientPerpetualFuturesApiTrading(_logger, this);
         }
 
         #endregion

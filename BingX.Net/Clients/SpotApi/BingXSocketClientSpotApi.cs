@@ -43,8 +43,8 @@ namespace BingX.Net.Clients.SpotApi
         /// <summary>
         /// ctor
         /// </summary>
-        internal BingXSocketClientSpotApi(ILogger logger, BingXSocketOptions options) :
-            base(logger, BingXExchange.Metadata.Id, options.Environment.SocketClientSpotAddress!, options, options.FuturesOptions)
+        internal BingXSocketClientSpotApi(ILoggerFactory? loggerFactory, BingXSocketOptions options) :
+            base(loggerFactory, BingXExchange.Metadata.Id, options.Environment.SocketClientSpotAddress!, options, options.FuturesOptions)
         {
             AddSystemSubscription(new BingXPingSubscription(_logger));
 
