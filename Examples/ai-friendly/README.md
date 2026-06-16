@@ -15,7 +15,7 @@ These examples are optimized for AI coding assistants and quick onboarding. Each
 | `02-perpetual-futures.cs` | Perpetual futures: set leverage, place market order, get position, close position pattern |
 | `03-websocket.cs` | Subscribe to ticker updates and klines with proper teardown |
 | `04-multi-exchange.cs` | `CryptoExchange.Net.SharedApis` pattern for exchange-agnostic code |
-| `05-error-handling.cs` | `WebCallResult` patterns, retry, common error scenarios |
+| `05-error-handling.cs` | `HttpResult` patterns, retry, common error scenarios |
 
 ## Running
 
@@ -27,4 +27,3 @@ dotnet add package JK.BingX.Net
 # Replace API_KEY / API_SECRET placeholders for private endpoints
 dotnet run
 ```
-

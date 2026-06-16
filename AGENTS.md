@@ -39,7 +39,7 @@ var publicClient = new BingXRestClient();
 
 ## Core Pattern: Result Handling
 
-Every method returns `WebCallResult<T>` (REST) or `CallResult<T>` (WebSocket). Always check `.Success` before accessing `.Data`.
+Every method returns `HttpResult<T>` (REST) or `WebSocketResult<T>` (WebSocket). Always check `.Success` before accessing `.Data`.
 
 ```csharp
 var ticker = await restClient.SpotApi.ExchangeData.GetTickersAsync("BTC-USDT");
@@ -160,7 +160,7 @@ Inject `IBingXRestClient` and `IBingXSocketClient`.
 - Do not mix sync and async. Always `await` async methods.
 - Do not instantiate clients per request.
 - Do not forget to unsubscribe from WebSocket streams.
-- Do not assume `WebCallResult.Data` is non-null without checking `.Success`.
+- Do not assume `HttpResult.Data` is non-null without checking `.Success`.
 
 ## Environments
 
