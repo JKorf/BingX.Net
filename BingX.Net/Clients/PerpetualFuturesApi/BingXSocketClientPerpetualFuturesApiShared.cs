@@ -110,20 +110,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         #region Balance client
-        SubscribeBalanceOptions IBalanceSocketClient.SubscribeBalanceOptions { get; } = new SubscribeBalanceOptions(_exchangeName, false)
-        {
-            RequiredOptionalParameters = new List<ParameterDescription>
-            {
-                new ParameterDescription(nameof(SubscribeBalancesRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
-            }
-        };
+        SubscribeBalanceOptions IBalanceSocketClient.SubscribeBalanceOptions { get; } = new SubscribeBalanceOptions(_exchangeName, true);
         async Task<WebSocketResult<UpdateSubscription>> IBalanceSocketClient.SubscribeToBalanceUpdatesAsync(SubscribeBalancesRequest request, Action<DataEvent<SharedBalance[]>> handler, CancellationToken ct)
         {
             var validationError = ((IBalanceSocketClient)this).SubscribeBalanceOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
-            var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onAccountUpdate: update => handler(update.ToType(update.Data.Update.Balances.Select(x => new SharedBalance(x.Asset, x.BalanceExIsolatedMargin, x.Balance)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
@@ -133,20 +127,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         #region Futures Order client
-        SubscribeFuturesOrderOptions IFuturesOrderSocketClient.SubscribeFuturesOrderOptions { get; } = new SubscribeFuturesOrderOptions(_exchangeName, false)
-        {
-            RequiredOptionalParameters = new List<ParameterDescription>
-            {
-                new ParameterDescription(nameof(SubscribeFuturesOrderRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
-            }
-        };
+        SubscribeFuturesOrderOptions IFuturesOrderSocketClient.SubscribeFuturesOrderOptions { get; } = new SubscribeFuturesOrderOptions(_exchangeName, true);
         async Task<WebSocketResult<UpdateSubscription>> IFuturesOrderSocketClient.SubscribeToFuturesOrderUpdatesAsync(SubscribeFuturesOrderRequest request, Action<DataEvent<SharedFuturesOrder[]>> handler, CancellationToken ct)
         {
             var validationError = ((IFuturesOrderSocketClient)this).SubscribeFuturesOrderOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
-            var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onOrderUpdate: update => handler(update.ToType(new[] {
                     new SharedFuturesOrder(
                         ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
@@ -213,20 +201,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #endregion
 
         #region Position client
-        SubscribePositionOptions IPositionSocketClient.SubscribePositionOptions { get; } = new SubscribePositionOptions(_exchangeName, false)
-        {
-            RequiredOptionalParameters = new List<ParameterDescription>
-            {
-                new ParameterDescription(nameof(SubscribePositionRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
-            }
-        };
+        SubscribePositionOptions IPositionSocketClient.SubscribePositionOptions { get; } = new SubscribePositionOptions(_exchangeName, true);
         async Task<WebSocketResult<UpdateSubscription>> IPositionSocketClient.SubscribeToPositionUpdatesAsync(SubscribePositionRequest request, Action<DataEvent<SharedPosition[]>> handler, CancellationToken ct)
         {
             var validationError = ((IPositionSocketClient)this).SubscribePositionOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
-            var result = await SubscribeToUserDataUpdatesAsync(request.ListenKey!,
+            var result = await SubscribeToUserDataUpdatesAsync(
                 onAccountUpdate: update => handler(update.ToType(update.Data.Update.Positions.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), x.Symbol, x.Size, update.Data.EventTime)
                 {
                     AverageOpenPrice = x.EntryPrice,

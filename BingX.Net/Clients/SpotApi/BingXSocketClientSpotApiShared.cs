@@ -101,20 +101,14 @@ namespace BingX.Net.Clients.SpotApi
         #endregion
 
         #region Balance client
-        SubscribeBalanceOptions IBalanceSocketClient.SubscribeBalanceOptions { get; } = new SubscribeBalanceOptions(_exchangeName, false)
-        {
-            RequiredOptionalParameters = new List<ParameterDescription>
-            {
-                new ParameterDescription(nameof(SubscribeBalancesRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
-            }
-        };
+        SubscribeBalanceOptions IBalanceSocketClient.SubscribeBalanceOptions { get; } = new SubscribeBalanceOptions(_exchangeName, true);
         async Task<WebSocketResult<UpdateSubscription>> IBalanceSocketClient.SubscribeToBalanceUpdatesAsync(SubscribeBalancesRequest request, Action<DataEvent<SharedBalance[]>> handler, CancellationToken ct)
         {
             var validationError = ((IBalanceSocketClient)this).SubscribeBalanceOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
-            var result = await SubscribeToBalanceUpdatesAsync(request.ListenKey!,
+            var result = await SubscribeToBalanceUpdatesAsync(
                 update => handler(update.ToType(update.Data.EventData.Balances.Select(x => new SharedBalance(x.Asset, x.Total, x.Total + x.Locked)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
@@ -124,20 +118,14 @@ namespace BingX.Net.Clients.SpotApi
         #endregion
 
         #region Spot Order client
-        SubscribeSpotOrderOptions ISpotOrderSocketClient.SubscribeSpotOrderOptions { get; } = new SubscribeSpotOrderOptions(_exchangeName, false)
-        {
-            RequiredOptionalParameters = new List<ParameterDescription>
-            {
-                new ParameterDescription(nameof(SubscribeSpotOrderRequest.ListenKey), typeof(string), "The listenkey for starting the user stream", "123123123")
-            }
-        };
+        SubscribeSpotOrderOptions ISpotOrderSocketClient.SubscribeSpotOrderOptions { get; } = new SubscribeSpotOrderOptions(_exchangeName, true);
         async Task<WebSocketResult<UpdateSubscription>> ISpotOrderSocketClient.SubscribeToSpotOrderUpdatesAsync(SubscribeSpotOrderRequest request, Action<DataEvent<SharedSpotOrder[]>> handler, CancellationToken ct)
         {
             var validationError = ((ISpotOrderSocketClient)this).SubscribeSpotOrderOptions.ValidateRequest(request, this);
             if (validationError != null)
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
-            var result = await SubscribeToOrderUpdatesAsync(request.ListenKey!,
+            var result = await SubscribeToOrderUpdatesAsync(
                 update => handler(update.ToType(new[] {
                     new SharedSpotOrder(
                         ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
