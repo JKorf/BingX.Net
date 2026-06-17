@@ -18,6 +18,7 @@ using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.SharedApis;
 using CryptoExchange.Net.Sockets;
 using CryptoExchange.Net.Sockets.Default;
+using CryptoExchange.Net.Sockets.Interfaces;
 using CryptoExchange.Net.TokenManagement;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -331,10 +332,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return data.DecompressGzip();
         }
 
-        protected override async Task<CallResult> RevitalizeRequestAsync(Subscription subscription)
+        protected override async Task<Uri?> GetReconnectUriAsync(ISocketConnection connection)
         {
-            if (subscription.TokenLease == null)
-                return CallResult.Ok(); // Not an authenticated subscription, no need to revitalize
+            if (!connection.HasAuthenticatedSubscription)
+                return await base.GetReconnectUriAsync(connection).ConfigureAwait(false);
+
+            var subscriptions = ((SocketConnection)connection).Subscriptions.Where(x => x.TokenLease != null).ToList();
+            if (subscriptions.Count == 0)
+                return await base.GetReconnectUriAsync(connection).ConfigureAwait(false);
 
             var scope = new TokenScope(
                     BingXExchange.Metadata.Id,
@@ -342,7 +347,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     "Futures",
                     ApiCredentials!.Key);
 
-            return await TokenManager.AcquireAndReplaceAsync(subscription, scope).ConfigureAwait(false);
+            var token = await TokenManager.AcquireAndReplaceAsync(subscriptions[0], scope).ConfigureAwait(false);
+            if (!token.Success)
+                return null;
+
+            return new Uri(BaseAddress.AppendPath("swap-market") + "?listenKey=" + token.Data.Token.Token);
         }
 
         private async Task<CallResult<string>> StartListenKeyAsync(TokenScope tokenScope, CancellationToken ct)
