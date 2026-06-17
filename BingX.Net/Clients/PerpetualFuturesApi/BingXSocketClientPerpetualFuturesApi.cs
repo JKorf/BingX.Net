@@ -18,7 +18,9 @@ using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.SharedApis;
 using CryptoExchange.Net.Sockets;
 using CryptoExchange.Net.Sockets.Default;
+using CryptoExchange.Net.TokenManagement;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Net.WebSockets;
@@ -37,6 +39,27 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region fields
 
         protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
+        private readonly ILoggerFactory? _loggerFactory;
+        private BingXRestClient? _tokenClient;
+        internal TokenManager TokenManager { get; }
+        private BingXRestClient TokenClient
+        {
+            get
+            {
+                if (_tokenClient == null)
+                {
+                    _tokenClient = new BingXRestClient(null, _loggerFactory, Options.Create(new BingXRestOptions
+                    {
+                        ApiCredentials = ApiCredentials,
+                        Environment = ClientOptions.Environment,
+                        Proxy = ClientOptions.Proxy,
+                        OutputOriginalData = ClientOptions.OutputOriginalData
+                    }));
+                }
+
+                return _tokenClient;
+            }
+        }
         #endregion
 
         #region constructor/destructor
@@ -47,7 +70,18 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         internal BingXSocketClientPerpetualFuturesApi(ILoggerFactory? loggerFactory, BingXSocketOptions options) :
             base(loggerFactory, BingXExchange.Metadata.Id, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
         {
+            _loggerFactory = loggerFactory;
+
             AddSystemSubscription(new BingXFuturesPingSubscription(_logger));
+
+            TokenManager = new TokenManager(
+                BingXExchange.Metadata.Id,
+                loggerFactory,
+                TimeSpan.FromMinutes(30),
+                TimeSpan.FromMinutes(60),
+                startToken: StartListenKeyAsync,
+                keepAliveToken: KeepAliveListenKeyAsync,
+                stopToken: StopListenKeyAsync);
         }
         #endregion
 
@@ -242,18 +276,50 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         /// <inheritdoc />
+        public Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+            Action<DataEvent<BingXFuturesAccountUpdate>>? onAccountUpdate = null,
+            Action<DataEvent<BingXFuturesOrderUpdate>>? onOrderUpdate = null,
+            Action<DataEvent<BingXConfigUpdate>>? onConfigurationUpdate = null,
+            Action<DataEvent<BingXListenKeyExpiredUpdate>>? onListenKeyExpiredUpdate = null,
+            CancellationToken ct = default)
+            => SubscribeToUserDataUpdatesAsync(null, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate, ct);
+
+        /// <inheritdoc />
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
-            string listenKey, 
+            string? listenKey, 
             Action<DataEvent<BingXFuturesAccountUpdate>>? onAccountUpdate = null,
             Action<DataEvent<BingXFuturesOrderUpdate>>? onOrderUpdate = null,
             Action<DataEvent<BingXConfigUpdate>>? onConfigurationUpdate = null,
             Action<DataEvent<BingXListenKeyExpiredUpdate>>? onListenKeyExpiredUpdate = null,
             CancellationToken ct = default)
         {
-            listenKey.ValidateNotNull(nameof(listenKey));
+            if (listenKey == null && !Authenticated)
+                return WebSocketResult.Fail<UpdateSubscription>(Exchange, new NoApiCredentialsError());
 
-            var subscription = new BingXUserDataSubscription(_logger, this, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate);
-            return await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + listenKey, subscription, ct).ConfigureAwait(false);
+            TokenLease? lease = null;
+            if (listenKey == null)
+            {
+                var leaseResult = await TokenManager.AcquireAsync(new TokenScope(
+                    BingXExchange.Metadata.Id,
+                    EnvironmentName,
+                    "Futures",
+                    ApiCredentials!.Key), ct).ConfigureAwait(false);
+                if (!leaseResult.Success)
+                    return WebSocketResult.Fail<UpdateSubscription>(Exchange, leaseResult.Error);
+
+                lease = leaseResult.Data;
+            }
+
+            var subscription = new BingXUserDataSubscription(_logger, this, onAccountUpdate, onOrderUpdate, onConfigurationUpdate, onListenKeyExpiredUpdate)
+            {
+                TokenLease = lease
+            };
+            var lk = listenKey ?? lease!.Token.Token;
+            var result = await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + lk, subscription, ct).ConfigureAwait(false);
+            if (!result.Success && lease != null)
+                await lease.ReleaseAsync().ConfigureAwait(false);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -265,5 +331,45 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return data.DecompressGzip();
         }
 
+        protected override async Task<CallResult> RevitalizeRequestAsync(Subscription subscription)
+        {
+            if (subscription.TokenLease == null)
+                return CallResult.Ok(); // Not an authenticated subscription, no need to revitalize
+
+            var scope = new TokenScope(
+                    BingXExchange.Metadata.Id,
+                    EnvironmentName,
+                    "Futures",
+                    ApiCredentials!.Key);
+
+            return await TokenManager.AcquireAndReplaceAsync(subscription, scope).ConfigureAwait(false);
+        }
+
+        private async Task<CallResult<string>> StartListenKeyAsync(TokenScope tokenScope, CancellationToken ct)
+        {
+            var result = await TokenClient.PerpetualFuturesApi.Account.StartUserStreamAsync(ct).ConfigureAwait(false);
+            if (!result.Success)
+                return CallResult.Fail<string>(result.Error);
+
+            return CallResult.Ok(result.Data);
+        }
+
+        private async Task<CallResult> KeepAliveListenKeyAsync(TokenInfo token, CancellationToken ct)
+        {
+            var result = await TokenClient.PerpetualFuturesApi.Account.KeepAliveUserStreamAsync(token.Token, ct).ConfigureAwait(false);
+            if (!result.Success)
+                return CallResult.Fail<string>(result.Error);
+
+            return CallResult.Ok();
+        }
+
+        private async Task<CallResult> StopListenKeyAsync(TokenInfo token, CancellationToken ct)
+        {
+            var result = await TokenClient.PerpetualFuturesApi.Account.StopUserStreamAsync(token.Token, ct).ConfigureAwait(false);
+            if (!result.Success)
+                return CallResult.Fail<string>(result.Error);
+
+            return CallResult.Ok();
+        }
     }
 }

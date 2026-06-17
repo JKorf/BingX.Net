@@ -190,6 +190,28 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         Task<WebSocketResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
+        /// Listen to user data update events. Listen key is automatically obtained by the client and will be renewed as needed
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /><br />
+        /// Endpoint:<br />
+        /// WS /swap-market?listenKey={listenKey}
+        /// </para>
+        /// </summary>
+        /// <param name="onAccountUpdate">Event handler for balance and position updates</param>
+        /// <param name="onOrderUpdate">Event handler for order updates</param>
+        /// <param name="onConfigurationUpdate">Event handler for account configuration updates</param>
+        /// <param name="onListenKeyExpiredUpdate">Event handler for listenkey expired event</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToUserDataUpdatesAsync(
+            Action<DataEvent<BingXFuturesAccountUpdate>>? onAccountUpdate = null,
+            Action<DataEvent<BingXFuturesOrderUpdate>>? onOrderUpdate = null,
+            Action<DataEvent<BingXConfigUpdate>>? onConfigurationUpdate = null,
+            Action<DataEvent<BingXListenKeyExpiredUpdate>>? onListenKeyExpiredUpdate = null,
+            CancellationToken ct = default);
+
+        /// <summary>
         /// Listen to user data update events. Prior to using this, the <see cref="IBingXRestClientPerpetualFuturesApiAccount.StartUserStreamAsync(CancellationToken)">restClient.PerpetualFuturesApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para>
         /// Docs:<br />

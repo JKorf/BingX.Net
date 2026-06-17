@@ -128,6 +128,20 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         Task<WebSocketResult<UpdateSubscription>> SubscribeToBookPriceUpdatesAsync(string symbol, Action<DataEvent<BingXBookTickerUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
+        /// Subscribe to user order updates. Listen key is automatically obtained by the client and will be renewed as needed
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20order%20update%20data" /><br />
+        /// Endpoint:<br />
+        /// WS /market?listenKey={listenKey}
+        /// </para>
+        /// </summary>
+        /// <param name="onMessage">The event handler for the received data</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
         /// Subscribe to user order updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para>
         /// Docs:<br />
@@ -141,6 +155,20 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="ct">Cancellation token for closing this subscription</param>
         /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
         Task<WebSocketResult<UpdateSubscription>> SubscribeToOrderUpdatesAsync(string listenKey, Action<DataEvent<BingXOrderUpdate>> onMessage, CancellationToken ct = default);
+
+        /// <summary>
+        /// Subscribe to user balance updates. Listen key is automatically obtained by the client and will be renewed as needed
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20account%20balance%20push" /><br />
+        /// Endpoint:<br />
+        /// WS /market?listenKey={listenKey}
+        /// </para>
+        /// </summary>
+        /// <param name="onMessage">The event handler for the received data</param>
+        /// <param name="ct">Cancellation token for closing this subscription</param>
+        /// <returns>A stream subscription. This stream subscription can be used to be notified when the socket is disconnected/reconnected</returns>
+        Task<WebSocketResult<UpdateSubscription>> SubscribeToBalanceUpdatesAsync(Action<DataEvent<BingXBalanceUpdate>> onMessage, CancellationToken ct = default);
 
         /// <summary>
         /// Subscribe to user balance updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
