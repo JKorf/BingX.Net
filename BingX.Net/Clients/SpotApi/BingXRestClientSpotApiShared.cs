@@ -850,7 +850,13 @@ namespace BingX.Net.Clients.SpotApi
             return HttpResult.Ok(result,
                     ExchangeHelpers.ApplyFilter(result.Data, x => x.ApplyTime, request.StartTime, request.EndTime, direction)
                     .Select(x =>
-                        new SharedWithdrawal(x.Asset, x.Address, x.Quantity, x.Status == WithdrawalStatus.Completed, x.ApplyTime)
+                        new SharedWithdrawal(
+                            x.Asset, 
+                            x.Address, 
+                            x.Quantity, 
+                            x.Status == WithdrawalStatus.Completed, 
+                            x.ApplyTime,
+                            GetWithdrawalStatus(x))
                         {
                             Id = x.Id,
                             Confirmations = x.Confirmations,
@@ -862,6 +868,20 @@ namespace BingX.Net.Clients.SpotApi
                     .ToArray(), nextPageRequest);
         
                 
+        }
+
+        private SharedTransferStatus GetWithdrawalStatus(BingXWithdrawal x)
+        {
+            if (x.Status == WithdrawalStatus.Failed)
+                return SharedTransferStatus.Failed;
+
+            if (x.Status == WithdrawalStatus.Completed)
+                return SharedTransferStatus.Completed;
+
+            if (x.Status == WithdrawalStatus.UnderReview)
+                return SharedTransferStatus.InProgress;
+
+            return SharedTransferStatus.Unknown;
         }
 
         #endregion
