@@ -21,7 +21,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public TradingMode[] SupportedTradingModes { get; } = new[] { TradingMode.PerpetualLinear };
         public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
         public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
-        public SharedClientInfo Discover() => SharedUtils.GetClientInfo(this);
+        public SharedClientInfo Discover() => SharedUtils.GetClientInfo(BingXExchange.Metadata, this);
 
         #region Ticker client
         SubscribeTickerOptions ITickerSocketClient.SubscribeTickerOptions { get; } = new SubscribeTickerOptions(_exchangeName);
@@ -32,7 +32,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.ToType(new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol), update.Data.Symbol, update.Data.LastPrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.Volume, update.Data.PriceChangePercentage)
+            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.ToType(
+                new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol),
+                update.Data.Symbol,
+                update.Data.LastPrice,
+                update.Data.HighPrice,
+                update.Data.LowPrice,
+                update.Data.Volume,
+                update.Data.PriceChangePercentage)
             {
                 QuoteVolume = update.Data.QuoteVolume
             })), ct).ConfigureAwait(false);
@@ -102,7 +109,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
+            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
 
             return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
         }
@@ -137,7 +144,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var result = await SubscribeToUserDataUpdatesAsync(
                 onOrderUpdate: update => handler(update.ToType(new[] {
                     new SharedFuturesOrder(
-                        ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
+                        ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol),
                         update.Data.Symbol,
                         update.Data.OrderId.ToString(),
                         ParseOrderType(update.Data),
@@ -209,7 +216,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(
-                onAccountUpdate: update => handler(update.ToType(update.Data.Update.Positions.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, x.Symbol), x.Symbol, x.Size, update.Data.EventTime)
+                onAccountUpdate: update => handler(update.ToType(update.Data.Update.Positions.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, x.Symbol), x.Symbol, x.Size, update.Data.EventTime)
                 {
                     AverageOpenPrice = x.EntryPrice,
                     PositionMode = SharedPositionMode.HedgeMode,

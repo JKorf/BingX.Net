@@ -26,7 +26,8 @@ namespace BingX.Net
                 "https://www.bingx.com",
                 ["https://bingx-api.github.io/docs"],
                 PlatformType.CryptoCurrencyExchange,
-                CentralizationType.Centralized
+                CentralizationType.Centralized,
+                BingXEnvironment.All
                 );
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace BingX.Net.Clients.SpotApi
         public TradingMode[] SupportedTradingModes { get; } = new[] { TradingMode.Spot };
         public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
         public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
-        public SharedClientInfo Discover() => SharedUtils.GetClientInfo(this);
+        public SharedClientInfo Discover() => SharedUtils.GetClientInfo(BingXExchange.Metadata, this);
 
         #region Ticker client
         SubscribeTickerOptions ITickerSocketClient.SubscribeTickerOptions { get; } = new SubscribeTickerOptions(_exchangeName);
@@ -32,7 +32,7 @@ namespace BingX.Net.Clients.SpotApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.ToType(new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol), update.Data.Symbol, update.Data.LastPrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.Volume, decimal.Parse(update.Data.PriceChangePercentage.Substring(0, update.Data.PriceChangePercentage.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture))
+            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.ToType(new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.LastPrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.Volume, decimal.Parse(update.Data.PriceChangePercentage.Substring(0, update.Data.PriceChangePercentage.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture))
             {
                 QuoteVolume = update.Data.QuoteVolume
             })), ct).ConfigureAwait(false);
@@ -93,7 +93,7 @@ namespace BingX.Net.Clients.SpotApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
+            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
 
             return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
         }
@@ -128,7 +128,7 @@ namespace BingX.Net.Clients.SpotApi
             var result = await SubscribeToOrderUpdatesAsync(
                 update => handler(update.ToType(new[] {
                     new SharedSpotOrder(
-                        ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
+                        ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol),
                         update.Data.Symbol,
                         update.Data.OrderId.ToString(),
                         ParseOrderType(update.Data.Type),
@@ -146,7 +146,7 @@ namespace BingX.Net.Clients.SpotApi
                         IsTriggerOrder = update.Data.Type == OrderType.StopLimit || update.Data.Type == OrderType.StopMarket || update.Data.Type == OrderType.TriggerLimit || update.Data.Type == OrderType.TriggerMarket,
                         LastTrade = update.Data.LastFillQuantity > 0 ? 
                             new SharedUserTrade(
-                                ExchangeSymbolCache.ParseSymbol(_topicId, update.Data.Symbol),
+                                ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol),
                                 update.Data.Symbol,
                                 update.Data.OrderId.ToString(),
                                 update.Data.TradeId.ToString(),
