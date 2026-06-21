@@ -292,7 +292,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Cancel Replace Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXCancelReplaceResult>> CancelReplaceOrderAsync(
+        public async Task<HttpResult<BingXCancelReplaceResult>> CancelReplaceOrderAsync(
             long? orderId,
             string? clientOrderId,
             CancelReplaceMode mode,
@@ -328,40 +328,39 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             CancelRestrictions? restrictions = null,
             CancellationToken ct = default)
         {
-
-            var parameter = new ParameterCollection()
+            var parameter = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameter.AddOptional("cancelOrderId", orderId);
-            parameter.AddOptional("cancelClientOrderId", clientOrderId);
+            parameter.Add("cancelOrderId", orderId);
+            parameter.Add("cancelClientOrderId", clientOrderId);
 
-            parameter.AddEnum("cancelReplaceMode", mode);
-            parameter.AddOptionalEnum("cancelRestrictions", restrictions);
+            parameter.Add("cancelReplaceMode", mode);
+            parameter.Add("cancelRestrictions", restrictions);
 
-            parameter.AddEnum("side", side);
-            parameter.AddEnum("type", type);
-            parameter.AddEnum("positionSide", positionSide);
-            parameter.AddOptional("reduceOnly", reduceOnly);
-            parameter.AddOptional("quantity", quantity);
-            parameter.AddOptional("price", price);
-            parameter.AddOptional("stopPrice", stopPrice);
-            parameter.AddOptional("priceRate", priceRate);
-            parameter.AddOptionalEnum("timeInForce", timeInForce);
-            parameter.AddOptional("closePosition", closePosition?.ToString().ToLowerInvariant());
-            parameter.AddOptional("activationPrice", triggerPrice);
-            parameter.AddOptional("stopGuaranteed", stopGuaranteed);
-            parameter.AddOptionalEnum("workingType", workingType);
-            parameter.AddOptional("clientOrderId", newClientOrderId);
+            parameter.Add("side", side);
+            parameter.Add("type", type);
+            parameter.Add("positionSide", positionSide);
+            parameter.Add("reduceOnly", reduceOnly);
+            parameter.Add("quantity", quantity);
+            parameter.Add("price", price);
+            parameter.Add("stopPrice", stopPrice);
+            parameter.Add("priceRate", priceRate);
+            parameter.Add("timeInForce", timeInForce);
+            parameter.Add("closePosition", closePosition?.ToString().ToLowerInvariant());
+            parameter.Add("activationPrice", triggerPrice);
+            parameter.Add("stopGuaranteed", stopGuaranteed);
+            parameter.Add("workingType", workingType);
+            parameter.Add("clientOrderId", newClientOrderId);
 
             if (stopLossType != null)
             {
-                var stopLossParams = new ParameterCollection();
-                stopLossParams.AddEnum("type", stopLossType.Value);
-                stopLossParams.AddOptional("stopPrice", stopLossStopPrice);
-                stopLossParams.AddOptional("price", stopLossPrice);
-                stopLossParams.AddOptionalEnum("workingType", stopLossTriggerType);
-                stopLossParams.AddOptional("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
+                var stopLossParams = new Parameters(BingXExchange._parameterSerializationSettings);
+                stopLossParams.Add("type", stopLossType.Value);
+                stopLossParams.Add("stopPrice", stopLossStopPrice);
+                stopLossParams.Add("price", stopLossPrice);
+                stopLossParams.Add("workingType", stopLossTriggerType);
+                stopLossParams.Add("stopGuaranteed", stopLossStopGuaranteed?.ToString().ToLowerInvariant());
                 var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(stopLossParams);
                 json = json.Replace("\u0022", "\"");
                 parameter.Add("stopLoss", json);
@@ -369,18 +368,18 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             if (takeProfitType != null)
             {
-                var takeProfitParams = new ParameterCollection();
-                takeProfitParams.AddEnum("type", takeProfitType.Value);
-                takeProfitParams.AddOptional("stopPrice", takeProfitStopPrice);
-                takeProfitParams.AddOptional("price", takeProfitPrice);
-                takeProfitParams.AddOptionalEnum("workingType", takeProfitTriggerType);
-                takeProfitParams.AddOptional("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
+                var takeProfitParams = new Parameters(BingXExchange._parameterSerializationSettings);
+                takeProfitParams.Add("type", takeProfitType.Value);
+                takeProfitParams.Add("stopPrice", takeProfitStopPrice);
+                takeProfitParams.Add("price", takeProfitPrice);
+                takeProfitParams.Add("workingType", takeProfitTriggerType);
+                takeProfitParams.Add("stopGuaranteed", takeProfitStopGuaranteed?.ToString().ToLowerInvariant());
                 var json = new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(takeProfitParams);
                 json = json.Replace("\u0022", "\"");
                 parameter.Add("takeProfit", json);
             }
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/swap/v1/trade/cancelReplace", BingXExchange.RateLimiter.RestAccount2, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/swap/v1/trade/cancelReplace", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey), requestBodyFormat: RequestBodyFormat.Json);
             var result = await _baseClient.SendAsync<BingXCancelReplaceResult>(request, parameter, ct, additionalHeaders: new Dictionary<string, string>
                  {

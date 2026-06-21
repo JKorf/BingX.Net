@@ -241,7 +241,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="quoteQuantity">["<c>quoteOrderQty</c>"] Quantity in quote asset</param>
         /// <param name="restrictions">["<c>restrictions</c>"] Cancel restrictions</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXCancelReplaceResult>> CancelReplaceOrderAsync(
+        Task<HttpResult<BingXCancelReplaceResult>> CancelReplaceOrderAsync(
             long? orderId,
             string? clientOrderId,
             CancelReplaceMode mode,
