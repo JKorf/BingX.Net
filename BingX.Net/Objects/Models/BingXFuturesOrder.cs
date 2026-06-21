@@ -74,6 +74,11 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("clientOrderID")]
         public string? ClientOrderId { get; set; }
+        [JsonInclude, JsonPropertyName("clientOrderId")]
+        internal string? ClientOrderIdInt
+        {
+            set => ClientOrderId = value;
+        }
         /// <summary>
         /// ["<c>stopGuaranteed</c>"] Stop guaranteed
         /// </summary>
