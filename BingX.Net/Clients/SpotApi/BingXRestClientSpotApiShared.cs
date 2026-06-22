@@ -255,7 +255,12 @@ namespace BingX.Net.Clients.SpotApi
                 if (!result.Success)
                     return HttpResult.Fail<SharedBalance[]>(result);
 
-                return HttpResult.Ok(result, result.Data.Select(x => new SharedBalance(x.Asset, x.Free, x.Total)).ToArray());                
+                return HttpResult.Ok(result, result.Data.Select(x => 
+                    new SharedBalance(
+                        SupportedTradingModes, 
+                        x.Asset,
+                        x.Free,
+                        x.Total)).ToArray());                
             }
             else
             {
@@ -263,7 +268,12 @@ namespace BingX.Net.Clients.SpotApi
                 if (!result.Success)
                     return HttpResult.Fail<SharedBalance[]>(result);
 
-                return HttpResult.Ok(result, result.Data.Select(x => new SharedBalance(x.Asset, x.Free, x.Total)).ToArray());
+                return HttpResult.Ok(result, result.Data.Select(x => 
+                    new SharedBalance(
+                        SupportedTradingModes, 
+                        x.Asset,
+                        x.Free, 
+                        x.Total)).ToArray());
             }
         
                 

@@ -963,7 +963,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return HttpResult.Fail<SharedBalance[]>(result);
 
             return HttpResult.Ok(result, result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(x => 
-                new SharedBalance(x.Asset, x.AvailableMargin ?? 0, x.Equity ?? 0)).ToArray());
+                new SharedBalance(
+                        SupportedTradingModes, 
+                        x.Asset,
+                        x.AvailableMargin ?? 0, 
+                        x.Equity ?? 0)).ToArray());
         
                 
         }

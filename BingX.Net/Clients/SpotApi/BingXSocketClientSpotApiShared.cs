@@ -109,7 +109,12 @@ namespace BingX.Net.Clients.SpotApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var result = await SubscribeToBalanceUpdatesAsync(
-                update => handler(update.ToType(update.Data.EventData.Balances.Select(x => new SharedBalance(x.Asset, x.Total, x.Total + x.Locked)).ToArray())),
+                update => handler(update.ToType(update.Data.EventData.Balances.Select(x => 
+                    new SharedBalance(
+                        SupportedTradingModes, 
+                        x.Asset, 
+                        x.Total,
+                        x.Total + x.Locked)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);

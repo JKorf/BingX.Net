@@ -125,7 +125,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(
-                onAccountUpdate: update => handler(update.ToType(update.Data.Update.Balances.Select(x => new SharedBalance(x.Asset, x.BalanceExIsolatedMargin, x.Balance)).ToArray())),
+                onAccountUpdate: update => handler(update.ToType(update.Data.Update.Balances.Select(x => 
+                    new SharedBalance(
+                        SupportedTradingModes, 
+                        x.Asset,
+                        x.BalanceExIsolatedMargin,
+                        x.Balance)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);

@@ -255,11 +255,7 @@ namespace BingX.Net.Clients.SpotApi
             };
 
             var lk = listenKey ?? lease!.Token.Token;
-            var result = await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + lk, subscription, ct).ConfigureAwait(false);
-            if (!result.Success && lease != null)
-                await lease.ReleaseAsync().ConfigureAwait(false);
-
-            return result;
+            return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + lk, subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -291,11 +287,7 @@ namespace BingX.Net.Clients.SpotApi
             {
                 TokenLease = lease
             };
-            var result = await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + lk, subscription, ct).ConfigureAwait(false);
-            if (!result.Success && lease != null)
-                await lease.ReleaseAsync().ConfigureAwait(false);
-
-            return result;
+            return await SubscribeAsync(BaseAddress.AppendPath("market") + "?listenKey=" + lk, subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
