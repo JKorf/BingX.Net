@@ -316,7 +316,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 TokenLease = lease
             };
             var lk = listenKey ?? lease!.Token.Token;
-            return await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + lk, subscription, ct).ConfigureAwait(false); return
+            return await SubscribeAsync(BaseAddress.AppendPath("swap-market") + "?listenKey=" + lk, subscription, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
