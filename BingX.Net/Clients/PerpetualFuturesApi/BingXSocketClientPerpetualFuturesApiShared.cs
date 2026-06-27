@@ -44,7 +44,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 QuoteVolume = update.Data.QuoteVolume
             })), ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -65,7 +65,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 Side = x.BuyerIsMaker ? SharedOrderSide.Sell : SharedOrderSide.Buy,
             }).ToArray())), ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -95,7 +95,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 }
             }, ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
         #endregion
 
@@ -111,7 +111,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -133,7 +133,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                         x.Balance)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -175,7 +175,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 })),
                 ct: ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         private SharedOrderStatus ParseOrderStatus(OrderStatus status)
@@ -230,7 +230,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 }).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion

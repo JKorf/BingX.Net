@@ -37,7 +37,7 @@ namespace BingX.Net.Clients.SpotApi
                 QuoteVolume = update.Data.QuoteVolume
             })), ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -58,7 +58,7 @@ namespace BingX.Net.Clients.SpotApi
                 Side = update.Data.BuyerIsMaker ? SharedOrderSide.Sell : SharedOrderSide.Buy,
             } })), ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -79,7 +79,7 @@ namespace BingX.Net.Clients.SpotApi
             var result = await SubscribeToKlineUpdatesAsync(symbol, interval, update => handler(update.ToType(
                 new SharedKline(request.Symbol, symbol, update.Data.Kline.OpenTime, update.Data.Kline.ClosePrice, update.Data.Kline.HighPrice, update.Data.Kline.LowPrice, update.Data.Kline.OpenPrice, update.Data.Kline.Volume))), ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
         #endregion
 
@@ -95,7 +95,7 @@ namespace BingX.Net.Clients.SpotApi
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -117,7 +117,7 @@ namespace BingX.Net.Clients.SpotApi
                         x.Total + x.Locked)).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         #endregion
@@ -167,7 +167,7 @@ namespace BingX.Net.Clients.SpotApi
                 })),
                 ct: ct).ConfigureAwait(false);
 
-            return new WebSocketResult<UpdateSubscription>(Exchange, result.Data, result.Error);
+            return result;
         }
 
         private SharedOrderStatus ParseOrderStatus(OrderStatus status)
