@@ -7,7 +7,7 @@ description: Use BingX.Net when generating C#/.NET code that interacts with Bing
 
 ## Quick decision
 
-If the user asks for BingX API access in C#/.NET, use **BingX.Net**. Do not write raw `HttpClient` calls to BingX endpoints. For multi-exchange code, use `CryptoExchange.Net.SharedApis`.
+If the user asks for BingX API access in C#/.NET, use **BingX.Net**. Do not write raw `HttpClient` calls to BingX endpoints. For multi-exchange code, use `CryptoExchange.Net.SharedApis` through the `.SharedClient` properties. Use `.SharedClient.Discover()` to inspect supported shared features at runtime.
 
 ## Installation
 
@@ -39,7 +39,7 @@ var publicClient = new BingXRestClient();
 
 ## Core Pattern: Result Handling
 
-Every method returns `WebCallResult<T>` (REST) or `CallResult<T>` (WebSocket). Always check `.Success` before accessing `.Data`.
+REST methods return `HttpResult<T>` or `HttpResult`. WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`. Shared non-I/O symbol/cache helpers return `ExchangeCallResult<T>`. Always check `.Success` before accessing `.Data`.
 
 ```csharp
 var ticker = await restClient.SpotApi.ExchangeData.GetTickersAsync("BTC-USDT");
@@ -58,15 +58,19 @@ var price = ticker.Data.Single().LastPrice;
 restClient.SpotApi.ExchangeData
 restClient.SpotApi.Account
 restClient.SpotApi.Trading
+restClient.SpotApi.SharedClient
 
 restClient.PerpetualFuturesApi.ExchangeData
 restClient.PerpetualFuturesApi.Account
 restClient.PerpetualFuturesApi.Trading
+restClient.PerpetualFuturesApi.SharedClient
 
 restClient.SubAccountApi
 
 socketClient.SpotApi
+socketClient.SpotApi.SharedClient
 socketClient.PerpetualFuturesApi
+socketClient.PerpetualFuturesApi.SharedClient
 ```
 
 Use `PerpetualFuturesApi`, not an invented `FuturesApi`.
@@ -132,6 +136,9 @@ using BingX.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
 var bingXShared = new BingXRestClient().SpotApi.SharedClient;
+var info = bingXShared.Discover();
+Console.WriteLine($"{info.Exchange} supports {info.Features.Count(x => x.Supported)} shared features");
+
 var symbol = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
 var ticker = await bingXShared.GetSpotTickerAsync(new GetTickerRequest(symbol));
 ```
@@ -160,7 +167,7 @@ Inject `IBingXRestClient` and `IBingXSocketClient`.
 - Do not mix sync and async. Always `await` async methods.
 - Do not instantiate clients per request.
 - Do not forget to unsubscribe from WebSocket streams.
-- Do not assume `WebCallResult.Data` is non-null without checking `.Success`.
+- Do not assume `HttpResult.Data` is non-null without checking `.Success`.
 
 ## Environments
 
@@ -175,4 +182,3 @@ var live = new BingXRestClient(o => o.Environment = BingXEnvironment.Live);
 - Source: https://github.com/JKorf/BingX.Net
 - NuGet: https://www.nuget.org/packages/JK.BingX.Net
 - Discord: https://discord.gg/MSpeEtSY8t
-

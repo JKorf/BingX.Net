@@ -24,9 +24,9 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("s")]
         public string Symbol { get; set; } = string.Empty;
         /// <summary>
-        /// ["<c>C</c>"] Client order id
+        /// ["<c>c</c>"] Client order id
         /// </summary>
-        [JsonPropertyName("C")]
+        [JsonPropertyName("c")]
         public string? ClientOrderId { get; set; }
         /// <summary>
         /// ["<c>S</c>"] Side

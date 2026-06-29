@@ -28,19 +28,19 @@ namespace BingX.Net.Clients.SpotApi
         #endregion
 
         #region constructor/destructor
-        internal BingXRestClientSpotApi(ILogger logger, HttpClient? httpClient, BingXRestOptions options)
-            : base(logger, httpClient, options, options.SpotOptions)
+        internal BingXRestClientSpotApi(ILoggerFactory? loggerFactory, HttpClient? httpClient, BingXRestOptions options)
+            : base(loggerFactory, httpClient, options, options.SpotOptions)
         {
             Account = new BingXRestClientSpotApiAccount(this);
-            ExchangeData = new BingXRestClientSpotApiExchangeData(logger, this);
-            Trading = new BingXRestClientSpotApiTrading(logger, this);
+            ExchangeData = new BingXRestClientSpotApiExchangeData(_logger, this);
+            Trading = new BingXRestClientSpotApiTrading(_logger, this);
         }
         #endregion
 
         protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.SpotErrors);
 
         /// <inheritdoc />
-        protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
+        protected override Task<HttpResult<DateTime>> GetServerTimestampAsync()
             => ExchangeData.GetServerTimeAsync();
 
         /// <inheritdoc />

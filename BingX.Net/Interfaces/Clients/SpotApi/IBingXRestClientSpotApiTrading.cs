@@ -33,7 +33,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="timeInForce">["<c>timeInForce</c>"] Time in force</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, TimeInForce? timeInForce = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, TimeInForce? timeInForce = null, CancellationToken ct = default);
 
         /// <summary>
         /// Place multiple orders
@@ -48,7 +48,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="sync">["<c>sync</c>"] When false (default): Parallel order processing, all orders need to target the same symbol. true: sequential order processing, orders can target different symbols</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrder[]>> PlaceMultipleOrdersAsync(IEnumerable<BingXPlaceOrderRequest> orders, bool? sync = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOrder[]>> PlaceMultipleOrdersAsync(IEnumerable<BingXPlaceOrderRequest> orders, bool? sync = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel an active order
@@ -64,7 +64,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="clientOrderId">["<c>clientOrderID</c>"] Client order id, either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrder>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOrder>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel multiple active orders
@@ -81,7 +81,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="processPartialSuccess">When true the server will handle partially successful requests. When false the full request fails if any of the order cancellations fail.</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, bool? processPartialSuccess = null, CancellationToken ct = default);
+        Task<HttpResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, bool? processPartialSuccess = null, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all active orders on a symbol
@@ -95,7 +95,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrder[]>> CancelAllOrdersAsync(string symbol, CancellationToken ct = default);
+        Task<HttpResult<BingXOrder[]>> CancelAllOrdersAsync(string symbol, CancellationToken ct = default);
 
         /// <summary>
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
@@ -110,7 +110,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="cancelAfterSeconds">["<c>timeOut</c>"] Seconds after which to cancel all orders, between 10 and 120</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXCancelAfterResult>> CancelAllOrdersAfterAsync(bool activate, int cancelAfterSeconds, CancellationToken ct = default);
+        Task<HttpResult<BingXCancelAfterResult>> CancelAllOrdersAfterAsync(bool activate, int cancelAfterSeconds, CancellationToken ct = default);
 
         /// <summary>
         /// Get an order by orderId or clientOrderId
@@ -126,7 +126,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="clientOrderId">["<c>clientOrderID</c>"] Client order id, either this or orderId should be provided</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get open orders
@@ -140,7 +140,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="symbol">["<c>symbol</c>"] Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrderDetails[]>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOrderDetails[]>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get order history
@@ -161,7 +161,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="pageSize">["<c>pageSize</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get user trade history
@@ -182,7 +182,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<BingXUserTrade[]>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXUserTrade[]>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default);
 		
         /// <summary>
         /// Place a new OCO order
@@ -203,7 +203,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="aboveClientOrderId">["<c>aboveClientOrderId</c>"] Client order id for the limit order</param>
         /// <param name="belowClientOrderId">["<c>belowClientOrderId</c>"] Client order id for the stop limit order</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXOcoOrder[]>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOcoOrder[]>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default);
         
         /// <summary>
         /// Cancel an OCO order
@@ -217,7 +217,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="orderId">["<c>orderId</c>"] The order id. Either this or `clientOrderId` should be provided</param>
         /// <param name="clientOrderId">["<c>clientOrderId</c>"] The client order id. Either this or `orderId` should be provided</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXOrderId>> CancelOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOrderId>> CancelOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get a specific OCO order
@@ -231,7 +231,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="orderListId">["<c>orderListId</c>"] The order list id. Either this or `clientOrderId` should be provided</param>
         /// <param name="clientOrderId">["<c>clientOrderId</c>"] The client order id. Either this or `orderListId` should be provided</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get open OCO orders
@@ -245,7 +245,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="page">["<c>pageIndex</c>"] Page</param>
         /// <param name="pageSize">["<c>pageSize</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXOcoOrder[]>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
+        Task<HttpResult<BingXOcoOrder[]>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
 
         /// <summary>
         /// Get closed OCO orders
@@ -259,6 +259,6 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// <param name="page">["<c>pageIndex</c>"] Page</param>
         /// <param name="pageSize">["<c>pageSize</c>"] Page size</param>
         /// <param name="ct">Cancellation token</param>
-        Task<WebCallResult<BingXOcoOrder[]>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
+        Task<HttpResult<BingXOcoOrder[]>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default);
     }
 }

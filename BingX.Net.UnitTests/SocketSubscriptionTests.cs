@@ -68,7 +68,7 @@ namespace BingX.Net.UnitTests
                 OutputOriginalData = true
             }), logger);
 
-            var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-ws.bingx.com/market", "data");
+            var tester = new SocketSubscriptionValidator<BingXSocketClient>(client, "Subscriptions/PerpetualFutures", "wss://open-api-swap.bingx.com/swap-market", "data");
             await tester.ValidateConcurrentAsync<BingXFuturesKlineUpdate[]>(
                 (client, handler) => client.PerpetualFuturesApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.OneDay, handler),
                 (client, handler) => client.PerpetualFuturesApi.SubscribeToKlineUpdatesAsync("ETH-USDT", Enums.KlineInterval.OneHour, handler),

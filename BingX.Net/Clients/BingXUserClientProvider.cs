@@ -1,6 +1,7 @@
 ﻿using BingX.Net.Interfaces.Clients;
 using BingX.Net.Objects.Options;
 using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Clients;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -10,18 +11,17 @@ using System.Net.Http;
 namespace BingX.Net.Clients
 {
     /// <inheritdoc />
-    public class BingXUserClientProvider : IBingXUserClientProvider
-    {
-        private ConcurrentDictionary<string, IBingXRestClient> _restClients = new ConcurrentDictionary<string, IBingXRestClient>();
-        private ConcurrentDictionary<string, IBingXSocketClient> _socketClients = new ConcurrentDictionary<string, IBingXSocketClient>();
-
-        private readonly IOptions<BingXRestOptions> _restOptions;
-        private readonly IOptions<BingXSocketOptions> _socketOptions;
-        private readonly HttpClient _httpClient;
-        private readonly ILoggerFactory? _loggerFactory;
-
+    public class BingXUserClientProvider : UserClientProvider<
+        IBingXRestClient,
+        IBingXSocketClient,
+        BingXRestOptions,
+        BingXSocketOptions,
+        BingXCredentials,
+        BingXEnvironment
+        >, IBingXUserClientProvider
+    {        
         /// <inheritdoc />
-        public string ExchangeName => BingXExchange.ExchangeName;
+        public override string ExchangeName => BingXExchange.ExchangeName;
 
         /// <summary>
         /// ctor
@@ -40,97 +40,15 @@ namespace BingX.Net.Clients
             ILoggerFactory? loggerFactory,
             IOptions<BingXRestOptions> restOptions,
             IOptions<BingXSocketOptions> socketOptions)
+            : base(httpClient, loggerFactory, restOptions, socketOptions)
         {
-            _httpClient = httpClient ?? new HttpClient();
-            _httpClient.Timeout = restOptions.Value.RequestTimeout;
-            _loggerFactory = loggerFactory;
-            _restOptions = restOptions;
-            _socketOptions = socketOptions;
         }
 
         /// <inheritdoc />
-        public void InitializeUserClient(string userIdentifier, BingXCredentials credentials, BingXEnvironment? environment = null)
-        {
-            CreateRestClient(userIdentifier, credentials, environment);
-            CreateSocketClient(userIdentifier, credentials, environment);
-        }
-
+        protected override IBingXRestClient ConstructRestClient(HttpClient client, ILoggerFactory? loggerFactory, IOptions<BingXRestOptions> options)
+            => new BingXRestClient(client, loggerFactory, options);
         /// <inheritdoc />
-        public void ClearUserClients(string userIdentifier)
-        {
-            _restClients.TryRemove(userIdentifier, out _);
-            _socketClients.TryRemove(userIdentifier, out _);
-        }
-
-        /// <inheritdoc />
-        public IBingXRestClient GetRestClient(string userIdentifier, BingXCredentials? credentials = null, BingXEnvironment? environment = null)
-        {
-            if (!_restClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
-                client = CreateRestClient(userIdentifier, credentials, environment);
-
-            return client;
-        }
-
-        /// <inheritdoc />
-        public IBingXSocketClient GetSocketClient(string userIdentifier, BingXCredentials? credentials = null, BingXEnvironment? environment = null)
-        {
-            if (!_socketClients.TryGetValue(userIdentifier, out var client) || client.Disposed)
-                client = CreateSocketClient(userIdentifier, credentials, environment);
-
-            return client;
-        }
-
-        private IBingXRestClient CreateRestClient(string userIdentifier, BingXCredentials? credentials, BingXEnvironment? environment)
-        {
-            var clientRestOptions = SetRestEnvironment(environment);
-            var client = new BingXRestClient(_httpClient, _loggerFactory, clientRestOptions);
-            if (credentials != null)
-            {
-                client.SetApiCredentials(credentials);
-                _restClients[userIdentifier] = client;
-            }
-            return client;
-        }
-
-        private IBingXSocketClient CreateSocketClient(string userIdentifier, BingXCredentials? credentials, BingXEnvironment? environment)
-        {
-            var clientSocketOptions = SetSocketEnvironment(environment);
-            var client = new BingXSocketClient(clientSocketOptions!, _loggerFactory);
-            if (credentials != null)
-            {
-                client.SetApiCredentials(credentials);
-                _socketClients[userIdentifier] = client;
-            }
-            return client;
-        }
-
-        private IOptions<BingXRestOptions> SetRestEnvironment(BingXEnvironment? environment)
-        {
-            if (environment == null)
-                return _restOptions;
-
-            var newRestClientOptions = new BingXRestOptions();
-            var restOptions = _restOptions.Value.Set(newRestClientOptions);
-            newRestClientOptions.Environment = environment;
-            return Options.Create(newRestClientOptions);
-        }
-
-        private IOptions<BingXSocketOptions> SetSocketEnvironment(BingXEnvironment? environment)
-        {
-            if (environment == null)
-                return _socketOptions;
-
-            var newSocketClientOptions = new BingXSocketOptions();
-            var restOptions = _socketOptions.Value.Set(newSocketClientOptions);
-            newSocketClientOptions.Environment = environment;
-            return Options.Create(newSocketClientOptions);
-        }
-
-        private static T ApplyOptionsDelegate<T>(Action<T>? del) where T : new()
-        {
-            var opts = new T();
-            del?.Invoke(opts);
-            return opts;
-        }
+        protected override IBingXSocketClient ConstructSocketClient(ILoggerFactory? loggerFactory, IOptions<BingXSocketOptions> options)
+            => new BingXSocketClient(options, loggerFactory);
     }
 }

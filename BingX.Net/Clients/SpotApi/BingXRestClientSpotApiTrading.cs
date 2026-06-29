@@ -30,22 +30,22 @@ namespace BingX.Net.Clients.SpotApi
         #region Place Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, TimeInForce? timeInForce = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrder>> PlaceOrderAsync(string symbol, OrderSide side, OrderType type, decimal? quantity = null, decimal? price = null, decimal? quoteQuantity = null, decimal? stopPrice = null, string? clientOrderId = null, TimeInForce? timeInForce = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameters.AddEnum("side", side);
-            parameters.AddEnum("type", type);
-            parameters.AddOptional("quantity", quantity);
-            parameters.AddOptional("price", price);
-            parameters.AddOptional("quoteOrderQty", quoteQuantity);
-            parameters.AddOptional("stopPrice", stopPrice);
-            parameters.AddOptional("newClientOrderId", clientOrderId);
-            parameters.AddOptionalEnum("timeInForce", timeInForce);
+            parameters.Add("side", side);
+            parameters.Add("type", type);
+            parameters.Add("quantity", quantity);
+            parameters.Add("price", price);
+            parameters.Add("quoteOrderQty", quoteQuantity);
+            parameters.Add("stopPrice", stopPrice);
+            parameters.Add("newClientOrderId", clientOrderId);
+            parameters.Add("timeInForce", timeInForce);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/order", BingXExchange.RateLimiter.RestAccount2, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/trade/order", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXOrder>(request, parameters, ct,
                 additionalHeaders: new Dictionary<string, string>
@@ -60,22 +60,25 @@ namespace BingX.Net.Clients.SpotApi
         #region Place Multiple Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrder[]>> PlaceMultipleOrdersAsync(IEnumerable<BingXPlaceOrderRequest> orders, bool? sync = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrder[]>> PlaceMultipleOrdersAsync(IEnumerable<BingXPlaceOrderRequest> orders, bool? sync = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection()
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "data", new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext)).Serialize(orders) }
             };
-            parameters.AddOptional("sync", sync);
+            parameters.Add("sync", sync);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/batchOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/trade/batchOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXOrderWrapper>(request, parameters, ct,
                 additionalHeaders: new Dictionary<string, string>
                  {
                      { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
                  }).ConfigureAwait(false);
-            return result.As<BingXOrder[]>(result.Data?.Orders);
+            if (!result.Success)
+                return HttpResult.Fail<BingXOrder[]>(result);
+
+            return HttpResult.Ok(result, result.Data.Orders);
         }
 
         #endregion
@@ -83,15 +86,15 @@ namespace BingX.Net.Clients.SpotApi
         #region Cancel Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrder>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrder>> CancelOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
         {
-            var parameter = new ParameterCollection()
+            var parameter = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameter.AddOptional("orderId", orderId);
-            parameter.AddOptional("clientOrderID", clientOrderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/cancel", BingXExchange.RateLimiter.RestAccount2, 1, true, 
+            parameter.Add("orderId", orderId);
+            parameter.Add("clientOrderID", clientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/trade/cancel", BingXExchange.RateLimiter.RestAccount2, 1, true, 
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXOrder>(request, parameter, ct).ConfigureAwait(false);
             return result;
@@ -102,17 +105,17 @@ namespace BingX.Net.Clients.SpotApi
         #region Cancel Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, bool? processPartialSuccess = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXCancelsResult>> CancelOrdersAsync(string symbol, IEnumerable<long>? orderIds = null, IEnumerable<string>? clientOrderIds = null, bool? processPartialSuccess = null, CancellationToken ct = default)
         {
-            var parameter = new ParameterCollection()
+            var parameter = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameter.AddOptional("process", processPartialSuccess == null ? null : processPartialSuccess == true ? 1 : 0);
-            parameter.AddOptional("orderIds", orderIds == null? null: string.Join(",", orderIds));
-            parameter.AddOptional("clientOrderIDs", clientOrderIds == null ? null : string.Join(",", clientOrderIds));
+            parameter.Add("process", processPartialSuccess == null ? null : processPartialSuccess == true ? 1 : 0);
+            parameter.Add("orderIds", orderIds == null? null: string.Join(",", orderIds));
+            parameter.Add("clientOrderIDs", clientOrderIds == null ? null : string.Join(",", clientOrderIds));
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/cancelOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/trade/cancelOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXCancelsResult>(request, parameter, ct).ConfigureAwait(false);
             return result;
@@ -123,17 +126,20 @@ namespace BingX.Net.Clients.SpotApi
         #region Cancel All Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrder[]>> CancelAllOrdersAsync(string symbol, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrder[]>> CancelAllOrdersAsync(string symbol, CancellationToken ct = default)
         {
-            var parameter = new ParameterCollection()
+            var parameter = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/cancelOpenOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/trade/cancelOpenOrders", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXOrderWrapper>(request, parameter, ct).ConfigureAwait(false);
-            return result.As<BingXOrder[]>(result.Data?.Orders);
+            if (!result.Success)
+                return HttpResult.Fail<BingXOrder[]>(result);
+
+            return HttpResult.Ok(result, result.Data.Orders);
         }
 
         #endregion
@@ -141,15 +147,15 @@ namespace BingX.Net.Clients.SpotApi
         #region Cancel All Orders After
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXCancelAfterResult>> CancelAllOrdersAfterAsync(bool activate, int cancelAfterSeconds, CancellationToken ct = default)
+        public async Task<HttpResult<BingXCancelAfterResult>> CancelAllOrdersAfterAsync(bool activate, int cancelAfterSeconds, CancellationToken ct = default)
         {
-            var parameter = new ParameterCollection()
+            var parameter = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "type", activate ? "ACTIVATE": "CLOSE" },
                 { "timeOut", cancelAfterSeconds }
             };
 
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/trade/cancelAllAfter", BingXExchange.RateLimiter.RestAccount1, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/trade/cancelAllAfter", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXCancelAfterResult>(request, parameter, ct).ConfigureAwait(false);
         }
@@ -159,16 +165,16 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrderDetails>> GetOrderAsync(string symbol, long? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol }
             };
-            parameters.AddOptional("orderId", orderId);
-            parameters.AddOptional("clientOrderID", clientOrderId);
+            parameters.Add("orderId", orderId);
+            parameters.Add("clientOrderID", clientOrderId);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/trade/query", BingXExchange.RateLimiter.RestAccount1, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/trade/query", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             return await _baseClient.SendAsync<BingXOrderDetails>(request, parameters, ct).ConfigureAwait(false);
         }
@@ -178,15 +184,18 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Open Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrderDetails[]>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrderDetails[]>> GetOpenOrdersAsync(string? symbol = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("symbol", symbol);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("symbol", symbol);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/trade/openOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/trade/openOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXOrderDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<BingXOrderDetails[]>(result.Data?.Orders);
+            if (!result.Success)
+                return HttpResult.Fail<BingXOrderDetails[]>(result);
+
+            return HttpResult.Ok(result, result.Data.Orders);
         }
 
         #endregion
@@ -194,22 +203,25 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrderDetails[]>> GetOrdersAsync(string? symbol = null, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("symbol", symbol);
-            parameters.AddOptional("orderId", orderId);
-            parameters.AddOptionalEnum("status", status);
-            parameters.AddOptionalEnum("type", type);
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("pageIndex", page);
-            parameters.AddOptional("pageSize", pageSize);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("symbol", symbol);
+            parameters.Add("orderId", orderId);
+            parameters.Add("status", status);
+            parameters.Add("type", type);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("pageIndex", page);
+            parameters.Add("pageSize", pageSize);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/trade/historyOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/trade/historyOrders", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXOrderDetailsWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<BingXOrderDetails[]>(result.Data?.Orders);
+            if (!result.Success)
+                return HttpResult.Fail<BingXOrderDetails[]>(result);
+
+            return HttpResult.Ok(result, result.Data.Orders);
         }
 
         #endregion
@@ -217,22 +229,25 @@ namespace BingX.Net.Clients.SpotApi
         #region Get User Trades
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXUserTrade[]>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXUserTrade[]>> GetUserTradesAsync(string symbol, long? orderId = null, OrderStatus? status = null, OrderType? type = null, DateTime? startTime = null, DateTime? endTime = null, long? fromId = null, int? limit = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("symbol", symbol);
-            parameters.AddOptional("orderId", orderId);
-            parameters.AddOptionalEnum("status", status);
-            parameters.AddOptionalEnum("type", type);
-            parameters.AddOptionalMilliseconds("startTime", startTime);
-            parameters.AddOptionalMilliseconds("endTime", endTime);
-            parameters.AddOptional("fromId", fromId);
-            parameters.AddOptional("limit", limit);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("symbol", symbol);
+            parameters.Add("orderId", orderId);
+            parameters.Add("status", status);
+            parameters.Add("type", type);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
+            parameters.Add("fromId", fromId);
+            parameters.Add("limit", limit);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/trade/myTrades", BingXExchange.RateLimiter.RestAccount1, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/trade/myTrades", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
             var result = await _baseClient.SendAsync<BingXUserTradeWrapper>(request, parameters, ct).ConfigureAwait(false);
-            return result.As<BingXUserTrade[]>(result.Data?.Trades);
+            if (!result.Success)
+                return HttpResult.Fail<BingXUserTrade[]>(result);
+
+            return HttpResult.Ok(result, result.Data.Trades);
         }
 
         #endregion
@@ -240,19 +255,19 @@ namespace BingX.Net.Clients.SpotApi
         #region Place Oco Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOcoOrder[]>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOcoOrder[]>> PlaceOcoOrderAsync(string symbol, OrderSide side, decimal quantity, decimal limitPrice, decimal orderPrice, decimal triggerPrice, string? clientOrderId = null, string? aboveClientOrderId = null, string? belowClientOrderId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             parameters.Add("symbol", symbol);
-            parameters.AddEnum("side", side);
+            parameters.Add("side", side);
             parameters.Add("quantity", quantity);
             parameters.Add("limitPrice", limitPrice);
             parameters.Add("orderPrice", orderPrice);
             parameters.Add("triggerPrice", triggerPrice);
-            parameters.AddOptional("listClientOrderId", clientOrderId);
-            parameters.AddOptional("aboveClientOrderId", aboveClientOrderId);
-            parameters.AddOptional("belowClientOrderId", belowClientOrderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/oco/order", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            parameters.Add("listClientOrderId", clientOrderId);
+            parameters.Add("aboveClientOrderId", aboveClientOrderId);
+            parameters.Add("belowClientOrderId", belowClientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/oco/order", BingXExchange.RateLimiter.RestAccount1, 1, true);
             var result = await _baseClient.SendAsync<BingXOcoOrder[]>(request, parameters, ct, additionalHeaders: new Dictionary<string, string>
                  {
                      { "X-SOURCE-KEY", LibraryHelpers.GetClientReference(() => _baseClient.ClientOptions.BrokerId, _baseClient.Exchange) }
@@ -265,12 +280,12 @@ namespace BingX.Net.Clients.SpotApi
         #region Cancel Oco Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOrderId>> CancelOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOrderId>> CancelOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("orderId", orderId);
-            parameters.AddOptional("clientOrderId", clientOrderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Post, "/openApi/spot/v1/oco/cancel", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("orderId", orderId);
+            parameters.Add("clientOrderId", clientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Post, _baseClient.BaseAddress, "/openApi/spot/v1/oco/cancel", BingXExchange.RateLimiter.RestAccount1, 1, true);
             var result = await _baseClient.SendAsync<BingXOrderId>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -280,12 +295,12 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Oco Order
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            parameters.AddOptional("orderListId", orderListId);
-            parameters.AddOptional("clientOrderId", clientOrderId);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/oco/orderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("orderListId", orderListId);
+            parameters.Add("clientOrderId", clientOrderId);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/oco/orderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
             var result = await _baseClient.SendAsync<BingXOcoOrder[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -295,12 +310,12 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Open Oco Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOcoOrder[]>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOcoOrder[]>> GetOpenOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             parameters.Add("pageIndex", page);
             parameters.Add("pageSize", pageSize);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/oco/openOrderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/oco/openOrderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
             var result = await _baseClient.SendAsync<BingXOcoOrder[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -310,12 +325,12 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Closed Oco Orders
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXOcoOrder[]>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOcoOrder[]>> GetClosedOcoOrdersAsync(int page, int pageSize, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             parameters.Add("pageIndex", page);
             parameters.Add("pageSize", pageSize);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/spot/v1/oco/historyOrderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/oco/historyOrderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
             var result = await _baseClient.SendAsync<BingXOcoOrder[]>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }

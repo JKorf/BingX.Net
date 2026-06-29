@@ -177,7 +177,7 @@ namespace BingX.Net.UnitTests
         }
 
 
-        private bool IsAuthenticated(WebCallResult result)
+        private bool IsAuthenticated(IHttpResult result)
         {
             return result.RequestUrl.Contains("signature") || result.RequestBody?.Contains("signature") == true;
         }

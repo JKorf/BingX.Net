@@ -23,8 +23,8 @@ namespace BingX.Net.Clients.Apis
         #endregion
 
         #region constructor/destructor
-        internal BingXRestClientSubAccountApi(BingXRestClient baseClient, ILogger logger, HttpClient? httpClient, BingXRestOptions options)
-            : base(logger, httpClient, options, options.SpotOptions)
+        internal BingXRestClientSubAccountApi(BingXRestClient baseClient, ILoggerFactory? loggerFactory, HttpClient? httpClient, BingXRestOptions options)
+            : base(loggerFactory, httpClient, options, options.SpotOptions)
         {
             _baseClient = baseClient;
         }
@@ -33,10 +33,10 @@ namespace BingX.Net.Clients.Apis
         #region Get Api Key Permissions
 
         /// <inheritdoc />
-        public async Task<WebCallResult<BingXKeyPermissions>> GetApiKeyPermissionsAsync(CancellationToken ct = default)
+        public async Task<HttpResult<BingXKeyPermissions>> GetApiKeyPermissionsAsync(CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
-            var request = _definitions.GetOrCreate(HttpMethod.Get, "/openApi/v1/account/apiPermissions", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, BaseAddress, "/openApi/v1/account/apiPermissions", BingXExchange.RateLimiter.RestAccount1, 1, true, limitGuard: new SingleLimitGuard(2, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding));
             var result = await SendRawAsync<BingXKeyPermissions>(request, parameters, ct).ConfigureAwait(false);
             return result;
         }
@@ -47,7 +47,7 @@ namespace BingX.Net.Clients.Apis
         protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.SpotErrors);
 
         /// <inheritdoc />
-        protected override Task<WebCallResult<DateTime>> GetServerTimestampAsync()
+        protected override Task<HttpResult<DateTime>> GetServerTimestampAsync()
             => _baseClient.SpotApi.ExchangeData.GetServerTimeAsync();
     }
 }

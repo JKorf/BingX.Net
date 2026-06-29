@@ -32,13 +32,12 @@ namespace BingX.Net.UnitTests
                     return bodyParams["signature"].ToString();
                 },
                 "8D0D3EA9B592BE3678C33332AB13E9102E093E67255921E15A581146C87C272F",
-                new Dictionary<string, object>
+                new Parameters(BingXExchange._parameterSerializationSettings)
                 {
                     { "recvWindow", 0 },
                     { "subAccountString", "abc12345" },
                 },
                 DateTimeConverter.ParseFromDouble(1696751142337),
-                true,
                 false);
         }
 

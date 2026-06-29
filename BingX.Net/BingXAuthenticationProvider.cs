@@ -21,11 +21,11 @@ namespace BingX.Net
             request.Headers ??= new Dictionary<string, string>();
             request.Headers.Add("X-BX-APIKEY", Credential.Key);
 
-            if (!request.Authenticated)
+            if (!request.RequestDefinition.Authenticated)
                 return;
 
             var timestamp = GetMillisecondTimestampLong(apiClient);
-            var parameters = request.GetPositionParameters() ?? new Dictionary<string, object>();
+            var parameters = request.GetPositionParameters() ?? new Parameters(BingXExchange._parameterSerializationSettings);
             parameters.Add("timestamp", timestamp);
             if (!parameters.ContainsKey("recvWindow"))
             {

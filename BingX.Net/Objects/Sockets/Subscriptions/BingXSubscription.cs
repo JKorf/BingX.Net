@@ -28,7 +28,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
             _handler = handler;
             _topic = listenId;
 
-            MessageRouter = MessageRouter.CreateWithoutTopicFilter<BingXUpdate<T>>(listenId, DoHandleMessage);
+            MessageRouter = MessageRouter.CreateForEvent<BingXUpdate<T>>(listenId, DoHandleMessage);
         }
 
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace BingX.Net.Objects.Sockets.Subscriptions
                 new DataEvent<T>(BingXExchange.ExchangeName, message.Data!, receiveTime, originalData)
                 .WithUpdateType(SocketUpdateType.Update)
                 .WithDataTimestamp(message.Timestamp, _client.GetTimeOffset()));
-            return CallResult.SuccessResult;
+            return CallResult.Ok();
         }
     }
 }

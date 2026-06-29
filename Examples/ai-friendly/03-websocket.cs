@@ -11,6 +11,7 @@ using BingX.Net.Enums;
 // Reuse a single client instance across subscriptions.
 var socketClient = new BingXSocketClient();
 
+// Subscription methods return WebSocketResult<UpdateSubscription>.
 var tickerSub = await socketClient.SpotApi.SubscribeToTickerUpdatesAsync(
     "BTC-USDT",
     update =>
@@ -53,4 +54,3 @@ Console.WriteLine("Clean shutdown complete.");
 //   Spot order book:  socketClient.SpotApi.SubscribeToPartialOrderBookUpdatesAsync(symbol, depth, handler)
 //   Futures ticker:   socketClient.PerpetualFuturesApi.SubscribeToTickerUpdatesAsync(symbol, handler)
 //   Mark price:       socketClient.PerpetualFuturesApi.SubscribeToMarkPriceUpdatesAsync(symbol, handler)
-

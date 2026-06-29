@@ -11,7 +11,14 @@ using BingX.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
 // Each exchange client exposes a `.SharedClient` property on its API surfaces.
-ISpotTickerRestClient bingXShared = new BingXRestClient().SpotApi.SharedClient;
+var bingXRest = new BingXRestClient();
+ISpotTickerRestClient bingXShared = bingXRest.SpotApi.SharedClient;
+
+var sharedInfo = bingXRest.SpotApi.SharedClient.Discover();
+var supportedFeatures = sharedInfo.Features
+    .Where(x => x.Supported)
+    .Select(x => x.EndpointName);
+Console.WriteLine($"{sharedInfo.Exchange} {sharedInfo.TypeName}: {string.Join(", ", supportedFeatures)}");
 
 var btcusdt = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
 
@@ -34,6 +41,7 @@ async Task PrintTicker(ISpotTickerRestClient client, SharedSymbol symbol)
 //   IFuturesOrderRestClient, IFuturesSymbolRestClient, IBalanceRestClient
 //   IPositionRestClient, IFeeRestClient, IOrderBookRestClient
 //   IRecentTradeRestClient, IKlineRestClient, ITransferRestClient
+// Call SharedClient.Discover() before routing optional shared features.
 
 // ---- WEBSOCKET EXAMPLE - SHARED SUBSCRIPTION ----
 var bingXSocket = new BingXSocketClient();
@@ -56,4 +64,3 @@ await bingXSocket.UnsubscribeAsync(sub.Data);
 
 // Note: shared socket interfaces do not expose UnsubscribeAsync.
 // Keep the concrete socket client and call concreteClient.UnsubscribeAsync(sub.Data).
-

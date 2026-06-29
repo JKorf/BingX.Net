@@ -26,7 +26,8 @@ namespace BingX.Net
                 "https://www.bingx.com",
                 ["https://bingx-api.github.io/docs"],
                 PlatformType.CryptoCurrencyExchange,
-                CentralizationType.Centralized
+                CentralizationType.Centralized,
+                BingXEnvironment.All
                 );
 
         /// <summary>
@@ -62,6 +63,12 @@ namespace BingX.Net
         public static ExchangeType Type { get; } = ExchangeType.CEX;
 
         internal static JsonSerializerContext _serializerContext = JsonSerializerContextCache.GetOrCreate<BingXSourceGenerationContext>();
+        internal static readonly ParameterSerializationSettings _parameterSerializationSettings = new ParameterSerializationSettings()
+        {
+            Decimal = DecimalSerialization.Number,
+            Array = ArrayParametersSerialization.JsonArray,
+            Sort = true
+        };
 
         /// <summary>
         /// Aliases for BingX assets
@@ -93,7 +100,7 @@ namespace BingX.Net
         /// <summary>
         /// Rate limiter configuration for the BingX API
         /// </summary>
-        public static BingXRateLimiters RateLimiter { get; } = new BingXRateLimiters();
+        public static BingXRateLimiters RateLimiter { get; set; } = new BingXRateLimiters();
     }
 
     /// <summary>
@@ -112,13 +119,19 @@ namespace BingX.Net
         public event Action<RateLimitUpdateEvent> RateLimitUpdated;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        internal BingXRateLimiters()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public BingXRateLimiters()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             Initialize();
         }
 
-        private void Initialize()
+        /// <summary>
+        /// Initialize the rate limits
+        /// </summary>
+        protected virtual void Initialize()
         {
             RestMarket = new RateLimitGate("Rest Market")
                                             .AddGuard(new RateLimitGuard(RateLimitGuard.PerHost, new List<IGuardFilter>(), 10, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding)) // As suggested by BingX API support: IP limit of 10 requests per 1 second in total 

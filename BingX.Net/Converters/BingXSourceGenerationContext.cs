@@ -15,7 +15,8 @@ namespace BingX.Net.Converters
     [JsonSerializable(typeof(BingXUpdate<BingXOrderBook>))]
     [JsonSerializable(typeof(BingXUpdate<BingXIncrementalOrderBook>))]
     [JsonSerializable(typeof(BingXUpdate<BingXFuturesIncrementalOrderBook>))]
-    [JsonSerializable(typeof(ParameterCollection))]
+    [JsonSerializable(typeof(Parameters))]
+    [JsonSerializable(typeof(Parameters[]))]
     [JsonSerializable(typeof(IDictionary<string, object>))]
 
     // End manual defined attributes
