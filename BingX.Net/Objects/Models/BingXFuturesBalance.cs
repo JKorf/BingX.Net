@@ -40,6 +40,11 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("realisedProfit")]
         public decimal RealizedProfit { get; set; }
+        [JsonInclude, JsonPropertyName("realizedProfit")]
+        internal decimal RealizedProfitInt
+        {
+            set => RealizedProfit = value;
+        }
         /// <summary>
         /// ["<c>availableMargin</c>"] Available margin
         /// </summary>
@@ -55,6 +60,11 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("freezedMargin")]
         public decimal? FrozenMargin { get; set; }
+        [JsonInclude, JsonPropertyName("frozenMargin")]
+        internal decimal FrozenMarginInt
+        {
+            set => FrozenMargin = value;
+        }
         /// <summary>
         /// ["<c>shortUid</c>"] Short uid
         /// </summary>
