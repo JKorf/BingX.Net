@@ -228,10 +228,10 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// GET /openApi/spot/v1/oco/orderList
         /// </para>
         /// </summary>
-        /// <param name="orderListId">["<c>orderListId</c>"] The order list id. Either this or `clientOrderId` should be provided</param>
-        /// <param name="clientOrderId">["<c>clientOrderId</c>"] The client order id. Either this or `orderListId` should be provided</param>
+        /// <param name="orderId">["<c>orderId</c>"] The order list id. Either this or `clientOrderId` should be provided</param>
+        /// <param name="clientOrderId">["<c>clientOrderId</c>"] The client order id. Either this or `orderId` should be provided</param>
         /// <param name="ct">Cancellation token</param>
-        Task<HttpResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default);
+        Task<HttpResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get open OCO orders

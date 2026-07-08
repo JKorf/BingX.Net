@@ -295,10 +295,10 @@ namespace BingX.Net.Clients.SpotApi
         #region Get Oco Order
 
         /// <inheritdoc />
-        public async Task<HttpResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderListId = null, string? clientOrderId = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXOcoOrder[]>> GetOcoOrderAsync(string? orderId = null, string? clientOrderId = null, CancellationToken ct = default)
         {
             var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
-            parameters.Add("orderListId", orderListId);
+            parameters.Add("orderId", orderId);
             parameters.Add("clientOrderId", clientOrderId);
             var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/oco/orderList", BingXExchange.RateLimiter.RestAccount1, 1, true);
             var result = await _baseClient.SendAsync<BingXOcoOrder[]>(request, parameters, ct).ConfigureAwait(false);
