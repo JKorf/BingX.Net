@@ -16,7 +16,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get the server time
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/base-info.html#Server%20time" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Spot%20trading%20symbols" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/server/time
         /// </para>
@@ -29,7 +29,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get symbol information
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Spot%20trading%20symbols" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Spot%20trading%20symbols" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/common/symbols
         /// </para>
@@ -43,7 +43,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get a list of the most recent trades
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Recent%20Trades%20List" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Recent%20Trades%20List" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/market/trades
         /// </para>
@@ -58,7 +58,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get the orderbook for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Order%20Book" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/market/depth
         /// </para>
@@ -73,7 +73,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get kline/candlestick data
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Kline/Candlestick%20Data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Kline%2FCandlestick%20Data" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v2/market/kline
         /// </para>
@@ -91,7 +91,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get kline/candlestick data
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Historical%20K-line" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Historical%20K-line" /><br />
         /// Endpoint:<br />
         /// GET /openApi/market/his/v1/kline
         /// </para>
@@ -109,7 +109,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get ticker (24h price statistics)
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/24hr%20Ticker%20Price%20Change%20Statistics" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/ticker/24hr
         /// </para>
@@ -123,7 +123,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get aggregated order book
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Order%20Book%20aggregation" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Order%20Book%20aggregation" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v2/market/depth
         /// </para>
@@ -139,7 +139,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get the last trade for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Symbol%20Price%20Ticker" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/ticker/price
         /// </para>
@@ -153,7 +153,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get the last trade for all symbols
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Price%20Ticker" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Symbol%20Price%20Ticker" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/ticker/price
         /// </para>
@@ -166,7 +166,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get the current best book prices
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Symbol%20Order%20Book%20Ticker" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Symbol%20Order%20Book%20Ticker" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/ticker/bookTicker
         /// </para>
@@ -180,7 +180,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get historic trades
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/market-api.html#Old%20Trade%20Lookup" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Old%20Trade%20Lookup" /><br />
         /// Endpoint:<br />
         /// GET /openApi/market/his/v1/trade
         /// </para>

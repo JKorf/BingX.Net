@@ -16,7 +16,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get balances
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Account%20Endpoints/Query%20Assets" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/account/balance
         /// </para>
@@ -28,7 +28,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get funding account balances
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Fund%20Account%20Assets" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Account%20Endpoints/Query%20Fund%20Account%20Assets" /><br />
         /// Endpoint:<br />
         /// GET /openApi/fund/v1/account/balance
         /// </para>
@@ -40,7 +40,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get deposit history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Deposit%20records" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Wallet%20deposits%20and%20withdrawals/Deposit%20records" /><br />
         /// Endpoint:<br />
         /// GET /openApi/api/v3/capital/deposit/hisrec
         /// </para>
@@ -60,7 +60,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get withdrawal history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw%20records" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Wallet%20deposits%20and%20withdrawals/Withdraw%20records" /><br />
         /// Endpoint:<br />
         /// GET /openApi/api/v3/capital/withdraw/history
         /// </para>
@@ -82,7 +82,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get asset info
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Query%20Assets" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Wallet%20deposits%20and%20withdrawals/Query%20currency%20deposit%20and%20withdrawal%20data" /><br />
         /// Endpoint:<br />
         /// GET /openApi/wallets/v1/capital/config/getall
         /// </para>
@@ -96,7 +96,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Withdraw funds
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Withdraw" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Wallet%20deposits%20and%20withdrawals/Withdraw" /><br />
         /// Endpoint:<br />
         /// POST /openApi/wallets/v1/capital/withdraw/apply
         /// </para>
@@ -116,7 +116,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get deposit addresses
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/wallet-api.html#Main%20Account%20Deposit%20Address" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Wallet%20deposits%20and%20withdrawals/Main%20Account%20Deposit%20Address" /><br />
         /// Endpoint:<br />
         /// GET /openApi/wallets/v1/capital/deposit/address
         /// </para>
@@ -132,7 +132,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Universal transfer
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20Transfer%20New" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Account%20Endpoints/Asset%20Transfer%20New" /><br />
         /// Endpoint:<br />
         /// POST /openApi/api/asset/v1/transfer
         /// </para>
@@ -149,7 +149,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get universal transfer history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Asset%20transfer%20records" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Account%20Endpoints/Asset%20transfer%20records" /><br />
         /// Endpoint:<br />
         /// GET /openApi/api/v3/asset/transfer
         /// </para>
@@ -168,7 +168,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Transfer internal to an account on the BingX platform
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20Accoun%20internal%20transfer" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Account%20Endpoints/Main%20Accoun%20internal%20transfer" /><br />
         /// Endpoint:<br />
         /// POST /openApi/wallets/v1/capital/innerTransfer/apply
         /// </para>
@@ -188,7 +188,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get internal transfer history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/account-api.html#Main%20account%20internal%20transfer%20records" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Account%20Endpoints/Main%20account%20internal%20transfer%20records" /><br />
         /// Endpoint:<br />
         /// GET /openApi/wallets/v1/capital/innerTransfer/records
         /// </para>
@@ -207,7 +207,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Generate a listen key used for subscribing to user data streams with the socket client
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/listenKey.html#generate%20Listen%20Key" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Quick%20Start/WebSocket%20Rules/Generate%20Listen%20Key" /><br />
         /// Endpoint:<br />
         /// POST /openApi/user/auth/userDataStream
         /// </para>
@@ -220,7 +220,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Extend the lifetime of a listenkey with 60 minutes
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/listenKey.html#extend%20Listen%20Key%20Validity%20period" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Quick%20Start/WebSocket%20Rules/Extend%20Listen%20Key%20Validity" /><br />
         /// Endpoint:<br />
         /// PUT /openApi/user/auth/userDataStream
         /// </para>
@@ -234,7 +234,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Delete a listenkey and stop the user data stream
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/listenKey.html#delete%20Listen%20Key" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Quick%20Start/WebSocket%20Rules/Close%20Listen%20Key" /><br />
         /// Endpoint:<br />
         /// DELETE /openApi/user/auth/userDataStream
         /// </para>
@@ -248,7 +248,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get trading fees for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Trading%20Commission%20Rate" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Query%20Trading%20Commission%20Rate" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/user/commissionRate
         /// </para>
@@ -262,7 +262,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get user id
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20account%20uid" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Account%20and%20Wallet/Sub-account%20Management/%20Query%20Account%20UID" /><br />
         /// Endpoint:<br />
         /// GET /openApi/account/v1/uid
         /// </para>
@@ -275,7 +275,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get API key permissions and info
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20the%20API%20Key%20of%20a%20sub-account" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Account%20and%20Wallet/Sub-account%20Management/%20Query%20API%20Key%20Information" /><br />
         /// Endpoint:<br />
         /// GET /openApi/account/v1/apiKey/query
         /// </para>

@@ -17,7 +17,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get positions
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20position%20data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Account%20Endpoints/Query%20position%20data" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/user/positions
         /// </para>
@@ -31,7 +31,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Place a new test order. Order won't actually get placed
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Test%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Test%20Order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/order/test
         /// </para>
@@ -97,7 +97,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Place a new order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Place%20order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/order
         /// </para>
@@ -166,7 +166,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Place multiple new orders in one go
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20multiple%20orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Place%20multiple%20orders" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/batchOrders
         /// </para>
@@ -184,7 +184,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Edit an existing open order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Modify%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Modify%20Order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v1/trade/amend
         /// </para>
@@ -281,7 +281,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get an order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20pending%20order%20status" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Place%20order" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/trade/order
         /// </para>
@@ -297,7 +297,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Cancel an order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Cancel%20Order" /><br />
         /// Endpoint:<br />
         /// DELETE /openApi/swap/v2/trade/order
         /// </para>
@@ -313,7 +313,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Close all positions. Positions will be closed via market order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20All%20Positions" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Close%20All%20Positions" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/closeAllPositions
         /// </para>
@@ -327,7 +327,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Cancel multiple orders on a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20multiple%20orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Cancel%20multiple%20orders" /><br />
         /// Endpoint:<br />
         /// DELETE /openApi/swap/v2/trade/batchOrders
         /// </para>
@@ -343,7 +343,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Cancel all open orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Cancel%20All%20Open%20Orders" /><br />
         /// Endpoint:<br />
         /// DELETE /openApi/swap/v2/trade/allOpenOrders
         /// </para>
@@ -358,7 +358,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get all open orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20Open%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Current%20All%20Open%20Orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/trade/openOrders
         /// </para>
@@ -373,7 +373,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get liquidation order history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#User's%20Force%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/User's%20Force%20Orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/trade/forceOrders
         /// </para>
@@ -392,7 +392,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get closed orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Order%20history" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Order%20history" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/trade/allOrders
         /// </para>
@@ -411,7 +411,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get user trade history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20historical%20transaction%20orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/trade/allFillOrders
         /// </para>
@@ -428,7 +428,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get user trade history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20historical%20transaction%20details" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20historical%20transaction%20details" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/trade/fillHistory
         /// </para>
@@ -448,7 +448,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20All%20After" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Cancel%20All%20After" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/cancelAllAfter
         /// </para>
@@ -463,7 +463,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Close a position by its id
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Close%20position%20by%20position%20ID" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Close%20position%20by%20position%20ID" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v1/trade/closePosition
         /// </para>
@@ -477,7 +477,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get all orders, max 7 days ago
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#All%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/All%20Orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/trade/fullOrder
         /// </para>
@@ -494,7 +494,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get position and margin info
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Position%20and%20Maintenance%20Margin%20Ratio" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Position%20and%20Maintenance%20Margin%20Ratio" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/maintMarginRatio
         /// </para>
@@ -508,7 +508,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get position close history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Position%20History" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Position%20History" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/trade/positionHistory
         /// </para>
@@ -527,7 +527,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Place a new time weighted average price order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Place%20TWAP%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Place%20TWAP%20Order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v1/twap/order
         /// </para>
@@ -548,7 +548,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get open Twap orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Entrusted%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20TWAP%20Entrusted%20Order" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/twap/openOrders
         /// </para>
@@ -561,7 +561,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get closed Twap orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Historical%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20TWAP%20Historical%20Orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/twap/historyOrders
         /// </para>
@@ -578,7 +578,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get a Twap order by id
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20TWAP%20Historical%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/TWAP%20Order%20Details" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/twap/orderDetail
         /// </para>
@@ -591,7 +591,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Cancel Twap order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Cancel%20TWAP%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Cancel%20TWAP%20Order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v1/twap/cancelOrder
         /// </para>

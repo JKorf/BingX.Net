@@ -16,7 +16,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get balance info
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20account%20data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Account%20Endpoints/Query%20account%20data" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v3/user/balance
         /// </para>
@@ -29,7 +29,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get income history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Get%20Account%20Profit%20and%20Loss%20Fund%20Flow" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Account%20Endpoints/Get%20Account%20Profit%20and%20Loss%20Fund%20Flow" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/user/income
         /// </para>
@@ -47,7 +47,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get trading fee rates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#User%20fee%20rate" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Account%20Endpoints/Query%20Trading%20Commission%20Rate" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/user/commissionRate
         /// </para>
@@ -60,7 +60,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Generate a listen key used for subscribing to user data streams with the socket client
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/account-api.html#Query%20Trading%20Commission%20Rate" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Quick%20Start/WebSocket%20Rules/Generate%20Listen%20Key" /><br />
         /// Endpoint:<br />
         /// POST /openApi/user/auth/userDataStream
         /// </para>
@@ -73,7 +73,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Extend the lifetime of a listenkey with 60 minutes
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#extend%20Listen%20Key%20Validity%20period" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Quick%20Start/WebSocket%20Rules/Extend%20Listen%20Key%20Validity" /><br />
         /// Endpoint:<br />
         /// PUT /openApi/user/auth/userDataStream
         /// </para>
@@ -87,7 +87,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Delete a listenkey and stop the user data stream
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/listenKey.html#delete%20Listen%20Key" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Quick%20Start/WebSocket%20Rules/Close%20Listen%20Key" /><br />
         /// Endpoint:<br />
         /// DELETE /openApi/user/auth/userDataStream
         /// </para>
@@ -101,7 +101,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current margin mode for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Margin%20Type" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Margin%20Type" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/trade/marginType
         /// </para>
@@ -115,7 +115,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Change the margin mode for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Change%20Margin%20Type" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Change%20Margin%20Type" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/marginType
         /// </para>
@@ -130,7 +130,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current leverage settings for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Leverage" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Leverage%20and%20Available%20Positions" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/trade/leverage
         /// </para>
@@ -144,7 +144,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Set new leverage settings for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Leverage" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Leverage%20and%20Available%20Positions" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/leverage
         /// </para>
@@ -160,7 +160,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Adjust isolated margin for a position
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Leverage" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Modify%20Isolated%20Position%20Margin" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v2/trade/positionMargin
         /// </para>
@@ -177,7 +177,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get current position mode
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20position%20mode" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20position%20mode" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/positionSide/dual
         /// </para>
@@ -190,7 +190,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Set position mode
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Set%20Position%20Mode" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Set%20Position%20Mode" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v1/positionSide/dual
         /// </para>
@@ -204,7 +204,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get history of margin changes
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Isolated%20Margin%20Change%20History" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Isolated%20Margin%20Change%20History" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/positionMargin/history
         /// </para>
@@ -222,7 +222,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Apply for receiving VST assets. Only available on the VST environment
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Apply%20VST" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Apply%20VST" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v1/trade/getVst
         /// </para>
@@ -234,7 +234,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Set multi asset mode
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Switch%20Multi-Assets%20Mode" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Switch%20Multi-Assets%20Mode" /><br />
         /// Endpoint:<br />
         /// POST /openApi/swap/v1/trade/assetMode
         /// </para>
@@ -247,7 +247,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get current multi asset mode
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Mode" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Multi-Assets%20Mode" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/trade/assetMode
         /// </para>
@@ -259,7 +259,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get multi asset mode rules
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Rules" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Multi-Assets%20Rules" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/trade/multiAssetsRules
         /// </para>
@@ -271,7 +271,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get multi assets margin
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/trade-api.html#Query%20Multi-Assets%20Margin" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Multi-Assets%20Margin" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/user/marginAssets
         /// </para>

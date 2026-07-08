@@ -17,7 +17,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Place a new order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Place%20order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/trade/order
         /// </para>
@@ -39,7 +39,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Place multiple orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Place%20multiple%20orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Place%20multiple%20orders" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/trade/batchOrders
         /// </para>
@@ -54,7 +54,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel an active order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Cancel%20Order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/trade/cancel
         /// </para>
@@ -70,7 +70,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel multiple active orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20multiple%20orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Cancel%20multiple%20orders" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/trade/cancelOrders
         /// </para>
@@ -87,7 +87,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel all active orders on a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20all%20Open%20Orders%20on%20a%20Symbol" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Cancel%20all%20Open%20Orders%20on%20a%20Symbol" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/trade/cancelOpenOrders
         /// </para>
@@ -101,7 +101,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel all order after a set period. Can be called contineously to maintain a rolling timeout
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Cancel%20All%20After" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Cancel%20All%20After" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/trade/cancelAllAfter
         /// </para>
@@ -116,7 +116,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get an order by orderId or clientOrderId
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20details" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Query%20Order%20details" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/trade/query
         /// </para>
@@ -132,7 +132,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get open orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Current%20Open%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Current%20Open%20Orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/trade/openOrders
         /// </para>
@@ -146,7 +146,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get order history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20Order%20history" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Query%20Order%20history" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/trade/historyOrders
         /// </para>
@@ -167,7 +167,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get user trade history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20transaction%20details" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Query%20transaction%20details" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/trade/myTrades
         /// </para>
@@ -188,7 +188,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Place a new OCO order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20OCO%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Create%20an%20OCO%20Order" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/oco/order
         /// </para>
@@ -209,7 +209,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Cancel an OCO order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Create%20an%20OCO%20Order" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Cancel%20an%20OCO%20Order%20List" /><br />
         /// Endpoint:<br />
         /// POST /openApi/spot/v1/oco/cancel
         /// </para>
@@ -223,7 +223,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get a specific OCO order
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20an%20OCO%20Order%20List" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Query%20an%20OCO%20Order%20List" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/oco/orderList
         /// </para>
@@ -237,7 +237,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get open OCO orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20All%20Open%20OCO%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Query%20All%20Open%20OCO%20Orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/oco/openOrderList
         /// </para>
@@ -251,7 +251,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Get closed OCO orders
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/trade-api.html#Query%20All%20Open%20OCO%20Orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Trades%20Endpoints/Query%20OCO%20Historical%20Order%20List" /><br />
         /// Endpoint:<br />
         /// GET /openApi/spot/v1/oco/historyOrderList
         /// </para>

@@ -16,7 +16,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current server time
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/base-info.html#Get%20Server%20Time" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/USDT-M%20Perp%20Futures%20symbols" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/server/time
         /// </para>
@@ -29,7 +29,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get list of contracts
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#USDT-M%20Perp%20Futures%20symbols" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/USDT-M%20Perp%20Futures%20symbols" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/contracts
         /// </para>
@@ -43,7 +43,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get order book for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Order%20Book" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Order%20Book" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/depth
         /// </para>
@@ -58,7 +58,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get list of the most recent trades
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Recent%20Trades%20List" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Recent%20Trades%20List" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/trades
         /// </para>
@@ -73,7 +73,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get list of trades
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Query%20historical%20transaction%20orders" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Query%20historical%20transaction%20orders" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/market/historicalTrades
         /// </para>
@@ -89,7 +89,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current funding rate for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20and%20Funding%20Rate" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Mark%20Price%20and%20Funding%20Rate" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/premiumIndex
         /// </para>
@@ -103,7 +103,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the current funding rate for all symbols
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20and%20Funding%20Rate" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Mark%20Price%20and%20Funding%20Rate" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/premiumIndex
         /// </para>
@@ -116,7 +116,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get funding rate history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Get%20Funding%20Rate%20History" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Get%20Funding%20Rate%20History" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/fundingRate
         /// </para>
@@ -133,7 +133,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get kline history
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Kline/Candlestick%20Data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Kline%2FCandlestick%20Data" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v3/quote/klines
         /// </para>
@@ -151,7 +151,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get open interest
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Open%20Interest%20Statistics" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Open%20Interest%20Statistics" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/openInterest
         /// </para>
@@ -165,7 +165,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get ticker (24h price stats) for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/24hr%20Ticker%20Price%20Change%20Statistics" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/ticker
         /// </para>
@@ -179,7 +179,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get ticker (24h price stats) for all symbols
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#24hr%20Ticker%20Price%20Change%20Statistics" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/24hr%20Ticker%20Price%20Change%20Statistics" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/ticker
         /// </para>
@@ -192,7 +192,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the best ask and bid info
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Order%20Book%20Ticker" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Symbol%20Order%20Book%20Ticker" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v2/quote/bookTicker
         /// </para>
@@ -206,7 +206,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get mark price klines
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Mark%20Price%20Kline/Candlestick%20Data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Mark%20Price%20Kline%2FCandlestick%20Data" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/market/markPriceKlines
         /// </para>
@@ -224,7 +224,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the last trade price for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Price%20Ticker" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Symbol%20Price%20Ticker" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/ticker/price
         /// </para>
@@ -238,7 +238,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get the last trade price for all symbols
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Symbol%20Price%20Ticker" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Symbol%20Price%20Ticker" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/ticker/price
         /// </para>
@@ -251,7 +251,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Get trading rules for a symbol
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/market-api.html#Trading%20Rules" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Trading%20Rules" /><br />
         /// Endpoint:<br />
         /// GET /openApi/swap/v1/tradingRules
         /// </para>

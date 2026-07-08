@@ -15,7 +15,7 @@ namespace BingX.Net.Interfaces.Clients.Apis
     {
         /// <summary>
         /// Get the permissions of the API key
-        /// <para><a href="https://bingx-api.github.io/docs/#/en-us/common/sub-account#Query%20user%20API%20Key%20permissions" /></para>
+        /// <para><a href="https://bingx-api.github.io/docs-v3/#/en/Account%20and%20Wallet/Fund%20Account/Query%20Assets" /></para>
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         Task<HttpResult<BingXKeyPermissions>> GetApiKeyPermissionsAsync(CancellationToken ct = default);

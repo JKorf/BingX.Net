@@ -24,7 +24,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to live trade updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscription%20transaction%20by%20transaction" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/Subscription%20transaction%20by%20transaction" /><br />
         /// Endpoint:<br />
         /// WS /market
         /// </para>
@@ -39,7 +39,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to live kline/candlestick data updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#K-line%20Streams" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/K-line%20Streamst" /><br />
         /// Endpoint:<br />
         /// WS /market
         /// </para>
@@ -55,7 +55,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to live orderbook data updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20Market%20Depth%20Data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/Subscribe%20Market%20Depth%20Data" /><br />
         /// Endpoint:<br />
         /// WS /market
         /// </para>
@@ -71,7 +71,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to live incremental order book updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Incremental%20and%20Full%20Depth%20Information" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/Incremental%20and%20Full%20Depth%20Information" /><br />
         /// Endpoint:<br />
         /// WS /market
         /// </para>
@@ -86,7 +86,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to live price statistics updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%2024-hour%20Price%20Change" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/Subscribe%20to%2024-hour%20Price%20Change" /><br />
         /// Endpoint:<br />
         /// WS /market
         /// </para>
@@ -101,7 +101,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to live price updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Latest%20Trade%20Price" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/Subscription%20transaction%20by%20transaction" /><br />
         /// Endpoint:<br />
         /// WS /market
         /// </para>
@@ -116,7 +116,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to live best book price updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/market.html#Subscribe%20to%20Best%20Order%20Book" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/Subscription%20transaction%20by%20transaction" /><br />
         /// Endpoint:<br />
         /// WS /market
         /// </para>
@@ -131,7 +131,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to user order updates. Listen key is automatically obtained by the client and will be renewed as needed
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20order%20update%20data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Account%20Data/order%20update%20event" /><br />
         /// Endpoint:<br />
         /// WS /market?listenKey={listenKey}
         /// </para>
@@ -145,7 +145,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to user order updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20order%20update%20data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Account%20Data/order%20update%20event" /><br />
         /// Endpoint:<br />
         /// WS /market?listenKey={listenKey}
         /// </para>
@@ -160,7 +160,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to user balance updates. Listen key is automatically obtained by the client and will be renewed as needed
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20account%20balance%20push" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Account%20Data/Subscription%20account%20balance%20push" /><br />
         /// Endpoint:<br />
         /// WS /market?listenKey={listenKey}
         /// </para>
@@ -174,7 +174,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Subscribe to user balance updates. Prior to using this, the <see cref="IBingXRestClientSpotApiAccount.StartUserStreamAsync(CancellationToken)">restClient.SpotApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/spot/socket/account.html#Subscription%20account%20balance%20push" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Account%20Data/Subscription%20account%20balance%20push" /><br />
         /// Endpoint:<br />
         /// WS /market?listenKey={listenKey}
         /// </para>

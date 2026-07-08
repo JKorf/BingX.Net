@@ -25,7 +25,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to live trade updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20the%20Latest%20Trade%20Detail" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20the%20Latest%20Trade%20Detail" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -40,7 +40,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to order book updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Websocket%20Market%20Data/Subscribe%20Market%20Depth%20Data" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -57,7 +57,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to live incremental order book updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Incremental%20Depth%20Information" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Incremental%20Depth%20Information" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -72,7 +72,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to order book updates for all symbols
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20Market%20Depth%20Data%20of%20all%20trading%20pairs" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Partial%20Order%20Book%20Depth" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -88,7 +88,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to kline/candlestick updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20K-Line%20Data" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -104,7 +104,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to kline/candlestick updates for all symbols
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20K-Line%20Data" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -119,7 +119,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to live price statistics updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20K-Line%20Data%20of%20all%20trading%20pairs" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20K-Line%20Data" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -134,7 +134,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to live price statistics updates for all symbols
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%2024-hour%20price%20changes%20of%20all%20trading%20pairs" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20to%2024-hour%20price%20changes" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -148,7 +148,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to live price updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20price%20changes" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20to%20latest%20price%20changes" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -163,7 +163,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to live mark price updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20latest%20mark%20price%20changes" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20to%20latest%20mark%20price%20changes" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -178,7 +178,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Subscribe to live best book price updates
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/market.html#Subscribe%20to%20the%20Book%20Ticker%20Streams" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Market%20Data/Subscribe%20to%20the%20Book%20Ticker%20Streams" /><br />
         /// Endpoint:<br />
         /// WS /swap-market
         /// </para>
@@ -193,7 +193,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Listen to user data update events. Listen key is automatically obtained by the client and will be renewed as needed
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Account%20Data/Order%20update%20push" /><br />
         /// Endpoint:<br />
         /// WS /swap-market?listenKey={listenKey}
         /// </para>
@@ -215,7 +215,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Listen to user data update events. Prior to using this, the <see cref="IBingXRestClientPerpetualFuturesApiAccount.StartUserStreamAsync(CancellationToken)">restClient.PerpetualFuturesApi.Account.StartUserStreamAsync</see> method should be called to start the stream and obtaining a listen key.
         /// <para>
         /// Docs:<br />
-        /// <a href="https://bingx-api.github.io/docs/#/en-us/swapV2/socket/account.html#listenKey%20expired%20push" /><br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Websocket%20Account%20Data/Order%20update%20push" /><br />
         /// Endpoint:<br />
         /// WS /swap-market?listenKey={listenKey}
         /// </para>
