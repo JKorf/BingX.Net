@@ -186,6 +186,12 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 4.1.0 - 09 Jul 2026
+    * Updated CryptoExchange.Net to v12.1.0
+    * Updated RealizedProfit and FrozenMargin mapping on BingXFuturesBalance model
+    * Updated documentation links
+    * Renamed orderListId to orderId for SpotApi.Trading.GetOcoOrderAsync endpoint
+
 * Version 4.0.0 - 29 Jun 2026
     * Result types:
       * (Web)CallResult types are replaced by HttpResult, WebSocketResult and QueryResult with the same logic
