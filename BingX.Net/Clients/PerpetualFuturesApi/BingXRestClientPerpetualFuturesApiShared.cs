@@ -86,7 +86,21 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result.Success)
                 return HttpResult.Fail<SharedFuturesSymbol[]>(result);
 
-            var resultData = result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(s => new SharedFuturesSymbol(TradingMode.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
+            var resultData = result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(ParseSymbol);
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData.ToArray());
+            if (request.SymbolType != null)
+                resultData = resultData.Where(x => x.SymbolType == request.SymbolType);
+            if (request.SymbolSubType != null)
+                resultData = resultData.Where(x => x.SymbolSubType == request.SymbolSubType);
+
+            return HttpResult.Ok(result, resultData.ToArray());        
+                
+        }
+
+        private SharedFuturesSymbol ParseSymbol(BingXContract s)
+        {
+            var (symbolType, subType) = ParseSymbolType(s);
+            return new SharedFuturesSymbol(TradingMode.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
                 MinNotionalValue = s.MinOrderValue,
@@ -94,13 +108,21 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 QuantityDecimals = s.QuantityPrecision,
                 ContractSize = 1,
                 MaxShortLeverage = s.MaxShortLeverage,
-                MaxLongLeverage = s.MaxLongLeverage
-            }).ToArray();
+                MaxLongLeverage = s.MaxLongLeverage,
+                SymbolType = symbolType,
+                SymbolSubType = subType,
+                DisplayName = s.DisplayName
+            };
+        }
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData);
-            return HttpResult.Ok(result, resultData);
-        
-                
+        private (SymbolAssetType, SymbolAssetSubType?) ParseSymbolType(BingXContract s)
+        {
+            if (s.Symbol.StartsWith("NCSK"))
+                return (SymbolAssetType.Rwa, SymbolAssetSubType.Stock);
+            if (s.Symbol.StartsWith("NCCO"))
+                return (SymbolAssetType.Rwa, SymbolAssetSubType.Commodity);
+
+            return (SymbolAssetType.Crypto, null);
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)

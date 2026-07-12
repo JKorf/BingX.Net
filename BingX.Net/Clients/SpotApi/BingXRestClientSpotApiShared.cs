@@ -88,19 +88,44 @@ namespace BingX.Net.Clients.SpotApi
             if (!result.Success)
                 return HttpResult.Fail<SharedSpotSymbol[]>(result);
 
-            var resultData = result.Data.Select(s => new SharedSpotSymbol(s.Name.Split(new[] { '-' })[0], s.Name.Split(new[] { '-' })[1], s.Name, s.Status == SymbolStatus.Online)
+            var resultData = result.Data.Select(x => ParseSymbol(x)!).Where(x => x != null);
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData.ToArray());
+            if (request.SymbolType != null)
+                resultData = resultData.Where(x => x.SymbolType == request.SymbolType);
+            if (request.SymbolSubType != null)
+                resultData = resultData.Where(x => x.SymbolSubType == request.SymbolSubType);
+
+            return HttpResult.Ok(result, resultData.ToArray());
+        }
+
+        private SharedSpotSymbol? ParseSymbol(BingXSymbol s)
+        {
+            var assets = s.Name.Split(new[] { '-' });
+            if (assets.Length != 2)
+                return null;
+
+            var (symbolType, symbolSubType) = ParseSymbolType(assets[0]);
+            return new SharedSpotSymbol(assets[0], assets[1], s.Name, s.Status == SymbolStatus.Online)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
                 MinNotionalValue = s.MinNotional,
                 MaxTradeQuantity = s.MaxOrderQuantity,
                 QuantityStep = s.StepSize,
-                PriceStep = s.TickSize
-            }).ToArray();
+                PriceStep = s.TickSize,
+                SymbolType = symbolType,
+                SymbolSubType = symbolSubType
+            };
+        }
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData);
-            return HttpResult.Ok(result, resultData);
-        
-                
+        private (SymbolAssetType, SymbolAssetSubType?) ParseSymbolType(string asset)
+        {
+            if (LibraryHelpers.IsStableCoin(asset))
+                return (SymbolAssetType.Crypto, SymbolAssetSubType.StableCoin);
+
+            if (LibraryHelpers.IsFiatAsset(asset))
+                return (SymbolAssetType.Fiat, null);
+
+            return (SymbolAssetType.Crypto, null);
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsForBaseAssetAsync(string baseAsset)
