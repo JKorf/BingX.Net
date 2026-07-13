@@ -26,7 +26,7 @@ namespace BingX.Net
 
             var timestamp = GetMillisecondTimestampLong(apiClient);
             var parameters = request.GetPositionParameters() ?? new Parameters(BingXExchange._parameterSerializationSettings);
-            parameters.Add("timestamp", timestamp);
+            parameters["timestamp"] = timestamp;
             if (!parameters.ContainsKey("recvWindow"))
             {
                 var receiveWindow = ((BingXRestOptions)apiClient.ClientOptions).ReceiveWindow ?? TimeSpan.FromSeconds(5);
@@ -37,7 +37,7 @@ namespace BingX.Net
             {
                 var bodyString = string.Join("&", parameters.OrderBy(p => p.Key).Select(o => o.Key + "=" + (o.Value is bool ? o.Value?.ToString()!.ToLowerInvariant() : string.Format(CultureInfo.InvariantCulture, "{0}", o.Value))));
                 var signature = SignHMACSHA256(bodyString, SignOutputType.Hex);
-                parameters.Add("signature", signature);
+                parameters["signature"] = signature;
                 if (request.BodyFormat == RequestBodyFormat.FormData)
                     request.SetBodyContent($"{bodyString}&signature={signature}");
             }
@@ -45,7 +45,7 @@ namespace BingX.Net
             {
                 var queryString = parameters.CreateParamString(false, request.ArraySerialization);
                 var signature = SignHMACSHA256(queryString, SignOutputType.Hex);
-                parameters.Add("signature", signature);
+                parameters["signature"] = signature;
                 request.SetQueryString($"{queryString}&signature={signature}");
             }
         }
