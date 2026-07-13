@@ -186,6 +186,9 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 4.1.1 - 13 Jul 2026
+    * Fixed exception during authentication when retrying requests
+
 * Version 4.1.0 - 09 Jul 2026
     * Updated CryptoExchange.Net to v12.1.0
     * Updated RealizedProfit and FrozenMargin mapping on BingXFuturesBalance model
