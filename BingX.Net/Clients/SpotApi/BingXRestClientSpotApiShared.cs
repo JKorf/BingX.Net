@@ -5,7 +5,10 @@ using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.SharedApis;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -22,6 +25,7 @@ namespace BingX.Net.Clients.SpotApi
         public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
         public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
         public SharedClientInfo Discover() => SharedUtils.GetClientInfo(BingXExchange.Metadata, this);
+        private static HashSet<string> _exchangeSupportedFiatCurrencies = ["EUR", "USD"];
 
         #region Kline client
 
@@ -77,6 +81,7 @@ namespace BingX.Net.Clients.SpotApi
 
         #region Spot Symbol client
 
+        SharedSymbolCatalog? ISpotSymbolRestClient.SymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_topicId, EnvironmentName, null);
         GetSpotSymbolsOptions ISpotSymbolRestClient.GetSpotSymbolsOptions { get; } = new GetSpotSymbolsOptions(_exchangeName, false);
         async Task<HttpResult<SharedSpotSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
@@ -88,14 +93,13 @@ namespace BingX.Net.Clients.SpotApi
             if (!result.Success)
                 return HttpResult.Fail<SharedSpotSymbol[]>(result);
 
-            var resultData = result.Data.Select(x => ParseSymbol(x)!).Where(x => x != null);
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData.ToArray());
-            if (request.SymbolType != null)
-                resultData = resultData.Where(x => x.SymbolType == request.SymbolType);
-            if (request.SymbolSubType != null)
-                resultData = resultData.Where(x => x.SymbolSubType == request.SymbolSubType);
+            var data = result.Data
+                .Select(x => ParseSymbol(x)!)
+                .Where(x => x != null)
+                .ToArray();
 
-            return HttpResult.Ok(result, resultData.ToArray());
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, data);
+            return HttpResult.Ok(result, SharedUtils.ApplySymbolFilter(data, request));
         }
 
         private SharedSpotSymbol? ParseSymbol(BingXSymbol s)
@@ -104,28 +108,89 @@ namespace BingX.Net.Clients.SpotApi
             if (assets.Length != 2)
                 return null;
 
-            var (symbolType, symbolSubType) = ParseSymbolType(assets[0]);
-            return new SharedSpotSymbol(assets[0], assets[1], s.Name, s.Status == SymbolStatus.Online)
+            var result = new SharedSpotSymbol(assets[0], assets[1], s.Name, s.Status == SymbolStatus.Online)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
                 MinNotionalValue = s.MinNotional,
                 MaxTradeQuantity = s.MaxOrderQuantity,
                 QuantityStep = s.StepSize,
                 PriceStep = s.TickSize,
-                SymbolType = symbolType,
-                SymbolSubType = symbolSubType
+                DisplayName = s.DisplayName,
             };
+
+            if (LibraryHelpers.IsStableCoin(assets[0]))
+            {
+                result.BaseAssetType = SharedAssetType.Crypto;
+                result.BaseAssetSubType = SharedAssetSubType.StableCoin;
+            } 
+            else if (_exchangeSupportedFiatCurrencies.Contains(assets[0]))
+            {
+                result.BaseAssetType = SharedAssetType.Fiat;
+            }
+            else
+            {
+                result.BaseAssetType = SharedAssetType.Crypto;
+            }
+
+            if (LibraryHelpers.IsStableCoin(assets[1]))
+            {
+                result.QuoteAssetType = SharedAssetType.Crypto;
+                result.QuoteAssetSubType = SharedAssetSubType.StableCoin;
+            }
+            else if (_exchangeSupportedFiatCurrencies.Contains(assets[1]))
+            {
+                result.QuoteAssetType = SharedAssetType.Fiat;
+            }
+            else
+            {
+                result.QuoteAssetType = SharedAssetType.Crypto;
+            }
+
+            return result;
         }
 
-        private (SymbolAssetType, SymbolAssetSubType?) ParseSymbolType(string asset)
+
+        private SharedSymbolCatalog CreateCatalog(BingXSymbol[] bingXSymbols)
         {
-            if (LibraryHelpers.IsStableCoin(asset))
-                return (SymbolAssetType.Crypto, SymbolAssetSubType.StableCoin);
+            SharedAssetInfo MapAsset(string asset)
+            {
+                if (LibraryHelpers.IsStableCoin(asset))
+                    return new SharedAssetInfo(asset, SharedAssetType.Crypto, SharedAssetSubType.StableCoin);
 
-            if (LibraryHelpers.IsFiatAsset(asset))
-                return (SymbolAssetType.Fiat, null);
+                if (_exchangeSupportedFiatCurrencies.Contains(asset))
+                    return new SharedAssetInfo(asset, SharedAssetType.Fiat, null);
 
-            return (SymbolAssetType.Crypto, null);
+                return new SharedAssetInfo(asset, SharedAssetType.Crypto, null);
+            }
+
+            var assets = new Dictionary<string, SharedAssetInfo>();
+            var symbols = new Dictionary<string, SharedSymbolInfo>();
+            foreach (var symbol in bingXSymbols)
+            {
+                var symbolAssets = symbol.Name.Split(new[] { '-' });
+                if (symbolAssets.Length != 2)
+                    continue;
+
+                if (!assets.TryGetValue(symbolAssets[0], out var baseAssetInfo))
+                {
+                    baseAssetInfo = MapAsset(symbolAssets[0]);
+                    assets.Add(symbolAssets[0], baseAssetInfo);
+                }
+                if (!assets.TryGetValue(symbolAssets[1], out var quoteAssetInfo))
+                {
+                    quoteAssetInfo = MapAsset(symbolAssets[1]);
+                    assets.Add(symbolAssets[1], quoteAssetInfo);
+                }
+
+                symbols.Add(symbol.Name, new SharedSymbolInfo(symbol.Name, baseAssetInfo, quoteAssetInfo));
+            }
+
+            var catalog = new SharedSymbolCatalog
+            {
+                Assets = assets,
+                Symbols = symbols
+            };
+            return catalog;
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsForBaseAssetAsync(string baseAsset)

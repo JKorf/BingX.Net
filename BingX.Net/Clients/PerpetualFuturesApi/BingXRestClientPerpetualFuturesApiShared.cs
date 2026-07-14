@@ -6,6 +6,7 @@ using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.SharedApis;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -75,6 +76,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #region Futures Symbol client
 
+        SharedSymbolCatalog? IFuturesSymbolRestClient.SymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_topicId, EnvironmentName, null);
         GetFuturesSymbolsOptions IFuturesSymbolRestClient.GetFuturesSymbolsOptions { get; } = new GetFuturesSymbolsOptions(_exchangeName, false);
         async Task<HttpResult<SharedFuturesSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
@@ -86,21 +88,19 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result.Success)
                 return HttpResult.Fail<SharedFuturesSymbol[]>(result);
 
-            var resultData = result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(ParseSymbol);
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData.ToArray());
-            if (request.SymbolType != null)
-                resultData = resultData.Where(x => x.SymbolType == request.SymbolType);
-            if (request.SymbolSubType != null)
-                resultData = resultData.Where(x => x.SymbolSubType == request.SymbolSubType);
+            var data = result.Data
+                .Where(x => !string.IsNullOrEmpty(x.Asset))
+                .Select(x => ParseSymbol(x))
+                .ToArray();
 
-            return HttpResult.Ok(result, resultData.ToArray());        
-                
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, data);
+            return HttpResult.Ok(result, SharedUtils.ApplySymbolFilter(data, request));
+
         }
 
         private SharedFuturesSymbol ParseSymbol(BingXContract s)
         {
-            var (symbolType, subType) = ParseSymbolType(s);
-            return new SharedFuturesSymbol(TradingMode.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
+            var result = new SharedFuturesSymbol(TradingMode.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
                 MinNotionalValue = s.MinOrderValue,
@@ -109,20 +109,27 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 ContractSize = 1,
                 MaxShortLeverage = s.MaxShortLeverage,
                 MaxLongLeverage = s.MaxLongLeverage,
-                SymbolType = symbolType,
-                SymbolSubType = subType,
+                QuoteAssetType = SharedAssetType.Crypto,
+                QuoteAssetSubType = LibraryHelpers.IsStableCoin(s.Currency) ? SharedAssetSubType.StableCoin : null,
                 DisplayName = s.DisplayName
             };
-        }
 
-        private (SymbolAssetType, SymbolAssetSubType?) ParseSymbolType(BingXContract s)
-        {
-            if (s.Symbol.StartsWith("NCSK"))
-                return (SymbolAssetType.Rwa, SymbolAssetSubType.Stock);
-            if (s.Symbol.StartsWith("NCCO"))
-                return (SymbolAssetType.Rwa, SymbolAssetSubType.Commodity);
+            if (s.Asset.StartsWith("NCSK"))
+            {
+                result.BaseAssetType = SharedAssetType.Rwa;
+                result.BaseAssetSubType = SharedAssetSubType.Stock;
+            }
+            else if (s.Asset.StartsWith("NCCO"))
+            {
+                result.BaseAssetType = SharedAssetType.Rwa;
+                result.BaseAssetSubType = SharedAssetSubType.Commodity;
+            }
+            else
+            {
+                result.BaseAssetType = SharedAssetType.Crypto;
+            }
 
-            return (SymbolAssetType.Crypto, null);
+            return result;
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)
