@@ -76,7 +76,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #region Futures Symbol client
 
-        SharedSymbolCatalog? IFuturesSymbolRestClient.SymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_topicId, EnvironmentName, null);
+        SharedSymbolCatalog? IFuturesSymbolRestClient.FuturesSymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_topicId, EnvironmentName, null);
         GetFuturesSymbolsOptions IFuturesSymbolRestClient.GetFuturesSymbolsOptions { get; } = new GetFuturesSymbolsOptions(_exchangeName, false);
         async Task<HttpResult<SharedFuturesSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
@@ -95,7 +95,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, data);
             return HttpResult.Ok(result, SharedUtils.ApplySymbolFilter(data, request));
-
         }
 
         private SharedFuturesSymbol ParseSymbol(BingXContract s)
@@ -116,12 +115,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             if (s.Asset.StartsWith("NCSK"))
             {
-                result.BaseAssetType = SharedAssetType.Rwa;
+                result.BaseAssetType = SharedAssetType.TradFi;
                 result.BaseAssetSubType = SharedAssetSubType.Stock;
             }
             else if (s.Asset.StartsWith("NCCO"))
             {
-                result.BaseAssetType = SharedAssetType.Rwa;
+                result.BaseAssetType = SharedAssetType.TradFi;
                 result.BaseAssetSubType = SharedAssetSubType.Commodity;
             }
             else
