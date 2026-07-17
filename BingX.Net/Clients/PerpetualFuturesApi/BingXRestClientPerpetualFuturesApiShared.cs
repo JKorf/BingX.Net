@@ -116,7 +116,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (s.Asset.StartsWith("NCSK"))
             {
                 result.BaseAssetType = SharedAssetType.TradFi;
-                result.BaseAssetSubType = SharedAssetSubType.Stock;
+                result.BaseAssetSubType = SharedAssetSubType.Equity;
             }
             else if (s.Asset.StartsWith("NCCO"))
             {
