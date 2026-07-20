@@ -81,7 +81,7 @@ namespace BingX.Net.Clients.SpotApi
 
         #region Spot Symbol client
 
-        SharedSymbolCatalog? ISpotSymbolRestClient.SpotSymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_topicId, EnvironmentName, null);
+        SharedSymbolCatalog? ISpotSymbolRestClient.SpotSymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_exchangeName, _topicId, EnvironmentName, null);
         GetSpotSymbolsOptions ISpotSymbolRestClient.GetSpotSymbolsOptions { get; } = new GetSpotSymbolsOptions(_exchangeName, false);
         async Task<HttpResult<SharedSpotSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
@@ -147,50 +147,6 @@ namespace BingX.Net.Clients.SpotApi
             }
 
             return result;
-        }
-
-
-        private SharedSymbolCatalog CreateCatalog(BingXSymbol[] bingXSymbols)
-        {
-            SharedAssetInfo MapAsset(string asset)
-            {
-                if (LibraryHelpers.IsStableCoin(asset))
-                    return new SharedAssetInfo(asset, SharedAssetType.Crypto, SharedAssetSubType.StableCoin);
-
-                if (_exchangeSupportedFiatCurrencies.Contains(asset))
-                    return new SharedAssetInfo(asset, SharedAssetType.Fiat, null);
-
-                return new SharedAssetInfo(asset, SharedAssetType.Crypto, null);
-            }
-
-            var assets = new Dictionary<string, SharedAssetInfo>();
-            var symbols = new Dictionary<string, SharedSymbolInfo>();
-            foreach (var symbol in bingXSymbols)
-            {
-                var symbolAssets = symbol.Name.Split(new[] { '-' });
-                if (symbolAssets.Length != 2)
-                    continue;
-
-                if (!assets.TryGetValue(symbolAssets[0], out var baseAssetInfo))
-                {
-                    baseAssetInfo = MapAsset(symbolAssets[0]);
-                    assets.Add(symbolAssets[0], baseAssetInfo);
-                }
-                if (!assets.TryGetValue(symbolAssets[1], out var quoteAssetInfo))
-                {
-                    quoteAssetInfo = MapAsset(symbolAssets[1]);
-                    assets.Add(symbolAssets[1], quoteAssetInfo);
-                }
-
-                symbols.Add(symbol.Name, new SharedSymbolInfo(symbol.Name, baseAssetInfo, quoteAssetInfo));
-            }
-
-            var catalog = new SharedSymbolCatalog
-            {
-                Assets = assets,
-                Symbols = symbols
-            };
-            return catalog;
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsForBaseAssetAsync(string baseAsset)
