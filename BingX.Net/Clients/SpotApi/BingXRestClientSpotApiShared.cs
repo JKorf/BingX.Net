@@ -5,7 +5,10 @@ using CryptoExchange.Net;
 using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.SharedApis;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -22,6 +25,7 @@ namespace BingX.Net.Clients.SpotApi
         public void SetDefaultExchangeParameter(string key, object value) => ExchangeParameters.SetStaticParameter(Exchange, key, value);
         public void ResetDefaultExchangeParameters() => ExchangeParameters.ResetStaticParameters();
         public SharedClientInfo Discover() => SharedUtils.GetClientInfo(BingXExchange.Metadata, this);
+        private static HashSet<string> _exchangeSupportedFiatCurrencies = ["EUR", "USD"];
 
         #region Kline client
 
@@ -77,6 +81,7 @@ namespace BingX.Net.Clients.SpotApi
 
         #region Spot Symbol client
 
+        SharedSymbolCatalog? ISpotSymbolRestClient.SpotSymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_exchangeName, _topicId, EnvironmentName, null);
         GetSpotSymbolsOptions ISpotSymbolRestClient.GetSpotSymbolsOptions { get; } = new GetSpotSymbolsOptions(_exchangeName, false);
         async Task<HttpResult<SharedSpotSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
@@ -88,19 +93,60 @@ namespace BingX.Net.Clients.SpotApi
             if (!result.Success)
                 return HttpResult.Fail<SharedSpotSymbol[]>(result);
 
-            var resultData = result.Data.Select(s => new SharedSpotSymbol(s.Name.Split(new[] { '-' })[0], s.Name.Split(new[] { '-' })[1], s.Name, s.Status == SymbolStatus.Online)
+            var data = result.Data
+                .Select(x => ParseSymbol(x)!)
+                .Where(x => x != null)
+                .ToArray();
+
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, data);
+            return HttpResult.Ok(result, SharedUtils.ApplySymbolFilter(data, request));
+        }
+
+        private SharedSpotSymbol? ParseSymbol(BingXSymbol s)
+        {
+            var assets = s.Name.Split(new[] { '-' });
+            if (assets.Length != 2)
+                return null;
+
+            var result = new SharedSpotSymbol(assets[0], assets[1], s.Name, s.Status == SymbolStatus.Online)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
                 MinNotionalValue = s.MinNotional,
                 MaxTradeQuantity = s.MaxOrderQuantity,
                 QuantityStep = s.StepSize,
-                PriceStep = s.TickSize
-            }).ToArray();
+                PriceStep = s.TickSize,
+                DisplayName = s.DisplayName,
+            };
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData);
-            return HttpResult.Ok(result, resultData);
-        
-                
+            if (LibraryHelpers.IsStableCoin(assets[0]))
+            {
+                result.BaseAssetType = SharedAssetType.Crypto;
+                result.BaseAssetSubType = SharedAssetSubType.StableCoin;
+            } 
+            else if (_exchangeSupportedFiatCurrencies.Contains(assets[0]))
+            {
+                result.BaseAssetType = SharedAssetType.Fiat;
+            }
+            else
+            {
+                result.BaseAssetType = SharedAssetType.Crypto;
+            }
+
+            if (LibraryHelpers.IsStableCoin(assets[1]))
+            {
+                result.QuoteAssetType = SharedAssetType.Crypto;
+                result.QuoteAssetSubType = SharedAssetSubType.StableCoin;
+            }
+            else if (_exchangeSupportedFiatCurrencies.Contains(assets[1]))
+            {
+                result.QuoteAssetType = SharedAssetType.Fiat;
+            }
+            else
+            {
+                result.QuoteAssetType = SharedAssetType.Crypto;
+            }
+
+            return result;
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> ISpotSymbolRestClient.GetSpotSymbolsForBaseAssetAsync(string baseAsset)

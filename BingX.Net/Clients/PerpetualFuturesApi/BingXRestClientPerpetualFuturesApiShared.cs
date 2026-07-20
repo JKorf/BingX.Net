@@ -6,6 +6,7 @@ using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.SharedApis;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -75,6 +76,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #region Futures Symbol client
 
+        SharedSymbolCatalog? IFuturesSymbolRestClient.FuturesSymbolCatalog => ExchangeSymbolCache.GetSymbolCatalog(_exchangeName, _topicId, EnvironmentName, null);
         GetFuturesSymbolsOptions IFuturesSymbolRestClient.GetFuturesSymbolsOptions { get; } = new GetFuturesSymbolsOptions(_exchangeName, false);
         async Task<HttpResult<SharedFuturesSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsAsync(GetSymbolsRequest request, CancellationToken ct)
         {
@@ -86,7 +88,18 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result.Success)
                 return HttpResult.Fail<SharedFuturesSymbol[]>(result);
 
-            var resultData = result.Data.Where(x => !string.IsNullOrEmpty(x.Asset)).Select(s => new SharedFuturesSymbol(TradingMode.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
+            var data = result.Data
+                .Where(x => !string.IsNullOrEmpty(x.Asset))
+                .Select(x => ParseSymbol(x))
+                .ToArray();
+
+            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, data);
+            return HttpResult.Ok(result, SharedUtils.ApplySymbolFilter(data, request));
+        }
+
+        private SharedFuturesSymbol ParseSymbol(BingXContract s)
+        {
+            var result = new SharedFuturesSymbol(TradingMode.PerpetualLinear, s.Asset, s.Currency, s.Symbol, s.Status == 1)
             {
                 MinTradeQuantity = s.MinOrderQuantity,
                 MinNotionalValue = s.MinOrderValue,
@@ -94,13 +107,28 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 QuantityDecimals = s.QuantityPrecision,
                 ContractSize = 1,
                 MaxShortLeverage = s.MaxShortLeverage,
-                MaxLongLeverage = s.MaxLongLeverage
-            }).ToArray();
+                MaxLongLeverage = s.MaxLongLeverage,
+                QuoteAssetType = SharedAssetType.Crypto,
+                QuoteAssetSubType = LibraryHelpers.IsStableCoin(s.Currency) ? SharedAssetSubType.StableCoin : null,
+                DisplayName = s.DisplayName
+            };
 
-            ExchangeSymbolCache.UpdateSymbolInfo(_topicId, EnvironmentName, null, resultData);
-            return HttpResult.Ok(result, resultData);
-        
-                
+            if (s.Asset.StartsWith("NCSK"))
+            {
+                result.BaseAssetType = SharedAssetType.TradFi;
+                result.BaseAssetSubType = SharedAssetSubType.Equity;
+            }
+            else if (s.Asset.StartsWith("NCCO"))
+            {
+                result.BaseAssetType = SharedAssetType.TradFi;
+                result.BaseAssetSubType = SharedAssetSubType.Commodity;
+            }
+            else
+            {
+                result.BaseAssetType = SharedAssetType.Crypto;
+            }
+
+            return result;
         }
 
         async Task<ExchangeCallResult<SharedSymbol[]>> IFuturesSymbolRestClient.GetFuturesSymbolsForBaseAssetAsync(string baseAsset)
