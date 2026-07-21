@@ -54,6 +54,8 @@ Store the returned `UpdateSubscription` and unsubscribe on shutdown via `socketC
 
 For code that needs to work across multiple exchanges, use `CryptoExchange.Net.SharedApis` interfaces (`ISpotTickerRestClient`, `ISpotOrderRestClient`, etc.) accessed via `.SharedClient` properties.
 
+Successful shared spot and perpetual symbol retrieval populates `SpotSymbolCatalog` / `FuturesSymbolCatalog`. These symbol queries honor `GetSymbolsRequest` filters and return display names plus asset type metadata; preserve that metadata instead of reclassifying symbols from their names in application code.
+
 ## Avoid
 
 - Raw `HttpClient` calls to BingX endpoints
@@ -67,4 +69,3 @@ For code that needs to work across multiple exchanges, use `CryptoExchange.Net.S
 ## Reference
 
 For detailed patterns and pitfalls see `AGENTS.md`, `llms.txt`, `docs/ai-api-map.md`, and `Examples/ai-friendly/`.
-

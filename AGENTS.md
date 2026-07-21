@@ -143,6 +143,8 @@ var symbol = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
 var ticker = await bingXShared.GetSpotTickerAsync(new GetTickerRequest(symbol));
 ```
 
+In 4.2.0, successful shared symbol retrieval populates the `SpotSymbolCatalog` / `FuturesSymbolCatalog` properties. `GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters and return display names plus asset type metadata. Spot EUR/USD assets are marked as fiat and stablecoins use the stablecoin subtype; perpetual `NCSK...` bases are marked as equities, `NCCO...` bases as commodities, and other bases as crypto.
+
 ## Dependency Injection
 
 ```csharp

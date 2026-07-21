@@ -2,9 +2,11 @@
 
 > Strongly typed .NET client library for the BingX REST and WebSocket APIs. Supports Spot, Perpetual Futures, sub-account endpoints, account management, market data, and order placement. Part of the CryptoExchange.Net ecosystem providing a unified abstraction across cryptocurrency exchanges.
 
-BingX.Net provides strongly typed public and private endpoints, automatic WebSocket reconnection, comprehensive error handling via the `HttpResult<T>` / `WebSocketResult<T>` pattern, native AOT support, local order book support, and SharedApis integration for exchange-agnostic code. Current package version in this repository: 3.11.1. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
+BingX.Net provides strongly typed public and private endpoints, automatic WebSocket reconnection, comprehensive error handling via the `HttpResult<T>` / `WebSocketResult<T>` pattern, native AOT support, local order book support, and SharedApis integration for exchange-agnostic code. Current package version in this repository: 4.2.0. Targets netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
 
 REST methods return `HttpResult<T>` / `HttpResult`, WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`, and shared symbol/cache helpers return `ExchangeCallResult<T>`. Call `SharedClient.Discover()` to inspect supported shared features before routing optional multi-exchange functionality.
+
+Successful shared spot and perpetual futures symbol retrieval populates their symbol catalogs. These symbol queries honor `GetSymbolsRequest` filters and return display names plus crypto, fiat, stablecoin, equity, or commodity asset metadata where BingX supplies enough information.
 
 ## Documentation
 

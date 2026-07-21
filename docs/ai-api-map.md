@@ -173,6 +173,10 @@ BingX.Net examples should use hyphenated symbols such as `BTC-USDT` and `ETH-USD
 | Shared spot socket client | `new BingXSocketClient().SpotApi.SharedClient` |
 | Shared perpetual futures socket client | `new BingXSocketClient().PerpetualFuturesApi.SharedClient` |
 | Discover shared capabilities | `client.SpotApi.SharedClient.Discover()` / `client.PerpetualFuturesApi.SharedClient.Discover()` |
+| Get filtered shared spot symbols | `ISpotSymbolRestClient.GetSpotSymbolsAsync(new GetSymbolsRequest(...))` |
+| Read shared spot symbol catalog | `ISpotSymbolRestClient.SpotSymbolCatalog` |
+| Get filtered shared futures symbols | `IFuturesSymbolRestClient.GetFuturesSymbolsAsync(new GetSymbolsRequest(...))` |
+| Read shared futures symbol catalog | `IFuturesSymbolRestClient.FuturesSymbolCatalog` |
 | Shared spot ticker REST | `ISpotTickerRestClient.GetSpotTickerAsync(new GetTickerRequest(symbol))` |
 | Shared spot order REST | `ISpotOrderRestClient.PlaceSpotOrderAsync(...)` |
 | Shared futures order REST | `IFuturesOrderRestClient.PlaceFuturesOrderAsync(...)` |
@@ -180,6 +184,8 @@ BingX.Net examples should use hyphenated symbols such as `BTC-USDT` and `ETH-USD
 | Shared order book socket | `IOrderBookSocketClient.SubscribeToOrderBookUpdatesAsync(...)` |
 
 Shared REST calls return `HttpResult<T>` / `HttpResult`. Shared socket subscriptions return `WebSocketResult<UpdateSubscription>`. Shared non-I/O symbol/cache helpers such as symbol support checks return `ExchangeCallResult<T>`.
+
+Successful shared spot and futures symbol retrieval populates the corresponding catalog. Results include display names and asset type/subtype metadata: spot EUR/USD assets are fiat and known stablecoins carry the stablecoin subtype; perpetual `NCSK...` bases are TradFi equities, `NCCO...` bases are TradFi commodities, and other bases are crypto.
 
 For shared socket subscriptions, keep the concrete socket client and unsubscribe with `await socketClient.UnsubscribeAsync(subscription.Data)`.
 

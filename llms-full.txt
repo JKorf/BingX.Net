@@ -4,8 +4,8 @@
 
 BingX.Net is a strongly typed .NET client library for the BingX REST and WebSocket APIs. It is part of the CryptoExchange.Net ecosystem and uses the same result, shared API, logging, rate limiting, and socket patterns as the other JKorf exchange libraries.
 
-Current package version in this repository: 3.11.1.
-CryptoExchange.Net dependency: 11.1.0.
+Current package version in this repository: 4.2.0.
+CryptoExchange.Net dependency: 12.2.0.
 Target frameworks: netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
 Native AOT: supported on compatible .NET targets.
 
@@ -376,6 +376,24 @@ if (!ticker.Success)
 
 Console.WriteLine(ticker.Data.LastPrice);
 ```
+
+Successful shared symbol retrieval populates the corresponding catalog and returns classified asset metadata:
+
+```csharp
+ISpotSymbolRestClient spotSymbols = new BingXRestClient().SpotApi.SharedClient;
+var symbols = await spotSymbols.GetSpotSymbolsAsync(new GetSymbolsRequest());
+if (!symbols.Success)
+{
+    Console.WriteLine(symbols.Error);
+    return;
+}
+
+var catalog = spotSymbols.SpotSymbolCatalog;
+var first = symbols.Data.First();
+Console.WriteLine($"{first.DisplayName}: {first.BaseAssetType}/{first.BaseAssetSubType}");
+```
+
+`GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters. Spot symbols classify EUR/USD as fiat and known stablecoins with `SharedAssetSubType.StableCoin`. Perpetual futures classify `NCSK...` base assets as TradFi equities, `NCCO...` bases as TradFi commodities, other bases as crypto, and quote assets as crypto with stablecoin subtype metadata when applicable. The equivalent futures catalog is `IFuturesSymbolRestClient.FuturesSymbolCatalog`.
 
 Shared WebSocket subscriptions return an `UpdateSubscription` in `.Data`. For shared interface variables, unsubscribe through the concrete socket client:
 
