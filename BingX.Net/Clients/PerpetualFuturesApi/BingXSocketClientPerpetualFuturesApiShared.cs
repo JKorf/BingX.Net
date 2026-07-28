@@ -38,10 +38,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 update.Data.LastPrice,
                 update.Data.HighPrice,
                 update.Data.LowPrice,
-                update.Data.Volume,
+                new SharedOrderQuantity(update.Data.Volume, update.Data.QuoteVolume),
                 update.Data.PriceChangePercentage)
             {
-                QuoteVolume = update.Data.QuoteVolume
             })), ct).ConfigureAwait(false);
 
             return result;
@@ -60,7 +59,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.ToType(update.Data.Select(x => 
-            new SharedTrade(request.Symbol, symbol, x.Quantity, x.Price, x.TradeTime)
+            new SharedTrade(request.Symbol, symbol, new SharedOrderQuantity(x.Quantity), x.Price, x.TradeTime)
             {
                 Side = x.BuyerIsMaker ? SharedOrderSide.Sell : SharedOrderSide.Buy,
             }).ToArray())), ct).ConfigureAwait(false);
@@ -91,7 +90,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 foreach (var item in update.Data)
                 {
                     handler(update.ToType(new SharedKline(
-                        request.Symbol, symbol, item.Timestamp, item.ClosePrice, item.HighPrice, item.LowPrice, item.OpenPrice, item.Volume)));
+                        request.Symbol,
+                        symbol,
+                        item.Timestamp,
+                        item.ClosePrice,
+                        item.HighPrice, 
+                        item.LowPrice,
+                        item.OpenPrice, 
+                        new SharedOrderQuantity(item.Volume))));
                 }
             }, ct).ConfigureAwait(false);
 

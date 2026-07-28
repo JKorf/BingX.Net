@@ -66,7 +66,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return HttpResult.Ok(result,
                 ExchangeHelpers.ApplyFilter(result.Data, x => x.Timestamp, request.StartTime, request.EndTime, direction)
                     .Select(x =>
-                        new SharedKline(request.Symbol, symbol, x.Timestamp, x.ClosePrice, x.HighPrice, x.LowPrice, x.OpenPrice, x.Volume))
+                        new SharedKline(
+                            request.Symbol,
+                            symbol, 
+                            x.Timestamp,
+                            x.ClosePrice,
+                            x.HighPrice, 
+                            x.LowPrice,
+                            x.OpenPrice,
+                            new SharedOrderQuantity(x.Volume)))
                     .ToArray(), nextPageRequest);
         
                 
@@ -194,7 +202,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                     resultTicker.Result.Data.LastPrice,
                     resultTicker.Result.Data.HighPrice,
                     resultTicker.Result.Data.LowPrice,
-                    resultTicker.Result.Data.Volume,
+                    new SharedOrderQuantity(resultTicker.Result.Data.Volume),
                     resultTicker.Result.Data.PriceChangePercent)
                 {
                     IndexPrice = resultFunding.Result.Data.IndexPrice,
@@ -224,7 +232,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return HttpResult.Ok(resultTickers.Result, resultTickers.Result.Data.Select(x =>
             {
                 var markPrice = resultFunding.Result.Data.Single(p => p.Symbol == x.Symbol);
-                return new SharedFuturesTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, x.Symbol), x.Symbol, x.LastPrice, x.HighPrice, x.LowPrice, x.Volume, x.PriceChangePercent)
+                return new SharedFuturesTicker(
+                    ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, x.Symbol),
+                    x.Symbol,
+                    x.LastPrice,
+                    x.HighPrice, 
+                    x.LowPrice,
+                    new SharedOrderQuantity(x.Volume), 
+                    x.PriceChangePercent)
                 {
                     MarkPrice = markPrice.MarkPrice,
                     IndexPrice = markPrice.IndexPrice,
@@ -282,7 +297,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return HttpResult.Fail<SharedTrade[]>(result);
 
             return HttpResult.Ok(result, result.Data.AsEnumerable().Reverse().Select(x => 
-                new SharedTrade(request.Symbol, symbol, x.Quantity, x.Price, x.Timestamp)
+                new SharedTrade(request.Symbol, symbol, new SharedOrderQuantity(x.Quantity, x.Value), x.Price, x.Timestamp)
             {
                 Side = x.BuyerIsMaker ? SharedOrderSide.Sell : SharedOrderSide.Buy,
             }).ToArray());

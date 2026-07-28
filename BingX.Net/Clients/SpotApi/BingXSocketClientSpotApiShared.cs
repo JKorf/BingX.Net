@@ -32,9 +32,16 @@ namespace BingX.Net.Clients.SpotApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.ToType(new SharedSpotTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.LastPrice, update.Data.HighPrice, update.Data.LowPrice, update.Data.Volume, decimal.Parse(update.Data.PriceChangePercentage.Substring(0, update.Data.PriceChangePercentage.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture))
+            var result = await SubscribeToTickerUpdatesAsync(symbol, update => handler(update.ToType(
+                new SharedSpotTicker(
+                    ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol),
+                    update.Data.Symbol,
+                    update.Data.LastPrice,
+                    update.Data.HighPrice,
+                    update.Data.LowPrice,
+                    new SharedOrderQuantity(update.Data.Volume, update.Data.QuoteVolume),
+                    decimal.Parse(update.Data.PriceChangePercentage.Substring(0, update.Data.PriceChangePercentage.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture))
             {
-                QuoteVolume = update.Data.QuoteVolume
             })), ct).ConfigureAwait(false);
 
             return result;
@@ -53,7 +60,7 @@ namespace BingX.Net.Clients.SpotApi
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var result = await SubscribeToTradeUpdatesAsync(symbol, update => handler(update.ToType(new[] {
-                new SharedTrade(request.Symbol, symbol, update.Data.Quantity, update.Data.Price, update.Data.TradeTime)
+                new SharedTrade(request.Symbol, symbol, new SharedOrderQuantity(update.Data.Quantity), update.Data.Price, update.Data.TradeTime)
             {
                 Side = update.Data.BuyerIsMaker ? SharedOrderSide.Sell : SharedOrderSide.Buy,
             } })), ct).ConfigureAwait(false);
@@ -77,7 +84,15 @@ namespace BingX.Net.Clients.SpotApi
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
             var result = await SubscribeToKlineUpdatesAsync(symbol, interval, update => handler(update.ToType(
-                new SharedKline(request.Symbol, symbol, update.Data.Kline.OpenTime, update.Data.Kline.ClosePrice, update.Data.Kline.HighPrice, update.Data.Kline.LowPrice, update.Data.Kline.OpenPrice, update.Data.Kline.Volume))), ct).ConfigureAwait(false);
+                new SharedKline(
+                    request.Symbol,
+                    symbol,
+                    update.Data.Kline.OpenTime,
+                    update.Data.Kline.ClosePrice,
+                    update.Data.Kline.HighPrice,
+                    update.Data.Kline.LowPrice,
+                    update.Data.Kline.OpenPrice,
+                    new SharedOrderQuantity(update.Data.Kline.Volume, update.Data.Kline.QuoteVolume)))), ct).ConfigureAwait(false);
 
             return result;
         }
