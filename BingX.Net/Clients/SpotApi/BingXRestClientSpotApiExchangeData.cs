@@ -68,7 +68,7 @@ namespace BingX.Net.Clients.SpotApi
                 { "symbol", symbol }
             };
             parameters.Add("limit", limit);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/market/trades", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/quote/trades", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXTrade[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -98,17 +98,14 @@ namespace BingX.Net.Clients.SpotApi
         {
             mergeDepth.ValidateIntBetween(nameof(mergeDepth), 0, 5);
 
-            // This endpoint doesn't work unless symbol is with an underscore
-            symbol = symbol.Replace('-', '_');
-
             var parameters = new Parameters(BingXExchange._parameterSerializationSettings)
             {
                 { "symbol", symbol },
-                { "depth", limit },
+                { "limit", limit },
                 { "type", "step" + mergeDepth }
             };
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/market/depth", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/quote/depth", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXOrderBook>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -128,7 +125,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.Add("endTime", endTime);
             parameters.Add("limit", limit);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/market/kline", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/quote/klines", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXKline[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -144,7 +141,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.Add("endTime", endTime);
             parameters.Add("limit", limit);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/market/his/v1/kline", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/quote/historicalKlines", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXKline[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -161,7 +158,7 @@ namespace BingX.Net.Clients.SpotApi
             };
             parameters.Add("symbol", symbol);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/ticker/24hr", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/quote/ticker", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXTicker[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
@@ -213,7 +210,7 @@ namespace BingX.Net.Clients.SpotApi
             {
                 { "symbol", symbol }
             };
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v1/ticker/bookTicker", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/quote/bookTicker", BingXExchange.RateLimiter.RestMarket, 1, false);
             var result = await _baseClient.SendAsync<BingXBookTicker[]>(request, parameters, ct).ConfigureAwait(false);
             if (!result.Success)
                 return HttpResult.Fail<BingXBookTicker>(result);
@@ -235,7 +232,7 @@ namespace BingX.Net.Clients.SpotApi
             parameters.Add("limit", limit);
             parameters.Add("fromId", fromId);
 
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/market/his/v1/trade", BingXExchange.RateLimiter.RestMarket, 1, false);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/spot/v2/quote/historicalTrades", BingXExchange.RateLimiter.RestMarket, 1, false);
             return await _baseClient.SendAsync<BingXTradeHistory[]>(request, parameters, ct).ConfigureAwait(false);
         }
 

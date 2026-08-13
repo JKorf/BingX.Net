@@ -1,5 +1,5 @@
 GET
-/openApi/spot/v1/market/trades
+/openApi/spot/v2/quote/trades
 false
 {
   "code": 0,

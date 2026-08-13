@@ -1,5 +1,5 @@
 GET
-/openApi/market/his/v1/trade
+/openApi/spot/v2/quote/historicalTrades
 false
 {
   "code": 0,

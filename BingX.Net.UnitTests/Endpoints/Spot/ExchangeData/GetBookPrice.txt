@@ -1,18 +1,17 @@
 GET
-/openApi/spot/v1/ticker/bookTicker
+/openApi/spot/v2/quote/bookTicker
 false
 {
   "code": 0,
-  "timestamp": 1707147866795,
+  "timestamp": 1785332945524,
   "data": [
     {
-      "eventType": "bookTicker",
-      "time": 1707147866623,
+      "time": 1785332944751,
       "symbol": "BTC-USDT",
-      "bidPrice": "42738.64",
-      "bidVolume": "5.19530",
-      "askPrice": "42739.50",
-      "askVolume": "5.72867"
+      "bidPrice": "64576.83",
+      "bidQty": "8.994776",
+      "askPrice": "64576.90",
+      "askQty": "0.000037"
     }
   ]
 }

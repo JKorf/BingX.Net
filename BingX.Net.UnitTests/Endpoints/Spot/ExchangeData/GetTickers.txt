@@ -1,5 +1,5 @@
 GET
-/openApi/spot/v1/ticker/24hr
+/openApi/spot/v2/quote/ticker
 false
 {
   "code": 0,

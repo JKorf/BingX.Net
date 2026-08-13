@@ -45,11 +45,11 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Recent%20Trades%20List" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/spot/v1/market/trades
+        /// GET /openApi/spot/v2/quote/trades
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
-        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results, max 500</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<HttpResult<BingXTrade[]>> GetRecentTradesAsync(string symbol, int? limit = null, CancellationToken ct = default);
@@ -75,14 +75,14 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Kline%2FCandlestick%20Data" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/spot/v2/market/kline
+        /// GET /openApi/spot/v2/quote/kline
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="interval">["<c>interval</c>"] Kline interval</param>
         /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
         /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
-        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results, max 1440</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<HttpResult<BingXKline[]>> GetKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -93,14 +93,14 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Historical%20K-line" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/market/his/v1/kline
+        /// GET /openApi/spot/v2/quote/historicalKlines
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
         /// <param name="interval">["<c>interval</c>"] Kline interval</param>
         /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
         /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
-        /// <param name="limit">["<c>limit</c>"] Max amount of results</param>
+        /// <param name="limit">["<c>limit</c>"] Max amount of results, max 1000</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
         Task<HttpResult<BingXKline[]>> GetHistoricalKlinesAsync(string symbol, KlineInterval interval, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
@@ -111,7 +111,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/24hr%20Ticker%20Price%20Change%20Statistics" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/spot/v1/ticker/24hr
+        /// GET /openApi/spot/v2/quote/ticker
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] Filter by symbol, for example `ETH-USDT`</param>
@@ -125,11 +125,11 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Order%20Book%20aggregation" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/spot/v2/market/depth
+        /// GET /openApi/spot/v2/quote/depth
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
-        /// <param name="limit">["<c>depth</c>"] Book depth</param>
+        /// <param name="limit">["<c>limit</c>"] Book depth, max 1024</param>
         /// <param name="mergeDepth">0 is default precision, 1 to 5 are 10 to 100000 times precision respectively</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
@@ -168,7 +168,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Symbol%20Order%20Book%20Ticker" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/spot/v1/ticker/bookTicker
+        /// GET /openApi/spot/v2/quote/bookTicker
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
@@ -182,11 +182,11 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Spot/Market%20Data/Old%20Trade%20Lookup" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/market/his/v1/trade
+        /// GET /openApi/spot/v2/quote/historicalTrades
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
-        /// <param name="limit">["<c>limit</c>"] Amount or results, max 500</param>
+        /// <param name="limit">["<c>limit</c>"] Amount or results, max 1000</param>
         /// <param name="fromId">["<c>fromId</c>"] Return trades after this id</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>

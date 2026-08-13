@@ -36,6 +36,11 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("bidVolume")]
         public decimal BestBidQuantity { get; set; }
+        [JsonInclude, JsonPropertyName("bidQty")]
+        internal decimal BestBidQuantityInt
+        {
+            set => BestBidQuantity = value;
+        }
         /// <summary>
         /// ["<c>askPrice</c>"] Best ask price
         /// </summary>
@@ -46,5 +51,10 @@ namespace BingX.Net.Objects.Models
         /// </summary>
         [JsonPropertyName("askVolume")]
         public decimal BestAskQuantity { get; set; }
+        [JsonInclude, JsonPropertyName("askQty")]
+        internal decimal BestAskQuantityInt
+        {
+            set => BestAskQuantity = value;
+        }
     }
 }

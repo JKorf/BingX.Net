@@ -1,5 +1,5 @@
 GET
-/openApi/spot/v2/market/depth
+/openApi/spot/v2/quote/depth
 false
 {
   "code": 0,
