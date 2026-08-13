@@ -36,12 +36,13 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] Filter by symbol, for example `ETH-USDT`</param>
         /// <param name="incomeType">["<c>incomeType</c>"] Filter by income type</param>
+        /// <param name="settleAsset">["<c>currency</c>"] Settlement asset. Valid values are USDT and USDC.The default is USDT</param>
         /// <param name="startTime">["<c>startTime</c>"] Filter by start time</param>
         /// <param name="endTime">["<c>endTime</c>"] Filter by end time</param>
         /// <param name="limit">["<c>limit</c>"] Max results</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<HttpResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
+        Task<HttpResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get trading fee rates

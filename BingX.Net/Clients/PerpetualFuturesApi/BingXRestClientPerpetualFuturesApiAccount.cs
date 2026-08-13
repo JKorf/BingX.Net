@@ -37,11 +37,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Incomes
 
         /// <inheritdoc />
-        public async Task<HttpResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXIncome[]>> GetIncomesAsync(string? symbol = null, IncomeType? incomeType = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? limit = null, CancellationToken ct = default)
         {
             var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             parameters.Add("symbol", symbol);
             parameters.Add("incomeType", incomeType);
+            parameters.Add("currency", settleAsset);
             parameters.Add("startTime", startTime);
             parameters.Add("endTime", endTime);
             parameters.Add("limit", limit);

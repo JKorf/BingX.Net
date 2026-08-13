@@ -59,10 +59,10 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("avgClosePrice")]
         public decimal AverageClosePrice { get; set; }
         /// <summary>
-        /// ["<c>realisedProfit</c>"] Realised profit and loss
+        /// ["<c>realizedProfit</c>"] Realized profit and loss
         /// </summary>
-        [JsonPropertyName("realisedProfit")]
-        public decimal RealisedPnl { get; set; }
+        [JsonPropertyName("realizedProfit")]
+        public decimal RealizedPnl { get; set; }
         /// <summary>
         /// ["<c>netProfit</c>"] Net profit and loss
         /// </summary>

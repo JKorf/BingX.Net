@@ -1104,7 +1104,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                             x.AveragePrice,
                             x.AverageClosePrice,
                             x.ClosePositionQuantity,
-                            x.RealisedPnl,
+                            x.RealizedPnl,
                             x.UpdateTime)
                         {
                             Leverage = x.Leverage,

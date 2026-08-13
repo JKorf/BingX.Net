@@ -30,10 +30,11 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Get Positions
 
         /// <inheritdoc />
-        public async Task<HttpResult<BingXPosition[]>> GetPositionsAsync(string? symbol = null, CancellationToken ct = default)
+        public async Task<HttpResult<BingXPosition[]>> GetPositionsAsync(string? symbol = null, string? settleAsset = null, CancellationToken ct = default)
         {
             var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
             parameters.Add("symbol", symbol);
+            parameters.Add("currency", settleAsset);
 
             var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/swap/v2/user/positions", BingXExchange.RateLimiter.RestAccount2, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
@@ -680,17 +681,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             parameters.Add("symbol", symbol);
             parameters.Add("positionId", positionId);
             parameters.Add("currency", settleAsset);
-            parameters.Add("startTs", startTime);
-            parameters.Add("endTs", endTime);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
             parameters.Add("pageIndex", page);
             parameters.Add("pageSize", pageSize);
-            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/swap/v1/trade/positionHistory", BingXExchange.RateLimiter.RestAccount1, 1, true,
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/swap/v2/trade/positionHistory", BingXExchange.RateLimiter.RestAccount1, 1, true,
                 limitGuard: new SingleLimitGuard(5, TimeSpan.FromSeconds(1), RateLimitWindowType.Sliding, keySelector: SingleLimitGuard.PerApiKey));
-            var result = await _baseClient.SendAsync<BingXPositionHistoryWrapper>(request, parameters, ct).ConfigureAwait(false);
-            if (!result.Success)
-                return HttpResult.Fail<BingXPositionHistory[]>(result);
-
-            return HttpResult.Ok(result, result.Data.History);
+            return await _baseClient.SendAsync<BingXPositionHistory[]>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion

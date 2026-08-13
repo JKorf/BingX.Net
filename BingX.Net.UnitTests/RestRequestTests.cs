@@ -166,7 +166,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.CancelAllOrdersAfterAsync(true, 1), "CancelAllOrdersAfter");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.ClosePositionAsync("123"), "ClosePosition");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionAndMarginInfoAsync("123"), "GetPositionAndMarginInfo");
-            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ETH-USDT"), "GetPositionHistory", nestedJsonProperty: "data.positionHistory");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetPositionHistoryAsync("ETH-USDT"), "GetPositionHistory", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.PlaceTwapOrderAsync("123", OrderSide.Sell, PositionSide.Long, PriceType.Constant, 123, 0.1m, 123, 0.1m, 0.1m), "PlaceTwapOrder", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetClosedTwapOrdersAsync("123", 123, 123, DateTime.UtcNow, DateTime.UtcNow), "GetClosedTwapOrders", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.Trading.GetTwapOrderAsync(123), "GetTwapOrder", nestedJsonProperty: "data");

@@ -23,9 +23,10 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="settleAsset">["<c>currency</c>"] Settlement asset. Valid values are USDT and USDC. If omitted, positions for all settlement currencies are returned</param>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<HttpResult<BingXPosition[]>> GetPositionsAsync(string? symbol = null, CancellationToken ct = default);
+        Task<HttpResult<BingXPosition[]>> GetPositionsAsync(string? symbol = null, string? settleAsset = null, CancellationToken ct = default);
 
         /// <summary>
         /// Place a new test order. Order won't actually get placed
@@ -510,7 +511,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// Docs:<br />
         /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Trades%20Endpoints/Query%20Position%20History" /><br />
         /// Endpoint:<br />
-        /// GET /openApi/swap/v1/trade/positionHistory
+        /// GET /openApi/swap/v2/trade/positionHistory
         /// </para>
         /// </summary>
         /// <param name="symbol">["<c>symbol</c>"] The symbol, for example `ETH-USDT`</param>
@@ -519,7 +520,7 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="startTime">["<c>startTs</c>"] Filter by start time</param>
         /// <param name="endTime">["<c>endTs</c>"] Filter by end time</param>
         /// <param name="page">["<c>pageIndex</c>"] Page number</param>
-        /// <param name="pageSize">["<c>pageSize</c>"] Page size</param>
+        /// <param name="pageSize">["<c>pageSize</c>"] Page size, max 1000</param>
         /// <param name="ct">Cancellation token</param>
         Task<HttpResult<BingXPositionHistory[]>> GetPositionHistoryAsync(string symbol, long? positionId = null, string? settleAsset = null, DateTime? startTime = null, DateTime? endTime = null, int? page = null, int? pageSize = null, CancellationToken ct = default);
 

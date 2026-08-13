@@ -30,7 +30,8 @@ namespace BingX.Net.Converters
     [JsonSerializable(typeof(decimal?))]
     [JsonSerializable(typeof(DateTime))]
     [JsonSerializable(typeof(DateTime?))]
-    
+
+    [JsonSerializable(typeof(BingXResult<BingXPositionHistory[]>))]
     [JsonSerializable(typeof(BingXResult<BingXEditResult>))]
     [JsonSerializable(typeof(BingXResult<BingXListenKey>))]
     [JsonSerializable(typeof(BingXResult<BingXListenKey[]>))]
