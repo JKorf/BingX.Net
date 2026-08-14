@@ -247,6 +247,13 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 4.4.0 - 14 Aug 2026
+    * Added settleAsset parameter to GetIncomesAsync and GetPositionsAsync endpoints
+    * Updated spot market data endpoints to V2
+    * Updated GetPositionHistoryAsync to V2 endpoint
+    * Renamed RealisedPnl to RealizedPnl in BingXPositionHistory model
+    * Fixed Shared GetOpenInterestAsync being marked as Authenticated
+
 * Version 4.3.0 - 29 Jul 2026
     * Updated CryptoExchange.Net to version 12.4.0
     * Added calculation of AveragePrice on Shared order models if data is available and AveragePrice is not set
