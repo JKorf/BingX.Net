@@ -4,8 +4,8 @@
 
 BingX.Net is a strongly typed .NET client library for the BingX REST and WebSocket APIs. It is part of the CryptoExchange.Net ecosystem and uses the same result, shared API, logging, rate limiting, and socket patterns as the other JKorf exchange libraries.
 
-Current package version in this repository: 4.4.0.
-CryptoExchange.Net dependency: 12.2.0.
+Current package version in this repository: 4.5.0.
+CryptoExchange.Net dependency: 12.5.0.
 Target frameworks: netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0.
 Native AOT: supported on compatible .NET targets.
 
@@ -394,6 +394,8 @@ Console.WriteLine($"{first.DisplayName}: {first.BaseAssetType}/{first.BaseAssetS
 ```
 
 `GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters. Spot symbols classify EUR/USD as fiat and known stablecoins with `SharedAssetSubType.StableCoin`. Perpetual futures classify `NCSK...` base assets as TradFi equities, `NCCO...` bases as TradFi commodities, other bases as crypto, and quote assets as crypto with stablecoin subtype metadata when applicable. The equivalent futures catalog is `IFuturesSymbolRestClient.FuturesSymbolCatalog`.
+
+Shared quantities are represented by `SharedOrderQuantity` metadata across book tickers, trades, user trades, open interest, positions, and position history. Decimal compatibility properties remain available, but use the plural properties (`BestAskQuantities` / `BestBidQuantities`, `Quantities`, `OpenInterests`, `PositionSizes`) when quantity notation matters. Shared spot and perpetual order books set `QuantityType` to `SharedQuantityType.BaseAsset`.
 
 Shared WebSocket subscriptions return an `UpdateSubscription` in `.Data`. For shared interface variables, unsubscribe through the concrete socket client:
 

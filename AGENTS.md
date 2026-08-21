@@ -143,7 +143,9 @@ var symbol = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
 var ticker = await bingXShared.GetSpotTickerAsync(new GetTickerRequest(symbol));
 ```
 
-In 4.4.0, successful shared symbol retrieval populates the `SpotSymbolCatalog` / `FuturesSymbolCatalog` properties. `GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters and return display names plus asset type metadata. Spot EUR/USD assets are marked as fiat and stablecoins use the stablecoin subtype; perpetual `NCSK...` bases are marked as equities, `NCCO...` bases as commodities, and other bases as crypto.
+Successful shared symbol retrieval populates the `SpotSymbolCatalog` / `FuturesSymbolCatalog` properties. `GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters and return display names plus asset type metadata. Spot EUR/USD assets are marked as fiat and stablecoins use the stablecoin subtype; perpetual `NCSK...` bases are marked as equities, `NCCO...` bases as commodities, and other bases as crypto.
+
+Shared API quantities include `SharedOrderQuantity` metadata. Use plural quantity properties such as `Quantities`, `PositionSizes`, or `BestAskQuantities` when the base/quote/contract distinction matters; shared order books report `QuantityType` as `BaseAsset`.
 
 ## Dependency Injection
 
