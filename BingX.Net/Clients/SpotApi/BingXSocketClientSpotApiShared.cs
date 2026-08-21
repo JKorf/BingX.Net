@@ -108,7 +108,15 @@ namespace BingX.Net.Clients.SpotApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
+            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(
+                update.ToType(
+                    new SharedBookTicker(
+                        ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol),
+                        update.Data.Symbol, 
+                        update.Data.BestAskPrice, 
+                        new SharedOrderQuantity(update.Data.BestAskQuantity),
+                        update.Data.BestBidPrice,
+                        new SharedOrderQuantity(update.Data.BestBidQuantity)))), ct).ConfigureAwait(false);
 
             return result;
         }
@@ -171,7 +179,7 @@ namespace BingX.Net.Clients.SpotApi
                                 update.Data.OrderId.ToString(),
                                 update.Data.TradeId.ToString(),
                                 update.Data.Side == Enums.OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
-                                update.Data.LastFillQuantity!.Value,
+                                new SharedOrderQuantity(update.Data.LastFillQuantity !.Value),
                                 update.Data.LastFillPrice!.Value,
                                 update.Data.UpdateTime!.Value)
                             {

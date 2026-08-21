@@ -115,7 +115,15 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var symbol = request.Symbol!.GetSymbol(FormatSymbol);
-            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(update.ToType(new SharedBookTicker(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol), update.Data.Symbol, update.Data.BestAskPrice, update.Data.BestAskQuantity, update.Data.BestBidPrice, update.Data.BestBidQuantity))), ct).ConfigureAwait(false);
+            var result = await SubscribeToBookPriceUpdatesAsync(symbol, update => handler(
+                update.ToType(
+                    new SharedBookTicker(
+                        ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, update.Data.Symbol),
+                        update.Data.Symbol,
+                        update.Data.BestAskPrice, 
+                        new SharedOrderQuantity(update.Data.BestAskQuantity),
+                        update.Data.BestBidPrice,
+                        new SharedOrderQuantity(update.Data.BestBidQuantity)))), ct).ConfigureAwait(false);
 
             return result;
         }
@@ -227,13 +235,18 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 return new WebSocketResult<UpdateSubscription>(Exchange, null, validationError);
 
             var result = await SubscribeToUserDataUpdatesAsync(
-                onAccountUpdate: update => handler(update.ToType(update.Data.Update.Positions.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, x.Symbol), x.Symbol, x.Size, update.Data.EventTime)
-                {
-                    AverageOpenPrice = x.EntryPrice,
-                    PositionMode = SharedPositionMode.HedgeMode,
-                    PositionSide = x.Side == Enums.TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
-                    UnrealizedPnl = x.UnrealizedPnl
-                }).ToArray())),
+                onAccountUpdate: update => handler(update.ToType(update.Data.Update.Positions.Select(x => 
+                    new SharedPosition(
+                        ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, x.Symbol),
+                        x.Symbol,
+                        new SharedOrderQuantity(x.Size), 
+                        update.Data.EventTime)
+                    {
+                        AverageOpenPrice = x.EntryPrice,
+                        PositionMode = SharedPositionMode.HedgeMode,
+                        PositionSide = x.Side == Enums.TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long,
+                        UnrealizedPnl = x.UnrealizedPnl
+                    }).ToArray())),
                 ct: ct).ConfigureAwait(false);
 
             return result;

@@ -118,7 +118,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 MaxLongLeverage = s.MaxLongLeverage,
                 QuoteAssetType = SharedAssetType.Crypto,
                 QuoteAssetSubType = LibraryHelpers.IsStableCoin(s.Currency) ? SharedAssetSubType.StableCoin : null,
-                DisplayName = s.DisplayName
+                DisplayName = s.DisplayName,
+                MakerFeePercentage = s.MakerFeeRate * 100,
+                TakerFeePercentage = s.TakerFeeRate * 100
             };
 
             if (s.Asset.StartsWith("NCSK"))
@@ -270,9 +272,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, resultTicker.Data.Symbol),
                 resultTicker.Data.Symbol,
                 resultTicker.Data.BestAskPrice,
-                resultTicker.Data.BestAskQuantity,
+                new SharedOrderQuantity(resultTicker.Data.BestAskQuantity),
                 resultTicker.Data.BestBidPrice,
-                resultTicker.Data.BestBidQuantity));
+                new SharedOrderQuantity(resultTicker.Data.BestBidQuantity)));
         
                 
         }
@@ -366,7 +368,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result.Success)
                 return HttpResult.Fail<SharedOrderBook>(result);
 
-            return HttpResult.Ok(result, new SharedOrderBook(result.Data.Asks, result.Data.Bids));
+            return HttpResult.Ok(result, new SharedOrderBook(SharedQuantityType.BaseAsset, result.Data.Asks, result.Data.Bids));
         
                 
         }
@@ -485,7 +487,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result.Success)
                 return HttpResult.Fail<SharedOpenInterest>(result);
 
-            return HttpResult.Ok(result, new SharedOpenInterest(result.Data.OpenInterest));
+            return HttpResult.Ok(result, new SharedOpenInterest(new SharedOrderQuantity(result.Data.OpenInterest)));
         
                 
         }
@@ -752,7 +754,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 x.OrderId.ToString(),
                 x.TradeId,
                 x.Side == OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
-                x.Quantity,
+                new SharedOrderQuantity(x.Quantity),
                 x.Price,
                 x.Timestamp)
             {
@@ -808,7 +810,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                             x.OrderId.ToString(),
                             x.TradeId.ToString(),
                             x.Side == OrderSide.Buy ? SharedOrderSide.Buy : SharedOrderSide.Sell,
-                            x.Quantity,
+                            new SharedOrderQuantity(x.Quantity),
                             x.Price,
                             x.Timestamp)
                         {
@@ -850,15 +852,20 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             if (!result.Success)
                 return HttpResult.Fail<SharedPosition[]>(result);
 
-            return HttpResult.Ok(result, result.Data.Select(x => new SharedPosition(ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, x.Symbol), x.Symbol, x.Size, x.UpdateTime)
-            {
-                UnrealizedPnl = x.UnrealizedProfit,
-                LiquidationPrice = x.LiquidationPrice,
-                Leverage = x.Leverage,
-                AverageOpenPrice = x.AveragePrice,
-                PositionMode = SharedPositionMode.HedgeMode,
-                PositionSide = x.Side == TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long
-            }).ToArray());
+            return HttpResult.Ok(result, result.Data.Select(x => 
+                new SharedPosition(
+                    ExchangeSymbolCache.ParseSymbol(_topicId, EnvironmentName, null, x.Symbol),
+                    x.Symbol,
+                    new SharedOrderQuantity(x.Size),
+                    x.UpdateTime)
+                {
+                    UnrealizedPnl = x.UnrealizedProfit,
+                    LiquidationPrice = x.LiquidationPrice,
+                    Leverage = x.Leverage,
+                    AverageOpenPrice = x.AveragePrice,
+                    PositionMode = SharedPositionMode.HedgeMode,
+                    PositionSide = x.Side == TradeSide.Short ? SharedPositionSide.Short : SharedPositionSide.Long
+                }).ToArray());
         
                 
         }
@@ -1103,7 +1110,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                             x.PositionSide == PositionSide.Long ? SharedPositionSide.Long : SharedPositionSide.Short,
                             x.AveragePrice,
                             x.AverageClosePrice,
-                            x.ClosePositionQuantity,
+                            new SharedOrderQuantity(x.ClosePositionQuantity),
                             x.RealizedPnl,
                             x.UpdateTime)
                         {
