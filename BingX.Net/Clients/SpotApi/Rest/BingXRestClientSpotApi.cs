@@ -15,6 +15,8 @@ namespace BingX.Net.Clients.SpotApi
     internal partial class BingXRestClientSpotApi : BingXRestClientApi, IBingXRestClientSpotApi
     {
         #region fields 
+        private readonly BingXRestClientSpotSharedApi _sharedApi;
+
         protected override ErrorMapping ErrorMapping => BingXErrors.SpotErrors;
         #endregion
 
@@ -34,6 +36,8 @@ namespace BingX.Net.Clients.SpotApi
             Account = new BingXRestClientSpotApiAccount(this);
             ExchangeData = new BingXRestClientSpotApiExchangeData(_logger, this);
             Trading = new BingXRestClientSpotApiTrading(_logger, this);
+
+            _sharedApi = new BingXRestClientSpotSharedApi(this);
         }
         #endregion
 
@@ -44,7 +48,9 @@ namespace BingX.Net.Clients.SpotApi
             => ExchangeData.GetServerTimeAsync();
 
         /// <inheritdoc />
-        public IBingXRestClientSpotApiShared SharedClient => this;
+        public IBingXRestClientSpotApiShared SharedClient => _sharedApi;
+        /// <inheritdoc />
+        public IBingXRestClientSpotSharedApi SharedApi => _sharedApi;
 
     }
 }

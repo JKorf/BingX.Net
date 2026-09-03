@@ -1,15 +1,16 @@
-﻿using NUnit.Framework;
-using BingX.Net.Clients;
+﻿using BingX.Net.Clients;
+using BingX.Net.Clients.SpotApi;
+using BingX.Net.Interfaces.Clients;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Clients;
-using System.Net.Http;
-using System.Collections.Generic;
+using CryptoExchange.Net.Converters.SystemTextJson;
+using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CryptoExchange.Net.Objects;
-using BingX.Net.Interfaces.Clients;
-using CryptoExchange.Net.Converters.SystemTextJson;
-using BingX.Net.Clients.SpotApi;
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Net.Http;
 
 namespace BingX.Net.UnitTests
 {
@@ -145,6 +146,42 @@ namespace BingX.Net.UnitTests
             Assert.That(((BaseApiClient)restClient.SpotApi).ClientOptions.Proxy.Port, Is.EqualTo(80));
             Assert.That(((BaseApiClient)socketClient.SpotApi).ClientOptions.Proxy.Host, Is.EqualTo("host2"));
             Assert.That(((BaseApiClient)socketClient.SpotApi).ClientOptions.Proxy.Port, Is.EqualTo(81));
+        }
+
+        [Test]
+        public void TestRestSpotSharedApiDiscoveryMatchesAggregate()
+        {
+            var (missingOptions, missingInterfaces) = TestHelpers.ValidateSharedApi(new BingXRestClient().SpotApi.SharedApi);
+
+            Assert.That(missingOptions, Is.Empty);
+            Assert.That(missingInterfaces, Is.Empty);
+        }
+
+        [Test]
+        public void TestRestFuturesSharedApiDiscoveryMatchesAggregate()
+        {
+            var (missingOptions, missingInterfaces) = TestHelpers.ValidateSharedApi(new BingXRestClient().PerpetualFuturesApi.SharedApi);
+
+            Assert.That(missingOptions, Is.Empty);
+            Assert.That(missingInterfaces, Is.Empty);
+        }
+
+        [Test]
+        public void TestSocketSpotSharedApiDiscoveryMatchesAggregate()
+        {
+            var (missingOptions, missingInterfaces) = TestHelpers.ValidateSharedApi(new BingXSocketClient().SpotApi.SharedApi);
+
+            Assert.That(missingOptions, Is.Empty);
+            Assert.That(missingInterfaces, Is.Empty);
+        }
+
+        [Test]
+        public void TestSocketFuturesSharedApiDiscoveryMatchesAggregate()
+        {
+            var (missingOptions, missingInterfaces) = TestHelpers.ValidateSharedApi(new BingXSocketClient().PerpetualFuturesApi.SharedApi);
+
+            Assert.That(missingOptions, Is.Empty);
+            Assert.That(missingInterfaces, Is.Empty);
         }
     }
 }

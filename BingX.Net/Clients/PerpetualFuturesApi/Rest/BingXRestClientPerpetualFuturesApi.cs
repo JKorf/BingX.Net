@@ -16,6 +16,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
     internal partial class BingXRestClientPerpetualFuturesApi : BingXRestClientApi, IBingXRestClientPerpetualFuturesApi
     {
         #region fields 
+        private readonly BingXRestClientPerpetualFuturesSharedApi _sharedApi;
         protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
         #endregion
 
@@ -35,11 +36,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             Account = new BingXRestClientPerpetualFuturesApiAccount(this);
             ExchangeData = new BingXRestClientPerpetualFuturesApiExchangeData(_logger, this);
             Trading = new BingXRestClientPerpetualFuturesApiTrading(_logger, this);
+
+            _sharedApi = new BingXRestClientPerpetualFuturesSharedApi(this);
         }
 
         #endregion
 
-        public IBingXRestClientPerpetualFuturesApiShared SharedClient => this;
+        public IBingXRestClientPerpetualFuturesApiShared SharedClient => _sharedApi;
+        public IBingXRestClientPerpetualFuturesSharedApi SharedApi => _sharedApi;
 
         protected override IRestMessageHandler MessageHandler => new BingXRestMessageHandler(BingXErrors.FuturesErrors);
 

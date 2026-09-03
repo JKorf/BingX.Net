@@ -39,6 +39,8 @@ namespace BingX.Net.Clients.SpotApi
         // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
 
         #region fields
+        private readonly BingXSocketClientSpotSharedApi _sharedApi;
+
         protected override ErrorMapping ErrorMapping => BingXErrors.SpotErrors;
         private readonly ILoggerFactory? _loggerFactory;
         private BingXRestClient? _tokenClient;
@@ -72,6 +74,7 @@ namespace BingX.Net.Clients.SpotApi
             base(loggerFactory, BingXExchange.Metadata.Id, options.Environment.SocketClientSpotAddress!, options, options.FuturesOptions)
         {
             _loggerFactory = loggerFactory;
+            _sharedApi = new BingXSocketClientSpotSharedApi(this);
 
             AddSystemSubscription(new BingXPingSubscription(_logger));
 
@@ -96,7 +99,8 @@ namespace BingX.Net.Clients.SpotApi
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverTime = null)
                 => BingXExchange.FormatSymbol(baseAsset, quoteAsset, tradingMode, deliverTime);
 
-        public IBingXSocketClientSpotApiShared SharedClient => this;
+        public IBingXSocketClientSpotApiShared SharedClient => _sharedApi;
+        public IBingXSocketClientSpotSharedApi SharedApi => _sharedApi;
 
         public override ISocketMessageHandler CreateMessageConverter(WebSocketMessageType messageType) => new BingXSocketClientSpotApiMessageConverter();
 
