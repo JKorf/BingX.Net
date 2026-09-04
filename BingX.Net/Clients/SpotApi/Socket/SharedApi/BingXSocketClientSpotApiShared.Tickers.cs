@@ -15,7 +15,8 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXSocketClientSpotSharedApi
     {
-        #region Ticker client
+        #region Subscribe To Ticker Updates
+
         async Task<WebSocketResult<UpdateSubscription>> ISubscribeTickerSocket.SubscribeToTickerUpdatesAsync(SubscribeTickerRequest request, Action<DataEvent<SharedTicker>> handler, CancellationToken ct)
             => await SubscribeToTickerUpdatesAsync(request, x => handler(x.ToType<SharedTicker>(x.Data)), ct).ConfigureAwait(false);
 
@@ -43,5 +44,6 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         #endregion
+
     }
 }

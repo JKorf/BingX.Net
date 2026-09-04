@@ -15,7 +15,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     internal partial class BingXSocketClientPerpetualFuturesSharedApi
     {
-        #region Book Ticker client
+        #region Subscribe To Book Ticker Updates
 
         public SubscribeBookTickerOptions SubscribeBookTickerOptions { get; } = new SubscribeBookTickerOptions(_exchangeName, false);
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToBookTickerUpdatesAsync(SubscribeBookTickerRequest request, Action<DataEvent<SharedBookTicker>> handler, CancellationToken ct)
@@ -39,5 +39,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
     }
 }

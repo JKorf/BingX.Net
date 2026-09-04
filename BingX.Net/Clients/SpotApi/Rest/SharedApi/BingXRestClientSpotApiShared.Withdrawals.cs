@@ -18,13 +18,16 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXRestClientSpotSharedApi
     {
-        #region Withdrawal client
+        #region Get Withdrawal History
 
         Task<HttpResult<SharedWithdrawal[]>> IWithdrawalRestClient.GetWithdrawalsAsync(GetWithdrawalsRequest request, PageRequest? nextPageToken, CancellationToken ct)
             => GetWithdrawalHistoryAsync(request, nextPageToken, ct);
         GetWithdrawalHistoryOptions IWithdrawalRestClient.GetWithdrawalsOptions => GetWithdrawalHistoryOptions;
 
         public GetWithdrawalHistoryOptions GetWithdrawalHistoryOptions { get; } = new GetWithdrawalHistoryOptions(_exchangeName, false, true, true, 1000);
+        async Task<ICallResult<SharedWithdrawal[]>> IGetWithdrawalHistory.GetWithdrawalHistoryAsync(GetWithdrawalsRequest request, PageRequest? pageRequest, CancellationToken ct)
+            => await GetWithdrawalHistoryAsync(request, pageRequest, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedWithdrawal[]>> GetWithdrawalHistoryAsync(GetWithdrawalsRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
             var validationError = GetWithdrawalHistoryOptions.ValidateRequest(request, this);
@@ -77,6 +80,8 @@ namespace BingX.Net.Clients.SpotApi
                 
         }
 
+        #endregion
+
         private SharedTransferStatus GetWithdrawalStatus(BingXWithdrawal x)
         {
             if (x.Status == WithdrawalStatus.Failed)
@@ -91,11 +96,12 @@ namespace BingX.Net.Clients.SpotApi
             return SharedTransferStatus.Unknown;
         }
 
-        #endregion
-
-        #region Withdraw client
+        #region Withdraw
 
         public WithdrawOptions WithdrawOptions { get; } = new WithdrawOptions(_exchangeName);
+
+        async Task<ICallResult<SharedId>> IWithdraw.WithdrawAsync(WithdrawRequest request, CancellationToken ct)
+            => await WithdrawAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedId>> WithdrawAsync(WithdrawRequest request, CancellationToken ct)
         {
@@ -121,5 +127,6 @@ namespace BingX.Net.Clients.SpotApi
         }
 
         #endregion
+
     }
 }

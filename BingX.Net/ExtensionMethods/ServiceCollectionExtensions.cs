@@ -1,4 +1,4 @@
-﻿using CryptoExchange.Net.Clients;
+using CryptoExchange.Net.Clients;
 using CryptoExchange.Net.Interfaces;
 using System;
 using System.Net.Http;
@@ -116,6 +116,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 x.GetRequiredService<ILoggerFactory>(),
                 x.GetRequiredService<IOptions<BingXRestOptions>>(),
                 x.GetRequiredService<IOptions<BingXSocketOptions>>()));
+
+            services.AddTransient<IBingXSharedApiClient, BingXSharedApiClient>();
+
+            services.RegisterSharedApi(x => x.GetRequiredService<IBingXRestClient>().SpotApi.SharedApi);
+            services.RegisterSharedApi(x => x.GetRequiredService<IBingXSocketClient>().SpotApi.SharedApi);
+            services.RegisterSharedApi(x => x.GetRequiredService<IBingXRestClient>().PerpetualFuturesApi.SharedApi);
+            services.RegisterSharedApi(x => x.GetRequiredService<IBingXSocketClient>().PerpetualFuturesApi.SharedApi);
 
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().SpotApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().SpotApi.SharedClient);

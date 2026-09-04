@@ -18,8 +18,12 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXRestClientSpotSharedApi
     {
-        #region Deposit client
+        #region Get Deposit Addresses
+
         public GetDepositAddressesOptions GetDepositAddressesOptions { get; } = new GetDepositAddressesOptions(_exchangeName, true);
+
+        async Task<ICallResult<SharedDepositAddress[]>> IGetDepositAddresses.GetDepositAddressesAsync(GetDepositAddressesRequest request, CancellationToken ct)
+            => await GetDepositAddressesAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedDepositAddress[]>> GetDepositAddressesAsync(GetDepositAddressesRequest request, CancellationToken ct)
         {
@@ -42,11 +46,18 @@ namespace BingX.Net.Clients.SpotApi
             ).ToArray());
         }
 
+        #endregion
+
+        #region Get Deposit History
+
         Task<HttpResult<SharedDeposit[]>> IDepositRestClient.GetDepositsAsync(GetDepositsRequest request, PageRequest? nextPageToken, CancellationToken ct)
             => GetDepositHistoryAsync(request, nextPageToken, ct);
         GetDepositHistoryOptions IDepositRestClient.GetDepositsOptions => GetDepositHistoryOptions;
 
         public GetDepositHistoryOptions GetDepositHistoryOptions { get; } = new GetDepositHistoryOptions(_exchangeName, false, true, true, 1000);
+        async Task<ICallResult<SharedDeposit[]>> IGetDepositHistory.GetDepositHistoryAsync(GetDepositsRequest request, PageRequest? pageRequest, CancellationToken ct)
+            => await GetDepositHistoryAsync(request, pageRequest, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedDeposit[]>> GetDepositHistoryAsync(GetDepositsRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
             var validationError = GetDepositHistoryOptions.ValidateRequest(request, this);
@@ -95,6 +106,8 @@ namespace BingX.Net.Clients.SpotApi
                     .ToArray(), nextPageRequest);
         }
 
+        #endregion
+
         private SharedTransferStatus ParseTransferStatus(DepositStatus status)
         {
             if (status == DepositStatus.Completed)
@@ -105,6 +118,5 @@ namespace BingX.Net.Clients.SpotApi
             return SharedTransferStatus.Unknown;
         }
 
-        #endregion
     }
 }

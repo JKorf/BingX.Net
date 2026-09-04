@@ -18,8 +18,12 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXRestClientSpotSharedApi
     {
-        #region Order Book client
+        #region Get Order Book
+
         public GetOrderBookOptions GetOrderBookOptions { get; } = new GetOrderBookOptions(_exchangeName, 1, 2000, false);
+        async Task<ICallResult<SharedOrderBook>> IGetOrderBook.GetOrderBookAsync(GetOrderBookRequest request, CancellationToken ct)
+            => await GetOrderBookAsync(request, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedOrderBook>> GetOrderBookAsync(GetOrderBookRequest request, CancellationToken ct)
         {
             var validationError = GetOrderBookOptions.ValidateRequest(request, this);
@@ -37,6 +41,7 @@ namespace BingX.Net.Clients.SpotApi
         
                 
         }
+
         #endregion
     }
 }

@@ -17,8 +17,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     internal partial class BingXRestClientPerpetualFuturesSharedApi
     {
-        #region Fee Client
+        #region Get Fees
+
         public GetFeeOptions GetFeeOptions { get; } = new GetFeeOptions(_exchangeName, true);
+
+        async Task<ICallResult<SharedFee>> IGetFees.GetFeesAsync(GetFeeRequest request, CancellationToken ct)
+            => await GetFeesAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedFee>> GetFeesAsync(GetFeeRequest request, CancellationToken ct)
         {
@@ -36,6 +40,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         
                 
         }
+
         #endregion
     }
 }

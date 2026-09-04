@@ -15,7 +15,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     internal partial class BingXSocketClientPerpetualFuturesSharedApi
     {
-        #region Kline client
+        #region Subscribe To Kline Updates
+
         public SubscribeKlineOptions SubscribeKlineOptions { get; } = new SubscribeKlineOptions(_exchangeName, false);
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(SubscribeKlineRequest request, Action<DataEvent<SharedKline>> handler, CancellationToken ct)
         {
@@ -49,6 +50,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
             return result;
         }
+
         #endregion
     }
 }

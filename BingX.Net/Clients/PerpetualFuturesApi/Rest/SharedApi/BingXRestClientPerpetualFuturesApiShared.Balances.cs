@@ -17,8 +17,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     internal partial class BingXRestClientPerpetualFuturesSharedApi
     {
-        #region Balance client
+        #region Get Balances
+
         public GetBalancesOptions GetBalancesOptions { get; } = new GetBalancesOptions(_exchangeName, AccountTypeFilter.Futures);
+
+        async Task<ICallResult<SharedBalance[]>> IGetBalances.GetBalancesAsync(GetBalancesRequest request, CancellationToken ct)
+            => await GetBalancesAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedBalance[]>> GetBalancesAsync(GetBalancesRequest request, CancellationToken ct)
         {
@@ -41,5 +45,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
     }
 }

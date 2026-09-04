@@ -18,8 +18,12 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXRestClientSpotSharedApi
     {
-        #region Trigger Order Client
+        #region Place Spot Trigger Order
+
         public PlaceSpotTriggerOrderOptions PlaceSpotTriggerOrderOptions { get; } = new PlaceSpotTriggerOrderOptions(_exchangeName, true);
+        async Task<ICallResult<SharedId>> IPlaceSpotTriggerOrder.PlaceSpotTriggerOrderAsync(PlaceSpotTriggerOrderRequest request, CancellationToken ct)
+            => await PlaceSpotTriggerOrderAsync(request, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedId>> PlaceSpotTriggerOrderAsync(PlaceSpotTriggerOrderRequest request, CancellationToken ct)
         {
             var validationError = PlaceSpotTriggerOrderOptions.ValidateRequest(request, this);
@@ -46,7 +50,14 @@ namespace BingX.Net.Clients.SpotApi
                 
         }
 
+        #endregion
+
+        #region Get Spot Trigger Order
+
         public GetSpotTriggerOrderOptions GetSpotTriggerOrderOptions { get; } = new GetSpotTriggerOrderOptions(_exchangeName, true);
+        async Task<ICallResult<SharedSpotTriggerOrder>> IGetSpotTriggerOrder.GetSpotTriggerOrderAsync(GetOrderRequest request, CancellationToken ct)
+            => await GetSpotTriggerOrderAsync(request, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedSpotTriggerOrder>> GetSpotTriggerOrderAsync(GetOrderRequest request, CancellationToken ct)
         {
             var validationError = GetSpotTriggerOrderOptions.ValidateRequest(request, this);
@@ -90,6 +101,8 @@ namespace BingX.Net.Clients.SpotApi
                 
         }
 
+        #endregion
+
         private SharedTriggerOrderStatus ParseTriggerStatus(BingXOrderDetails data)
         {
             if (data.Status == OrderStatus.Filled)
@@ -104,7 +117,12 @@ namespace BingX.Net.Clients.SpotApi
             return SharedTriggerOrderStatus.Unknown;
         }
 
+        #region Cancel Spot Trigger Order
+
         public CancelSpotTriggerOrderOptions CancelSpotTriggerOrderOptions { get; } = new CancelSpotTriggerOrderOptions(_exchangeName, true);
+        async Task<ICallResult<SharedId>> ICancelSpotTriggerOrder.CancelSpotTriggerOrderAsync(CancelOrderRequest request, CancellationToken ct)
+            => await CancelSpotTriggerOrderAsync(request, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedId>> CancelSpotTriggerOrderAsync(CancelOrderRequest request, CancellationToken ct)
         {
             var validationError = CancelSpotTriggerOrderOptions.ValidateRequest(request, this);
@@ -123,6 +141,8 @@ namespace BingX.Net.Clients.SpotApi
                 
         }
 
+        #endregion
+
         private (SharedOrderType, SharedTriggerOrderDirection) ParseTriggerDirections(OrderType orderType, OrderSide side)
         {
             if (side == OrderSide.Buy)
@@ -138,6 +158,5 @@ namespace BingX.Net.Clients.SpotApi
                     SharedTriggerOrderDirection.Exit);
             }            
         }
-        #endregion
     }
 }

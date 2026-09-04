@@ -15,7 +15,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     internal partial class BingXSocketClientPerpetualFuturesSharedApi
     {
-        #region Futures Order client
+        #region Subscribe To Futures Order Updates
 
         async Task<WebSocketResult<UpdateSubscription>> IFuturesOrderSocketClient.SubscribeToFuturesOrderUpdatesAsync(SubscribeFuturesOrderRequest request, Action<DataEvent<SharedFuturesOrder[]>> handler, CancellationToken ct)
             => await SubscribeToFuturesOrderUpdatesAsync(request, x => handler(x.ToType<SharedFuturesOrder[]>(x.Data)), ct).ConfigureAwait(false);
@@ -61,6 +61,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return result;
         }
 
+        #endregion
+
         private SharedOrderStatus ParseOrderStatus(OrderStatus status)
         {
             if (status == Enums.OrderStatus.Canceled || status == OrderStatus.Failed)
@@ -93,6 +95,5 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return SharedOrderType.Other;
         }
 
-        #endregion
     }
 }

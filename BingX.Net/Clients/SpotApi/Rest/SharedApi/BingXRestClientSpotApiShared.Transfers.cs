@@ -18,7 +18,7 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXRestClientSpotSharedApi
     {
-        #region Transfer client
+        #region Transfer
 
         public TransferOptions TransferOptions { get; } = new TransferOptions(_exchangeName, [
             SharedAccountType.Funding,
@@ -26,6 +26,9 @@ namespace BingX.Net.Clients.SpotApi
             SharedAccountType.PerpetualLinearFutures,
             SharedAccountType.PerpetualInverseFutures
             ]);
+        async Task<ICallResult<SharedId>> ITransfer.TransferAsync(TransferRequest request, CancellationToken ct)
+            => await TransferAsync(request, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedId>> TransferAsync(TransferRequest request, CancellationToken ct)
         {
             var validationError = TransferOptions.ValidateRequest(request, this);
@@ -52,6 +55,8 @@ namespace BingX.Net.Clients.SpotApi
                 
         }
 
+        #endregion
+
         private TransferAccountType? GetTransferType(SharedAccountType type)
         {
             if (type == SharedAccountType.Funding) return TransferAccountType.Funding;
@@ -61,6 +66,5 @@ namespace BingX.Net.Clients.SpotApi
             return null;
         }
 
-        #endregion
     }
 }

@@ -17,9 +17,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     internal partial class BingXRestClientPerpetualFuturesSharedApi
     {
-        #region Mark Klines client
+        #region Get Mark Price Klines
 
         public GetMarkPriceKlinesOptions GetMarkPriceKlinesOptions { get; } = new GetMarkPriceKlinesOptions(_exchangeName, false, true, true, 1440, false);
+
+        async Task<ICallResult<SharedFuturesKline[]>> IGetMarkPriceKlines.GetMarkPriceKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
+            => await GetMarkPriceKlinesAsync(request, pageRequest, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedFuturesKline[]>> GetMarkPriceKlinesAsync(GetKlinesRequest request, PageRequest? pageRequest, CancellationToken ct)
         {
@@ -65,5 +68,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
     }
 }

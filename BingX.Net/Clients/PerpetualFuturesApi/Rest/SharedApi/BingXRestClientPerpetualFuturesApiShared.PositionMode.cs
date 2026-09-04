@@ -17,11 +17,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 {
     internal partial class BingXRestClientPerpetualFuturesSharedApi
     {
-        #region Position Mode client
+        #region Get Position Mode
 
         public SharedPositionModeSelection PositionModeSettingType => SharedPositionModeSelection.PerAccount;
 
         public GetPositionModeOptions GetPositionModeOptions { get; } = new GetPositionModeOptions(_exchangeName);
+        async Task<ICallResult<SharedPositionModeResult>> IGetPositionMode.GetPositionModeAsync(GetPositionModeRequest request, CancellationToken ct)
+            => await GetPositionModeAsync(request, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedPositionModeResult>> GetPositionModeAsync(GetPositionModeRequest request, CancellationToken ct)
         {
             var validationError = GetPositionModeOptions.ValidateRequest(request, this);
@@ -37,7 +40,14 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 
         }
 
+        #endregion
+
+        #region Set Position Mode
+
         public SetPositionModeOptions SetPositionModeOptions { get; } = new SetPositionModeOptions(_exchangeName);
+        async Task<ICallResult<SharedPositionModeResult>> ISetPositionMode.SetPositionModeAsync(SetPositionModeRequest request, CancellationToken ct)
+            => await SetPositionModeAsync(request, ct).ConfigureAwait(false);
+
         public async Task<HttpResult<SharedPositionModeResult>> SetPositionModeAsync(SetPositionModeRequest request, CancellationToken ct)
         {
             var validationError = SetPositionModeOptions.ValidateRequest(request, this);
@@ -52,6 +62,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         
                 
         }
+
         #endregion
     }
 }

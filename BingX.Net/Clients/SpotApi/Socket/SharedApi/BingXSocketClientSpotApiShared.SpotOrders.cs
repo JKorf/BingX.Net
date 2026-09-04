@@ -15,7 +15,8 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXSocketClientSpotSharedApi
     {
-        #region Spot Order client
+        #region Subscribe To Spot Order Updates
+
         async Task<WebSocketResult<UpdateSubscription>> ISpotOrderSocketClient.SubscribeToSpotOrderUpdatesAsync(SubscribeSpotOrderRequest request, Action<DataEvent<SharedSpotOrder[]>> handler, CancellationToken ct)
             => await SubscribeToSpotOrderUpdatesAsync(request, x => handler(x.ToType<SharedSpotOrder[]>(x.Data)), ct).ConfigureAwait(false);
 
@@ -68,6 +69,8 @@ namespace BingX.Net.Clients.SpotApi
             return result;
         }
 
+        #endregion
+
         private SharedOrderStatus ParseOrderStatus(OrderStatus status)
         {
             if (status == Enums.OrderStatus.Canceled || status == OrderStatus.Failed)
@@ -91,6 +94,5 @@ namespace BingX.Net.Clients.SpotApi
             return SharedOrderType.Other;
         }
 
-        #endregion
     }
 }

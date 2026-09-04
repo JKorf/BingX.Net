@@ -15,7 +15,8 @@ namespace BingX.Net.Clients.SpotApi
 {
     internal partial class BingXSocketClientSpotSharedApi
     {
-        #region Kline client
+        #region Subscribe To Kline Updates
+
         public SubscribeKlineOptions SubscribeKlineOptions { get; } = new SubscribeKlineOptions(_exchangeName, false);
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToKlineUpdatesAsync(SubscribeKlineRequest request, Action<DataEvent<SharedKline>> handler, CancellationToken ct)
         {
@@ -41,6 +42,7 @@ namespace BingX.Net.Clients.SpotApi
 
             return result;
         }
+
         #endregion
     }
 }
