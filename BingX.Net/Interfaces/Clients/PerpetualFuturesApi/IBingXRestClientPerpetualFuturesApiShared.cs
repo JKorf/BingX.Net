@@ -35,8 +35,8 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
     /// </summary>
     public interface IBingXRestClientPerpetualFuturesSharedApi :
         IGetBalancesRest,
-        IGetFuturesTickerRest,
-        IGetAllFuturesTickersRest,
+        IGetTickerRest,
+        IGetAllTickersRest,
         IGetFuturesSymbolsRest,
         IPlaceFuturesOrderRest,
         IGetFuturesOrderRest,
@@ -46,7 +46,7 @@ namespace BingX.Net.Interfaces.Clients.SpotApi
         IGetFuturesUserTradeHistoryRest,
         ICancelFuturesOrderRest,
         IGetPositionsRest,
-        IClosePositionRest,
+        ICloseFullPositionRest,
         IGetKlinesRest,
         IGetRecentTradesRest,
         IGetLeverageRest,

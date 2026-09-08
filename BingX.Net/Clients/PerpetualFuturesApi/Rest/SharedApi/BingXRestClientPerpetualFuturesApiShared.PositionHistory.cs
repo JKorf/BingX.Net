@@ -21,10 +21,9 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         public GetPositionHistoryOptions GetPositionHistoryOptions { get; } = new GetPositionHistoryOptions(_exchangeName, false, true, true, 1000)
         {
-            RequiredRequestParameters = new List<ParameterDescription>
-            {
-                new ParameterDescription(nameof(GetPositionHistoryRequest.Symbol), typeof(SharedSymbol), "The symbol to get position history for", "ETH-USDT")
-            }
+            ParameterRuleOverwrites = [
+                RequestParameterRuleOverride<GetPositionHistoryRequest>.Required(x => x.Symbol)
+            ]
         };
         async Task<ICallResult<SharedPositionHistory[]>> IGetPositionHistory.GetPositionHistoryAsync(GetPositionHistoryRequest request, PageRequest? pageRequest, CancellationToken ct)
             => await GetPositionHistoryAsync(request, pageRequest, ct).ConfigureAwait(false);
