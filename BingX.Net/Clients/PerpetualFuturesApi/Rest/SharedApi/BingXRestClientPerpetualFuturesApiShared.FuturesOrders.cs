@@ -33,7 +33,13 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         public string GenerateClientOrderId() => ExchangeHelpers.RandomString(40).ToLowerInvariant();
 
-        public PlaceFuturesOrderOptions PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(_exchangeName, true);
+        public PlaceFuturesOrderOptions PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(_exchangeName, true)
+        {
+            ParameterRuleOverwrites = [
+                    RequestParameterRuleOverride<PlaceFuturesOrderRequest>.NotSupported(x => x.MarginMode),
+                    RequestParameterRuleOverride<PlaceFuturesOrderRequest>.NotSupported(x => x.PositionSide),
+                ]
+        };
         async Task<ICallResult<SharedId>> IPlaceFuturesOrder.PlaceFuturesOrderAsync(PlaceFuturesOrderRequest request, CancellationToken ct)
             => await PlaceFuturesOrderAsync(request, ct).ConfigureAwait(false);
 
@@ -53,7 +59,6 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 reduceOnly: request.ReduceOnly,
                 timeInForce: GetTimeInForce(request.TimeInForce),
                 clientOrderId: request.ClientOrderId,
-
                 takeProfitStopPrice: request.TakeProfitPrice,
                 takeProfitType: request.TakeProfitPrice == null ? null : TakeProfitStopLossMode.TakeProfitMarket,
                 stopLossStopPrice: request.StopLossPrice,

@@ -68,7 +68,12 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         #region Cancel Futures Tp Sl
 
-        public CancelFuturesTpSlOptions CancelFuturesTpSlOptions { get; } = new CancelFuturesTpSlOptions(_exchangeName, true);
+        public CancelFuturesTpSlOptions CancelFuturesTpSlOptions { get; } = new CancelFuturesTpSlOptions(_exchangeName, true)
+        {
+            ParameterRuleOverwrites = [
+                RequestParameterRuleOverride<CancelTpSlRequest>.Required(x => x.OrderId)
+                ]
+        };
         async Task<ICallResult<bool>> ICancelFuturesTpSl.CancelFuturesTpSlAsync(CancelTpSlRequest request, CancellationToken ct)
             => await CancelFuturesTpSlAsync(request, ct).ConfigureAwait(false);
 

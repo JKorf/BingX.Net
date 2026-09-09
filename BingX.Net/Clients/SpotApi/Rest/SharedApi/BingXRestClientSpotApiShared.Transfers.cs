@@ -25,7 +25,13 @@ namespace BingX.Net.Clients.SpotApi
             SharedAccountType.Spot,
             SharedAccountType.PerpetualLinearFutures,
             SharedAccountType.PerpetualInverseFutures
-            ]);
+            ])
+        {
+            ParameterRuleOverwrites = [
+                RequestParameterRuleOverride<TransferRequest>.NotSupported(x => x.FromSymbol),
+                RequestParameterRuleOverride<TransferRequest>.NotSupported(x => x.ToSymbol),
+                ]
+        };
         async Task<ICallResult<SharedId>> ITransfer.TransferAsync(TransferRequest request, CancellationToken ct)
             => await TransferAsync(request, ct).ConfigureAwait(false);
 
