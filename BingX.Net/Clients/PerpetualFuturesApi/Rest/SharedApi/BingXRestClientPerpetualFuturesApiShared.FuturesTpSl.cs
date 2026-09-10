@@ -70,7 +70,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         public CancelFuturesTpSlOptions CancelFuturesTpSlOptions { get; } = new CancelFuturesTpSlOptions(_exchangeName, true)
         {
-            ParameterRuleOverwrites = [
+            ParameterRuleOverrides = [
                 RequestParameterRuleOverride<CancelTpSlRequest>.Required(x => x.OrderId)
                 ]
         };

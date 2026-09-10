@@ -21,7 +21,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         public GetPositionHistoryOptions GetPositionHistoryOptions { get; } = new GetPositionHistoryOptions(_exchangeName, false, true, true, 1000)
         {
-            ParameterRuleOverwrites = [
+            ParameterRuleOverrides = [
                 RequestParameterRuleOverride<GetPositionHistoryRequest>.Required(x => x.Symbol)
             ]
         };

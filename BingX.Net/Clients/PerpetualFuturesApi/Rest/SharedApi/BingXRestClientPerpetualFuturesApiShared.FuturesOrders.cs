@@ -35,7 +35,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         public PlaceFuturesOrderOptions PlaceFuturesOrderOptions { get; } = new PlaceFuturesOrderOptions(_exchangeName, true)
         {
-            ParameterRuleOverwrites = [
+            ParameterRuleOverrides = [
                     RequestParameterRuleOverride<PlaceFuturesOrderRequest>.NotSupported(x => x.MarginMode),
                     RequestParameterRuleOverride<PlaceFuturesOrderRequest>.NotSupported(x => x.PositionSide),
                 ]
@@ -418,7 +418,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         public CloseFullPositionOptions CloseFullPositionOptions { get; } = new CloseFullPositionOptions(_exchangeName, true)
         {
-            ParameterRuleOverwrites = [
+            ParameterRuleOverrides = [
                 RequestParameterRuleOverride<CloseFullPositionRequest>.Required(x => x.PositionId)
             ]
         };

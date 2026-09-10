@@ -27,7 +27,7 @@ namespace BingX.Net.Clients.SpotApi
             SharedAccountType.PerpetualInverseFutures
             ])
         {
-            ParameterRuleOverwrites = [
+            ParameterRuleOverrides = [
                 RequestParameterRuleOverride<TransferRequest>.NotSupported(x => x.FromSymbol),
                 RequestParameterRuleOverride<TransferRequest>.NotSupported(x => x.ToSymbol),
                 ]
