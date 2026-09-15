@@ -13,11 +13,11 @@ namespace BingX.Net.Clients
         /// <inheritdoc />
         public IBingXRestClientSpotSharedApi SpotRest { get; }
         /// <inheritdoc />
-        public IBingXRestClientPerpetualFuturesSharedApi FuturesRest { get; }
+        public IBingXRestClientPerpetualFuturesSharedApi PerpetualFuturesRest { get; }
         /// <inheritdoc />
         public IBingXSocketClientSpotSharedApi SpotSocket { get; }
         /// <inheritdoc />
-        public IBingXSocketClientPerpetualFuturesSharedApi FuturesSocket { get; }
+        public IBingXSocketClientPerpetualFuturesSharedApi PerpetualFuturesSocket { get; }
 
         /// <summary>
         /// ctor
@@ -34,9 +34,9 @@ namespace BingX.Net.Clients
                   )
         {
             SpotRest = restClient.SpotApi.SharedApi;
-            FuturesRest = restClient.PerpetualFuturesApi.SharedApi;
+            PerpetualFuturesRest = restClient.PerpetualFuturesApi.SharedApi;
             SpotSocket = socketClient.SpotApi.SharedApi;
-            FuturesSocket = socketClient.PerpetualFuturesApi.SharedApi;
+            PerpetualFuturesSocket = socketClient.PerpetualFuturesApi.SharedApi;
         }
     }
 }

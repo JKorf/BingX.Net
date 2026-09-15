@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using CryptoExchange.Net.Interfaces.Clients;
 using System.Threading;
+using CryptoExchange.Net.SharedApis;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -119,19 +120,18 @@ namespace Microsoft.Extensions.DependencyInjection
                 x.GetRequiredService<IOptions<BingXRestOptions>>(),
                 x.GetRequiredService<IOptions<BingXSocketOptions>>()));
 
-            services.AddTransient<IBingXSharedApiClient, BingXSharedApiClient>();
-
-            services.RegisterSharedApi(x => x.GetRequiredService<IBingXRestClient>().SpotApi.SharedApi);
-            services.RegisterSharedApi(x => x.GetRequiredService<IBingXSocketClient>().SpotApi.SharedApi);
-            services.RegisterSharedApi(x => x.GetRequiredService<IBingXRestClient>().PerpetualFuturesApi.SharedApi);
-            services.RegisterSharedApi(x => x.GetRequiredService<IBingXSocketClient>().PerpetualFuturesApi.SharedApi);
-
-            services.RegisterSharedApiClientCapabilities<IBingXSharedApiClient>();
-
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().SpotApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().SpotApi.SharedClient);
             services.RegisterSharedRestInterfaces(x => x.GetRequiredService<IBingXRestClient>().PerpetualFuturesApi.SharedClient);
             services.RegisterSharedSocketInterfaces(x => x.GetRequiredService<IBingXSocketClient>().PerpetualFuturesApi.SharedClient);
+
+            services.RegisterSharedApiClient<
+                IBingXSharedApiClient,
+                BingXSharedApiClient>(sharedApis => sharedApis
+                    .Add(client => client.SpotRest)
+                    .Add(client => client.SpotSocket)
+                    .Add(client => client.PerpetualFuturesSocket)
+                    .Add(client => client.PerpetualFuturesRest));
 
             return services;
         }

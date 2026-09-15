@@ -17,7 +17,7 @@ namespace BingX.Net.Interfaces.Clients
         /// <summary>
         /// Futures REST shared API implementations
         /// </summary>
-        IBingXRestClientPerpetualFuturesSharedApi FuturesRest { get; }
+        IBingXRestClientPerpetualFuturesSharedApi PerpetualFuturesRest { get; }
 
         /// <summary>
         /// Spot WebSocket shared API implementations
@@ -27,6 +27,6 @@ namespace BingX.Net.Interfaces.Clients
         /// <summary>
         /// Futures WebSocket shared API implementations
         /// </summary>
-        IBingXSocketClientPerpetualFuturesSharedApi FuturesSocket { get; }
+        IBingXSocketClientPerpetualFuturesSharedApi PerpetualFuturesSocket { get; }
     }
 }
