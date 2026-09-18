@@ -30,7 +30,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public BingXRestClientPerpetualFuturesSharedApi(BingXRestClientPerpetualFuturesApi api)
             : base(
                   SharedTransport.Rest,
-                  api.Exchange,
+                  api,
                   new[] { TradingMode.PerpetualLinear },
                   () => api.Authenticated,
                   api.FormatSymbol)

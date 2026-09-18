@@ -28,7 +28,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public BingXSocketClientPerpetualFuturesSharedApi(BingXSocketClientPerpetualFuturesApi api)
             : base(
                   SharedTransport.Socket,
-                  api.Exchange,
+                  api,
                   new[] { TradingMode.PerpetualLinear },
                   () => api.Authenticated,
                   api.FormatSymbol)

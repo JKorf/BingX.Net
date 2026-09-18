@@ -32,7 +32,7 @@ namespace BingX.Net.Clients.SpotApi
         public BingXRestClientSpotSharedApi(BingXRestClientSpotApi api)
             : base(
                   SharedTransport.Rest,
-                  api.Exchange,
+                  api,
                   new[] { TradingMode.Spot },
                   () => api.Authenticated,
                   api.FormatSymbol)

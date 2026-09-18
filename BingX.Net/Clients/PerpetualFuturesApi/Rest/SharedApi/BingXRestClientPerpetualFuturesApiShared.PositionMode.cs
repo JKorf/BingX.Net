@@ -22,7 +22,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         public SharedPositionModeSelection PositionModeSettingType => SharedPositionModeSelection.PerAccount;
 
         public GetPositionModeOptions GetPositionModeOptions { get; } = new GetPositionModeOptions(_exchangeName);
-        async Task<ICallResult<SharedPositionModeResult>> IGetPositionMode.GetPositionModeAsync(GetPositionModeRequest request, CancellationToken ct)
+        async Task<IExchangeCallResult<SharedPositionModeResult>> IGetPositionMode.GetPositionModeAsync(GetPositionModeRequest request, CancellationToken ct)
             => await GetPositionModeAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedPositionModeResult>> GetPositionModeAsync(GetPositionModeRequest request, CancellationToken ct)
@@ -45,7 +45,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Set Position Mode
 
         public SetPositionModeOptions SetPositionModeOptions { get; } = new SetPositionModeOptions(_exchangeName);
-        async Task<ICallResult<SharedPositionModeResult>> ISetPositionMode.SetPositionModeAsync(SetPositionModeRequest request, CancellationToken ct)
+        async Task<IExchangeCallResult<SharedPositionModeResult>> ISetPositionMode.SetPositionModeAsync(SetPositionModeRequest request, CancellationToken ct)
             => await SetPositionModeAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedPositionModeResult>> SetPositionModeAsync(SetPositionModeRequest request, CancellationToken ct)

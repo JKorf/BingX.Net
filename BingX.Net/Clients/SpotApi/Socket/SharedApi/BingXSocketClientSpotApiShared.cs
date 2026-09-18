@@ -28,7 +28,7 @@ namespace BingX.Net.Clients.SpotApi
         public BingXSocketClientSpotSharedApi(BingXSocketClientSpotApi api)
             : base(
                   SharedTransport.Socket,
-                  api.Exchange,
+                  api,
                   new[] { TradingMode.Spot },
                   () => api.Authenticated,
                   api.FormatSymbol)

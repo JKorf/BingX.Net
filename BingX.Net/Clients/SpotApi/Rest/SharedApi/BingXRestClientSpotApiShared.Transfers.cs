@@ -32,7 +32,7 @@ namespace BingX.Net.Clients.SpotApi
                 RequestParameterRuleOverride<TransferRequest>.NotSupported(x => x.ToSymbol),
                 ]
         };
-        async Task<ICallResult<SharedId>> ITransfer.TransferAsync(TransferRequest request, CancellationToken ct)
+        async Task<IExchangeCallResult<SharedId>> ITransfer.TransferAsync(TransferRequest request, CancellationToken ct)
             => await TransferAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedId>> TransferAsync(TransferRequest request, CancellationToken ct)

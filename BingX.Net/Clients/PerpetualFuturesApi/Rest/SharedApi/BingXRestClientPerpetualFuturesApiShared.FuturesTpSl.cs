@@ -20,7 +20,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         #region Set Futures Tp Sl
 
         public SetFuturesTpSlOptions SetFuturesTpSlOptions { get; } = new SetFuturesTpSlOptions(_exchangeName, true);
-        async Task<ICallResult<SharedId>> ISetFuturesTpSl.SetFuturesTpSlAsync(SetTpSlRequest request, CancellationToken ct)
+        async Task<IExchangeCallResult<SharedId>> ISetFuturesTpSl.SetFuturesTpSlAsync(SetTpSlRequest request, CancellationToken ct)
             => await SetFuturesTpSlAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<SharedId>> SetFuturesTpSlAsync(SetTpSlRequest request, CancellationToken ct)
@@ -74,7 +74,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 RequestParameterRuleOverride<CancelTpSlRequest>.Required(x => x.OrderId)
                 ]
         };
-        async Task<ICallResult<bool>> ICancelFuturesTpSl.CancelFuturesTpSlAsync(CancelTpSlRequest request, CancellationToken ct)
+        async Task<IExchangeCallResult<bool>> ICancelFuturesTpSl.CancelFuturesTpSlAsync(CancelTpSlRequest request, CancellationToken ct)
             => await CancelFuturesTpSlAsync(request, ct).ConfigureAwait(false);
 
         public async Task<HttpResult<bool>> CancelFuturesTpSlAsync(CancelTpSlRequest request, CancellationToken ct)
