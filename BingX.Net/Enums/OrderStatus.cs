@@ -44,6 +44,11 @@ namespace BingX.Net.Enums
         /// ["<c>FAILED</c>"] Failed
         /// </summary>
         [Map("FAILED")]
-        Failed
+        Failed,
+        /// <summary>
+        /// ["<c>EXPIRED</c>"] Expired order
+        /// </summary>
+        [Map("EXPIRED")]
+        Expired
     }
 }
