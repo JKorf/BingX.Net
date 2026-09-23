@@ -39,7 +39,7 @@ true
         "workingType": ""
       },
       "advanceAttr": 0,
-      "positionID": 0,
+      "positionID": 2097336000000000001,
       "takeProfitEntrustPrice": 0,
       "stopLossEntrustPrice": 0,
       "orderType": "",

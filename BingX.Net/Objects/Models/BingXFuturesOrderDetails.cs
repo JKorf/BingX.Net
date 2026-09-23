@@ -193,9 +193,9 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("mainOrderId")]
         public string? MainOrderId { get; set; }
         /// <summary>
-        /// ["<c>positionId</c>"] Position id
+        /// ["<c>positionID</c>"] Position id
         /// </summary>
-        [JsonPropertyName("positionId")]
+        [JsonPropertyName("positionID")]
         public long? PositionId { get; set; }
     }
 

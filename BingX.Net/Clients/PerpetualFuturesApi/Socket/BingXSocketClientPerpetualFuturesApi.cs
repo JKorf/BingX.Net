@@ -330,11 +330,10 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             return data.DecompressGzip();
         }
 
+        /// <inheritdoc />
         protected override async Task<Uri?> GetReconnectUriAsync(ISocketConnection connection)
         {
-            if (!connection.HasAuthenticatedSubscription)
-                return await base.GetReconnectUriAsync(connection).ConfigureAwait(false);
-
+            // Listen-key subscriptions authenticate through the URL, so their Authenticated flag is false.
             var subscriptions = ((SocketConnection)connection).Subscriptions.Where(x => x.TokenLease != null).ToList();
             if (subscriptions.Count == 0)
                 return await base.GetReconnectUriAsync(connection).ConfigureAwait(false);
