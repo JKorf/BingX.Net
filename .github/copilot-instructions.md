@@ -52,7 +52,7 @@ Store the returned `UpdateSubscription` and unsubscribe on shutdown via `socketC
 
 ## Cross-exchange
 
-For code that needs to work across multiple exchanges, use `CryptoExchange.Net.SharedApis` interfaces (`ISpotTickerRestClient`, `ISpotOrderRestClient`, etc.) accessed via `.SharedClient` properties.
+For code that needs to work across multiple exchanges, use `CryptoExchange.Net.SharedApis` interfaces (`IGetTickerRest`, `IPlaceSpotOrderRest`, etc.) accessed via `.SharedApi` properties.
 
 Successful shared spot and perpetual symbol retrieval populates `SpotSymbolCatalog` / `FuturesSymbolCatalog`. These symbol queries honor `GetSymbolsRequest` filters and return display names plus asset type metadata; preserve that metadata instead of reclassifying symbols from their names in application code.
 

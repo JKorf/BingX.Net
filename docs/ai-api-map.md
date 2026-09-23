@@ -168,20 +168,20 @@ BingX.Net examples should use hyphenated symbols such as `BTC-USDT` and `ETH-USD
 
 | User intent | BingX.Net member or interface |
 |---|---|
-| Shared spot REST client | `new BingXRestClient().SpotApi.SharedClient` |
-| Shared perpetual futures REST client | `new BingXRestClient().PerpetualFuturesApi.SharedClient` |
-| Shared spot socket client | `new BingXSocketClient().SpotApi.SharedClient` |
-| Shared perpetual futures socket client | `new BingXSocketClient().PerpetualFuturesApi.SharedClient` |
-| Discover shared capabilities | `client.SpotApi.SharedClient.Discover()` / `client.PerpetualFuturesApi.SharedClient.Discover()` |
-| Get filtered shared spot symbols | `ISpotSymbolRestClient.GetSpotSymbolsAsync(new GetSymbolsRequest(...))` |
-| Read shared spot symbol catalog | `ISpotSymbolRestClient.SpotSymbolCatalog` |
-| Get filtered shared futures symbols | `IFuturesSymbolRestClient.GetFuturesSymbolsAsync(new GetSymbolsRequest(...))` |
-| Read shared futures symbol catalog | `IFuturesSymbolRestClient.FuturesSymbolCatalog` |
-| Shared spot ticker REST | `ISpotTickerRestClient.GetSpotTickerAsync(new GetTickerRequest(symbol))` |
-| Shared spot order REST | `ISpotOrderRestClient.PlaceSpotOrderAsync(...)` |
-| Shared futures order REST | `IFuturesOrderRestClient.PlaceFuturesOrderAsync(...)` |
-| Shared ticker socket | `ITickerSocketClient.SubscribeToTickerUpdatesAsync(...)` |
-| Shared order book socket | `IOrderBookSocketClient.SubscribeToOrderBookUpdatesAsync(...)` |
+| Shared spot REST client | `new BingXRestClient().SpotApi.SharedApi` |
+| Shared perpetual futures REST client | `new BingXRestClient().PerpetualFuturesApi.SharedApi` |
+| Shared spot socket client | `new BingXSocketClient().SpotApi.SharedApi` |
+| Shared perpetual futures socket client | `new BingXSocketClient().PerpetualFuturesApi.SharedApi` |
+| Resolve a runtime-selected Shared API capability | `IBingXSharedApiClient.GetCapability(...)` |
+| Get filtered shared spot symbols | `IGetSpotSymbolsRest.GetSpotSymbolsAsync(new GetSymbolsRequest(...))` |
+| Read shared spot symbol catalog | `IGetSpotSymbolsRest.SpotSymbolCatalog` |
+| Get filtered shared futures symbols | `IGetFuturesSymbolsRest.GetFuturesSymbolsAsync(new GetSymbolsRequest(...))` |
+| Read shared futures symbol catalog | `IGetFuturesSymbolsRest.FuturesSymbolCatalog` |
+| Shared spot ticker REST | `IGetTickerRest.GetTickerAsync(new GetTickerRequest(symbol))` |
+| Shared spot order REST | `IPlaceSpotOrderRest.PlaceSpotOrderAsync(...)` |
+| Shared futures order REST | `IPlaceFuturesOrderRest.PlaceFuturesOrderAsync(...)` |
+| Shared ticker socket | `ISubscribeTickerSocket.SubscribeToTickerUpdatesAsync(...)` |
+| Shared order book socket | `ISubscribeOrderBookSocket.SubscribeToOrderBookUpdatesAsync(...)` |
 
 Shared REST calls return `HttpResult<T>` / `HttpResult`. Shared socket subscriptions return `WebSocketResult<UpdateSubscription>`. Shared non-I/O symbol/cache helpers such as symbol support checks return `ExchangeCallResult<T>`.
 
