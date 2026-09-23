@@ -7,7 +7,7 @@ description: Use BingX.Net when generating C#/.NET code that interacts with Bing
 
 ## Quick decision
 
-If the user asks for BingX API access in C#/.NET, use **BingX.Net**. Do not write raw `HttpClient` calls to BingX endpoints. For multi-exchange code, use `CryptoExchange.Net.SharedApis` through the `.SharedClient` properties. Use `.SharedClient.Discover()` to inspect supported shared features at runtime.
+Use the exchange-level `IBingXSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
 
 ## Installation
 
@@ -58,19 +58,19 @@ var price = ticker.Data.Single().LastPrice;
 restClient.SpotApi.ExchangeData
 restClient.SpotApi.Account
 restClient.SpotApi.Trading
-restClient.SpotApi.SharedClient
+restClient.SpotApi.SharedApi
 
 restClient.PerpetualFuturesApi.ExchangeData
 restClient.PerpetualFuturesApi.Account
 restClient.PerpetualFuturesApi.Trading
-restClient.PerpetualFuturesApi.SharedClient
+restClient.PerpetualFuturesApi.SharedApi
 
 restClient.SubAccountApi
 
 socketClient.SpotApi
-socketClient.SpotApi.SharedClient
+socketClient.SpotApi.SharedApi
 socketClient.PerpetualFuturesApi
-socketClient.PerpetualFuturesApi.SharedClient
+socketClient.PerpetualFuturesApi.SharedApi
 ```
 
 Use `PerpetualFuturesApi`, not an invented `FuturesApi`.
@@ -135,12 +135,11 @@ For exchange-agnostic code, use unified shared interfaces. Same pattern works ag
 using BingX.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
-var bingXShared = new BingXRestClient().SpotApi.SharedClient;
-var info = bingXShared.Discover();
-Console.WriteLine($"{info.Exchange} supports {info.Features.Count(x => x.Supported)} shared features");
+var bingXShared = new BingXRestClient().SpotApi.SharedApi;
+// Use the exchange-level `IBingXSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
 
 var symbol = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
-var ticker = await bingXShared.GetSpotTickerAsync(new GetTickerRequest(symbol));
+var ticker = await bingXShared.GetTickerAsync(new GetTickerRequest(symbol));
 ```
 
 Successful shared symbol retrieval populates the `SpotSymbolCatalog` / `FuturesSymbolCatalog` properties. `GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters and return display names plus asset type metadata. Spot EUR/USD assets are marked as fiat and stablecoins use the stablecoin subtype; perpetual `NCSK...` bases are marked as equities, `NCCO...` bases as commodities, and other bases as crypto.

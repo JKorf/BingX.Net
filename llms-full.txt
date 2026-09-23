@@ -33,7 +33,7 @@ Primary documentation:
 - Use `PerpetualFuturesApi` for futures, not `FuturesApi` or `SwapApi`.
 - Use hyphenated BingX symbols such as `BTC-USDT` and `ETH-USDT`.
 - Do not pass custom client order IDs unless the user explicitly needs correlation with an external system.
-- For multi-exchange code, use `CryptoExchange.Net.SharedApis` interfaces from each exchange's `.SharedClient` and call `.Discover()` to inspect supported shared features.
+- Use the exchange-level `IBingXSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
 
 ## Installation
 
@@ -192,12 +192,12 @@ BingXRestClient
     .ExchangeData
     .Account
     .Trading
-    .SharedClient
+    .SharedApi
   .PerpetualFuturesApi
     .ExchangeData
     .Account
     .Trading
-    .SharedClient
+    .SharedApi
   .SubAccountApi
 ```
 
@@ -206,14 +206,14 @@ WebSocket:
 ```text
 BingXSocketClient
   .SpotApi
-    .SharedClient
+    .SharedApi
     SubscribeToTickerUpdatesAsync(...)
     SubscribeToKlineUpdatesAsync(...)
     SubscribeToPartialOrderBookUpdatesAsync(...)
     SubscribeToOrderUpdatesAsync(...)
     SubscribeToBalanceUpdatesAsync(...)
   .PerpetualFuturesApi
-    .SharedClient
+    .SharedApi
     SubscribeToTickerUpdatesAsync(...)
     SubscribeToKlineUpdatesAsync(...)
     SubscribeToMarkPriceUpdatesAsync(...)
@@ -360,14 +360,12 @@ Use CryptoExchange.Net.SharedApis when the user asks for code that can work agai
 using BingX.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
-ISpotTickerRestClient tickerClient = new BingXRestClient().SpotApi.SharedClient;
-var info = tickerClient.Discover();
-var supported = info.Features.Where(x => x.Supported).Select(x => x.EndpointName);
-Console.WriteLine($"{info.Exchange} {info.TypeName}: {string.Join(", ", supported)}");
+IGetTickerRest tickerClient = new BingXRestClient().SpotApi.SharedApi;
+// Use the exchange-level `IBingXSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
 
 var symbol = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
 
-var ticker = await tickerClient.GetSpotTickerAsync(new GetTickerRequest(symbol));
+var ticker = await tickerClient.GetTickerAsync(new GetTickerRequest(symbol));
 if (!ticker.Success)
 {
     Console.WriteLine(ticker.Error);
@@ -380,7 +378,7 @@ Console.WriteLine(ticker.Data.LastPrice);
 Successful shared symbol retrieval populates the corresponding catalog and returns classified asset metadata:
 
 ```csharp
-ISpotSymbolRestClient spotSymbols = new BingXRestClient().SpotApi.SharedClient;
+IGetSpotSymbolsRest spotSymbols = new BingXRestClient().SpotApi.SharedApi;
 var symbols = await spotSymbols.GetSpotSymbolsAsync(new GetSymbolsRequest());
 if (!symbols.Success)
 {
@@ -393,7 +391,7 @@ var first = symbols.Data.First();
 Console.WriteLine($"{first.DisplayName}: {first.BaseAssetType}/{first.BaseAssetSubType}");
 ```
 
-`GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters. Spot symbols classify EUR/USD as fiat and known stablecoins with `SharedAssetSubType.StableCoin`. Perpetual futures classify `NCSK...` base assets as TradFi equities, `NCCO...` bases as TradFi commodities, other bases as crypto, and quote assets as crypto with stablecoin subtype metadata when applicable. The equivalent futures catalog is `IFuturesSymbolRestClient.FuturesSymbolCatalog`.
+`GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters. Spot symbols classify EUR/USD as fiat and known stablecoins with `SharedAssetSubType.StableCoin`. Perpetual futures classify `NCSK...` base assets as TradFi equities, `NCCO...` bases as TradFi commodities, other bases as crypto, and quote assets as crypto with stablecoin subtype metadata when applicable. The equivalent futures catalog is `IGetFuturesSymbolsRest.FuturesSymbolCatalog`.
 
 Shared quantities are represented by `SharedOrderQuantity` metadata across book tickers, trades, user trades, open interest, positions, and position history. Decimal compatibility properties remain available, but use the plural properties (`BestAskQuantities` / `BestBidQuantities`, `Quantities`, `OpenInterests`, `PositionSizes`) when quantity notation matters. Shared spot and perpetual order books set `QuantityType` to `SharedQuantityType.BaseAsset`.
 
@@ -401,7 +399,7 @@ Shared WebSocket subscriptions return an `UpdateSubscription` in `.Data`. For sh
 
 ```csharp
 var socketClient = new BingXSocketClient();
-ITickerSocketClient tickerSocket = socketClient.SpotApi.SharedClient;
+ISubscribeTickerSocket tickerSocket = socketClient.SpotApi.SharedApi;
 
 var sub = await tickerSocket.SubscribeToTickerUpdatesAsync(
     new SubscribeTickerRequest(new SharedSymbol(TradingMode.Spot, "BTC", "USDT")),

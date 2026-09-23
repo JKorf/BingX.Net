@@ -38,7 +38,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         // No HighPerf websocket subscriptions because the data is received compressed and needs to be decompressed
 
         #region fields
-
+        private readonly BingXSocketClientPerpetualFuturesSharedApi _sharedApi;
         protected override ErrorMapping ErrorMapping => BingXErrors.FuturesErrors;
         private readonly ILoggerFactory? _loggerFactory;
         private BingXRestClient? _tokenClient;
@@ -72,6 +72,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
             base(loggerFactory, BingXExchange.Metadata.Id, options.Environment.SocketClientSwapAddress!, options, options.FuturesOptions)
         {
             _loggerFactory = loggerFactory;
+            _sharedApi = new BingXSocketClientPerpetualFuturesSharedApi(this);
 
             AddSystemSubscription(new BingXFuturesPingSubscription(_logger));
 
@@ -100,7 +101,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BingXExchange._serializerContext));
 
-        public IBingXSocketClientPerpetualFuturesApiShared SharedClient => this;
+        public IBingXSocketClientPerpetualFuturesApiShared SharedClient => _sharedApi;
+        public IBingXSocketClientPerpetualFuturesSharedApi SharedApi => _sharedApi;
 
         /// <inheritdoc />
         public async Task<WebSocketResult<UpdateSubscription>> SubscribeToTradeUpdatesAsync(string symbol, Action<DataEvent<BingXFuturesTradeUpdate[]>> onMessage, CancellationToken ct = default)

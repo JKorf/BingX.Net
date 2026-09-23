@@ -74,14 +74,14 @@ For exchange-agnostic code, use `CryptoExchange.Net.SharedApis`:
 ```csharp
 using CryptoExchange.Net.SharedApis;
 
-var shared = new BingXRestClient().SpotApi.SharedClient;
-var ticker = await shared.GetSpotTickerAsync(
+var shared = new BingXRestClient().SpotApi.SharedApi;
+var ticker = await shared.GetTickerAsync(
     new GetTickerRequest(new SharedSymbol(TradingMode.Spot, "BTC", "USDT")));
 ```
 
 Same pattern works against other CryptoExchange.Net libraries such as Binance.Net, OKX.Net, and Bybit.Net.
 
-In 4.2.0, successful shared symbol retrieval populates `ISpotSymbolRestClient.SpotSymbolCatalog` and `IFuturesSymbolRestClient.FuturesSymbolCatalog`. Shared symbol queries honor `GetSymbolsRequest` filters and include display names and asset type/subtype metadata, including fiat/stablecoin spot assets and equity/commodity perpetual bases.
+In 4.2.0, successful shared symbol retrieval populates `IGetSpotSymbolsRest.SpotSymbolCatalog` and `IGetFuturesSymbolsRest.FuturesSymbolCatalog`. Shared symbol queries honor `GetSymbolsRequest` filters and include display names and asset type/subtype metadata, including fiat/stablecoin spot assets and equity/commodity perpetual bases.
 
 ## Hard rules
 
@@ -94,7 +94,7 @@ In 4.2.0, successful shared symbol retrieval populates `ISpotSymbolRestClient.Sp
 - Always use `BingXCredentials("key", "secret")`, not generic `ApiCredentials`.
 - Always store WebSocket subscriptions and unsubscribe on shutdown.
 - Use `PerpetualFuturesApi`, not a generic `FuturesApi`.
-- Use `.SharedClient` for cross-exchange code.
+- Use `.SharedApi` for cross-exchange code.
 
 ## Reference
 
