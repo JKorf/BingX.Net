@@ -65,7 +65,7 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
 
         private SharedOrderStatus ParseOrderStatus(OrderStatus status)
         {
-            if (status == Enums.OrderStatus.Canceled || status == OrderStatus.Failed)
+            if (status == Enums.OrderStatus.Canceled || status == OrderStatus.Failed || status == OrderStatus.Expired)
                 return SharedOrderStatus.Canceled;
             if (status == Enums.OrderStatus.New || status == Enums.OrderStatus.Pending || status == Enums.OrderStatus.PartiallyFilled || status == OrderStatus.Working)
                 return SharedOrderStatus.Open;
