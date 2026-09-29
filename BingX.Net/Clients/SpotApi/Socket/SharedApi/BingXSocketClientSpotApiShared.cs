@@ -44,5 +44,8 @@ namespace BingX.Net.Clients.SpotApi
                 SubscribeSpotOrderOptions
                 );
         }
+
+        /// <inheritdoc />
+        public Task UnsubscribeAllAsync() => _api.UnsubscribeAllAsync();
     }
 }

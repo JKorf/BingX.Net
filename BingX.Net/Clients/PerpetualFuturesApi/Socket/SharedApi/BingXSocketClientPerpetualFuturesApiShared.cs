@@ -45,5 +45,8 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
                 SubscribePositionOptions
                 );
         }
+
+        /// <inheritdoc />
+        public Task UnsubscribeAllAsync() => _api.UnsubscribeAllAsync();
     }
 }
