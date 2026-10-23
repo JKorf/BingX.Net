@@ -12,6 +12,11 @@ namespace BingX.Net.Objects.Models
     public record BingXFuturesTradeUpdate
     {
         /// <summary>
+        /// ["<c>t</c>"] Trade id
+        /// </summary>
+        [JsonPropertyName("t")]
+        public string TradeId { get; set; } = string.Empty;
+        /// <summary>
         /// ["<c>s</c>"] Symbol
         /// </summary>
         [JsonPropertyName("s")]
