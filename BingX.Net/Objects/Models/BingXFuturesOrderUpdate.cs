@@ -64,6 +64,11 @@ namespace BingX.Net.Objects.Models
         [JsonPropertyName("i")]
         public long OrderId { get; set; }
         /// <summary>
+        /// ["<c>li</c>"] Parent order id
+        /// </summary>
+        [JsonPropertyName("li")]
+        public long? ParentOrderId { get; set; }
+        /// <summary>
         /// ["<c>z</c>"] Quantity filled
         /// </summary>
         [JsonPropertyName("z")]
