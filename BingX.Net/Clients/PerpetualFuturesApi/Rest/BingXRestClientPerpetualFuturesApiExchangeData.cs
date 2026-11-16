@@ -299,5 +299,18 @@ namespace BingX.Net.Clients.PerpetualFuturesApi
         }
 
         #endregion
+
+        #region Get Trading Schedule
+
+        /// <inheritdoc />
+        public async Task<HttpResult<BingXTradingSchedule[]>> GetTradingScheduleAsync(string? symbol = null, CancellationToken ct = default)
+        {
+            var parameters = new Parameters(BingXExchange._parameterSerializationSettings);
+            parameters.Add("symbol", symbol);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, _baseClient.BaseAddress, "/openApi/swap/v1/quote/tradingSchedule", BingXExchange.RateLimiter.RestMarket, 1);
+            return await _baseClient.SendAsync<BingXTradingSchedule[]>(request, parameters, ct).ConfigureAwait(false);
+        }
+
+        #endregion
     }
 }

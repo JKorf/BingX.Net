@@ -1,0 +1,23 @@
+GET
+/openApi/swap/v1/quote/tradingSchedule
+false
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "symbol": "NCSKMSFT2USD-USDT",
+      "contractType": "nonCryptoStock",
+      "marketStatus": "open",
+      "timeZone": "UTC+08:00",
+      "updateTime": 1792045615000,
+      "sessions": [
+        {
+          "startTime": 1793548800000,
+          "endTime": 1794153600000,
+          "type": "REGULAR"
+        }
+      ]
+    }
+  ]
+}

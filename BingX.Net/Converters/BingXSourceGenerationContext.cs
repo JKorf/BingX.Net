@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 namespace BingX.Net.Converters
 {
     [JsonSerializable(typeof(BingXResult<BingXCancelReplaceResult>))]
+    [JsonSerializable(typeof(BingXResult<BingXTradingSchedule[]>))]
 
     [JsonSerializable(typeof(IEnumerable<BingXPlaceOrderRequest>))]
     [JsonSerializable(typeof(IEnumerable<BingXFuturesPlaceOrderRequest>))]

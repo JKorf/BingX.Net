@@ -259,5 +259,18 @@ namespace BingX.Net.Interfaces.Clients.PerpetualFuturesApi
         /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
         /// <param name="ct">Cancellation token</param>
         Task<HttpResult<BingXTradingRules>> GetTradingRulesAsync(string symbol, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get trading schedule
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://bingx-api.github.io/docs-v3/#/en/Swap/Market%20Data/Trading%20Schedule" /><br />
+        /// Endpoint:<br />
+        /// GET /openApi/swap/v1/quote/tradingSchedule
+        /// </para>
+        /// </summary>
+        /// <param name="symbol">["<c>symbol</c>"] Symbol, for example `ETH-USDT`</param>
+        /// <param name="ct">Cancellation token</param>
+        Task<HttpResult<BingXTradingSchedule[]>> GetTradingScheduleAsync(string? symbol = null, CancellationToken ct = default);
     }
 }

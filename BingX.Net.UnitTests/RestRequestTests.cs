@@ -139,6 +139,7 @@ namespace BingX.Net.UnitTests
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.ExchangeData.GetTickerAsync("ETHUSDT"), "GetTicker", nestedJsonProperty: "data");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.ExchangeData.GetBookTickerAsync("ETHUSDT"), "GetBookTicker", nestedJsonProperty: "data.book_ticker");
             await tester.ValidateAsync(client => client.PerpetualFuturesApi.ExchangeData.GetLastTradePriceAsync("ETHUSDT"), "GetLastTradePrice", nestedJsonProperty: "data");
+            await tester.ValidateAsync(client => client.PerpetualFuturesApi.ExchangeData.GetTradingScheduleAsync(), "GetTradingSchedule", nestedJsonProperty: "data");
         }
 
         [Test]
