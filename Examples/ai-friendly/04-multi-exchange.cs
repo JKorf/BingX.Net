@@ -10,11 +10,11 @@
 using BingX.Net.Clients;
 using CryptoExchange.Net.SharedApis;
 
-// Each exchange client exposes a `.SharedClient` property on its API surfaces.
-var bingXRest = new BingXRestClient();
-ISpotTickerRestClient bingXShared = bingXRest.SpotApi.SharedClient;
+// SharedApi exposes capabilities for individual operations.
+using var bingXRest = new BingXRestClient();
+IGetTickerRest bingXShared = bingXRest.SpotApi.SharedApi;
 
-var sharedInfo = bingXRest.SpotApi.SharedClient.Discover();
+var sharedInfo = bingXRest.SpotApi.SharedApi.Discover();
 var supportedFeatures = sharedInfo.Features
     .Where(x => x.Supported)
     .Select(x => x.EndpointName);
@@ -24,9 +24,9 @@ var btcusdt = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
 
 await PrintTicker(bingXShared, btcusdt);
 
-async Task PrintTicker(ISpotTickerRestClient client, SharedSymbol symbol)
+async Task PrintTicker(IGetTickerRest client, SharedSymbol symbol)
 {
-    var result = await client.GetSpotTickerAsync(new GetTickerRequest(symbol));
+    var result = await client.GetTickerAsync(new GetTickerRequest(symbol));
     if (!result.Success)
     {
         Console.WriteLine($"[{client.Exchange}] Failed: {result.Error}");
@@ -36,16 +36,13 @@ async Task PrintTicker(ISpotTickerRestClient client, SharedSymbol symbol)
     Console.WriteLine($"[{client.Exchange}] {result.Data.Symbol}: {result.Data.LastPrice}");
 }
 
-// REST shared interfaces include:
-//   ISpotTickerRestClient, ISpotSymbolRestClient, ISpotOrderRestClient
-//   IFuturesOrderRestClient, IFuturesSymbolRestClient, IBalanceRestClient
-//   IPositionRestClient, IFeeRestClient, IOrderBookRestClient
-//   IRecentTradeRestClient, IKlineRestClient, ITransferRestClient
-// Call SharedClient.Discover() before routing optional shared features.
+// Other capabilities include IGetSpotSymbolsRest, IPlaceSpotOrderRest,
+// IPlaceFuturesOrderRest, IGetBalancesRest, and IGetOrderBookRest.
+// Use the exchange aggregate for runtime-selected capability lookup.
 
 // ---- WEBSOCKET EXAMPLE - SHARED SUBSCRIPTION ----
-var bingXSocket = new BingXSocketClient();
-ITickerSocketClient bingXTickerSocket = bingXSocket.SpotApi.SharedClient;
+using var bingXSocket = new BingXSocketClient();
+ISubscribeTickerSocket bingXTickerSocket = bingXSocket.SpotApi.SharedApi;
 
 var sub = await bingXTickerSocket.SubscribeToTickerUpdatesAsync(
     new SubscribeTickerRequest(btcusdt),
@@ -57,10 +54,15 @@ if (!sub.Success)
     return;
 }
 
-Console.WriteLine("Press Enter to exit");
-Console.ReadLine();
-
-await bingXSocket.UnsubscribeAsync(sub.Data);
+try
+{
+    Console.WriteLine("Press Enter to exit");
+    Console.ReadLine();
+}
+finally
+{
+    await bingXSocket.UnsubscribeAsync(sub.Data);
+}
 
 // Note: shared socket interfaces do not expose UnsubscribeAsync.
 // Keep the concrete socket client and call concreteClient.UnsubscribeAsync(sub.Data).

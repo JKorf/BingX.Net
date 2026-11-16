@@ -74,7 +74,7 @@ var order = await client.SpotApi.Trading.PlaceOrderAsync(
 if (!order.Success)
 {
     var category = order.Error?.IsTransient == true
-        ? "Transient - retry may be appropriate"
+        ? "Transient - reconcile the order state before resubmitting"
         : "Permanent - surface to user";
 
     Console.WriteLine($"{category}: {order.Error?.Code} {order.Error?.Message}");

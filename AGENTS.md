@@ -1,187 +1,51 @@
----
-name: bingx-net
-description: Use BingX.Net when generating C#/.NET code that interacts with BingX, including Spot, Perpetual Futures, REST endpoints, WebSocket subscriptions, account management, market data, or order placement. Triggers on BingX integration requests in C#, .NET, dotnet, F#, or VB.NET context.
----
+# Working on BingX.Net
 
-# BingX.Net Skill
+For library development, use this file. For code that consumes the library, read the [BingX.Net skill](.claude/skills/bingx-net/SKILL.md). [llms.txt](llms.txt) indexes the remaining documentation.
 
-## Quick decision
+## Repository layout
 
-Use the exchange-level `IBingXSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
+- [Client interfaces](BingX.Net/Interfaces/Clients/): public endpoint signatures and XML documentation.
+- [Clients](BingX.Net/Clients/): REST, WebSocket, and Shared API implementations, grouped by API and transport.
+- [Models](BingX.Net/Objects/Models/), [options](BingX.Net/Objects/Options/), and [enums](BingX.Net/Enums/): wire models and configuration.
+- [Unit tests](BingX.Net.UnitTests/): request/response fixtures, subscription validation, and example compilation.
+- [AI-friendly examples](Examples/ai-friendly/): complete consumer programs.
 
-## Installation
+## Build and validation
 
-```bash
-dotnet add package JK.BingX.Net
+Run commands from the repository root. Use the SDK configured in the [build workflow](.github/workflows/dotnet.yml); targets and dependencies are defined in the [library project](BingX.Net/BingX.Net.csproj).
+
+```sh
+dotnet restore BingX.Net.sln
+dotnet build BingX.Net.sln --no-restore
+dotnet test BingX.Net.UnitTests/BingX.Net.UnitTests.csproj --no-build
 ```
 
-Targets: netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0. Native AOT supported.
+Debug builds select a subset of frameworks. To check every supported target:
 
-## Core Pattern: REST Client Setup
-
-Always create the client via `BingXRestClient`. For private endpoints, configure credentials.
-
-```csharp
-using BingX.Net;
-using BingX.Net.Clients;
-
-var restClient = new BingXRestClient(options =>
-{
-    options.ApiCredentials = new BingXCredentials("API_KEY", "API_SECRET");
-});
+```sh
+dotnet build BingX.Net/BingX.Net.csproj -p:BuildAllFrameworks=true
 ```
 
-For read-only public market data:
+Run focused tests for the change. For edits to consumer examples:
 
-```csharp
-var publicClient = new BingXRestClient();
+```sh
+dotnet test BingX.Net.UnitTests/BingX.Net.UnitTests.csproj --filter FullyQualifiedName~AiExampleCompileTests
 ```
 
-## Core Pattern: Result Handling
+That test compiles the examples; it does not execute their exchange operations or validate Markdown snippets. Integration tests are disabled by default; do not enable authenticated exchange calls as part of routine validation.
 
-REST methods return `HttpResult<T>` or `HttpResult`. WebSocket subscriptions return `WebSocketResult<UpdateSubscription>`. Shared non-I/O symbol/cache helpers return `ExchangeCallResult<T>`. Always check `.Success` before accessing `.Data`.
+## Implementation conventions
 
-```csharp
-var ticker = await restClient.SpotApi.ExchangeData.GetTickersAsync("BTC-USDT");
-if (!ticker.Success)
-{
-    Console.WriteLine($"Error: {ticker.Error}");
-    return;
-}
+- Use the matching client interface and a neighboring endpoint implementation as the starting point. Preserve endpoint metadata, serialization, signing, rate limits, and cancellation behavior.
+- Update public interfaces and XML documentation together with implementations. Add meaningful request/response or subscription coverage when behavior changes.
+- Keep Shared API adapters consistent with native endpoint behavior; verify capability support and trading modes against the implemented surface.
+- Preserve serialization compatibility and source-generated JSON metadata when changing models.
+- Keep changes compatible with every target in the library project; gate framework-specific APIs where required.
 
-var price = ticker.Data.Single().LastPrice;
-```
+## AI documentation ownership
 
-## Core Pattern: API Surface
-
-```csharp
-restClient.SpotApi.ExchangeData
-restClient.SpotApi.Account
-restClient.SpotApi.Trading
-restClient.SpotApi.SharedApi
-
-restClient.PerpetualFuturesApi.ExchangeData
-restClient.PerpetualFuturesApi.Account
-restClient.PerpetualFuturesApi.Trading
-restClient.PerpetualFuturesApi.SharedApi
-
-restClient.SubAccountApi
-
-socketClient.SpotApi
-socketClient.SpotApi.SharedApi
-socketClient.PerpetualFuturesApi
-socketClient.PerpetualFuturesApi.SharedApi
-```
-
-Use `PerpetualFuturesApi`, not an invented `FuturesApi`.
-
-## Core Pattern: Placing a Spot Order
-
-Let the library generate and manage the client order ID. Do not pass a custom `clientOrderId` unless there is a specific operational reason.
-
-```csharp
-using BingX.Net.Enums;
-
-var order = await restClient.SpotApi.Trading.PlaceOrderAsync(
-    symbol: "BTC-USDT",
-    side: OrderSide.Buy,
-    type: OrderType.Limit,
-    quantity: 0.001m,
-    price: 50000m,
-    timeInForce: TimeInForce.GoodTillCanceled);
-
-if (!order.Success) { Console.WriteLine(order.Error); return; }
-var orderId = order.Data.OrderId;
-```
-
-## Core Pattern: Placing a Perpetual Futures Order
-
-```csharp
-using BingX.Net.Enums;
-
-await restClient.PerpetualFuturesApi.Account.SetLeverageAsync("ETH-USDT", PositionSide.Long, 10);
-
-var order = await restClient.PerpetualFuturesApi.Trading.PlaceOrderAsync(
-    symbol: "ETH-USDT",
-    side: OrderSide.Buy,
-    type: FuturesOrderType.Market,
-    positionSide: PositionSide.Long,
-    quantity: 0.1m);
-```
-
-In one-way mode use `PositionSide.Both` where the endpoint requires a position side.
-
-## Core Pattern: WebSocket Subscriptions
-
-Use `BingXSocketClient`. Always store the `UpdateSubscription` and unsubscribe when done.
-
-```csharp
-var socketClient = new BingXSocketClient();
-
-var subscription = await socketClient.SpotApi.SubscribeToTickerUpdatesAsync(
-    "BTC-USDT",
-    update => Console.WriteLine(update.Data.LastPrice));
-
-if (!subscription.Success) { Console.WriteLine(subscription.Error); return; }
-
-await socketClient.UnsubscribeAsync(subscription.Data);
-```
-
-## Multi-Exchange via CryptoExchange.Net.SharedApis
-
-For exchange-agnostic code, use unified shared interfaces. Same pattern works against BingX, Binance, Bybit, OKX, Kraken, and other CryptoExchange.Net libraries.
-
-```csharp
-using BingX.Net.Clients;
-using CryptoExchange.Net.SharedApis;
-
-var bingXShared = new BingXRestClient().SpotApi.SharedApi;
-// Use the exchange-level `IBingXSharedApiClient` aggregate's `GetCapability(...)` or `GetCapabilities(...)` methods for runtime capability lookup; use an API surface's `.SharedApi` property when the transport and API are known.
-
-var symbol = new SharedSymbol(TradingMode.Spot, "BTC", "USDT");
-var ticker = await bingXShared.GetTickerAsync(new GetTickerRequest(symbol));
-```
-
-Successful shared symbol retrieval populates the `SpotSymbolCatalog` / `FuturesSymbolCatalog` properties. `GetSpotSymbolsAsync` and `GetFuturesSymbolsAsync` honor `GetSymbolsRequest` filters and return display names plus asset type metadata. Spot EUR/USD assets are marked as fiat and stablecoins use the stablecoin subtype; perpetual `NCSK...` bases are marked as equities, `NCCO...` bases as commodities, and other bases as crypto.
-
-Shared API quantities include `SharedOrderQuantity` metadata. Use plural quantity properties such as `Quantities`, `PositionSizes`, or `BestAskQuantities` when the base/quote/contract distinction matters; shared order books report `QuantityType` as `BaseAsset`.
-
-## Dependency Injection
-
-```csharp
-using BingX.Net;
-using Microsoft.Extensions.DependencyInjection;
-
-services.AddBingX(options =>
-{
-    options.ApiCredentials = new BingXCredentials("API_KEY", "API_SECRET");
-});
-```
-
-Inject `IBingXRestClient` and `IBingXSocketClient`.
-
-## Common Pitfalls - AVOID
-
-- Do not use raw `HttpClient` to call BingX endpoints.
-- Do not use generic `ApiCredentials`; use `BingXCredentials`.
-- Do not use `FuturesApi`; use `PerpetualFuturesApi`.
-- Do not use non-hyphenated spot symbols in examples. Prefer `BTC-USDT`.
-- Do not pass a custom `clientOrderId` unless required.
-- Do not mix sync and async. Always `await` async methods.
-- Do not instantiate clients per request.
-- Do not forget to unsubscribe from WebSocket streams.
-- Do not assume `HttpResult.Data` is non-null without checking `.Success`.
-
-## Environments
-
-```csharp
-var live = new BingXRestClient(o => o.Environment = BingXEnvironment.Live);
-```
-
-## Reference
-
-- Full client reference: https://cryptoexchange.jkorf.dev/BingX.Net/
-- Examples: `Examples/ai-friendly/`
-- Source: https://github.com/JKorf/BingX.Net
-- NuGet: https://www.nuget.org/packages/JK.BingX.Net
-- Discord: https://discord.gg/MSpeEtSY8t
+- [SKILL.md](.claude/skills/bingx-net/SKILL.md) owns consumer conventions and routes to detailed skill references.
+- [API surfaces](.claude/skills/bingx-net/references/api-surfaces.md) owns endpoint routing; [usage](.claude/skills/bingx-net/references/usage.md) owns snippets.
+- Link to those files instead of repeating API guides here or in tool-specific instructions.
+- Keep skill links relative. References outside the skill are checkout-only; packaged guidance must remain usable without repository sources.
+- The project packs [.claude/skills](.claude/skills/) into `skills/` in NuGet. After changing its layout, inspect package entries and verify referenced resources are included.

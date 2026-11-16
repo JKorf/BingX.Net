@@ -1,0 +1,4 @@
+interface:
+  display_name: "BingX.Net"
+  short_description: "Build C# BingX integrations with BingX.Net."
+  default_prompt: "Use $bingx-net to implement a BingX.Net REST or websocket workflow."

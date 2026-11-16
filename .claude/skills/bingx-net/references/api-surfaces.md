@@ -1,25 +1,22 @@
-# BingX.Net AI API Quick Map
+# BingX.Net API surfaces
 
-Use this file to route common user intents to the correct BingX.Net client member. If a method name or parameter is not listed here, inspect `BingX.Net/Interfaces/Clients/**` before generating code.
+Use this reference to route an intent to the relevant member. Table entries abbreviate overloads; confirm parameters in the installed package before use. For setup and result examples, see [usage](usage.md).
 
-## Client Roots
+## Client roots
 
-| Intent | Use |
-|---|---|
-| REST calls | `new BingXRestClient()` |
-| WebSocket streams | `new BingXSocketClient()` |
-| API key authentication | `options.ApiCredentials = new BingXCredentials("key", "secret")` |
-| Live environment | `BingXEnvironment.Live` |
-| Dependency injection | `services.AddBingX(options => { ... })` |
-| Spot REST | `client.SpotApi` |
-| Perpetual Futures REST | `client.PerpetualFuturesApi` |
-| Sub-account REST | `client.SubAccountApi` |
-| Spot socket | `socketClient.SpotApi` |
-| Perpetual Futures socket | `socketClient.PerpetualFuturesApi` |
+| Surface | Purpose |
+| --- | --- |
+| `BingXRestClient.SpotApi.ExchangeData` | Spot symbols, tickers, klines, trades, and order books |
+| `BingXRestClient.SpotApi.Account` | Spot balances, wallet operations, transfers, and user streams |
+| `BingXRestClient.SpotApi.Trading` | Spot orders, OCO, and user trades |
+| `BingXRestClient.PerpetualFuturesApi.ExchangeData` | Perpetual market data, funding, and mark prices |
+| `BingXRestClient.PerpetualFuturesApi.Account` | Perpetual balances, leverage, margin mode, position mode, and user streams |
+| `BingXRestClient.PerpetualFuturesApi.Trading` | Perpetual orders, positions, and TWAP |
+| `BingXRestClient.SubAccountApi` | `GetApiKeyPermissionsAsync` for key permissions |
+| `BingXSocketClient.SpotApi` | Spot subscriptions |
+| `BingXSocketClient.PerpetualFuturesApi` | Perpetual futures subscriptions |
 
-## Symbols
-
-BingX.Net examples should use hyphenated symbols such as `BTC-USDT` and `ETH-USDT`.
+The tables use `client` for a `BingXRestClient` and `socketClient` for a `BingXSocketClient`. Native symbols use hyphens, such as `BTC-USDT`. There is no `FuturesApi` or `SwapApi` root.
 
 ## Spot REST
 
@@ -164,52 +161,54 @@ BingX.Net examples should use hyphenated symbols such as `BTC-USDT` and `ETH-USD
 | Subscribe futures incremental order book | `socketClient.PerpetualFuturesApi.SubscribeToIncrementalOrderBookUpdatesAsync(symbol, handler)` |
 | Subscribe futures user data | `socketClient.PerpetualFuturesApi.SubscribeToUserDataUpdatesAsync(listenKey, ...)` |
 
-## SharedApis
+## User stream lifecycle
 
-| User intent | BingX.Net member or interface |
-|---|---|
-| Shared spot REST client | `new BingXRestClient().SpotApi.SharedApi` |
-| Shared perpetual futures REST client | `new BingXRestClient().PerpetualFuturesApi.SharedApi` |
-| Shared spot socket client | `new BingXSocketClient().SpotApi.SharedApi` |
-| Shared perpetual futures socket client | `new BingXSocketClient().PerpetualFuturesApi.SharedApi` |
-| Resolve a runtime-selected Shared API capability | `IBingXSharedApiClient.GetCapability(...)` |
-| Get filtered shared spot symbols | `IGetSpotSymbolsRest.GetSpotSymbolsAsync(new GetSymbolsRequest(...))` |
-| Read shared spot symbol catalog | `IGetSpotSymbolsRest.SpotSymbolCatalog` |
-| Get filtered shared futures symbols | `IGetFuturesSymbolsRest.GetFuturesSymbolsAsync(new GetSymbolsRequest(...))` |
-| Read shared futures symbol catalog | `IGetFuturesSymbolsRest.FuturesSymbolCatalog` |
-| Shared spot ticker REST | `IGetTickerRest.GetTickerAsync(new GetTickerRequest(symbol))` |
-| Shared spot order REST | `IPlaceSpotOrderRest.PlaceSpotOrderAsync(...)` |
-| Shared futures order REST | `IPlaceFuturesOrderRest.PlaceFuturesOrderAsync(...)` |
-| Shared ticker socket | `ISubscribeTickerSocket.SubscribeToTickerUpdatesAsync(...)` |
-| Shared order book socket | `ISubscribeOrderBookSocket.SubscribeToOrderBookUpdatesAsync(...)` |
+With socket credentials configured, prefer private subscription overloads without a listen-key argument: the client obtains and renews the key automatically. Spot exposes `SubscribeToOrderUpdatesAsync(handler)` and `SubscribeToBalanceUpdatesAsync(handler)`; perpetual futures exposes `SubscribeToUserDataUpdatesAsync(...)` with callback arguments.
 
-Shared REST calls return `HttpResult<T>` / `HttpResult`. Shared socket subscriptions return `WebSocketResult<UpdateSubscription>`. Shared non-I/O symbol/cache helpers such as symbol support checks return `ExchangeCallResult<T>`.
+For an externally managed key, call `StartUserStreamAsync` through the matching REST account API and pass the key to the explicit-key subscription overload. Keep it alive with `KeepAliveUserStreamAsync` and stop it with `StopUserStreamAsync` when no longer needed. Keep spot and perpetual keys with their corresponding APIs. In either mode, unsubscribe through the concrete socket client on shutdown.
 
-Successful shared spot and futures symbol retrieval populates the corresponding catalog. Results include display names and asset type/subtype metadata: spot EUR/USD assets are fiat and known stablecoins carry the stablecoin subtype; perpetual `NCSK...` bases are TradFi equities, `NCCO...` bases are TradFi commodities, and other bases are crypto.
+## Shared API V2
 
-For shared socket subscriptions, keep the concrete socket client and unsubscribe with `await socketClient.UnsubscribeAsync(subscription.Data)`.
+For portable code, use `.SharedApi` on the selected native REST or socket root. Keep native request/model types separate from Shared API types.
 
-## Result Handling
+| Intent | Capability or member |
+| --- | --- |
+| Get a ticker | `IGetTickerRest.GetTickerAsync` |
+| Get/filter spot symbols | `IGetSpotSymbolsRest.GetSpotSymbolsAsync` |
+| Get/filter futures symbols | `IGetFuturesSymbolsRest.GetFuturesSymbolsAsync` |
+| Place a spot order | `IPlaceSpotOrderRest.PlaceSpotOrderAsync` |
+| Place a futures order | `IPlaceFuturesOrderRest.PlaceFuturesOrderAsync` |
+| Subscribe to tickers | `ISubscribeTickerSocket.SubscribeToTickerUpdatesAsync` |
+| Subscribe to trades | `ISubscribeTradesSocket.SubscribeToTradeUpdatesAsync` |
+| Subscribe to order books | `ISubscribeOrderBookSocket.SubscribeToOrderBookUpdatesAsync` |
 
-| Situation | Pattern |
-|---|---|
-| REST success check | `if (!result.Success) { Console.WriteLine(result.Error); return; }` |
-| Socket subscription success check | `WebSocketResult<UpdateSubscription> sub = await ...; if (!sub.Success) { Console.WriteLine(sub.Error); return; }` |
-| Read REST data | Read `result.Data` only after `result.Success` |
-| Shared helper data | Read `ExchangeCallResult<T>.Data` only after `result.Success` |
-| Retry decision | Retry only when `result.Error?.IsTransient == true` |
-| Cancellation | Pass `ct: cancellationToken` |
+`IBingXSharedApiClient` groups the four supported surfaces:
 
-## Common Routing Pitfalls
+| Property | Interface |
+| --- | --- |
+| `SpotRest` | `IBingXRestClientSpotSharedApi` |
+| `PerpetualFuturesRest` | `IBingXRestClientPerpetualFuturesSharedApi` |
+| `SpotSocket` | `IBingXSocketClientSpotSharedApi` |
+| `PerpetualFuturesSocket` | `IBingXSocketClientPerpetualFuturesSharedApi` |
 
-| Do not use | Use instead |
-|---|---|
-| Raw `HttpClient` | `BingXRestClient` / `BingXSocketClient` |
-| `ApiCredentials` | `BingXCredentials` |
-| `FuturesApi` | `PerpetualFuturesApi` |
-| `SwapApi` | `PerpetualFuturesApi` |
-| `BTCUSDT` in examples | `BTC-USDT` |
-| `.Data` without `.Success` check | Check `.Success` first |
-| Shared socket `UnsubscribeAsync(...)` | Keep the concrete socket client and call `socketClient.UnsubscribeAsync(subscription.Data)` |
-| Custom `clientOrderId` by default | Let BingX.Net auto-generate it |
-| `positionSide` omitted from futures orders | Futures `PlaceOrderAsync` requires `PositionSide` |
+Use a surface property when the operation is known. For dynamic selection, call `GetCapability` on an aggregate instance with a typed descriptor such as `SharedCapabilities.Tickers.GetTicker.Rest`, and specify the intended trading mode when selecting between spot and futures. Check for a null match, then use its `Capability` and `Options`. Use `GetCapabilities` for all matches and `Discover` for summary metadata.
+
+`AddBingX` registers the aggregate and its supported capabilities. Where several surfaces or exchanges implement an injected capability, select the intended implementation explicitly instead of relying on the last DI registration.
+
+### Symbols and quantities
+
+Call `GetSpotSymbolsAsync` or `GetFuturesSymbolsAsync` successfully before reading the corresponding `SpotSymbolCatalog` or `FuturesSymbolCatalog`. `GetSymbolsRequest` supports asset-type filters. Symbol responses populate display names, base/quote asset types, and subtypes. Spot EUR/USD assets are fiat and known stablecoins carry the stablecoin subtype. Perpetual bases starting with `NCSK` classify as TradFi equities and `NCCO` as commodities; other bases classify as crypto. Preserve returned metadata rather than reclassifying symbols in application code.
+
+Shared quantities use `SharedOrderQuantity` metadata, including plural properties such as `Quantities`, `PositionSizes`, and `BestAskQuantities`. Read `QuantityInBaseAsset`, `QuantityInQuoteAsset`, or `QuantityInContracts` as appropriate. BingX shared order books report `QuantityType` as `SharedQuantityType.BaseAsset`.
+
+Shared subscriptions are closed through the concrete `BingXSocketClient.UnsubscribeAsync(subscription.Data)`.
+
+## Source navigation in a checkout
+
+These links are available in a source checkout, not in the standalone NuGet skill:
+
+- [Client interfaces](../../../../BingX.Net/Interfaces/Clients/): exact method signatures and endpoint documentation.
+- [Client implementations](../../../../BingX.Net/Clients/): transport and Shared API mappings.
+- [Compiled examples](../../../../Examples/ai-friendly/): complete programs.
+
+For packaged usage patterns, see [usage](usage.md).

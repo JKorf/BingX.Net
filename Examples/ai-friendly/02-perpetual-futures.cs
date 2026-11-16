@@ -51,7 +51,7 @@ if (!positions.Success)
     return;
 }
 
-var position = positions.Data.FirstOrDefault(p => p.Size != 0);
+var position = positions.Data.FirstOrDefault(p => p.Size != 0 && p.Side == TradeSide.Long);
 if (position == null)
 {
     Console.WriteLine("No open position found (may not have filled yet).");
@@ -63,18 +63,17 @@ Console.WriteLine($"Unrealized PnL: {position.UnrealizedProfit} {position.Curren
 Console.WriteLine($"Liquidation price: {position.LiquidationPrice}");
 
 // ---- 4. CLOSE THE POSITION ----
-// Opposite side, same quantity, reduceOnly=true to avoid an accidental position flip.
-var closeOrder = await client.PerpetualFuturesApi.Trading.PlaceOrderAsync(
-    symbol: symbol,
-    side: OrderSide.Sell,
-    type: FuturesOrderType.Market,
-    positionSide: PositionSide.Long,
-    quantity: Math.Abs(position.Size),
-    reduceOnly: true);
+// Close the selected long position by ID rather than mixing hedge-mode
+// position sides with a one-way reduce-only order recipe.
+var closeOrder = await client.PerpetualFuturesApi.Trading.ClosePositionAsync(position.PositionId);
 
 if (closeOrder.Success)
 {
-    Console.WriteLine($"Closed position via order {closeOrder.Data.OrderId}");
+    Console.WriteLine($"Close request succeeded for position {position.PositionId}");
+}
+else
+{
+    Console.WriteLine($"Failed to close position: {closeOrder.Error}");
 }
 
 // Common variations:
