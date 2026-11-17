@@ -1,0 +1,18 @@
+{
+  "baseBranch": "main",
+  "sdk": "11.0.100",
+  "packages": [
+    {
+      "key": "bingx",
+      "project": "BingX.Net/BingX.Net.csproj",
+      "testProjects": [
+        "BingX.Net.UnitTests/BingX.Net.UnitTests.csproj"
+      ],
+      "packageId": "JK.BingX.Net",
+      "readme": "README.md",
+      "tagPrefix": "BingX.Net.",
+      "releaseIntegrationTests": false,
+      "publishToGitHubPackages": true
+    }
+  ]
+}
