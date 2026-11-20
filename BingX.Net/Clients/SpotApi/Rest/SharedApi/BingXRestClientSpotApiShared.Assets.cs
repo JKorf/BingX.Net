@@ -20,7 +20,7 @@ namespace BingX.Net.Clients.SpotApi
     {
         #region Get Asset
 
-        public GetAssetOptions GetAssetOptions { get; } = new GetAssetOptions(_exchangeName, false);
+        public GetAssetOptions GetAssetOptions { get; } = new GetAssetOptions(_exchangeName, true);
         async Task<IExchangeCallResult<SharedAsset>> IGetAsset.GetAssetAsync(GetAssetRequest request, CancellationToken ct)
             => await GetAssetAsync(request, ct).ConfigureAwait(false);
 
