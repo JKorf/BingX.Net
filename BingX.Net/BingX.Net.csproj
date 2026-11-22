@@ -46,7 +46,7 @@
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>
-    <DocumentationFile>BingX.Net.xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Icon\BingX.png" Pack="true" PackagePath="\" />
